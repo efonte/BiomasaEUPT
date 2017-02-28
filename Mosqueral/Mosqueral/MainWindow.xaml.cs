@@ -24,5 +24,27 @@ namespace Mosqueral
         {
             InitializeComponent();
         }
+
+        private void menuSalir_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void menuAcercaDe_Click(object sender, RoutedEventArgs e)
+        {
+            AcercaDe acercaDe = new AcercaDe();
+            acercaDe.Owner = GetWindow(this);
+            acercaDe.ShowDialog();
+        }
+
+        private void menuGitHub_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/F0NT3/Mosqueral");
+        }
     }
 }

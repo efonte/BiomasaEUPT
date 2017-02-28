@@ -5,8 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mosqueral"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Mosqueral" Height="350" Width="525"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <DockPanel>
+        <materialDesign:ColorZone Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
+            <DockPanel>
+                <!-- Barra Menu -->
+                <Menu DockPanel.Dock="Left" Background="#303030">
+                    <!-- Archivo -->
+                    <MenuItem Header="_Archivo" Height="20" Foreground="White" FontFamily="Roboto">
+                        <!-- Ticket Manager -->
+                        <MenuItem Header="_MenuItem 1" Height="30" Foreground="White" FontFamily="Roboto">
+                            <MenuItem x:Name="menu1" Header="_Menu 1" Height="30"/>
+                            <Separator />
+                            <MenuItem x:Name="menu2" Header="_Menu 2" Height="30"/>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem x:Name="menuSalir" Header="_Salir" Height="30" Click="menuSalir_Click"/>
+                    </MenuItem>
+                    <!-- Opciones -->
+                    <MenuItem Header="_Opciones" Height="20" Foreground="White" FontFamily="Roboto">
+                        <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30"  />
+                    </MenuItem>
+                    <!-- Ayuda -->
+                    <MenuItem Header="A_yuda" Height="20" Foreground="White" FontFamily="Roboto">
+                        <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Height="30" Click="menuGitHub_Click"/>
+                        <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Height="30" Click="menuAcercaDe_Click"/>
+                    </MenuItem>
+                </Menu>
+                <TextBlock x:Name="tbInfoProgreso" Height="20" Foreground="White" FontFamily="Roboto" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
+                <ProgressBar x:Name="pbProgreso" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            </DockPanel>
+
+
+        </materialDesign:ColorZone>
+    </DockPanel>
+
 </Window>
