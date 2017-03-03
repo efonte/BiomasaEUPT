@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mosqueral"
-        mc:Ignorable="d"
-        Title="Mosqueral" Height="350" Width="525"
-        WindowStartupLocation="CenterScreen"
-        Closing="Window_Closing"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
+        mc:Ignorable="d"
+        Title="Mosqueral" Height="350" Width="525" MinHeight="350" MinWidth="525"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"        
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -17,6 +19,17 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <DockPanel>
         <materialDesign:ColorZone Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
             <DockPanel>
@@ -46,9 +59,41 @@
                 <TextBlock x:Name="tbInfoProgreso" Height="20" Foreground="White" FontFamily="Roboto" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
                 <ProgressBar x:Name="pbProgreso" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
             </DockPanel>
-
-
         </materialDesign:ColorZone>
+
+        <!-- Pestañas -->
+        <dockablz:Layout>
+            <dragablz:TabablzControl BorderThickness="0" Margin="0 0 0 0">
+
+                <!-- Pestaña 1 -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                            <TextBlock Text="Pestaña 1" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <local:UserControl1 x:Name="ucTab1"/>
+
+                </TabItem>
+                
+                <!-- Pestaña 2 -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                            <TextBlock Text="Pestaña 2" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <local:UserControl1 x:Name="ucTab2" />
+
+                </TabItem>
+
+            </dragablz:TabablzControl>
+        </dockablz:Layout>
+
     </DockPanel>
 
 </Window>
