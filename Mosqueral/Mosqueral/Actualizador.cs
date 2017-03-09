@@ -13,7 +13,6 @@ namespace Mosqueral
     {
         private readonly string URL_PROGRAMA = "https://github.com/F0NT3/Mosqueral";
         private readonly string URL_ULTIMA_VERSION = "https://github.com/F0NT3/Mosqueral/releases";
-        //private readonly string VERSION = "dev-0.1";
 
         public Actualizador()
         {

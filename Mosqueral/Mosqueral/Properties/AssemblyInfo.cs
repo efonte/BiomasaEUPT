@@ -17,11 +17,11 @@ using System.Windows;
 [assembly: AssemblyCulture("")]
 
 // Si establece ComVisible en false, los tipos de este ensamblado no estarán visibles 
-// para los componentes COM.  Si necesita obtener acceso a un tipo de este ensamblado desde 
+// para los componentes COM.  Si es necesario obtener acceso a un tipo en este ensamblado desde 
 // COM, establezca el atributo ComVisible en true en este tipo.
 [assembly: ComVisible(false)]
 
-//Para comenzar a compilar aplicaciones que se puedan traducir, establezca 
+//Para comenzar a compilar aplicaciones que se puedan traducir, establezca
 //<UICulture>CultureYouAreCodingWith</UICulture> en el archivo .csproj
 //dentro de <PropertyGroup>.  Por ejemplo, si utiliza inglés de EE.UU.
 //en los archivos de código fuente, establezca <UICulture> en en-US.  A continuación, quite la marca de comentario
@@ -33,10 +33,10 @@ using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //donde se encuentran los diccionarios de recursos específicos del tema
-                                     //(se utiliza si no se encuentra ningún recurso en la página 
+                                     //(se utiliza si no se encuentra ningún recurso en la página,
                                      // ni diccionarios de recursos de la aplicación)
     ResourceDictionaryLocation.SourceAssembly //donde se encuentra el diccionario de recursos genérico
-                                              //(se utiliza si no se encuentra ningún recurso en la página, 
+                                              //(se utiliza si no se encuentra ningún recurso en la página,
                                               // aplicación o diccionarios de recursos específicos del tema)
 )]
 
@@ -44,11 +44,11 @@ using System.Windows;
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //
 //      Versión principal
-//      Versión secundaria 
+//      Versión secundaria
 //      Número de compilación
 //      Revisión
 //
-// Puede especificar todos los valores o usar los valores predeterminados de número de compilación y de revisión 
+// Puede especificar todos los valores o utilizar los números de compilación y de revisión predeterminados
 // mediante el carácter '*', como se muestra a continuación:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1.0.0")]
