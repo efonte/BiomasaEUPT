@@ -7,12 +7,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mosqueral
+namespace BiomasaEUPT
 {
     class Actualizador
     {
-        private readonly string URL_PROGRAMA = "https://github.com/F0NT3/Mosqueral";
-        private readonly string URL_ULTIMA_VERSION = "https://github.com/F0NT3/Mosqueral/releases";
+        private readonly string URL_PROGRAMA = "https://github.com/F0NT3/BiomasaEUPT";
+        private readonly string URL_ULTIMA_VERSION = "https://github.com/F0NT3/BiomasaEUPT/releases";
 
         public Actualizador()
         {
@@ -43,13 +43,13 @@ namespace Mosqueral
 
         public void actualizarPrograma()
         {
-            Log.Information("ACTUALIZADOR: Actualizando Mosqueral...");
+            Log.Information("ACTUALIZADOR: Actualizando BiomasaEUPT...");
 
             WebClient wc = new WebClient();
 
             try
             {
-                wc.DownloadFile(URL_PROGRAMA, "Mosqueral.exe");
+                wc.DownloadFile(URL_PROGRAMA, "BiomasaEUPT.exe");
                 Log.Information("UPDATER: Actualización completada.");
             }
             catch (WebException ex)

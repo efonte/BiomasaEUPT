@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-namespace Mosqueral.Domain
+namespace BiomasaEUPT.Domain
 {
     public class SimpleDataTemplateSelector : DataTemplateSelector
     {

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{99F3FAC5-1E76-47A2-B9F3-D34385B32983}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Mosqueral</RootNamespace>
-    <AssemblyName>Mosqueral</AssemblyName>
+    <RootNamespace>BiomasaEUPT</RootNamespace>
+    <AssemblyName>BiomasaEUPT</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

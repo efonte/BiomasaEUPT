@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Mosqueral
+namespace BiomasaEUPT
 {
     /// <summary>
     /// Lógica de interacción para UserControl1.xaml

@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Mosqueral
+namespace BiomasaEUPT
 {
     /// <summary>
     /// Lógica de interacción para AcercaDe.xaml

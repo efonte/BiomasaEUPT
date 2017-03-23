@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace Mosqueral.Domain
+namespace BiomasaEUPT.Domain
 {
     public class NotEmptyValidationRule : ValidationRule
     {

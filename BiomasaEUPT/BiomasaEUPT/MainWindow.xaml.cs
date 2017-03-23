@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Mosqueral
+namespace BiomasaEUPT
 {
     /// <summary>
     /// Lógica de interacción para MainWindow.xaml
@@ -44,7 +44,7 @@ namespace Mosqueral
 
         private void menuGitHub_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/F0NT3/Mosqueral");
+            System.Diagnostics.Process.Start("https://github.com/F0NT3/BiomasaEUPT");
         }
     }
 }

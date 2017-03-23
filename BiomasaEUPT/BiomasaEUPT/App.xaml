@@ -1,8 +1,8 @@
-﻿<Application x:Class="Mosqueral.App"
+﻿<Application x:Class="BiomasaEUPT.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-             xmlns:local="clr-namespace:Mosqueral"
+             xmlns:local="clr-namespace:BiomasaEUPT"
              StartupUri="Splash.xaml">
     <Application.Resources>
         <ResourceDictionary>

@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Mosqueral
+namespace BiomasaEUPT
 {
     /// <summary>
     /// Lógica de interacción para Splash.xaml
@@ -32,9 +32,9 @@ namespace Mosqueral
 
         private void iniciarConfig()
         {
-            if (!File.Exists("Mosqueral.exe.config"))
+            if (!File.Exists("BiomasaEUPT.exe.config"))
             {
-                File.WriteAllText(@"Mosqueral.exe.config", Properties.Resources.App);
+                File.WriteAllText(@"BiomasaEUPT.exe.config", Properties.Resources.App);
             }
         }
 
@@ -42,13 +42,13 @@ namespace Mosqueral
         {
             if (Properties.Settings.Default.ModoDebug)
             {
-                if (File.Exists("Mosqueral.log"))
+                if (File.Exists("BiomasaEUPT.log"))
                 {
-                    File.Delete("Mosqueral.log");
+                    File.Delete("BiomasaEUPT.log");
                 }
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.File("Mosqueral.log")
+                    .WriteTo.File("BiomasaEUPT.log")
                     .CreateLogger();
             }
 
