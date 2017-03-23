@@ -86,7 +86,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <local:UserControl1 x:Name="ucTab2" />
+                    <local:Formulario x:Name="ucTab2" />
 
                 </TabItem>
 
