@@ -69,6 +69,7 @@ namespace BiomasaEUPT
 
             //MainWindow main = new MainWindow();
             Login login = new Login();
+            //Window1 w1 = new Window1();
 
             await Task.Run(() => inicioFinalizado());
 

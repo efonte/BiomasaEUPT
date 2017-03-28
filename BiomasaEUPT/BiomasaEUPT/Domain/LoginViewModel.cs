@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace BiomasaEUPT.Domain
     public class LoginViewModel : INotifyPropertyChanged
     {
         private string _usuario;
+        private SecureString _contrasena;
         //private int? _selectedValueOne;
         //private string _selectedTextTwo;
 
@@ -33,9 +35,23 @@ namespace BiomasaEUPT.Domain
             {
                 //ValidateProperty("Usuario");
                 _usuario = value;
-                ValidateProperty("Usuario");
+                //ValidateProperty("Usuario");
                 NotifyPropertyChanged("Usuario");
                 //this.MutateVerbose(ref _usuario, value, RaisePropertyChanged());
+            }
+        }
+
+
+        public SecureString Contrasena
+        {
+            get { return _contrasena; }
+            set
+            {
+                //ValidateProperty("Contrasena");
+                _contrasena = value;
+                //ValidateProperty("Contrasena");
+                NotifyPropertyChanged("Contrasena");
+                //this.MutateVerbose(ref _contrasena, value, RaisePropertyChanged());
             }
         }
 
@@ -82,18 +98,19 @@ namespace BiomasaEUPT.Domain
          private bool CanDownload(object parameter) {
              return HasErrors == false;
          }*/
-      /*  protected Dictionary<string, List<ValidationError>> errors = new Dictionary<string, List<ValidationError>>();
+        /*  protected Dictionary<string, List<ValidationError>> errors = new Dictionary<string, List<ValidationError>>();
 
-        public int ErrorCount
-        {
-            get { return errors.Count; }
-        }*/
+          public int ErrorCount
+          {
+              get { return errors.Count; }
+          }*/
 
 
         public bool PuedeIniciarSesion(object z)
         {
-            return !string.IsNullOrEmpty(Usuario);
-           // && ErrorCount == 0;
+            return !string.IsNullOrWhiteSpace(Usuario)
+                 && Contrasena != null && Contrasena.Length > 0;
+            // && ErrorCount == 0;
         }
 
         public virtual void ValidateProperty(string propertyName)
