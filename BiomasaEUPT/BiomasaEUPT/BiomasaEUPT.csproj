@@ -74,10 +74,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Domain\LoginViewModel.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
+    <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
@@ -90,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formulario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

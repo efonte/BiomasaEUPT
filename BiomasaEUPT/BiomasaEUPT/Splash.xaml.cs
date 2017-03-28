@@ -67,14 +67,16 @@ namespace BiomasaEUPT
         {
             await Task.Run(() => iniciarPrograma());
 
-            MainWindow main = new MainWindow();
+            //MainWindow main = new MainWindow();
+            Login login = new Login();
 
             await Task.Run(() => inicioFinalizado());
 
             Log.Information("SPLASH: Inicialización completa.");
 
             // Cerrar Splashscreen
-            main.Show();
+            //main.Show();
+            login.Show();
             Close();
         }
 
