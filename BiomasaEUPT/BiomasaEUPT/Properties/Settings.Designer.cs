@@ -57,5 +57,29 @@ namespace BiomasaEUPT.Properties {
                 return ((string)(this["BiomasaEUPTConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string usuario {
+            get {
+                return ((string)(this["usuario"]));
+            }
+            set {
+                this["usuario"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string contrasena {
+            get {
+                return ((string)(this["contrasena"]));
+            }
+            set {
+                this["contrasena"] = value;
+            }
+        }
     }
 }

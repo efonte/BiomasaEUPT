@@ -77,7 +77,7 @@
         </TextBox>
 
         <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Foreground="{Binding BorderBrush, ElementName=pbContrasena}" HorizontalAlignment="Right" />
-        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena" materialDesign:HintAssist.Hint="Contraseña" domain:PasswordBoxMVVMAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChanged="pbContrasena_PasswordChanged"/>
+        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena" materialDesign:HintAssist.Hint="Contraseña" domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChanged="pbContrasena_PasswordChanged"/>
         <CheckBox x:Name="cbRecordarme" Grid.Row="3" Grid.Column="1" Content="Recordar contraseña" HorizontalAlignment="Right" Margin="0 20 0 20" />
 
         <Button x:Name="bIniciarSesion" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Iniciar Sesión" Command="{Binding Path=IniciarSesionComando}" />

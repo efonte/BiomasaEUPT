@@ -66,19 +66,35 @@ namespace BiomasaEUPT
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
             await Task.Run(() => iniciarPrograma());
-
-            //MainWindow main = new MainWindow();
-            Login login = new Login();
-            //Window1 w1 = new Window1();
-
             await Task.Run(() => inicioFinalizado());
 
             Log.Information("SPLASH: Inicialización completa.");
+            Login login = new Login();
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.usuario) && !string.IsNullOrWhiteSpace(Properties.Settings.Default.contrasena))
+            {
+                if (login.iniciarSesion(Properties.Settings.Default.usuario, Properties.Settings.Default.contrasena))
+                {
+                    login.Close();
+                    MainWindow main = new MainWindow();
+                    main.Show();
+                    Close();
+                }
+                else
+                {
+                    login.Show();
+                    login.tbUsuario.Text = Properties.Settings.Default.usuario;
+                    Close();
+                    MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+            else
+            {
+                login.Show();
+                login.tbUsuario.Text = Properties.Settings.Default.usuario;
+                Close();
+            }
 
-            // Cerrar Splashscreen
-            //main.Show();
-            login.Show();
-            Close();
+           
         }
 
         private void iniciarPrograma()

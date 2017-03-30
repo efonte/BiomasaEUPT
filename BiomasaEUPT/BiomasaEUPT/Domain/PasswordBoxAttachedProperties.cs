@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace BiomasaEUPT.Domain
 {
-    public static class PasswordBoxMVVMAttachedProperties
+    public static class PasswordBoxAttachedProperties
     {
         public static SecureString GetEncryptedPassword(DependencyObject obj)
         {
@@ -22,6 +22,6 @@ namespace BiomasaEUPT.Domain
 
         // Using a DependencyProperty as the backing store for EncryptedPassword.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EncryptedPasswordProperty =
-            DependencyProperty.RegisterAttached("EncryptedPassword", typeof(SecureString), typeof(PasswordBoxMVVMAttachedProperties));
+            DependencyProperty.RegisterAttached("EncryptedPassword", typeof(SecureString), typeof(PasswordBoxAttachedProperties));
     }
 }

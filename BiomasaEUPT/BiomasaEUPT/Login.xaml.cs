@@ -27,8 +27,6 @@ namespace BiomasaEUPT
         {
             InitializeComponent();
 
-            //DataContext = new LoginViewModel();
-
             Assembly assembly = typeof(LoginViewModel).Assembly;
             LoginViewModel ViewModel = (LoginViewModel)assembly.CreateInstance(typeof(LoginViewModel).FullName);
             if (ViewModel == null)
@@ -38,23 +36,19 @@ namespace BiomasaEUPT
 
 
             ViewModel.IniciarSesionCmd = new RelayCommand((object z) =>
-            {               
-                using (var ctx = new BiomasaEUPTEntities())
+            {
+
+                String hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(ViewModel.Contrasena));
+                if (iniciarSesion(ViewModel.Usuario, hashContrasena))
                 {
-                    String hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(ViewModel.Contrasena));
-
-                    try
-                    {
-                        usuarios usuario = ctx.usuarios.Where(s => s.nombre == ViewModel.Usuario && s.contrasena == hashContrasena).First<usuarios>();
-                        MessageBox.Show("Login Correctos.", "Login Correcto", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    }
-
-
+                    Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
+                    Properties.Settings.Default.usuario = ViewModel.Usuario;
+                    Properties.Settings.Default.Save();
+                    cargarVistaMain();
+                }
+                else
+                {
+                    MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }, ViewModel.PuedeIniciarSesion);
 
@@ -87,7 +81,33 @@ namespace BiomasaEUPT
         private void pbContrasena_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox pBox = sender as PasswordBox;
-            PasswordBoxMVVMAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
+            PasswordBoxAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
+        }
+
+
+        private void cargarVistaMain()
+        {
+            MainWindow mainWindows = new MainWindow();
+            Close();
+            mainWindows.Show();
+        }
+
+        public bool iniciarSesion(String usuario, String hashContrasena)
+        {
+            using (var ctx = new BiomasaEUPTEntities())
+            {
+                try
+                {
+                    ctx.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).First<usuarios>();
+                    return true;
+
+                }
+                catch (InvalidOperationException)
+                {
+                    return false;
+                }
+
+            }
         }
     }
 }

@@ -92,9 +92,8 @@
     <Compile Include="Domain\LoginViewModel.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
-    <Compile Include="Domain\PasswordBoxMVVMAttachedProperties.cs" />
+    <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
-    <Compile Include="Domain\SecureStringManipulation.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
