@@ -89,12 +89,17 @@
       <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Domain\ContrasenaHashing.cs" />
+    <Compile Include="Domain\IRepositorioGenerico.cs" />
     <Compile Include="Domain\LoginViewModel.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
+    <Compile Include="Domain\RepositorioGenerico.cs" />
+    <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
+    <Compile Include="Domain\UserControl1ViewModel.cs" />
+    <Compile Include="Domain\UserControl3ViewModel.cs" />
     <Compile Include="Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
@@ -116,6 +121,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Domain\PruebaViewSource.cs" />
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,12 @@
     </Compile>
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl2.xaml.cs">
+      <DependentUpon>UserControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl3.xaml.cs">
+      <DependentUpon>UserControl3.xaml</DependentUpon>
     </Compile>
     <Compile Include="usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
@@ -167,6 +179,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -46,5 +46,15 @@ namespace BiomasaEUPT
         {
             System.Diagnostics.Process.Start("https://github.com/F0NT3/BiomasaEUPT");
         }
+
+        private void menuCerrarSesion_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.contrasena = "";
+            Properties.Settings.Default.Save();
+            Login login = new Login();
+            login.Show();
+            login.tbUsuario.Text = Properties.Settings.Default.usuario;
+            Close();
+        }
     }
 }

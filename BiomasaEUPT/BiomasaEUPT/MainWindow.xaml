@@ -43,6 +43,8 @@
                             <MenuItem x:Name="menu2" Header="_Menu 2" Height="30"/>
                         </MenuItem>
                         <Separator/>
+                        <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Height="30" Click="menuCerrarSesion_Click"/>
+                        <Separator/>
                         <MenuItem x:Name="menuSalir" Header="_Salir" Height="30" Click="menuSalir_Click"/>
                     </MenuItem>
                     <!-- Opciones -->
@@ -73,7 +75,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <local:UserControl1 x:Name="ucTab1"/>
+                    <local:UserControl2 x:Name="ucTab1"/>
 
                 </TabItem>
 
