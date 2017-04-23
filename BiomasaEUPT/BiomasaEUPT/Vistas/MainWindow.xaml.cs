@@ -20,9 +20,19 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class MainWindow : Window
     {
+        // BiomasaEUPTDataSet biomasaEUPTDataSet;
+        // BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // biomasaEUPTDataSet = ((BiomasaEUPTDataSet)(FindResource("biomasaEUPTDataSet")));
+            // biomasaEUPTDataSet = new BiomasaEUPTDataSet();
+            // biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
+            // biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
         }
 
         private void menuSalir_Click(object sender, RoutedEventArgs e)
@@ -56,5 +66,6 @@ namespace BiomasaEUPT
             login.tbUsuario.Text = Properties.Settings.Default.usuario;
             Close();
         }
+
     }
 }

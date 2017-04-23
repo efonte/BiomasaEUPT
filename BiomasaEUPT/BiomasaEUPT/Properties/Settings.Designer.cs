@@ -12,7 +12,7 @@ namespace BiomasaEUPT.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.0.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -51,7 +51,7 @@ namespace BiomasaEUPT.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Inf" +
-            "o=True;User ID=usuario;Password=usuario")]
+            "o=True;User ID=usuario;Password=usuario;MultipleActiveResultSets=False")]
         public string BiomasaEUPTConnectionString {
             get {
                 return ((string)(this["BiomasaEUPTConnectionString"]));
@@ -79,6 +79,17 @@ namespace BiomasaEUPT.Properties {
             }
             set {
                 this["contrasena"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;User Id=usuario;Pass" +
+            "word=usuario")]
+        public string ConexionBD {
+            get {
+                return ((string)(this["ConexionBD"]));
             }
         }
     }

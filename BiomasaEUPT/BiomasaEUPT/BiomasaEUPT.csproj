@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -79,7 +80,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="Vistas\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
@@ -88,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Clases\Comando.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\IRepositorioGenerico.cs" />
     <Compile Include="Domain\LoginViewModel.cs" />
@@ -99,11 +101,16 @@
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
+    <Compile Include="Domain\UserControl2ViewModel.cs" />
     <Compile Include="Domain\UserControl3ViewModel.cs" />
-    <Compile Include="Formulario.xaml.cs">
+    <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="Viejo %28no borrar aun%29\GestionUsuariosViewModel.cs" />
+    <Compile Include="Vistas\GestionUsuarios.xaml.cs">
+      <DependentUpon>GestionUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modelo.Context.cs">
@@ -122,75 +129,106 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="Domain\PruebaViewSource.cs" />
-    <Compile Include="Splash.xaml.cs">
+    <Compile Include="Viejo %28no borrar aun%29\ConexionBD.cs" />
+    <Compile Include="Viejo %28no borrar aun%29\ConexionBD1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Viejo %28no borrar aun%29\ConexionBD2.cs" />
+    <Compile Include="Viejo %28no borrar aun%29\ConexionBD3.cs" />
+    <Compile Include="Vistas\MensajeConfirmacion.xaml.cs">
+      <DependentUpon>MensajeConfirmacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
     <Compile Include="tipos_usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserControl1.xaml.cs">
+    <Compile Include="Viejo %28no borrar aun%29\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl2.xaml.cs">
+    <Compile Include="Viejo %28no borrar aun%29\UserControl2.xaml.cs">
       <DependentUpon>UserControl2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl3.xaml.cs">
+    <Compile Include="Viejo %28no borrar aun%29\UserControl3.xaml.cs">
       <DependentUpon>UserControl3.xaml</DependentUpon>
     </Compile>
     <Compile Include="usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Viejo %28no borrar aun%29\GestionUsuarios1.xaml.cs">
+      <DependentUpon>GestionUsuarios1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="vista_usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
-    <Page Include="AcercaDe.xaml">
+    <Page Include="Vistas\AcercaDe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formulario.xaml">
+    <Page Include="Vistas\Formulario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="Vistas\GestionUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Vistas\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AcercaDe.xaml.cs">
+    <Compile Include="Vistas\AcercaDe.xaml.cs">
       <DependentUpon>AcercaDe.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Actualizador.cs" />
-    <Compile Include="App.xaml.cs">
+    <Compile Include="Clases\Actualizador.cs" />
+    <Compile Include="Vistas\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Vistas\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Splash.xaml">
+    <Page Include="Vistas\MensajeConfirmacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
+    <Page Include="Vistas\Splash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl2.xaml">
+    <Page Include="Viejo %28no borrar aun%29\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl3.xaml">
+    <Page Include="Viejo %28no borrar aun%29\UserControl2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window1.xaml">
+    <Page Include="Viejo %28no borrar aun%29\UserControl3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Viejo %28no borrar aun%29\GestionUsuarios1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +299,7 @@
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Modelos\Validadores\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

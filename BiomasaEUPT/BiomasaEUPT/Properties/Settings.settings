@@ -11,16 +11,23 @@
     <Setting Name="BiomasaEUPTConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Info=True;User ID=usuario;Password=usuario&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Info=True;User ID=usuario;Password=usuario;MultipleActiveResultSets=False&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Info=True;User ID=usuario;Password=usuario</Value>
+      <Value Profile="(Default)">Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Info=True;User ID=usuario;Password=usuario;MultipleActiveResultSets=False</Value>
     </Setting>
     <Setting Name="usuario" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="contrasena" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ConexionBD" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;User Id=usuario;Password=usuario&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;User Id=usuario;Password=usuario</Value>
     </Setting>
   </Settings>
 </SettingsFile>

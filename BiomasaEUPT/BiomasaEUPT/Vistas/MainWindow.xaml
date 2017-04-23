@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BiomasaEUPT"
+        xmlns:local="clr-namespace:BiomasaEUPT.Vistas"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="350" Width="525" MinHeight="350" MinWidth="525"
+        Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"        
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -75,7 +76,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <local:UserControl2 x:Name="ucTab1"/>
+                    <local:GestionUsuarios x:Name="ucTab1"/>
 
                 </TabItem>
 
@@ -88,7 +89,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <local:Formulario x:Name="ucTab2" />
+                    <!--local:Formulario x:Name="ucTab2" /-->
 
                 </TabItem>
 

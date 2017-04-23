@@ -1,0 +1,109 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT" x:Class="BiomasaEUPT.Vistas.GestionUsuarios"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <BiomasaEUPT:BiomasaEUPTDataSet x:Key="biomasaEUPTDataSet"/>
+        <CollectionViewSource x:Key="usuariosViewSource" Source="{Binding usuarios, Source={StaticResource biomasaEUPTDataSet}}"/>
+        <CollectionViewSource x:Key="tipos_usuariosViewSource" Source="{Binding tipos_usuarios, Source={StaticResource biomasaEUPTDataSet}}"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource usuariosViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="usuariosDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
+                <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" Binding="{Binding nombre}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                <materialDesign:MaterialDataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="Contraseña" Binding="{Binding contrasena}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="Email" Binding="{Binding email}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
+                <DataGridComboBoxColumn x:Name="tipo_idColumn" Header="Tipo"
+                    ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}" SelectedValuePath="id_tipo_usuario" 
+                    DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id}" EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                <!--materialDesign:MaterialDataGridComboBoxColumn x:Name="tipoColumn" Header="Tipo"
+                    ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}" SelectedValuePath="id_tipo_usuario" 
+                    DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id}"/>
+                <materialDesign:MaterialDataGridComboBoxColumn Header="Tipo" 
+                    SelectedValueBinding="{Binding tipo_id}" SelectedValuePath="id_tipo_usuario" 
+                    DisplayMemberPath="nombre" ItemsSourceBinding="{Binding Source={StaticResource tipos_usuariosViewSource}}" />
+                <DataGridTemplateColumn x:Name="fecha_altaColumn" Width="SizeToHeader" Header="fecha alta">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}" SelectedValuePath="id_tipo_usuario"
+                                      DisplayMemberPath="nombre" SelectedValue="{Binding tipo_id}"></ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTemplateColumn Header="eee" MinWidth="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=tipo_id, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}"
+                                      SelectedValuePath="id_tipo_usuario" DisplayMemberPath="nombre" SelectedValue="{Binding Path=tipo_id, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn-->
+                
+                <!--DataGridTemplateColumn x:Name="fecha_altaColumn" Width="SizeToHeader" Header="fecha alta">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding fecha_alta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="fecha_bajaColumn" Width="SizeToHeader" Header="fecha baja">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding fecha_baja, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="fecha_contrasenaColumn" Width="SizeToHeader" Header="fecha contrasena">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding fecha_contrasena, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn-->
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <!--Button x:Name="bBorrarUsuarios" Margin="10" Content="Borrar usuarios" Command="{Binding Path=BorrarUsuriosComando}" Click="bBorrarUsuarios_Click" /-->
+            <Button x:Name="bAnadirUsuario" Margin="10" Content="Añadir usuario" Click="bAnadirUsuario_Click" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" />
+            <Button x:Name="bBorrarUsuario" Margin="10" Content="Borrar usuario" 
+                    Command="{Binding BorrarUsuarioComando}" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="bConfirmarCambios" Margin="10" Content="Confirmar Cambios" Click="bConfirmarCambios_Click" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

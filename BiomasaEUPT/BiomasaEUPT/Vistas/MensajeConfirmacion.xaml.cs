@@ -1,5 +1,4 @@
-﻿using BiomasaEUPT.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT
+namespace BiomasaEUPT.Vistas
 {
     /// <summary>
-    /// Lógica de interacción para UserControl1.xaml
+    /// Lógica de interacción para MensajeConfirmacion.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class MensajeConfirmacion : UserControl
     {
-        public UserControl1()
+        public MensajeConfirmacion()
         {
             InitializeComponent();
-            DataContext = new UserControl1ViewModel();
+        }
+
+        public MensajeConfirmacion(string mensaje)
+        {
+            InitializeComponent();
+            this.mensaje.Text = mensaje;
         }
     }
 }

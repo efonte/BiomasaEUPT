@@ -12,6 +12,10 @@ namespace BiomasaEUPT.Domain
         readonly Action<object> Execute_;
         readonly Predicate<object> CanExecute_;
 
+        public RelayCommand(Action<object> Execute) : this(Execute, null)
+        {
+        }
+
         public RelayCommand(Action<object> Execute, Predicate<object> CanExecute)
         {
             if (Execute == null)

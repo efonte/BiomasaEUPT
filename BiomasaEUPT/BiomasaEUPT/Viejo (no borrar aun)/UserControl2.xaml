@@ -90,6 +90,14 @@
                     DisplayMemberPath="nombre"
                     SelectedValuePath="id_tipo_usuario"
                     SelectedValueBinding="{Binding tipos_usuarios}"/>
+                <DataGridComboBoxColumn
+                    Header="Role"
+                    SelectedValueBinding="{Binding tipos_usuarios}"
+                    ItemsSource="{Binding TiposUsuariosColeccion}"
+                    DisplayMemberPath="nombre"/>
+                <DataGridComboBoxColumn
+                    Header="A"
+                    ItemsSource="{Binding AColeccion}"/>
                 <!--DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

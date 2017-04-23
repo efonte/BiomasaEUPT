@@ -20,7 +20,7 @@ namespace BiomasaEUPT
     {
         BiomasaEUPTEntities context = new BiomasaEUPTEntities();
         private IRepositorioGenerico<usuarios> repositorio = null;
-        private IRepositorioGenerico<tipos_usuarios> repositorioTiposUsuarios = null;
+        // private IRepositorioGenerico<tipos_usuarios> repositorioTiposUsuarios = null;
         public UserControl2()
         {
             InitializeComponent();
@@ -32,30 +32,25 @@ namespace BiomasaEUPT
              dgUsuarios.DataSource = bi;
              dgUsuarios.Refresh();*/
             repositorio = new RepositorioGenerico<usuarios>();
-            UsuariosColeccion = new ObservableCollection<usuarios>(repositorio.SelectAll());
-            repositorioTiposUsuarios = new RepositorioGenerico<tipos_usuarios>();
-            TiposUsuariosColeccion = new ObservableCollection<tipos_usuarios>(repositorioTiposUsuarios.SelectAll());
-            DataContext = this;
-        }
-        private bool? _estanTodosUsuariosSeleccionados;
-        public bool? EstanTodosUsuariosSeleccionados
-        {
-            get { return _estanTodosUsuariosSeleccionados; }
-            set
+            //UsuariosColeccion = new ObservableCollection<usuarios>(repositorio.SelectAll());
+            //repositorioTiposUsuarios = new RepositorioGenerico<tipos_usuarios>();
+            //  TiposUsuariosColeccion = new ObservableCollection<tipos_usuarios>(repositorioTiposUsuarios.SelectAll());
+            //TiposUsuariosColeccion = new ObservableCollection<tipos_usuarios>();
+            //foreach (var tipoUsuario in context.tipos_usuarios)
+            //{
+            //    TiposUsuariosColeccion.Add(tipoUsuario);
+            //}
+            DataContext = new UserControl2ViewModel();
+            var context = new BiomasaEUPTEntities();
+            var a = new usuarios()
             {
-                if (_estanTodosUsuariosSeleccionados == value) return;
-
-                _estanTodosUsuariosSeleccionados = value;
-
-                if (_estanTodosUsuariosSeleccionados.HasValue)
-                {
-                    foreach (var model in UsuariosColeccion)
-                    {
-                        //  model.EstaSeleccionado = _estanTodosUsuariosSeleccionados.Value;
-                    }
-                }
-                //OnPropertyChanged();
-            }
+                nombre = "asd",
+                contrasena = "asd",
+                tipo_id = 1,
+                email = "asd@asd.asd"
+            };
+            context.usuarios.Add(a);
+            context.SaveChanges();
         }
 
         private void EmployeeDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -95,99 +90,55 @@ namespace BiomasaEUPT
             context.SubmitChanges();*/
         }
 
-        private void InsertHandler(object sender, RoutedEventArgs e)
-        {
-            usuarios nuevoUsuario = new usuarios()
-            {
-                nombre = "efwfwfwf",
-                email = "ffefefef@ffefe.com",
-                contrasena = "a",
-                tipo_id = 1
-            };
-            repositorio.Insert(nuevoUsuario);
-            repositorio.Save();
-            UpdateCollection();
-        }
+        /* private void InsertHandler(object sender, RoutedEventArgs e)
+         {
+             usuarios nuevoUsuario = new usuarios()
+             {
+                 nombre = "efwfwfwf",
+                 email = "ffefefef@ffefe.com",
+                 contrasena = "a",
+                 tipo_id = 1
+             };
+             repositorio.Insert(nuevoUsuario);
+             repositorio.Save();
+             UpdateCollection();
+         }
 
-        private void DeleteHandler(object sender, RoutedEventArgs e)
-        {
-            repositorio.Delete(UsuarioSeleccionado.id_usuario);
-            repositorio.Save();
-            UpdateCollection();
-        }
+         private void DeleteHandler(object sender, RoutedEventArgs e)
+         {
+             repositorio.Delete(UsuarioSeleccionado.id_usuario);
+             repositorio.Save();
+             UpdateCollection();
+         }
 
-        private void UpdateHandler(object sender, RoutedEventArgs e)
-        {
-            UsuarioSeleccionado.nombre = UsuarioSeleccionado.nombre + "_Updated";
-            UsuarioSeleccionado.email = UsuarioSeleccionado.email + "_Updated";
-            repositorio.Update(UsuarioSeleccionado);
-            repositorio.Save();
-            UpdateCollection();
-        }
+         private void UpdateHandler(object sender, RoutedEventArgs e)
+         {
+             UsuarioSeleccionado.nombre = UsuarioSeleccionado.nombre + "_Updated";
+             UsuarioSeleccionado.email = UsuarioSeleccionado.email + "_Updated";
+             repositorio.Update(UsuarioSeleccionado);
+             repositorio.Save();
+             UpdateCollection();
+         }
 
-        private void ReadHandler(object sender, RoutedEventArgs e)
-        {
-            string usuario = UsuarioSeleccionado.nombre + Environment.NewLine +
-                UsuarioSeleccionado.email + Environment.NewLine +
-                UsuarioSeleccionado.tipo_id + Environment.NewLine;
+         private void ReadHandler(object sender, RoutedEventArgs e)
+         {
+             string usuario = UsuarioSeleccionado.nombre + Environment.NewLine +
+                 UsuarioSeleccionado.email + Environment.NewLine +
+                 UsuarioSeleccionado.tipo_id + Environment.NewLine;
 
-            MessageBox.Show(usuario);
-        }
+             MessageBox.Show(usuario);
+         }
 
 
 
-        private void UpdateCollection()
-        {
-            UsuariosColeccion.Clear();
-            foreach (usuarios usuario in repositorio.SelectAll())
-            {
-                UsuariosColeccion.Add(usuario);
-            }
-        }
-        private ObservableCollection<usuarios> _usuariosColeccion;
-        public ObservableCollection<usuarios> UsuariosColeccion
-        {
-            get
-            {
-                return _usuariosColeccion;
-            }
-            set
-            {
-                _usuariosColeccion = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<tipos_usuarios> _tiposUsuariosColeccion;
-        public ObservableCollection<tipos_usuarios> TiposUsuariosColeccion
-        {
-            get
-            {
-                return _tiposUsuariosColeccion;
-            }
-            set
-            {
-                _tiposUsuariosColeccion = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        usuarios _usuarioSeleccionado = null;
-        public usuarios UsuarioSeleccionado
-        {
-            get { return _usuarioSeleccionado; }
-            set
-            {
-                _usuarioSeleccionado = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+         private void UpdateCollection()
+         {
+             UsuariosColeccion.Clear();
+             foreach (usuarios usuario in repositorio.SelectAll())
+             {
+                 UsuariosColeccion.Add(usuario);
+             }
+         }*/
 
         private void dgUsuarios_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -204,7 +155,7 @@ namespace BiomasaEUPT
                     nuevoUsuario.contrasena = usuario.contrasena = "a";
 
                     context.usuarios.Add(nuevoUsuario);
-                    //context.SaveChanges();
+                    context.SaveChanges();
 
                     Debug.WriteLine("---");
                 }
@@ -213,7 +164,7 @@ namespace BiomasaEUPT
                     usuarioExistente.nombre = usuario.nombre;
                     usuarioExistente.email = usuario.email;
                     usuarioExistente.tipo_id = usuario.tipo_id;
-                    //context.SaveChanges();
+                    context.SaveChanges();
                     Debug.WriteLine("+++");
                 }
 

@@ -6,7 +6,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:domain1="clr-namespace:BiomasaEUPT.Domain"
-             xmlns:local="clr-namespace:BiomasaEUPT"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
              <!--d:DataContext="{d:DesignInstance domain:TextFieldsViewModel, d:IsDesignTimeCreatable=False}">-->

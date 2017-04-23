@@ -94,7 +94,7 @@ namespace BiomasaEUPT
                 Close();
             }
 
-           
+
         }
 
         private void iniciarPrograma()
@@ -109,14 +109,14 @@ namespace BiomasaEUPT
                     lInfoProgreso.Text = "Buscando actualizaciones...";
                     pbProgreso.Value = 10;
                 });
-                Thread.Sleep(500);
+                // Thread.Sleep(500);
                 if (actualizador.ComprobarActualizacionPrograma())
                 {
                     Dispatcher.Invoke(() =>
                     {
                         lInfoProgreso.Text = "¡Actualización encontrada!";
                     });
-                    Thread.Sleep(500);
+                    // Thread.Sleep(500);
 
                     Dispatcher.Invoke(() =>
                     {
@@ -124,7 +124,7 @@ namespace BiomasaEUPT
                         pbProgreso.Value = 25;
                     });
                     actualizador.actualizarPrograma();
-                    Thread.Sleep(500);
+                    // Thread.Sleep(500);
                 }
 
                 // Estado 2 - Conexión BD
@@ -133,7 +133,7 @@ namespace BiomasaEUPT
                     lInfoProgreso.Text = "Conectándose a la BD";
                     pbProgreso.Value = 75;
                 });
-                Thread.Sleep(500);
+                // Thread.Sleep(500);
             }
         }
 
@@ -145,7 +145,7 @@ namespace BiomasaEUPT
                 pbProgreso.Value = 100;
             });
 
-            Thread.Sleep(500);
+            // Thread.Sleep(500);
         }
     }
 }

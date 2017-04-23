@@ -140,30 +140,6 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
             </Mappings>
             <Sources />
           </TableAdapter>
-          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vista_usuariosTableAdapter" GeneratorDataComponentClassName="vista_usuariosTableAdapter" Name="vista_usuarios" UserDataComponentName="vista_usuariosTableAdapter">
-            <MainSource>
-              <DbSource ConnectionRef="BiomasaEUPTConnectionString (Settings)" DbObjectName="BiomasaEUPT.dbo.vista_usuarios" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
-                <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT id_usuario, nombre, contrasena, email, tipo_id, tipo_nombre, fecha_alta, fecha_baja, fecha_contrasena FROM dbo.vista_usuarios</CommandText>
-                    <Parameters />
-                  </DbCommand>
-                </SelectCommand>
-              </DbSource>
-            </MainSource>
-            <Mappings>
-              <Mapping SourceColumn="id_usuario" DataSetColumn="id_usuario" />
-              <Mapping SourceColumn="nombre" DataSetColumn="nombre" />
-              <Mapping SourceColumn="contrasena" DataSetColumn="contrasena" />
-              <Mapping SourceColumn="email" DataSetColumn="email" />
-              <Mapping SourceColumn="tipo_id" DataSetColumn="tipo_id" />
-              <Mapping SourceColumn="tipo_nombre" DataSetColumn="tipo_nombre" />
-              <Mapping SourceColumn="fecha_alta" DataSetColumn="fecha_alta" />
-              <Mapping SourceColumn="fecha_baja" DataSetColumn="fecha_baja" />
-              <Mapping SourceColumn="fecha_contrasena" DataSetColumn="fecha_contrasena" />
-            </Mappings>
-            <Sources />
-          </TableAdapter>
         </Tables>
         <Sources />
       </DataSource>
@@ -207,7 +183,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
               <xs:element name="contrasena" msprop:Generator_ColumnVarNameInTable="columncontrasena" msprop:Generator_ColumnPropNameInRow="contrasena" msprop:Generator_ColumnPropNameInTable="contrasenaColumn" msprop:Generator_UserColumnName="contrasena">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
+                    <xs:maxLength value="255" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -219,45 +195,6 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                 </xs:simpleType>
               </xs:element>
               <xs:element name="tipo_id" msprop:Generator_ColumnVarNameInTable="columntipo_id" msprop:Generator_ColumnPropNameInRow="tipo_id" msprop:Generator_ColumnPropNameInTable="tipo_idColumn" msprop:Generator_UserColumnName="tipo_id" type="xs:int" />
-              <xs:element name="fecha_alta" msprop:Generator_ColumnVarNameInTable="columnfecha_alta" msprop:Generator_ColumnPropNameInRow="fecha_alta" msprop:Generator_ColumnPropNameInTable="fecha_altaColumn" msprop:Generator_UserColumnName="fecha_alta" type="xs:dateTime" />
-              <xs:element name="fecha_baja" msprop:Generator_ColumnVarNameInTable="columnfecha_baja" msprop:Generator_ColumnPropNameInRow="fecha_baja" msprop:Generator_ColumnPropNameInTable="fecha_bajaColumn" msprop:Generator_UserColumnName="fecha_baja" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="fecha_contrasena" msprop:Generator_ColumnVarNameInTable="columnfecha_contrasena" msprop:Generator_ColumnPropNameInRow="fecha_contrasena" msprop:Generator_ColumnPropNameInTable="fecha_contrasenaColumn" msprop:Generator_UserColumnName="fecha_contrasena" type="xs:dateTime" minOccurs="0" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="vista_usuarios" msprop:Generator_TableClassName="vista_usuariosDataTable" msprop:Generator_TableVarName="tablevista_usuarios" msprop:Generator_TablePropName="vista_usuarios" msprop:Generator_RowDeletingName="vista_usuariosRowDeleting" msprop:Generator_RowChangingName="vista_usuariosRowChanging" msprop:Generator_RowEvHandlerName="vista_usuariosRowChangeEventHandler" msprop:Generator_RowDeletedName="vista_usuariosRowDeleted" msprop:Generator_UserTableName="vista_usuarios" msprop:Generator_RowChangedName="vista_usuariosRowChanged" msprop:Generator_RowEvArgName="vista_usuariosRowChangeEvent" msprop:Generator_RowClassName="vista_usuariosRow">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="id_usuario" msprop:Generator_ColumnVarNameInTable="columnid_usuario" msprop:Generator_ColumnPropNameInRow="id_usuario" msprop:Generator_ColumnPropNameInTable="id_usuarioColumn" msprop:Generator_UserColumnName="id_usuario" type="xs:int" />
-              <xs:element name="nombre" msprop:Generator_ColumnVarNameInTable="columnnombre" msprop:Generator_ColumnPropNameInRow="nombre" msprop:Generator_ColumnPropNameInTable="nombreColumn" msprop:Generator_UserColumnName="nombre">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="contrasena" msprop:Generator_ColumnVarNameInTable="columncontrasena" msprop:Generator_ColumnPropNameInRow="contrasena" msprop:Generator_ColumnPropNameInTable="contrasenaColumn" msprop:Generator_UserColumnName="contrasena">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="email" msprop:Generator_ColumnVarNameInTable="columnemail" msprop:Generator_ColumnPropNameInRow="email" msprop:Generator_ColumnPropNameInTable="emailColumn" msprop:Generator_UserColumnName="email">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="254" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="tipo_id" msprop:Generator_ColumnVarNameInTable="columntipo_id" msprop:Generator_ColumnPropNameInRow="tipo_id" msprop:Generator_ColumnPropNameInTable="tipo_idColumn" msprop:Generator_UserColumnName="tipo_id" type="xs:int" />
-              <xs:element name="tipo_nombre" msprop:Generator_ColumnVarNameInTable="columntipo_nombre" msprop:Generator_ColumnPropNameInRow="tipo_nombre" msprop:Generator_ColumnPropNameInTable="tipo_nombreColumn" msprop:Generator_UserColumnName="tipo_nombre">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:element name="fecha_alta" msprop:Generator_ColumnVarNameInTable="columnfecha_alta" msprop:Generator_ColumnPropNameInRow="fecha_alta" msprop:Generator_ColumnPropNameInTable="fecha_altaColumn" msprop:Generator_UserColumnName="fecha_alta" type="xs:dateTime" />
               <xs:element name="fecha_baja" msprop:Generator_ColumnVarNameInTable="columnfecha_baja" msprop:Generator_ColumnPropNameInRow="fecha_baja" msprop:Generator_ColumnPropNameInTable="fecha_bajaColumn" msprop:Generator_UserColumnName="fecha_baja" type="xs:dateTime" minOccurs="0" />
               <xs:element name="fecha_contrasena" msprop:Generator_ColumnVarNameInTable="columnfecha_contrasena" msprop:Generator_ColumnPropNameInRow="fecha_contrasena" msprop:Generator_ColumnPropNameInTable="fecha_contrasenaColumn" msprop:Generator_UserColumnName="fecha_contrasena" type="xs:dateTime" minOccurs="0" />
@@ -272,10 +209,6 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
     </xs:unique>
     <xs:unique name="usuarios_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:usuarios" />
-      <xs:field xpath="mstns:id_usuario" />
-    </xs:unique>
-    <xs:unique name="vista_usuarios_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:vista_usuarios" />
       <xs:field xpath="mstns:id_usuario" />
     </xs:unique>
   </xs:element>
