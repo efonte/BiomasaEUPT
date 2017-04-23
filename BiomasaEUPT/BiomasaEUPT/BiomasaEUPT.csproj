@@ -84,12 +84,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BiomasaEUPTDataSet.cs">
+      <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="BiomasaEUPTDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Clases\Comando.cs" />
+    <Compile Include="Clases\CursorEspera.cs" />
+    <Compile Include="Clases\RelayComando.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\IRepositorioGenerico.cs" />
     <Compile Include="Domain\LoginViewModel.cs" />

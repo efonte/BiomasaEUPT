@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,14 +29,14 @@ namespace BiomasaEUPT.Vistas
         public GestionUsuarios()
         {
             InitializeComponent();
+
+            DataContext = this;
+            //DataContext="{Binding RelativeSource={RelativeSource Self}}"
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("aaaaaaaaaa");
             biomasaEUPTDataSet = ((BiomasaEUPTDataSet)(FindResource("biomasaEUPTDataSet")));
-
-
 
             // No cargue datos en tiempo de diseño.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -43,17 +44,22 @@ namespace BiomasaEUPT.Vistas
                 //Cargue los datos aquí y asigne el resultado a CollectionViewSource.
                 // 	System.Windows.Data.CollectionViewSource myCollectionViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["Resource Key for CollectionViewSource"];
                 // 	myCollectionViewSource.Source = your data
-                // Carga datos de la tabla usuarios.
-                biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
-                biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-                CollectionViewSource usuariosViewSource = ((CollectionViewSource)(FindResource("usuariosViewSource")));
-                usuariosViewSource.View.MoveCurrentToFirst();
+                using (new CursorEspera())
+                {
+                    //dataGrid1.ItemsSource = source;
+                    // Carga datos de la tabla usuarios.
+                    biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
+                    biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
+                    CollectionViewSource usuariosViewSource = ((CollectionViewSource)(FindResource("usuariosViewSource")));
+                    usuariosViewSource.View.MoveCurrentToFirst();
 
-                // Carga datos de la tabla tipos_usuarios.
-                biomasaEUPTDataSettipos_usuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter();
-                biomasaEUPTDataSettipos_usuariosTableAdapter.Fill(biomasaEUPTDataSet.tipos_usuarios);
-                CollectionViewSource tipos_usuariosViewSource = ((CollectionViewSource)(FindResource("tipos_usuariosViewSource")));
-                tipos_usuariosViewSource.View.MoveCurrentToFirst();
+                    // Carga datos de la tabla tipos_usuarios.
+                    biomasaEUPTDataSettipos_usuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter();
+                    biomasaEUPTDataSettipos_usuariosTableAdapter.Fill(biomasaEUPTDataSet.tipos_usuarios);
+                    CollectionViewSource tipos_usuariosViewSource = ((CollectionViewSource)(FindResource("tipos_usuariosViewSource")));
+                    tipos_usuariosViewSource.View.MoveCurrentToFirst();
+                }
+               
             }
 
         }
@@ -63,7 +69,35 @@ namespace BiomasaEUPT.Vistas
 
         }
 
-        private void bConfirmarCambios_Click(object sender, RoutedEventArgs e)
+        private void usuariosDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+
+        }
+
+#region ConfirmarCambios
+        private ICommand _confirmarCambiosComando;
+
+        public ICommand ConfirmarCambiosComando
+        {
+            get
+            {
+                if (_confirmarCambiosComando == null)
+                {
+                    _confirmarCambiosComando = new RelayComando(
+                        param => ConfirmarCambios(),
+                        param => CanConfirmarCambios()
+                    );
+                }
+                return _confirmarCambiosComando;
+            }
+        }
+
+        private bool CanConfirmarCambios()
+        {
+            return biomasaEUPTDataSet!=null && biomasaEUPTDataSet.usuarios.GetChanges() != null;
+        }
+
+        private void ConfirmarCambios()
         {
             if (biomasaEUPTDataSet.usuarios.GetChanges() != null)
             {
@@ -75,5 +109,8 @@ namespace BiomasaEUPT.Vistas
             //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
             biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
         }
+#endregion ConfirmarCambios
+
+
     }
 }

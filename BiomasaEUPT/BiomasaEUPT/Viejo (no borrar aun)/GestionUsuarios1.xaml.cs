@@ -30,7 +30,7 @@ namespace BiomasaEUPT.Vistas
         public GestionUsuarios1()
         {
             InitializeComponent();
-            DataContext = new GestionUsuariosViewModel();
+            DataContext = new GestionUsuarios1ViewModel();
             RellenarDataGrid1();
         }
 

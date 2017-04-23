@@ -13,7 +13,7 @@
         <CollectionViewSource x:Key="usuariosViewSource" Source="{Binding usuarios, Source={StaticResource biomasaEUPTDataSet}}"/>
         <CollectionViewSource x:Key="tipos_usuariosViewSource" Source="{Binding tipos_usuarios, Source={StaticResource biomasaEUPTDataSet}}"/>
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource usuariosViewSource}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -23,10 +23,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" x:Name="usuariosDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="0" x:Name="usuariosDataGrid" DataContext="{StaticResource usuariosViewSource}" RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" RowEditEnding="usuariosDataGrid_RowEditEnding">
             <DataGrid.Columns>
                 <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" Binding="{Binding nombre}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" Binding="{Binding nombre, ValidatesOnExceptions=True}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 <materialDesign:MaterialDataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="Contraseña" Binding="{Binding contrasena}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="Email" Binding="{Binding email}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
@@ -88,7 +88,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <!--Button x:Name="bBorrarUsuarios" Margin="10" Content="Borrar usuarios" Command="{Binding Path=BorrarUsuriosComando}" Click="bBorrarUsuarios_Click" /-->
+            <!--Button x:Name="bBorrarUsuarios" Margin="10" Content="Borrar usuarios" Command="{Binding Path=BorrarUsuariosComando}" Click="bBorrarUsuarios_Click" /-->
             <Button x:Name="bAnadirUsuario" Margin="10" Content="Añadir usuario" Click="bAnadirUsuario_Click" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" />
             <Button x:Name="bBorrarUsuario" Margin="10" Content="Borrar usuario" 
                     Command="{Binding BorrarUsuarioComando}" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}">
@@ -102,7 +102,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="bConfirmarCambios" Margin="10" Content="Confirmar Cambios" Click="bConfirmarCambios_Click" CommandParameter="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" />
+            <Button x:Name="bConfirmarCambios" Margin="10" Content="Confirmar Cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}" />
         </StackPanel>
 
     </Grid>

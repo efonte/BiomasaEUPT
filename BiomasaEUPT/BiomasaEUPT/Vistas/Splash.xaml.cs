@@ -76,8 +76,9 @@ namespace BiomasaEUPT
                 {
                     login.Close();
                     MainWindow main = new MainWindow();
-                    main.Show();
                     Close();
+                    main.Show();
+                   
                 }
                 else
                 {

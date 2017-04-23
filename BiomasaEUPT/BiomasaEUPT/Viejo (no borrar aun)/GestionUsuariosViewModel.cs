@@ -11,10 +11,10 @@ using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas
 {
-    public class GestionUsuariosViewModel : INotifyPropertyChanged
+    public class GestionUsuarios1ViewModel : INotifyPropertyChanged
     {
 
-        public GestionUsuariosViewModel()
+        public GestionUsuarios1ViewModel()
         {
             BorrarUsuarioComando = new Comando(BorrarUsuario);
             AceptarComando = new Comando(AceptarBorrarUsuario);
