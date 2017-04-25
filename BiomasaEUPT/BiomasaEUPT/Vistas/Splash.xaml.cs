@@ -72,7 +72,7 @@ namespace BiomasaEUPT
             Login login = new Login();
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.usuario) && !string.IsNullOrWhiteSpace(Properties.Settings.Default.contrasena))
             {
-                if (login.iniciarSesion(Properties.Settings.Default.usuario, Properties.Settings.Default.contrasena))
+                if (login.IniciarSesion(Properties.Settings.Default.usuario, Properties.Settings.Default.contrasena))
                 {
                     login.Close();
                     MainWindow main = new MainWindow();

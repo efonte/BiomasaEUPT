@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BiomasaEUPT"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+        xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
         mc:Ignorable="d"
         Title="Iniciar Sesión" Height="300" Width="280"
         WindowStartupLocation="CenterScreen"
@@ -16,8 +17,9 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="NoResize"
-        d:DataContext="{d:DesignInstance domain:LoginViewModel, d:IsDesignTimeCreatable=False}">
+        FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="NoResize">
+    <!-- d:DataContext="{d:DesignInstance domain:LoginViewModel, d:IsDesignTimeCreatable=False}"> -->
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -70,16 +72,37 @@
             <TextBox.Text>
                 <Binding Path="Usuario" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <domain:NotEmptyValidationRule NombreCampo="usuario" ValidatesOnTargetUpdated="True" />
+                        <validadores:RequeridoValidationRule NombreCampo="usuario" ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
         <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Foreground="{Binding BorderBrush, ElementName=pbContrasena}" HorizontalAlignment="Right" />
-        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena" materialDesign:HintAssist.Hint="Contraseña" domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChanged="pbContrasena_PasswordChanged"/>
+        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena"
+                     materialDesign:HintAssist.Hint="Contraseña"
+                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     PasswordChanged="pbContrasena_PasswordChanged">
+            
+        </PasswordBox>
         <CheckBox x:Name="cbRecordarme" Grid.Row="3" Grid.Column="1" Content="Recordar contraseña" HorizontalAlignment="Right" Margin="0 20 0 20" />
 
-        <Button x:Name="bIniciarSesion" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Iniciar Sesión" Command="{Binding Path=IniciarSesionComando}" />
+        <Button x:Name="bIniciarSesion" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Iniciar Sesión" Click="bIniciarSesion_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="IsEnabled" Value="false" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding  ElementName=tbUsuario, Path=(Validation.HasError)}" 
+                                       Value="false" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" 
+                            Value="true" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Window>

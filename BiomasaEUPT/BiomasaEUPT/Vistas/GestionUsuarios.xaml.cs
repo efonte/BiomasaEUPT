@@ -109,7 +109,7 @@ namespace BiomasaEUPT.Vistas
             //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
             biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
         }
-#endregion ConfirmarCambios
+#endregion
 
 
     }

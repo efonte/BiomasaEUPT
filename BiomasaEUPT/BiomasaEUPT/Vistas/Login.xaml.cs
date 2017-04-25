@@ -1,10 +1,12 @@
-﻿using BiomasaEUPT.Domain;
+﻿using BespokeFusion;
+using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,45 +28,7 @@ namespace BiomasaEUPT
         public Login()
         {
             InitializeComponent();
-
-            Assembly assembly = typeof(LoginViewModel).Assembly;
-            LoginViewModel ViewModel = (LoginViewModel)assembly.CreateInstance(typeof(LoginViewModel).FullName);
-            if (ViewModel == null)
-            {
-                throw new Exception("No se puede crear ViewModel " + typeof(LoginViewModel).FullName);
-            }
-
-
-            ViewModel.IniciarSesionCmd = new RelayCommand((object z) =>
-            {
-
-                String hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(ViewModel.Contrasena));
-                if (iniciarSesion(ViewModel.Usuario, hashContrasena))
-                {
-                    Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
-                    Properties.Settings.Default.usuario = ViewModel.Usuario;
-                    Properties.Settings.Default.Save();
-                    cargarVistaMain();
-                }
-                else
-                {
-                    MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
-            }, ViewModel.PuedeIniciarSesion);
-
-
-            DataContext = ViewModel;
-
-            //BiomasaEUPTEntities ctx = new BiomasaEUPTEntities();
-            //using (BiomasaEUPTEntities context = new BiomasaEUPTEntities())
-            // {
-            // var objectContext = (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext;
-
-            //use objectContext here..
-            //usuarios usuariosEntity = context.usuarios.FirstOrDefault<usuarios>;
-            //var entityType = ObjectContext.GetObjectType(usuariosEntity.GetType());
-
-            //}          
+            DataContext = this;
 
         }
 
@@ -85,29 +49,74 @@ namespace BiomasaEUPT
         }
 
 
-        private void cargarVistaMain()
+        private void CargarVistaMain()
         {
             MainWindow mainWindows = new MainWindow();
             Close();
             mainWindows.Show();
         }
 
-        public bool iniciarSesion(String usuario, String hashContrasena)
+        public bool IniciarSesion(String usuario, String hashContrasena)
         {
-            using (var ctx = new BiomasaEUPTEntities())
+            BiomasaEUPTDataSet biomasaEUPTDataSet = new BiomasaEUPTDataSet();
+            BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
+            biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
+            biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
+            return biomasaEUPTDataSet.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).FirstOrDefault() != null;
+        }
+
+        private string _usuario;
+        public string Usuario
+        {
+            get { return _usuario; }
+            set { _usuario = value; }
+        }
+
+        private SecureString _contrasena;
+        public SecureString Contrasena
+        {
+            get { return _contrasena; }
+            set
             {
-                try
-                {
-                    ctx.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).First<usuarios>();
-                    return true;
-
-                }
-                catch (InvalidOperationException)
-                {
-                    return false;
-                }
-
+                _contrasena = value;
             }
+        }
+
+        private void bIniciarSesion_Click(object sender, RoutedEventArgs e)
+        {
+            String hashContrasena = "";
+            if (Contrasena != null)
+            {
+                hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(Contrasena));
+            }
+
+            if (IniciarSesion(Usuario, hashContrasena))
+            {
+                Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
+                Properties.Settings.Default.usuario = Usuario;
+                Properties.Settings.Default.Save();
+                CargarVistaMain();
+            }
+            else
+            {
+                MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                //MaterialMessageBox.ShowError("El usuario y/o la contraseña son incorrectos.");
+                //var msg = new CustomMaterialMessageBox
+                //{
+                //    TxtMessage = { Text = "El usuario y/o la contraseña son incorrectos.", Foreground = Brushes.White },
+                //    TxtTitle = { Text = "Login incorrecto", Foreground = Brushes.White },
+                //    BtnOk = { Content = "Aceptar" },
+                //    BtnCancel = { Content = "Noooo" },
+                //    MainContentControl = { Background = Brushes.MediumVioletRed },
+                //    TitleBackgroundPanel = { Background = Brushes.BlueViolet },
+                //
+                //    BorderBrush = Brushes.BlueViolet
+                //};
+
+                //msg.Show();
+                //var results = msg.Result;
+            }
+
         }
     }
 }

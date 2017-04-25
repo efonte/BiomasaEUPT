@@ -13,6 +13,21 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,14 +52,14 @@
     <ApplicationIcon>icono.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BespokeFusion, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialMessageBox.1.0.0.11\lib\BespokeFusion.dll</HintPath>
+    </Reference>
     <Reference Include="Dragablz, Version=0.0.3.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.186\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -66,6 +81,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -97,17 +115,14 @@
     <Compile Include="Clases\RelayComando.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\IRepositorioGenerico.cs" />
-    <Compile Include="Domain\LoginViewModel.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
-    <Compile Include="Domain\RepositorioGenerico.cs" />
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
-    <Compile Include="Domain\UserControl2ViewModel.cs" />
-    <Compile Include="Domain\UserControl3ViewModel.cs" />
+    <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
@@ -118,22 +133,6 @@
     <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modelo.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Domain\PruebaViewSource.cs" />
     <Compile Include="Viejo %28no borrar aun%29\ConexionBD.cs" />
     <Compile Include="Viejo %28no borrar aun%29\ConexionBD1.cs">
       <SubType>Form</SubType>
@@ -146,20 +145,8 @@
     <Compile Include="Vistas\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
-    <Compile Include="tipos_usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\UserControl2.xaml.cs">
-      <DependentUpon>UserControl2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Viejo %28no borrar aun%29\UserControl3.xaml.cs">
       <DependentUpon>UserControl3.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Viejo %28no borrar aun%29\GestionUsuarios1.xaml.cs">
       <DependentUpon>GestionUsuarios1.xaml</DependentUpon>
@@ -169,9 +156,6 @@
     </Compile>
     <Compile Include="Vistas\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="vista_usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Page Include="Vistas\AcercaDe.xaml">
       <SubType>Designer</SubType>
@@ -213,14 +197,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Viejo %28no borrar aun%29\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Viejo %28no borrar aun%29\UserControl2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Viejo %28no borrar aun%29\UserControl3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,10 +232,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Modelo.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Modelo.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="BiomasaEUPTDataSet.xsc">
       <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
     </None>
@@ -270,9 +242,6 @@
     </None>
     <None Include="BiomasaEUPTDataSet.xss">
       <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Modelo.edmx.diagram">
-      <DependentUpon>Modelo.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -291,21 +260,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icono.ico" />
-    <Content Include="Modelo.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-      <LastGenOutput>Modelo.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Modelo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-      <LastGenOutput>Modelo.cs</LastGenOutput>
-    </Content>
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Modelos\Validadores\" />
+    <Folder Include="asd\" />
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

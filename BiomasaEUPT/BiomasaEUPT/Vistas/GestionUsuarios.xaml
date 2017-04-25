@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT" x:Class="BiomasaEUPT.Vistas.GestionUsuarios"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -24,9 +25,31 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0" x:Name="usuariosDataGrid" DataContext="{StaticResource usuariosViewSource}" RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" RowEditEnding="usuariosDataGrid_RowEditEnding">
+            <!--DataGrid.Resources>
+                <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+                    <Setter Property="Padding" Value="-2"/>
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="ToolTip" 
+                                    Value="{Binding RelativeSource={RelativeSource Self},
+                                    Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </-->
+
             <DataGrid.Columns>
                 <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" Binding="{Binding nombre, ValidatesOnExceptions=True}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                    <materialDesign:MaterialDataGridTextColumn.Binding>
+                        <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">                           
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </materialDesign:MaterialDataGridTextColumn.Binding>
+                </materialDesign:MaterialDataGridTextColumn>
                 <materialDesign:MaterialDataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="Contraseña" Binding="{Binding contrasena}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="Email" Binding="{Binding email}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
