@@ -1,6 +1,7 @@
-﻿using BespokeFusion;
-using BiomasaEUPT.Clases;
+﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Domain;
+using BiomasaEUPT.Vistas;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,14 +30,9 @@ namespace BiomasaEUPT
         {
             InitializeComponent();
             DataContext = this;
-
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
+    
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -82,7 +78,7 @@ namespace BiomasaEUPT
             }
         }
 
-        private void bIniciarSesion_Click(object sender, RoutedEventArgs e)
+        private async void bIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
             String hashContrasena = "";
             if (Contrasena != null)
@@ -99,22 +95,14 @@ namespace BiomasaEUPT
             }
             else
             {
-                MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                //MaterialMessageBox.ShowError("El usuario y/o la contraseña son incorrectos.");
-                //var msg = new CustomMaterialMessageBox
-                //{
-                //    TxtMessage = { Text = "El usuario y/o la contraseña son incorrectos.", Foreground = Brushes.White },
-                //    TxtTitle = { Text = "Login incorrecto", Foreground = Brushes.White },
-                //    BtnOk = { Content = "Aceptar" },
-                //    BtnCancel = { Content = "Noooo" },
-                //    MainContentControl = { Background = Brushes.MediumVioletRed },
-                //    TitleBackgroundPanel = { Background = Brushes.BlueViolet },
-                //
-                //    BorderBrush = Brushes.BlueViolet
-                //};
+                //MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
-                //msg.Show();
-                //var results = msg.Result;
+                var mensaje = new MensajeInformacion("El usuario y/o la contraseña son incorrectos.");
+                mensaje.MaxHeight = Height;
+                mensaje.MaxWidth = Width;
+
+                var resultado = await DialogHost.Show(mensaje, "RootDialog");
+                // Console.WriteLine("*******" + mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
             }
 
         }

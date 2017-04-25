@@ -52,9 +52,6 @@
     <ApplicationIcon>icono.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BespokeFusion, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialMessageBox.1.0.0.11\lib\BespokeFusion.dll</HintPath>
-    </Reference>
     <Reference Include="Dragablz, Version=0.0.3.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.186\lib\net45\Dragablz.dll</HintPath>
     </Reference>
@@ -114,7 +111,6 @@
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\RelayComando.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
-    <Compile Include="Domain\IRepositorioGenerico.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
@@ -141,6 +137,9 @@
     <Compile Include="Viejo %28no borrar aun%29\ConexionBD3.cs" />
     <Compile Include="Vistas\MensajeConfirmacion.xaml.cs">
       <DependentUpon>MensajeConfirmacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\MensajeInformacion.xaml.cs">
+      <DependentUpon>MensajeInformacion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
@@ -190,6 +189,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Vistas\MensajeConfirmacion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\MensajeInformacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

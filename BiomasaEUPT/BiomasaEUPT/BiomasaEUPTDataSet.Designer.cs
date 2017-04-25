@@ -852,7 +852,6 @@ namespace BiomasaEUPT {
                 this.columnemail.AllowDBNull = false;
                 this.columnemail.MaxLength = 254;
                 this.columntipo_id.AllowDBNull = false;
-                this.columnfecha_alta.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1111,7 +1110,12 @@ namespace BiomasaEUPT {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public System.DateTime fecha_alta {
                 get {
-                    return ((global::System.DateTime)(this[this.tableusuarios.fecha_altaColumn]));
+                    try {
+                        return ((global::System.DateTime)(this[this.tableusuarios.fecha_altaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'fecha_alta\' de la tabla \'usuarios\' es DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableusuarios.fecha_altaColumn] = value;
@@ -1159,6 +1163,18 @@ namespace BiomasaEUPT {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_usuarios_tipo_id"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfecha_altaNull() {
+                return this.IsNull(this.tableusuarios.fecha_altaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfecha_altaNull() {
+                this[this.tableusuarios.fecha_altaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1738,13 +1754,14 @@ SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE (id_tipo_u
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[usuarios] WHERE (([id_usuario] = @Original_id_usuario) AND ([nombre] = @Original_nombre) AND ([contrasena] = @Original_contrasena) AND ([email] = @Original_email) AND ([tipo_id] = @Original_tipo_id) AND ([fecha_alta] = @Original_fecha_alta) AND ((@IsNull_fecha_baja = 1 AND [fecha_baja] IS NULL) OR ([fecha_baja] = @Original_fecha_baja)) AND ((@IsNull_fecha_contrasena = 1 AND [fecha_contrasena] IS NULL) OR ([fecha_contrasena] = @Original_fecha_contrasena)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[usuarios] WHERE (([id_usuario] = @Original_id_usuario) AND ([nombre] = @Original_nombre) AND ([contrasena] = @Original_contrasena) AND ([email] = @Original_email) AND ([tipo_id] = @Original_tipo_id) AND ((@IsNull_fecha_alta = 1 AND [fecha_alta] IS NULL) OR ([fecha_alta] = @Original_fecha_alta)) AND ((@IsNull_fecha_baja = 1 AND [fecha_baja] IS NULL) OR ([fecha_baja] = @Original_fecha_baja)) AND ((@IsNull_fecha_contrasena = 1 AND [fecha_contrasena] IS NULL) OR ([fecha_contrasena] = @Original_fecha_contrasena)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id_usuario", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id_usuario", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_nombre", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nombre", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_contrasena", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "contrasena", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_email", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "email", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_tipo_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tipo_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha_alta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_alta", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha_alta", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_alta", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha_baja", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_baja", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha_baja", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_baja", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -1764,7 +1781,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fecha_contrasena", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_contrasena", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[usuarios] SET [nombre] = @nombre, [contrasena] = @contrasena, [email] = @email, [tipo_id] = @tipo_id, [fecha_alta] = @fecha_alta, [fecha_baja] = @fecha_baja, [fecha_contrasena] = @fecha_contrasena WHERE (([id_usuario] = @Original_id_usuario) AND ([nombre] = @Original_nombre) AND ([contrasena] = @Original_contrasena) AND ([email] = @Original_email) AND ([tipo_id] = @Original_tipo_id) AND ([fecha_alta] = @Original_fecha_alta) AND ((@IsNull_fecha_baja = 1 AND [fecha_baja] IS NULL) OR ([fecha_baja] = @Original_fecha_baja)) AND ((@IsNull_fecha_contrasena = 1 AND [fecha_contrasena] IS NULL) OR ([fecha_contrasena] = @Original_fecha_contrasena)));
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[usuarios] SET [nombre] = @nombre, [contrasena] = @contrasena, [email] = @email, [tipo_id] = @tipo_id, [fecha_alta] = @fecha_alta, [fecha_baja] = @fecha_baja, [fecha_contrasena] = @fecha_contrasena WHERE (([id_usuario] = @Original_id_usuario) AND ([nombre] = @Original_nombre) AND ([contrasena] = @Original_contrasena) AND ([email] = @Original_email) AND ([tipo_id] = @Original_tipo_id) AND ((@IsNull_fecha_alta = 1 AND [fecha_alta] IS NULL) OR ([fecha_alta] = @Original_fecha_alta)) AND ((@IsNull_fecha_baja = 1 AND [fecha_baja] IS NULL) OR ([fecha_baja] = @Original_fecha_baja)) AND ((@IsNull_fecha_contrasena = 1 AND [fecha_contrasena] IS NULL) OR ([fecha_contrasena] = @Original_fecha_contrasena)));
 SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, fecha_contrasena FROM usuarios WHERE (id_usuario = @id_usuario)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nombre", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nombre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -1779,6 +1796,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_contrasena", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "contrasena", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_email", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "email", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_tipo_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tipo_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha_alta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_alta", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha_alta", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_alta", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha_baja", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_baja", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha_baja", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_baja", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -1862,7 +1880,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_id_usuario, string Original_nombre, string Original_contrasena, string Original_email, int Original_tipo_id, System.DateTime Original_fecha_alta, global::System.Nullable<global::System.DateTime> Original_fecha_baja, global::System.Nullable<global::System.DateTime> Original_fecha_contrasena) {
+        public virtual int Delete(int Original_id_usuario, string Original_nombre, string Original_contrasena, string Original_email, int Original_tipo_id, global::System.Nullable<global::System.DateTime> Original_fecha_alta, global::System.Nullable<global::System.DateTime> Original_fecha_baja, global::System.Nullable<global::System.DateTime> Original_fecha_contrasena) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_id_usuario));
             if ((Original_nombre == null)) {
                 throw new global::System.ArgumentNullException("Original_nombre");
@@ -1883,22 +1901,29 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_email));
             }
             this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_tipo_id));
-            this.Adapter.DeleteCommand.Parameters[5].Value = ((System.DateTime)(Original_fecha_alta));
-            if ((Original_fecha_baja.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((System.DateTime)(Original_fecha_baja.Value));
+            if ((Original_fecha_alta.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((System.DateTime)(Original_fecha_alta.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((Original_fecha_baja.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((System.DateTime)(Original_fecha_baja.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             if ((Original_fecha_contrasena.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((System.DateTime)(Original_fecha_contrasena.Value));
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((System.DateTime)(Original_fecha_contrasena.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1920,7 +1945,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string nombre, string contrasena, string email, int tipo_id, System.DateTime fecha_alta, global::System.Nullable<global::System.DateTime> fecha_baja, global::System.Nullable<global::System.DateTime> fecha_contrasena) {
+        public virtual int Insert(string nombre, string contrasena, string email, int tipo_id, global::System.Nullable<global::System.DateTime> fecha_alta, global::System.Nullable<global::System.DateTime> fecha_baja, global::System.Nullable<global::System.DateTime> fecha_contrasena) {
             if ((nombre == null)) {
                 throw new global::System.ArgumentNullException("nombre");
             }
@@ -1940,7 +1965,12 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(email));
             }
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(tipo_id));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((System.DateTime)(fecha_alta));
+            if ((fecha_alta.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((System.DateTime)(fecha_alta.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
             if ((fecha_baja.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[5].Value = ((System.DateTime)(fecha_baja.Value));
             }
@@ -1978,7 +2008,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                     string contrasena, 
                     string email, 
                     int tipo_id, 
-                    System.DateTime fecha_alta, 
+                    global::System.Nullable<global::System.DateTime> fecha_alta, 
                     global::System.Nullable<global::System.DateTime> fecha_baja, 
                     global::System.Nullable<global::System.DateTime> fecha_contrasena, 
                     int Original_id_usuario, 
@@ -1986,7 +2016,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                     string Original_contrasena, 
                     string Original_email, 
                     int Original_tipo_id, 
-                    System.DateTime Original_fecha_alta, 
+                    global::System.Nullable<global::System.DateTime> Original_fecha_alta, 
                     global::System.Nullable<global::System.DateTime> Original_fecha_baja, 
                     global::System.Nullable<global::System.DateTime> Original_fecha_contrasena, 
                     int id_usuario) {
@@ -2009,7 +2039,12 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(email));
             }
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(tipo_id));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(fecha_alta));
+            if ((fecha_alta.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(fecha_alta.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
             if ((fecha_baja.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(fecha_baja.Value));
             }
@@ -2042,24 +2077,31 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_email));
             }
             this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_tipo_id));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(Original_fecha_alta));
-            if ((Original_fecha_baja.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((System.DateTime)(Original_fecha_baja.Value));
+            if ((Original_fecha_alta.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((System.DateTime)(Original_fecha_alta.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            if ((Original_fecha_baja.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((System.DateTime)(Original_fecha_baja.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             if ((Original_fecha_contrasena.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((System.DateTime)(Original_fecha_contrasena.Value));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((System.DateTime)(Original_fecha_contrasena.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(id_usuario));
+            this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(id_usuario));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2080,7 +2122,7 @@ SELECT id_usuario, nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, f
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string nombre, string contrasena, string email, int tipo_id, System.DateTime fecha_alta, global::System.Nullable<global::System.DateTime> fecha_baja, global::System.Nullable<global::System.DateTime> fecha_contrasena, int Original_id_usuario, string Original_nombre, string Original_contrasena, string Original_email, int Original_tipo_id, System.DateTime Original_fecha_alta, global::System.Nullable<global::System.DateTime> Original_fecha_baja, global::System.Nullable<global::System.DateTime> Original_fecha_contrasena) {
+        public virtual int Update(string nombre, string contrasena, string email, int tipo_id, global::System.Nullable<global::System.DateTime> fecha_alta, global::System.Nullable<global::System.DateTime> fecha_baja, global::System.Nullable<global::System.DateTime> fecha_contrasena, int Original_id_usuario, string Original_nombre, string Original_contrasena, string Original_email, int Original_tipo_id, global::System.Nullable<global::System.DateTime> Original_fecha_alta, global::System.Nullable<global::System.DateTime> Original_fecha_baja, global::System.Nullable<global::System.DateTime> Original_fecha_contrasena) {
             return this.Update(nombre, contrasena, email, tipo_id, fecha_alta, fecha_baja, fecha_contrasena, Original_id_usuario, Original_nombre, Original_contrasena, Original_email, Original_tipo_id, Original_fecha_alta, Original_fecha_baja, Original_fecha_contrasena, Original_id_usuario);
         }
     }

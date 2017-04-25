@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,8 +59,20 @@ namespace BiomasaEUPT.Vistas
                     biomasaEUPTDataSettipos_usuariosTableAdapter.Fill(biomasaEUPTDataSet.tipos_usuarios);
                     CollectionViewSource tipos_usuariosViewSource = ((CollectionViewSource)(FindResource("tipos_usuariosViewSource")));
                     tipos_usuariosViewSource.View.MoveCurrentToFirst();
+
+
+                    BiomasaEUPTDataSet.usuariosRow newRegionRow;
+                    newRegionRow = biomasaEUPTDataSet.usuarios.NewusuariosRow();
+                    newRegionRow.tipo_id = 1;
+                    newRegionRow.nombre = "asd";
+                    newRegionRow.email = "asd@asd.asd";
+                    newRegionRow.contrasena = "asd";
+                    //biomasaEUPTDataSet.usuarios.Rows.Add(newRegionRow);
+                    //biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios);
+                    // biomasaEUPTDataSetusuariosTableAdapter.Insert();
+
                 }
-               
+
             }
 
         }
@@ -74,7 +87,7 @@ namespace BiomasaEUPT.Vistas
 
         }
 
-#region ConfirmarCambios
+        #region ConfirmarCambios
         private ICommand _confirmarCambiosComando;
 
         public ICommand ConfirmarCambiosComando
@@ -93,8 +106,8 @@ namespace BiomasaEUPT.Vistas
         }
 
         private bool CanConfirmarCambios()
-        {
-            return biomasaEUPTDataSet!=null && biomasaEUPTDataSet.usuarios.GetChanges() != null;
+        {           
+            return biomasaEUPTDataSet != null && biomasaEUPTDataSet.usuarios.GetChanges() != null;
         }
 
         private void ConfirmarCambios()
@@ -109,7 +122,7 @@ namespace BiomasaEUPT.Vistas
             //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
             biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
         }
-#endregion
+        #endregion
 
 
     }
