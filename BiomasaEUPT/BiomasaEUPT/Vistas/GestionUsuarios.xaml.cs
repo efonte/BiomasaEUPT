@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -84,7 +85,8 @@ namespace BiomasaEUPT.Vistas
 
         private void usuariosDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-
+            // var fila = e.Row.Item as DataRowView;
+            // var filaUsuario = fila.Row as BiomasaEUPTDataSet.usuariosRow;
         }
 
         #region ConfirmarCambios
@@ -106,7 +108,7 @@ namespace BiomasaEUPT.Vistas
         }
 
         private bool CanConfirmarCambios()
-        {           
+        {
             return biomasaEUPTDataSet != null && biomasaEUPTDataSet.usuarios.GetChanges() != null;
         }
 
@@ -122,8 +124,25 @@ namespace BiomasaEUPT.Vistas
             //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
             biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
         }
+
         #endregion
 
+        private void usuariosDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
+                {
+                    DataRowView fila = e.Row.Item as DataRowView;
+                    BiomasaEUPTDataSet.usuariosRow filaUsuario = fila.Row as BiomasaEUPTDataSet.usuariosRow;
+                    ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
+                    DataTemplate editingTemplate = contentPresenter.ContentTemplate;
+                    PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
+                    string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
+                    filaUsuario.contrasena = hashContrasena;
+                }
 
+            }
+        }
     }
 }
