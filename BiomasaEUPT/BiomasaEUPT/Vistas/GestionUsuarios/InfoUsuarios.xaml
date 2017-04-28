@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionUsuarios.InfoUsuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="200">
+    <Grid>
+        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20">
+            <GroupBox.Header>
+                <TextBlock Text="Total Usuarios" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Administradores" FontSize="16" FontFamily="Roboto"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Técnicos A" FontSize="16" FontFamily="Roboto"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Técnicos B" FontSize="16" FontFamily="Roboto"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Técnicos C" FontSize="16" FontFamily="Roboto"/>
+
+                <TextBlock x:Name="tbNumAdministradores" Grid.Column="1" Grid.Row="0" Text="0" FontSize="16" TextAlignment="Left" FontFamily="Roboto" FontWeight="Light"/>
+                <TextBlock x:Name="tbNumTecnicosA" Grid.Column="1" Grid.Row="2" Text="0" FontSize="16" TextAlignment="Left" FontFamily="Roboto" FontWeight="Light"/>
+                <TextBlock x:Name="tbNumTecnicosB" Grid.Column="1" Grid.Row="3" Text="0" FontSize="16" TextAlignment="Left" FontFamily="Roboto" FontWeight="Light"/>
+                <TextBlock x:Name="tbNumTecnicosC" Grid.Column="1" Grid.Row="4" Text="0" FontSize="16" TextAlignment="Left" FontFamily="Roboto" FontWeight="Light"/>
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

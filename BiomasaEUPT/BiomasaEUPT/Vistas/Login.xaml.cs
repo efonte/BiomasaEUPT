@@ -32,7 +32,7 @@ namespace BiomasaEUPT
             DataContext = this;
         }
 
-    
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -54,11 +54,12 @@ namespace BiomasaEUPT
 
         public bool IniciarSesion(String usuario, String hashContrasena)
         {
-            BiomasaEUPTDataSet biomasaEUPTDataSet = new BiomasaEUPTDataSet();
-            BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
-            biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
-            biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-            return biomasaEUPTDataSet.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).FirstOrDefault() != null;
+            // BiomasaEUPTDataSet biomasaEUPTDataSet = new BiomasaEUPTDataSet();
+            // BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
+            // biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
+            // biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
+            // return biomasaEUPTDataSet.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).FirstOrDefault() != null;
+            return true;
         }
 
         private string _usuario;

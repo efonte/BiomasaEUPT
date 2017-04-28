@@ -55,6 +55,12 @@
     <Reference Include="Dragablz, Version=0.0.3.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.186\lib\net45\Dragablz.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -99,17 +105,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BiomasaEUPTDataSet.cs">
-      <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
+    <Compile Include="almacenes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="BiomasaEUPTDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Clases\BaseDeDatos.cs" />
     <Compile Include="Clases\Comando.cs" />
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\RelayComando.cs" />
+    <Compile Include="clientes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="direcciones.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
@@ -118,23 +126,112 @@
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
+    <Compile Include="entradas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="envasados.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estados_salidas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="grupos_clientes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="grupos_materias_primas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="grupos_productos_terminados.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="materias_primas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelo.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
+    <Compile Include="pedidos.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="procedencias.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="productos_terminados.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proveedores.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="salidas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sitios_descargas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sitios_recogidas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipos_clientes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipos_materias_primas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipos_productos_terminados.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipos_proveedores.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipos_usuarios.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usuarios.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\GestionUsuariosViewModel.cs" />
-    <Compile Include="Vistas\GestionUsuarios.xaml.cs">
-      <DependentUpon>GestionUsuarios.xaml</DependentUpon>
+    <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
+      <DependentUpon>InfoUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionUsuarios\OpcionesUsuarios.xaml.cs">
+      <DependentUpon>OpcionesUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionUsuarios\TablaUsuarios.xaml.cs">
+      <DependentUpon>TablaUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionUsuarios\TabUsuarios.xaml.cs">
+      <DependentUpon>TabUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionUsuarios\TiposUsuarios.xaml.cs">
+      <DependentUpon>TiposUsuarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\ConexionBD.cs" />
-    <Compile Include="Viejo %28no borrar aun%29\ConexionBD1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\ConexionBD2.cs" />
-    <Compile Include="Viejo %28no borrar aun%29\ConexionBD3.cs" />
     <Compile Include="Vistas\MensajeConfirmacion.xaml.cs">
       <DependentUpon>MensajeConfirmacion.xaml</DependentUpon>
     </Compile>
@@ -144,17 +241,23 @@
     <Compile Include="Vistas\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\UserControl3.xaml.cs">
-      <DependentUpon>UserControl3.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Viejo %28no borrar aun%29\GestionUsuarios1.xaml.cs">
-      <DependentUpon>GestionUsuarios1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="vista_clientes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vista_materias_primas.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vista_productos_terminados.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vista_proveedores.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vista_usuarios.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Page Include="Vistas\AcercaDe.xaml">
       <SubType>Designer</SubType>
@@ -164,7 +267,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionUsuarios.xaml">
+    <Page Include="Vistas\GestionUsuarios\InfoUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionUsuarios\OpcionesUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionUsuarios\TablaUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionUsuarios\TabUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionUsuarios\TiposUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,18 +319,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Viejo %28no borrar aun%29\UserControl3.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Viejo %28no borrar aun%29\GestionUsuarios1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Vistas\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,16 +342,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="BiomasaEUPTDataSet.xsc">
-      <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="BiomasaEUPTDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BiomasaEUPTDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="BiomasaEUPTDataSet.xss">
-      <DependentUpon>BiomasaEUPTDataSet.xsd</DependentUpon>
+    <EntityDeploy Include="Modelo.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Modelo.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Modelo.edmx.diagram">
+      <DependentUpon>Modelo.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -253,7 +356,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icono.ico" />
@@ -263,10 +368,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icono.ico" />
+    <Content Include="Modelo.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelo.edmx</DependentUpon>
+      <LastGenOutput>Modelo.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Modelo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelo.edmx</DependentUpon>
+      <LastGenOutput>Modelo.cs</LastGenOutput>
+    </Content>
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="asd\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

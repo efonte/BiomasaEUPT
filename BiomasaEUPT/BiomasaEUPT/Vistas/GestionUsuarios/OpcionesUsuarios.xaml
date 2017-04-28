@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionUsuarios.OpcionesUsuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="200" Loaded="UserControl_Loaded">
+    <Grid>
+        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20" >
+            <GroupBox.Header>
+                <TextBlock Text="Opciones" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
+            </GroupBox.Header>
+
+            <StackPanel VerticalAlignment="Bottom">
+                <!--Button x:Name="bBorrarUsuarios" Margin="0 10 0 10" Content="Borrar usuarios" Command="{Binding Path=BorrarUsuariosComando}" Click="bBorrarUsuarios_Click" /-->
+                <Button x:Name="bAnadir" Margin="0 10 0 0" Content="Añadir" />
+                <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}" >
+                    <!--Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=usuariosDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style-->
+                </Button>
+                <Button x:Name="bConfirmarCambios" Margin="0 10 0 0" Content="Confirmar Cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}" />
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

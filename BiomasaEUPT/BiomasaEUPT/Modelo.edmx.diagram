@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="358d8bf1a26f48e2a561ed80e0fde416" Name="Diagram1">
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.almacenes" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.clientes" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.direcciones" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.entradas" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.envasados" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.estados_salidas" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.grupos_clientes" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.grupos_materias_primas" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.grupos_productos_terminados" Width="1.5" PointX="8.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.materias_primas" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.pedidos" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.procedencias" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.productos_terminados" Width="1.5" PointX="11" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.proveedores" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.salidas" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.sitios_descargas" Width="1.5" PointX="6" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.sitios_recogidas" Width="1.5" PointX="8.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.sysdiagrams" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.tipos_clientes" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.tipos_materias_primas" Width="1.5" PointX="6" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.tipos_productos_terminados" Width="1.5" PointX="8.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.tipos_proveedores" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.tipos_usuarios" Width="1.5" PointX="10.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.usuarios" Width="1.5" PointX="13" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_clientes" Width="1.5" PointX="13.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_materias_primas" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_productos_terminados" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_proveedores" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_usuarios" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_direccion_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_grupo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_tipo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_proveedores_direccion_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_grupo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_productos_terminados_grupo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_procedencia_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_proveedor_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_sitio_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_tipo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_productos_terminados_sitio_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_productos_terminados_tipo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_proveedores_tipo_id" ManuallyRouted="false" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_usuarios_tipo_id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

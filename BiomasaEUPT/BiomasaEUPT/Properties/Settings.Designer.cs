@@ -47,17 +47,6 @@ namespace BiomasaEUPT.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;Persist Security Inf" +
-            "o=True;User ID=usuario;Password=usuario;MultipleActiveResultSets=False")]
-        public string BiomasaEUPTConnectionString {
-            get {
-                return ((string)(this["BiomasaEUPTConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
@@ -79,17 +68,6 @@ namespace BiomasaEUPT.Properties {
             }
             set {
                 this["contrasena"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=155.210.68.124,49170;Initial Catalog=BiomasaEUPT;User Id=usuario;Pass" +
-            "word=usuario")]
-        public string ConexionBD {
-            get {
-                return ((string)(this["ConexionBD"]));
             }
         }
     }

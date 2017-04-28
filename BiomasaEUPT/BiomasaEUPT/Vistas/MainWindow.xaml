@@ -7,8 +7,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
+        xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         mc:Ignorable="d"
-        Title="BiomasaEUPT" Height="350" Width="525" MinHeight="350" MinWidth="525"
+        Title="BiomasaEUPT" Height="600" Width="900" MinHeight="550" MinWidth="800"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"        
@@ -72,11 +73,11 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Pestaña 1" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                         </StackPanel>
                     </TabItem.Header>
 
-                    <local:GestionUsuarios x:Name="ucTab1"/>
+                    <lGestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
 
                 </TabItem>
 
@@ -85,11 +86,11 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Pestaña 2" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                         </StackPanel>
                     </TabItem.Header>
 
-                    <!--local:Formulario x:Name="ucTab2" /-->
+                    <!--local:Formulario x:Name="ucClientes" /-->
 
                 </TabItem>
 

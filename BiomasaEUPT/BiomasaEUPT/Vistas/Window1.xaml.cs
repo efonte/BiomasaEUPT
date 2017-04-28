@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,34 +20,47 @@ namespace BiomasaEUPT.Vistas
     /// </summary>
     public partial class Window1 : Window
     {
-        BiomasaEUPTDataSet biomasaEUPTDataSet;
-        BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
+        BiomasaEUPTEntidades context = new BiomasaEUPTEntidades();
+        CollectionViewSource usuariosViewSource;
+        CollectionViewSource tiposUsuariosViewSource;
+
         public Window1()
         {
             InitializeComponent();
+
+            usuariosViewSource = ((CollectionViewSource)(FindResource("usuariosViewSource")));
+            tiposUsuariosViewSource = ((CollectionViewSource)(FindResource("tipos_usuariosViewSource")));
+            DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            biomasaEUPTDataSet = ((BiomasaEUPTDataSet)(FindResource("biomasaEUPTDataSet")));
-            // Cargar datos en la tabla usuarios. Puede modificar este código según sea necesario.
-            biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
-            biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-            CollectionViewSource usuariosViewSource = ((CollectionViewSource)(FindResource("usuariosViewSource")));
-            usuariosViewSource.View.MoveCurrentToFirst();
 
-            // Cargar datos en la tabla tipos_usuarios. Puede modificar este código según sea necesario.
-            BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter biomasaEUPTDataSettipos_usuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter();
-            biomasaEUPTDataSettipos_usuariosTableAdapter.Fill(biomasaEUPTDataSet.tipos_usuarios);
-            CollectionViewSource tipos_usuariosViewSource = ((CollectionViewSource)(FindResource("tipos_usuariosViewSource")));
-            tipos_usuariosViewSource.View.MoveCurrentToFirst();
+            // System.Windows.Data.CollectionViewSource usuariosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("usuariosViewSource")));
+            // Cargar datos estableciendo la propiedad CollectionViewSource.Source:
+            // usuariosViewSource.Source = [origen de datos genérico]
+
+           // System.Windows.Data.CollectionViewSource tipos_usuariosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("tipos_usuariosViewSource")));
+            // Cargar datos estableciendo la propiedad CollectionViewSource.Source:
+            // tipos_usuariosViewSource.Source = [origen de datos genérico]
+
+
+            // Load is an extension method on IQueryable,    
+            // defined in the System.Data.Entity namespace.   
+            // This method enumerates the results of the query,    
+            // similar to ToList but without creating a list.   
+            // When used with Linq to Entities this method    
+            // creates entity objects and adds them to the context.   
+            context.usuarios.Load();
+            context.tipos_usuarios.Load();
+
+            // After the data is loaded call the DbSet<T>.Local property    
+            // to use the DbSet<T> as a binding source.   
+            usuariosViewSource.Source = context.usuarios.Local;
+            tiposUsuariosViewSource.Source = context.tipos_usuarios.Local;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //biomasaEUPTDataSet.AcceptChanges();
-            //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-            biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios);
-        }
+     
+
     }
 }

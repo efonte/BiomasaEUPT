@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using BiomasaEUPT.Vistas;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -76,6 +77,7 @@ namespace BiomasaEUPT
                 {
                     login.Close();
                     MainWindow main = new MainWindow();
+                    //Window1 main = new Window1();
                     Close();
                     main.Show();
                    

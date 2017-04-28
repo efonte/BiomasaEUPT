@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionUsuarios.TabUsuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1000" Loaded="UserControl_Loaded">
+    <Grid MinHeight="500">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*" MinWidth="300"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions-->
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <local:InfoUsuarios Grid.Row="0" x:Name="ucInfoUsuarios" Margin="10 10 0 0" Height="200" VerticalAlignment="Top"/>
+            <local:TiposUsuarios Grid.Row="1" x:Name="ucTiposUsuarios" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <local:TablaUsuarios Grid.Column="1" x:Name="ucTablaUsuarios" Margin="10 10 0 10"/>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <local:OpcionesUsuarios Grid.Row="0" x:Name="ucOpcionesUsuarios" Margin="10 10 10 0" Height="225" VerticalAlignment="Top"/>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
