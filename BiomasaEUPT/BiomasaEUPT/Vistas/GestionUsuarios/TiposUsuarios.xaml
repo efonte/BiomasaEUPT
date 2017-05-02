@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="280" d:DesignWidth="225">
+             d:DesignHeight="250" d:DesignWidth="180" Loaded="UserControl_Loaded">
     <Grid>
         <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20" Margin="0,0,0,0">
             <GroupBox.Header>
@@ -14,11 +14,11 @@
             </GroupBox.Header>
 
             <ListBox x:Name="lbTiposUsuarios" HorizontalContentAlignment="Center" Margin="0 0 0 0" SelectedIndex="0" SelectionChanged="lbTiposUsuarios_SelectionChanged">
-                <TextBlock x:Name="tbTipoTodos" Margin="0 0 0 0" FontSize="14">Todos</TextBlock>
-                <TextBlock x:Name="tbTipoAdministrador" Margin="0 0 0 0" FontSize="14">Administrador</TextBlock>
-                <TextBlock x:Name="tbTipoTecnicoA" Margin="0 0 0 0" FontSize="14">Técnico A</TextBlock>
-                <TextBlock x:Name="tbTipoTecnicoB" Margin="0 0 0 0" FontSize="14">Técnico B</TextBlock>
-                <TextBlock x:Name="tbTipoTecnicoC" Margin="0 0 0 0" FontSize="14">Técnico C</TextBlock>
+                <ListBoxItem x:Name="tbTipoTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem>
+                <!--ListBoxItem x:Name="tbTipoAdministrador" Margin="0 0 0 0" FontSize="14">Administrador</ListBoxItem>
+                <ListBoxItem x:Name="tbTipoTecnicoA" Margin="0 0 0 0" FontSize="14">Técnico A</ListBoxItem>
+                <ListBoxItem x:Name="tbTipoTecnicoB" Margin="0 0 0 0" FontSize="14">Técnico B</ListBoxItem>
+                <ListBoxItem x:Name="tbTipoTecnicoC" Margin="0 0 0 0" FontSize="14">Técnico C</ListBoxItem-->
             </ListBox>
         </GroupBox>
     </Grid>

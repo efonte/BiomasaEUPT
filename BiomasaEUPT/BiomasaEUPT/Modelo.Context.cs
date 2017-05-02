@@ -18,7 +18,9 @@ namespace BiomasaEUPT
     public partial class BiomasaEUPTEntidades : DbContext
     {
         public BiomasaEUPTEntidades()
-            : base("name=BiomasaEUPTEntidades")
+            //: base("name=BiomasaEUPTEntidades")
+            //: base("Data Source=SERVER;Initial Catalog=DATABASE;Persist Security Info=True;User ID=USERNAME;Password=PASSWORD;MultipleActiveResultSets=True")
+            : base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
         {
         }
     

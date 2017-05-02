@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,24 +22,52 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     public partial class TiposUsuarios : UserControl
     {
         private bool primaraVez = false;
-
+        // private BiomasaEUPTEntidades context;
         public TiposUsuarios()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //  context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+
+            DependencyObject ucParent = Parent;
+
+            while (!(ucParent is UserControl))
+            {
+                ucParent = LogicalTreeHelper.GetParent(ucParent);
+            }
+
+            // Pestaña Usuarios
+            if (ucParent.GetType().Equals(typeof(TabUsuarios)))
+            {
+                TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
+                CollectionViewSource tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tipos_usuariosViewSource")));
+                foreach (tipos_usuarios tipoUsuario in tiposUsuariosViewSource.View)
+                {
+                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.nombre, FontSize = 14 });
+                }
+                /*foreach (var tipoUsuario in context.tipos_usuarios.ToList())
+                {
+                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.nombre, FontSize = 14 });
+                }*/
+            }
+
         }
 
         private void lbTiposUsuarios_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (primaraVez) // Se ejecuta nada más cargar la vista. Con el booleano se evita que se ejecute la primera vez.
             {
-                Console.WriteLine("----");
                 DependencyObject ucParent = Parent;
 
-                while ((ucParent is null))
+                while (!(ucParent is UserControl))
                 {
                     ucParent = LogicalTreeHelper.GetParent(ucParent);
                 }
 
+                // Pestaña Usuarios
                 if (ucParent.GetType().Equals(typeof(TabUsuarios)))
                 {
                     TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
@@ -51,5 +80,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 primaraVez = true;
             }
         }
+
     }
 }

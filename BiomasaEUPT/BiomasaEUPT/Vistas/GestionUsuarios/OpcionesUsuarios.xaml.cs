@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,51 +22,17 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     /// </summary>
     public partial class OpcionesUsuarios : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        // private BiomasaEUPTEntidades context;
         public OpcionesUsuarios()
         {
             InitializeComponent();
-            //DataContext = this;
+            // DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+            // context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
         }
-        /*
-        #region ConfirmarCambios
-        private ICommand _confirmarCambiosComando;
-
-        public ICommand ConfirmarCambiosComando
-        {
-            get
-            {
-                if (_confirmarCambiosComando == null)
-                {
-                    _confirmarCambiosComando = new RelayComando(
-                        param => ConfirmarCambios(),
-                        param => CanConfirmarCambios()
-                    );
-                }
-                return _confirmarCambiosComando;
-            }
-        }
-
-        private bool CanConfirmarCambios()
-        {
-            return context != null && context.ChangeTracker.HasChanges(); ;
-        }
-
-        private void ConfirmarCambios()
-        {
-            //biomasaEUPTDataSet.AcceptChanges();
-            //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-            //biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
-            context.SaveChanges();
-            //custViewSource.View.Refresh();
-        }
-        #endregion
-        */
 
     }
 }

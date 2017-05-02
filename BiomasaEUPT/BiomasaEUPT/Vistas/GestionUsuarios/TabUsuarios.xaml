@@ -5,18 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="1000" Loaded="UserControl_Loaded">
-    <Grid MinHeight="500">
+             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="170"/>
             <ColumnDefinition Width="*" MinWidth="300"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="190"/>
         </Grid.ColumnDefinitions>
-
-        <!--Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions-->
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -27,7 +22,7 @@
             <local:TiposUsuarios Grid.Row="1" x:Name="ucTiposUsuarios" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <local:TablaUsuarios Grid.Column="1" x:Name="ucTablaUsuarios" Margin="10 10 0 10"/>
+        <local:TablaUsuarios Grid.Column="1" x:Name="ucTablaUsuarios" Margin="10 10 0 10" />
 
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>

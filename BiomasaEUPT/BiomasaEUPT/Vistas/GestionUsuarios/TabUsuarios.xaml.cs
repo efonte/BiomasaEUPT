@@ -1,5 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Domain;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -115,9 +116,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
-            TextBlock tbTiposUsuarios = (TextBlock)ucTiposUsuarios.lbTiposUsuarios.SelectedItem;
+            ListBoxItem tbTiposUsuarios = (ListBoxItem)ucTiposUsuarios.lbTiposUsuarios.SelectedItem;
 
-            string tipoFiltrado = tbTiposUsuarios.Text.ToLower();
+            string tipoFiltrado = tbTiposUsuarios.Content.ToString().ToLower();
             string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
 
             var usuario = e.Item as usuarios;
@@ -211,13 +212,21 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             return false;
         }
 
-        private void BorrarUsuario()
+        private async void BorrarUsuario()
         {
             if (ucTablaUsuarios.dgUsuarios.SelectedItems.Count == 1)
             {
                 usuarios usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios;
-                context.usuarios.Remove(usuarioSeleccionado);
+                var mensaje = new MensajeConfirmacion("¿Está seguro de que desea borrar el usuario '" + usuarioSeleccionado.nombre + "'?");
+                mensaje.MaxHeight = ActualHeight;
+                mensaje.MaxWidth = ActualWidth;
 
+                var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
+
+                if (resultado)
+                {
+                    context.usuarios.Remove(usuarioSeleccionado);
+                }
                 /* var usuarioSeleccionado = usuariosViewSource.View.CurrentItem as usuarios;
 
                  var usuarioABorrar = (from u in context.usuarios

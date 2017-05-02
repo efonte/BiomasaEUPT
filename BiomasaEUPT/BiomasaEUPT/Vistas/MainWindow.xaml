@@ -9,7 +9,7 @@
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         mc:Ignorable="d"
-        Title="BiomasaEUPT" Height="600" Width="900" MinHeight="550" MinWidth="800"
+        Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"        
