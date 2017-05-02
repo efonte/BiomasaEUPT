@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     /// </summary>
     public partial class TabUsuarios : UserControl
     {
-        //private BaseDeDatos bd;
-        private BiomasaEUPTEntidades context;// = new BiomasaEUPTEntidades();
+        private BiomasaEUPTEntidades context;
         private CollectionViewSource usuariosViewSource;
         private CollectionViewSource tiposUsuariosViewSource;
 
@@ -40,7 +40,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //bd = BaseDeDatos.Instancia;           
             using (new CursorEspera())
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
@@ -50,15 +49,12 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 context.tipos_usuarios.Load();
                 usuariosViewSource.Source = context.usuarios.Local;
                 tiposUsuariosViewSource.Source = context.tipos_usuarios.Local;
+                //var result = from u in context.usuarios select u;
+                //ucTablaUsuarios.dgUsuarios.ItemsSource = result.ToList();
                 ActualizarContador();
             }
             ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
             ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
-
-            //ucOpcionesUsuarios.bBorrar.Triggers.
-            //ucTablaUsuarios.dgUsuarios.SelectedItem
-
-            // ucOpcionesUsuarios.bConfirmarCambios.IsEnabled = context.ChangeTracker.HasChanges();
         }
 
         private void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -67,8 +63,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
                 {
-                    //DataRowView fila = e.Row.Item as DataRowView;
-                    //BiomasaEUPTDataSet.usuariosRow filaUsuario = fila.Row as BiomasaEUPTDataSet.usuariosRow;
                     usuarios usuario = e.Row.DataContext as usuarios;
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
@@ -81,8 +75,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void DgUsuarios_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            // var fila = e.Row.Item as DataRowView;
-            // var filaUsuario = fila.Row as BiomasaEUPTDataSet.usuariosRow; 
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 usuarios usuario = e.Row.DataContext as usuarios;
@@ -98,9 +90,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                         contrasena = usuario.contrasena,
                         baneado = false
                     };
-                    Console.WriteLine(nuevoUsuario.nombre + " - " + nuevoUsuario.email + " - " + nuevoUsuario.tipo_id + " - " + nuevoUsuario.contrasena + " - " + nuevoUsuario.baneado);
+                    Console.WriteLine(nuevoUsuario.nombre + " - " + nuevoUsuario.email + " - " + nuevoUsuario.contrasena + " - " + nuevoUsuario.tipo_id + " - " + nuevoUsuario.baneado);
                     context.usuarios.Add(nuevoUsuario);
-                    context.SaveChanges();
                 }
                 else
                 {
@@ -109,8 +100,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     usuarioExistente.tipo_id = usuario.tipo_id;
                     usuarioExistente.contrasena = usuario.contrasena;
                     usuarioExistente.baneado = usuario.baneado;
-                }*/
-                //context.SaveChanges();
+                }
+                context.SaveChanges();*/
             }
 
         }
@@ -184,11 +175,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void ConfirmarCambios()
         {
-            //biomasaEUPTDataSet.AcceptChanges();
-            //biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
-            //biomasaEUPTDataSetusuariosTableAdapter.Update(biomasaEUPTDataSet.usuarios); // Automáticamente hace AcceptChanges()
             context.SaveChanges();
-            //custViewSource.View.Refresh();
+            usuariosViewSource.View.Refresh();
+            ActualizarContador();
         }
         #endregion
 
@@ -224,11 +213,23 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void BorrarUsuario()
         {
-
             if (ucTablaUsuarios.dgUsuarios.SelectedItems.Count == 1)
             {
                 usuarios usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios;
                 context.usuarios.Remove(usuarioSeleccionado);
+
+                /* var usuarioSeleccionado = usuariosViewSource.View.CurrentItem as usuarios;
+
+                 var usuarioABorrar = (from u in context.usuarios
+                                       where u.id_usuario == usuarioSeleccionado.id_usuario
+                                       select u).FirstOrDefault();
+
+                 if (usuarioABorrar != null)
+                 {
+                     context.usuarios.Remove(usuarioABorrar);
+                 }*/
+                //context.SaveChanges();
+                //usuariosViewSource.View.Refresh();
             }
             else if (ucTablaUsuarios.dgUsuarios.SelectedItems.Count > 1)
             {
@@ -238,6 +239,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     Console.WriteLine(usuarioSeleccionado.nombre);
                     context.usuarios.Local.Remove(usuarioSeleccionado); // Produce excepción ARREGLAR!!!!!!!!!!!!!!!
                 }
+                //ucTablaUsuarios.dgUsuarios.Items.Remove(ucTablaUsuarios.dgUsuarios.SelectedItems);
             }
         }
         #endregion
