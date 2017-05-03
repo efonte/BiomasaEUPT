@@ -163,6 +163,7 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
     <Compile Include="pedidos.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -214,6 +215,12 @@
     <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionClientes\TabClientes.xaml.cs">
+      <DependentUpon>TabClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
+      <DependentUpon>TablaClientes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
       <DependentUpon>InfoUsuarios.xaml</DependentUpon>
     </Compile>
@@ -264,6 +271,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Formulario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionClientes\TabClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -350,8 +365,10 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\tipos_usuarios.datasource" />
-    <None Include="Properties\DataSources\usuarios.datasource" />
+    <None Include="Properties\DataSources\clientes.datasource" />
+    <None Include="Properties\DataSources\grupos_clientes.datasource" />
+    <None Include="Properties\DataSources\tipos_clientes.datasource" />
+    <None Include="Properties\DataSources\vista_clientes.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

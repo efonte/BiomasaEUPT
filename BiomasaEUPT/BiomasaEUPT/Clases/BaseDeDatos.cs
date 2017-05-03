@@ -19,6 +19,7 @@ namespace BiomasaEUPT.Clases
             //biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
             //biomasaEUPTDataSettipos_usuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter();
             biomasaEUPTEntidades = new BiomasaEUPTEntidades();
+            //biomasaEUPTEntidades.Configuration.ProxyCreationEnabled = false;
         }
 
         private static BaseDeDatos _instancia;

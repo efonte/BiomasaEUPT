@@ -8,6 +8,7 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
+        xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
@@ -31,72 +32,73 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <DockPanel>
-        <materialDesign:ColorZone Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
-            <DockPanel>
-                <!-- Barra Menu -->
-                <Menu DockPanel.Dock="Left" Background="#303030">
-                    <!-- Archivo -->
-                    <MenuItem Header="_Archivo" Height="20" Foreground="White" FontFamily="Roboto">
-                        <!-- Ticket Manager -->
-                        <MenuItem Header="_MenuItem 1" Height="30" Foreground="White" FontFamily="Roboto">
-                            <MenuItem x:Name="menu1" Header="_Menu 1" Height="30"/>
-                            <Separator />
-                            <MenuItem x:Name="menu2" Header="_Menu 2" Height="30"/>
+    <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="280" MinHeight="300">
+        <DockPanel>
+            <materialDesign:ColorZone Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
+                <DockPanel>
+                    <!-- Barra Menu -->
+                    <Menu DockPanel.Dock="Left" Background="#303030">
+                        <!-- Archivo -->
+                        <MenuItem Header="_Archivo" Height="20" Foreground="White" FontFamily="Roboto">
+                            <!-- Ticket Manager -->
+                            <MenuItem Header="_MenuItem 1" Height="30" Foreground="White" FontFamily="Roboto">
+                                <MenuItem x:Name="menu1" Header="_Menu 1" Height="30"/>
+                                <Separator />
+                                <MenuItem x:Name="menu2" Header="_Menu 2" Height="30"/>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Height="30" Click="menuCerrarSesion_Click"/>
+                            <Separator/>
+                            <MenuItem x:Name="menuSalir" Header="_Salir" Height="30" Click="menuSalir_Click"/>
                         </MenuItem>
-                        <Separator/>
-                        <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Height="30" Click="menuCerrarSesion_Click"/>
-                        <Separator/>
-                        <MenuItem x:Name="menuSalir" Header="_Salir" Height="30" Click="menuSalir_Click"/>
-                    </MenuItem>
-                    <!-- Opciones -->
-                    <MenuItem Header="_Opciones" Height="20" Foreground="White" FontFamily="Roboto">
-                        <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30"  />
-                    </MenuItem>
-                    <!-- Ayuda -->
-                    <MenuItem Header="A_yuda" Height="20" Foreground="White" FontFamily="Roboto">
-                        <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Height="30" Click="menuGitHub_Click"/>
-                        <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Height="30" Click="menuAcercaDe_Click"/>
-                    </MenuItem>
-                </Menu>
-                <TextBlock x:Name="tbInfoProgreso" Height="20" Foreground="White" FontFamily="Roboto" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
-                <ProgressBar x:Name="pbProgreso" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-            </DockPanel>
-        </materialDesign:ColorZone>
+                        <!-- Opciones -->
+                        <MenuItem Header="_Opciones" Height="20" Foreground="White" FontFamily="Roboto">
+                            <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30"  />
+                        </MenuItem>
+                        <!-- Ayuda -->
+                        <MenuItem Header="A_yuda" Height="20" Foreground="White" FontFamily="Roboto">
+                            <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Height="30" Click="menuGitHub_Click"/>
+                            <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Height="30" Click="menuAcercaDe_Click"/>
+                        </MenuItem>
+                    </Menu>
+                    <TextBlock x:Name="tbInfoProgreso" Height="20" Foreground="White" FontFamily="Roboto" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
+                    <ProgressBar x:Name="pbProgreso" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                </DockPanel>
+            </materialDesign:ColorZone>
 
-        <!-- Pestañas -->
-        <dockablz:Layout>
-            <dragablz:TabablzControl BorderThickness="0" Margin="0 0 0 0">
+            <!-- Pestañas -->
+            <dockablz:Layout>
+                <dragablz:TabablzControl BorderThickness="0" Margin="0 0 0 0">
 
-                <!-- Pestaña 1 -->
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                    <!-- Pestaña 1 -->
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
 
-                    <lGestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
+                        <lGestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
 
-                </TabItem>
+                    </TabItem>
 
-                <!-- Pestaña 2 -->
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                    <!-- Pestaña 2 -->
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
 
-                    <!--local:Formulario x:Name="ucClientes" /-->
+                        <GestionClientes:TabClientes x:Name="ucClientes" />
 
-                </TabItem>
+                    </TabItem>
 
-            </dragablz:TabablzControl>
-        </dockablz:Layout>
+                </dragablz:TabablzControl>
+            </dockablz:Layout>
 
-    </DockPanel>
-    
+        </DockPanel>
+    </materialDesign:DialogHost>
 </Window>

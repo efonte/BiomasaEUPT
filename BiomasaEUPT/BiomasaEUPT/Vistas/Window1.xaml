@@ -6,50 +6,25 @@
         xmlns:local="clr-namespace:BiomasaEUPT.Vistas"
         xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT" x:Class="BiomasaEUPT.Vistas.Window1"
         mc:Ignorable="d"
-        Title="Window1" Height="600" Width="800" Loaded="Window_Loaded">
+        Title="Window1" Height="600" Width="800" Loaded="Window_Loaded" >
     <Window.Resources>
-        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:usuarios}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tipos_usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_usuarios}, CreateList=True}"/>
+        <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource usuariosViewSource}">
 
-        <DataGrid x:Name="usuariosDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,59,0,274" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+    <Grid DataContext="{StaticResource clientesViewSource}" >
+        <DataGrid x:Name="clientesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="162,132,230,237" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="contrasena" Binding="{Binding contrasena}"/>
-                <DataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="email" Binding="{Binding email}"/>
-                <DataGridTemplateColumn x:Name="fecha_altaColumn" Width="SizeToHeader" Header="fecha alta">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding fecha_alta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="fecha_bajaColumn" Width="SizeToHeader" Header="fecha baja">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding fecha_baja, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="fecha_contrasenaColumn" Width="SizeToHeader" Header="fecha contrasena">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding fecha_contrasena, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" Header="id usuario" Binding="{Binding id_usuario}"/>
-                <DataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="nombre" Binding="{Binding nombre}"/>
-                <DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/>
+                <DataGridTextColumn x:Name="calleColumn" Binding="{Binding calle}" Header="calle" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id}" Header="direccion id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="emailColumn" Binding="{Binding email}" Header="email" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="grupo_idColumn" Binding="{Binding grupo_id}" Header="grupo id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="id_clienteColumn" Binding="{Binding id_cliente}" Header="id cliente" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nifColumn" Binding="{Binding nif}" Header="nif" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="observacionesColumn" Binding="{Binding observaciones}" Header="observaciones" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social}" Header="razon social" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="tipo_idColumn" Binding="{Binding tipo_id}" Header="tipo id" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="tipos_usuariosComboBox" DisplayMemberPath="descripcion" ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}" Margin="342,412,432,139" SelectedValuePath="descripcion">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
 
     </Grid>
 </Window>

@@ -14,21 +14,74 @@ namespace BiomasaEUPT
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Data.SqlClient;
+    using System.Data.Entity.Core.EntityClient;
+    using System.Data.Entity.Validation;
+    using System.Collections.Generic;
+
     public partial class BiomasaEUPTEntidades : DbContext
     {
         public BiomasaEUPTEntidades()
-            //: base("name=BiomasaEUPTEntidades")
-            //: base("Data Source=SERVER;Initial Catalog=DATABASE;Persist Security Info=True;User ID=USERNAME;Password=PASSWORD;MultipleActiveResultSets=True")
-            : base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
+         //: base("name=BiomasaEUPTEntidades")
+         //: base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
+         : base("metadata=res://*/Modelo.csdl|res://*/;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
+        //: base(nameOrConnectionString: ConnectionString())
         {
         }
-    
+
+        private static string ConnectionString()
+        {
+            SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
+            sqlBuilder.DataSource = "155.210.68.124,49170";
+            sqlBuilder.InitialCatalog = "BiomasaEUPT";
+            sqlBuilder.PersistSecurityInfo = true;
+            sqlBuilder.IntegratedSecurity = true;
+            sqlBuilder.MultipleActiveResultSets = true;
+            sqlBuilder.UserID = "usuario";
+            sqlBuilder.Password = "usuario";
+            sqlBuilder.ApplicationName = "EntityFramework";
+
+            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
+            entityBuilder.ProviderConnectionString = sqlBuilder.ToString();
+            entityBuilder.Metadata = "res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl";
+            entityBuilder.Provider = "System.Data.SqlClient";
+
+            //Console.WriteLine(entityBuilder.ToString());
+            return entityBuilder.ToString();
+        }
+
+        protected override DbEntityValidationResult ValidateEntity(
+      System.Data.Entity.Infrastructure.DbEntityEntry entityEntry,
+      IDictionary<object, object> items)
+        {
+            var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
+            if (entityEntry.Entity is usuarios && entityEntry.State == EntityState.Added)
+            {
+                usuarios post = entityEntry.Entity as usuarios;
+                //check for uniqueness of post title
+                if (usuarios.Where(p => p.nombre == post.nombre).Count() > 0)
+                {
+                    result.ValidationErrors.Add(
+                            new System.Data.Entity.Validation.DbValidationError("nombre",
+                            "El nombre debe ser único."));
+                }
+            }
+
+            if (result.ValidationErrors.Count > 0)
+            {
+                return result;
+            }
+            else
+            {
+                return base.ValidateEntity(entityEntry, items);
+            }
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<almacenes> almacenes { get; set; }
         public virtual DbSet<clientes> clientes { get; set; }
         public virtual DbSet<direcciones> direcciones { get; set; }
@@ -58,105 +111,105 @@ namespace BiomasaEUPT
         public virtual DbSet<vista_productos_terminados> vista_productos_terminados { get; set; }
         public virtual DbSet<vista_proveedores> vista_proveedores { get; set; }
         public virtual DbSet<vista_usuarios> vista_usuarios { get; set; }
-    
+
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             var versionParameter = version.HasValue ?
                 new ObjectParameter("version", version) :
                 new ObjectParameter("version", typeof(int));
-    
+
             var definitionParameter = definition != null ?
                 new ObjectParameter("definition", definition) :
                 new ObjectParameter("definition", typeof(byte[]));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
-    
+
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             var versionParameter = version.HasValue ?
                 new ObjectParameter("version", version) :
                 new ObjectParameter("version", typeof(int));
-    
+
             var definitionParameter = definition != null ?
                 new ObjectParameter("definition", definition) :
                 new ObjectParameter("definition", typeof(byte[]));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
-    
+
         public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
-    
+
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
         }
-    
+
         public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
-    
+
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
                 new ObjectParameter("diagramname", typeof(string));
-    
+
             var owner_idParameter = owner_id.HasValue ?
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
-    
+
             var new_diagramnameParameter = new_diagramname != null ?
                 new ObjectParameter("new_diagramname", new_diagramname) :
                 new ObjectParameter("new_diagramname", typeof(string));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
-    
+
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");

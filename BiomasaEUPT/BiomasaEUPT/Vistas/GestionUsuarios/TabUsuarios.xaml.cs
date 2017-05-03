@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -176,9 +177,18 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void ConfirmarCambios()
         {
+            /*try
+            {*/
             context.SaveChanges();
             usuariosViewSource.View.Refresh();
             ActualizarContador();
+            /*}
+            catch (DbEntityValidationException ex)
+            {
+                var error = ex.EntityValidationErrors.First().ValidationErrors.First();
+                Console.WriteLine(error.ErrorMessage);
+                //this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }*/
         }
         #endregion
 

@@ -49,6 +49,7 @@
                                 <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                                        <!--validadores:UnicoValidationRule CurrentCollection="{StaticResource usuariosViewSource}"  ValidatesOnTargetUpdated="True"/-->
                                     </Binding.ValidationRules>
                                 </Binding>
                             </materialDesign:MaterialDataGridTextColumn.Binding>
