@@ -8,11 +8,21 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
-        <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
-        <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <!-- throw in some extra colour for our floating action button -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
+            <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
+        </ResourceDictionary>
+
     </UserControl.Resources>
 
     <Grid>
@@ -27,30 +37,91 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid Grid.Row="0" x:Name="dgClientes" DataContext="{StaticResource clientesViewSource}"
-                          AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
-                    <DataGrid.Columns>
-                        <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social}" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                        <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Binding="{Binding nif}" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Binding="{Binding email}" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                        <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid DataContext="{StaticResource clientesViewSource}" Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                          ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social}" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Binding="{Binding nif}" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Binding="{Binding email}" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tipos_clientesViewSource}}"
                                                 SelectedValuePath="id_tipo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                        <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource grupos_clientesViewSource}}"
                                                 SelectedValuePath="id_grupo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                        <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Binding="{Binding calle}" Header="calle" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                        <materialDesign:MaterialDataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id}" Header="direccion id" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                        <materialDesign:MaterialDataGridTextColumn x:Name="observacionesColumn" Binding="{Binding observaciones}" Header="observaciones" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                       
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Binding="{Binding calle}" Header="calle" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id}" Header="direccion id" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <!--materialDesign:MaterialDataGridTextColumn x:Name="observacionesColumn" Binding="{Binding observaciones}" Header="observaciones" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/-->
 
-                <TextBox x:Name="tbBuscar" Grid.Row="1" FontFamily="Roboto" FontSize="12" materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0" TextChanged="tbBuscar_TextChanged"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar clientes"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
+                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
+                            </Button>
+
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+
+
+                <StackPanel DataContext="{StaticResource clientesViewSource}" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical" Width="180"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="8,24,16,24">
+                            <ToggleButton HorizontalAlignment="Right" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}" FontSize="16"
+                               MaxWidth="180" MinHeight="300"
+                               TextWrapping="Wrap" VerticalAlignment="Top"/>
+                            <RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top" Visibility="Collapsed" FontSize="16"
+                                         DataObject.Pasting="rtbObservaciones_Pasting">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+
+                            <Button x:Name="bObservaciones" Margin="0 10 0 0" Content="Cambiar" VerticalAlignment="Bottom" IsEnabled="False"/>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12" materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0" TextChanged="tbBuscar_TextChanged"/>
 
             </Grid>
 
