@@ -27,10 +27,19 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
         {
+            DependencyObject ucParent = Parent;
 
+            while (!(ucParent is UserControl))
+            {
+                ucParent = LogicalTreeHelper.GetParent(ucParent);
+            }
+
+            TabClientes tabClientes = (TabClientes)ucParent;
+
+            tabClientes.FiltrarTabla();
         }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+      /*  private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             tbObservaciones.Visibility = Visibility.Collapsed;
             rtbObservaciones.Visibility = Visibility.Visible;
@@ -42,7 +51,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tbObservaciones.Visibility = Visibility.Visible;
             rtbObservaciones.Visibility = Visibility.Collapsed;
             bObservaciones.IsEnabled = false;
-        }
+        }*/
 
         private void rtbObservaciones_Pasting(object sender, DataObjectPastingEventArgs e)
         {
@@ -51,5 +60,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             Clipboard.SetText(textoPortapapeles);
             //Console.WriteLine(new TextRange(rtbObservaciones.Document.ContentStart, rtbObservaciones.Document.ContentEnd).Text);
         }
+
+    
     }
 }

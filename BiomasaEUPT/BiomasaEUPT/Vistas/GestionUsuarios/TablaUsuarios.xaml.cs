@@ -50,5 +50,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             tabUsuarios.FiltrarTabla();
         }
+       
     }
 }

@@ -118,6 +118,8 @@
     <Compile Include="direcciones.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\BooleanConverter.cs" />
+    <Compile Include="Domain\BooleanToVisibilityConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
@@ -212,6 +214,9 @@
     <Compile Include="usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
+      <DependentUpon>FiltroTabla.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
@@ -267,6 +272,10 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Page Include="Vistas\AcercaDe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\FiltroTabla.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

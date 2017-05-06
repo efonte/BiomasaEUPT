@@ -48,7 +48,62 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 clientesViewSource.Source = context.clientes.Local;
                 tiposClientesViewSource.Source = context.tipos_clientes.Local;
                 gruposClientesViewSource.Source = context.grupos_clientes.Local;
+
+                ucFiltroTabla.lbFiltro.SelectionChanged += LbFiltro_SelectionChanged;
             }
+        }
+
+        private void LbFiltro_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FiltrarTabla();
+        }
+
+        public void FiltrarTabla()
+        {
+            clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
+        }
+
+        private void FiltroTabla(object sender, FilterEventArgs e)
+        {
+            /* try
+             {*/
+            string textoBuscado = ucTablaClientes.tbBuscar.Text.ToLower();
+            var cliente = e.Item as clientes;
+            string razonSocial = cliente.razon_social.ToLower();
+            string nif = cliente.nif.ToLower();
+            string email = cliente.email.ToLower();
+            string calle = cliente.calle.ToLower();
+            string tipo = cliente.tipos_clientes.nombre.ToLower();
+
+            // Filtra todos
+            if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
+            {
+                e.Accepted = razonSocial.Contains(textoBuscado) || nif.Contains(textoBuscado)
+                             || email.Contains(textoBuscado) || calle.Contains(textoBuscado);
+            }
+            else
+            {
+                foreach (tipos_clientes tipoCliente in ucFiltroTabla.lbFiltro.SelectedItems)
+                {
+                    if (tipoCliente.nombre.ToLower().Equals(tipo))
+                    {
+                        // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
+                        e.Accepted = razonSocial.Contains(textoBuscado) || nif.Contains(textoBuscado)
+                                     || email.Contains(textoBuscado) || calle.Contains(textoBuscado);
+                        break;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
+                }
+            }
+            /* }
+             // Ocurre cuando insertas una columna en la tabla pero no están todos los campos establecidos
+             catch (NullReferenceException ex)
+             {
+                 e.Accepted = false;
+             }*/
         }
 
         #region ConfirmarCambios

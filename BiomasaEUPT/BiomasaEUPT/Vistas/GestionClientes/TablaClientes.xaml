@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
@@ -21,8 +22,9 @@
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid>
@@ -51,9 +53,9 @@
                     <DataGrid DataContext="{StaticResource clientesViewSource}" Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" AutoGenerateColumns="False" EnableRowVirtualization="True"
                           ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social}" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Binding="{Binding nif}" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Binding="{Binding email}" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social, UpdateSourceTrigger=PropertyChanged}" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Binding="{Binding nif, UpdateSourceTrigger=PropertyChanged}" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Binding="{Binding email, UpdateSourceTrigger=PropertyChanged}" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                             <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tipos_clientesViewSource}}"
                                                 SelectedValuePath="id_tipo_cliente" 
@@ -64,8 +66,8 @@
                                                 SelectedValuePath="id_grupo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Binding="{Binding calle}" Header="calle" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id}" Header="direccion id" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged}" Header="calle" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id, UpdateSourceTrigger=PropertyChanged}" Header="direccion id" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                             <!--materialDesign:MaterialDataGridTextColumn x:Name="observacionesColumn" Binding="{Binding observaciones}" Header="observaciones" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/-->
 
                         </DataGrid.Columns>
@@ -89,8 +91,6 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-
-
                 <StackPanel DataContext="{StaticResource clientesViewSource}" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
@@ -103,11 +103,13 @@
                         <StackPanel Orientation="Vertical" Width="180"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                             Margin="8,24,16,24">
-                            <ToggleButton HorizontalAlignment="Right" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}" FontSize="16"
+                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"/>
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
                                MaxWidth="180" MinHeight="300"
                                TextWrapping="Wrap" VerticalAlignment="Top"/>
-                            <RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top" Visibility="Collapsed" FontSize="16"
+                            <RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top"
+                                         Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="16"
                                          DataObject.Pasting="rtbObservaciones_Pasting">
                                 <FlowDocument>
                                     <Paragraph>
