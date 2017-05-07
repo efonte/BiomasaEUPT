@@ -103,12 +103,25 @@
                         <StackPanel Orientation="Vertical" Width="180"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                             Margin="8,24,16,24">
-                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"/>
+                            <ToggleButton x:Name="tbEditarObservaciones" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
+                                <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <RotateTransform Angle="45" />
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="Pin"/>
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                            </ToggleButton>
                             <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
-                               MaxWidth="180" MinHeight="300"
-                               TextWrapping="Wrap" VerticalAlignment="Top"/>
-                            <RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top"
+                                       MaxHeight="350" TextWrapping="Wrap"/>
+                            <TextBox x:Name="tboxObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                     FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                                     MaxHeight="350" TextWrapping="Wrap"/>
+                            <!--RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top"
                                          Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="16"
                                          DataObject.Pasting="rtbObservaciones_Pasting">
                                 <FlowDocument>
@@ -117,8 +130,7 @@
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-
-                            <Button x:Name="bObservaciones" Margin="0 10 0 0" Content="Cambiar" VerticalAlignment="Bottom" IsEnabled="False"/>
+                            <Button x:Name="bObservaciones" Margin="0 10 0 0" Content="Cambiar" VerticalAlignment="Bottom" IsEnabled="False"/-->
                         </StackPanel>
                     </Expander>
                 </StackPanel>
