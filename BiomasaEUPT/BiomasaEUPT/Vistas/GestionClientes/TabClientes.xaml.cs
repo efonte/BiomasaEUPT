@@ -131,7 +131,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private void ConfirmarCambios()
         {
-            Console.WriteLine("^^^^^^^^^^^^^^");
             context.SaveChanges();
             clientesViewSource.View.Refresh();
         }
@@ -148,7 +147,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 if (_borrarComando == null)
                 {
                     _borrarComando = new RelayComando(
-                        param => BorrarUsuario(),
+                        param => BorrarCliente(),
                         param => CanBorrar()
                     );
                 }
@@ -167,31 +166,21 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             return false;
         }
 
-        private async void BorrarUsuario()
+        private async void BorrarCliente()
         {
-            if (ucTablaClientes.dgClientes.SelectedItems.Count == 1)
-            {
-                clientes clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as clientes;
-                var mensaje = new MensajeConfirmacion("¿Está seguro de que desea borrar al cliente '" + clienteSeleccionado.razon_social + "'?");
-                mensaje.MaxHeight = ActualHeight;
-                mensaje.MaxWidth = ActualWidth;
+            string pregunta = ucTablaClientes.dgClientes.SelectedItems.Count == 1
+                ? "¿Está seguro de que desea borrar al cliente " + (ucTablaClientes.dgClientes.SelectedItem as clientes).razon_social + "?"
+                : "¿Está seguro de que desea borrar los clientes seleccionados?";
 
-                var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
+            var mensaje = new MensajeConfirmacion(pregunta);
+            mensaje.MaxHeight = ActualHeight;
+            mensaje.MaxWidth = ActualWidth;
 
-                if (resultado)
-                {
-                    context.clientes.Remove(clienteSeleccionado);
-                }
-            }
-            else if (ucTablaClientes.dgClientes.SelectedItems.Count > 1)
+            var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
+
+            if (resultado)
             {
-                /* foreach (var item in ucTablaClientes.dgClientes.SelectedItems)
-                 {
-                     clientes clienteSeleccionado = item as clientes;
-                     Console.WriteLine(clienteSeleccionado.razon_social);
-                     context.clientes.Local.Remove(clienteSeleccionado); // Produce excepción ARREGLAR!!!!!!!!!!!!!!!
-                 }*/
-                //ucTablaUsuarios.dgUsuarios.Items.Remove(ucTablaUsuarios.dgUsuarios.SelectedItems);
+                context.clientes.RemoveRange(ucTablaClientes.dgClientes.SelectedItems.Cast<clientes>().ToList());
             }
         }
         #endregion

@@ -24,7 +24,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     public partial class TablaUsuarios : UserControl
     {
 
-
         public TablaUsuarios()
         {
             InitializeComponent();

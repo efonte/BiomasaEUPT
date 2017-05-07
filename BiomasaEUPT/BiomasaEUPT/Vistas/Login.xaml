@@ -80,9 +80,9 @@
 
             <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Foreground="{Binding BorderBrush, ElementName=pbContrasena}" HorizontalAlignment="Right" />
             <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena"
-                     materialDesign:HintAssist.Hint="Contraseña"
-                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     PasswordChanged="pbContrasena_PasswordChanged">
+                         materialDesign:HintAssist.Hint="Contraseña"
+                         domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PasswordChanged="pbContrasena_PasswordChanged">
 
             </PasswordBox>
             <CheckBox x:Name="cbRecordarme" Grid.Row="3" Grid.Column="1" Content="Recordar contraseña" HorizontalAlignment="Right" Margin="0 20 0 20" />
@@ -95,10 +95,9 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding  ElementName=tbUsuario, Path=(Validation.HasError)}" 
-                                       Value="false" />
+                                               Value="false" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" 
-                            Value="true" />
+                                <Setter Property="IsEnabled" Value="true" />
                             </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>

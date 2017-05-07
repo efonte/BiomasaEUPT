@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="180" Loaded="UserControl_Loaded">
@@ -51,9 +52,91 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Grid.RowSpan="2" Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20" Margin="0,0,0,0">
+        <GroupBox Grid.Row="0" Grid.RowSpan="2" Style="{DynamicResource MaterialDesignCardGroupBox}" FontSize="20" Margin="0,0,0,0">
+
             <GroupBox.Header>
-                <TextBlock Text="Filtrar" HorizontalAlignment="Center" Foreground="White"/>
+                <materialDesign:ColorZone Mode="PrimaryMid">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
+                            <StackPanel>
+                                <Button Content="Añadir" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                    <Button.CommandParameter>
+                                        <StackPanel Margin="16">
+                                            <TextBlock>Nuevo tipo.</TextBlock>
+                                            <TextBox x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" Margin="10"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <TextBox.Text>
+                                                    <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <TextBox x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción" Margin="10"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <TextBox.Text>
+                                                    <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <validadores:RequeridoValidationRule NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                                <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand"
+                                                        Click="bNuevoTipo_Click">
+                                                    <Button.Style>
+                                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" 
+                                                                                   Value="False" />
+                                                                        <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" 
+                                                                                   Value="False" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="IsEnabled" Value="True" />
+                                                                </MultiDataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <Button.CommandParameter>
+                                                        <system:Boolean>True</system:Boolean>
+                                                    </Button.CommandParameter>
+                                                    ACEPTAR
+                                                </Button>
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                        IsCancel="True" Margin="0 8 8 0"
+                                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                    <Button.CommandParameter>
+                                                        <system:Boolean>False</system:Boolean>
+                                                    </Button.CommandParameter>
+                                                    CANCELAR
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Content="Editar">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=lbFiltro, Path=SelectedItems.Count}" Value="1">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Content="Borrar" IsEnabled="{Binding ElementName=lbFiltro, Path=SelectedItem}"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <TextBlock Text="Filtrar" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </materialDesign:ColorZone>
             </GroupBox.Header>
 
             <ListBox x:Name="lbFiltro" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
@@ -88,46 +171,6 @@
             </ListBox>
         </GroupBox>
 
-        <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                                
-                                       Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                                       VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                                       Grid.Row="0" Margin="0 0 20 20">
-            <Viewbox Width="15" Height="15">
-                <Canvas Width="15" Height="15">
-                    <Path Width="15" Height="15" Stretch="Fill" Data="F1 M 53.2929,21.2929L 54.7071,22.7071C 56.4645,24.4645 56.4645,27.3137 54.7071,29.0711L 52.2323,31.5459L 44.4541,23.7677L 46.9289,21.2929C 48.6863,19.5355 51.5355,19.5355 53.2929,21.2929 Z M 31.7262,52.052L 23.948,44.2738L 43.0399,25.182L 50.818,32.9601L 31.7262,52.052 Z M 23.2409,47.1023L 28.8977,52.7591L 21.0463,54.9537L 23.2409,47.1023 Z M 17,28L 17,23L 23,23L 23,17L 28,17L 28,23L 34,23L 34,28L 28,28L 28,34L 23,34L 23,28L 17,28 Z "
-                          Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
-                </Canvas>
-            </Viewbox>
-            <Button.CommandParameter>
-                <StackPanel Margin="16">
-                    <TextBlock>Añadir nuevo tipo.</TextBlock>
-                    <TextBox materialDesign:HintAssist.Hint="Nombre"  Margin="10"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox materialDesign:HintAssist.Hint="Descripción" Margin="10"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand" Click="Button_Click">
-                            <Button.CommandParameter>
-                                <system:Boolean>True</system:Boolean>
-                            </Button.CommandParameter>
-                            ACEPTAR
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
-                            </Button.CommandParameter>
-                            CANCELAR
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </Button.CommandParameter>
-        </Button>
     </Grid>
     <!--/-->
 </UserControl>

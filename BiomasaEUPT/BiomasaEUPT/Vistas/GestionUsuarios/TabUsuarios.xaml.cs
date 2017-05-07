@@ -224,41 +224,19 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private async void BorrarUsuario()
         {
-            if (ucTablaUsuarios.dgUsuarios.SelectedItems.Count == 1)
+            string pregunta = ucTablaUsuarios.dgUsuarios.SelectedItems.Count == 1
+                ? "¿Está seguro de que desea borrar al usuario " + (ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios).nombre + "?"
+                : "¿Está seguro de que desea borrar los usuarios seleccionados?";
+
+            var mensaje = new MensajeConfirmacion(pregunta);
+            mensaje.MaxHeight = ActualHeight;
+            mensaje.MaxWidth = ActualWidth;
+
+            var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
+
+            if (resultado)
             {
-                usuarios usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios;
-                var mensaje = new MensajeConfirmacion("¿Está seguro de que desea borrar el usuario '" + usuarioSeleccionado.nombre + "'?");
-                mensaje.MaxHeight = ActualHeight;
-                mensaje.MaxWidth = ActualWidth;
-
-                var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
-
-                if (resultado)
-                {
-                    context.usuarios.Remove(usuarioSeleccionado);
-                }
-                /* var usuarioSeleccionado = usuariosViewSource.View.CurrentItem as usuarios;
-
-                 var usuarioABorrar = (from u in context.usuarios
-                                       where u.id_usuario == usuarioSeleccionado.id_usuario
-                                       select u).FirstOrDefault();
-
-                 if (usuarioABorrar != null)
-                 {
-                     context.usuarios.Remove(usuarioABorrar);
-                 }*/
-                //context.SaveChanges();
-                //usuariosViewSource.View.Refresh();
-            }
-            else if (ucTablaUsuarios.dgUsuarios.SelectedItems.Count > 1)
-            {
-                foreach (var item in ucTablaUsuarios.dgUsuarios.SelectedItems)
-                {
-                    usuarios usuarioSeleccionado = item as usuarios;
-                    Console.WriteLine(usuarioSeleccionado.nombre);
-                    context.usuarios.Local.Remove(usuarioSeleccionado); // Produce excepción ARREGLAR!!!!!!!!!!!!!!!
-                }
-                //ucTablaUsuarios.dgUsuarios.Items.Remove(ucTablaUsuarios.dgUsuarios.SelectedItems);
+                context.usuarios.RemoveRange(ucTablaUsuarios.dgUsuarios.SelectedItems.Cast<usuarios>().ToList());
             }
         }
         #endregion

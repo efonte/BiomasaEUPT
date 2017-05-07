@@ -28,6 +28,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         public FiltroTabla()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -51,7 +52,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bNuevoTipo_Click(object sender, RoutedEventArgs e)
         {
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
@@ -59,10 +60,23 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 TabClientes tabClientes = (TabClientes)ucParent;
                 CollectionViewSource tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tipos_clientesViewSource")));
                 Console.WriteLine("asasasasa");
-                //   context.tipos_clientes.Add(new tipos_clientes() { nombre = "aa", descripcion = "bb" });
+                context.tipos_clientes.Add(new tipos_clientes() { nombre = Nombre, descripcion = Descripcion });
             }
 
         }
 
+        private string _nombre;
+        public string Nombre
+        {
+            get { return _nombre; }
+            set { _nombre = value; }
+        }
+
+        private string _descripcion;
+        public string Descripcion
+        {
+            get { return _descripcion; }
+            set { _descripcion = value; }
+        }
     }
 }
