@@ -164,6 +164,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
     <Compile Include="pedidos.cs">
@@ -225,6 +227,12 @@
     </Compile>
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionProveedores\TablaProveedores.xaml.cs">
+      <DependentUpon>TablaProveedores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
+      <DependentUpon>TabProveedores.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
       <DependentUpon>InfoUsuarios.xaml</DependentUpon>
@@ -288,6 +296,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionProveedores\TablaProveedores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionProveedores\TabProveedores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

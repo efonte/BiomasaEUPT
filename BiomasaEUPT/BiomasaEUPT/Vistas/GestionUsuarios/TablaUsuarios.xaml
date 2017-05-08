@@ -44,11 +44,13 @@
 
                     <DataGrid.Columns>
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
                             <materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                                        <validadores:LongitudValidationRule NombreCampo="nombre" Min="4" Max="10" ValidatesOnTargetUpdated="True" />
+                                        <validadores:RegexValidationRule ExpReg="^[a-z]*$" Mensaje="El campo nombre sólo acepta letras minúsculas." ValidatesOnTargetUpdated="True" />
                                         <!--validadores:UnicoValidationRule CurrentCollection="{StaticResource usuariosViewSource}"  ValidatesOnTargetUpdated="True"/-->
                                     </Binding.ValidationRules>
                                 </Binding>
@@ -83,7 +85,17 @@
                         </DataGridTemplateColumn>
 
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="Contraseña" Binding="{Binding contrasena}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="Email" Binding="{Binding email, UpdateSourceTrigger=PropertyChanged}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="100" Header="Email" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="254">
+                            <materialDesign:MaterialDataGridTextColumn.Binding>
+                                <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
+                                        <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
+                                        <validadores:RegexValidationRule ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" Mensaje="El campo email no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </materialDesign:MaterialDataGridTextColumn.Binding>
+                        </materialDesign:MaterialDataGridTextColumn>
                         <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
                         <DataGridComboBoxColumn x:Name="tipos_usuariosColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}"

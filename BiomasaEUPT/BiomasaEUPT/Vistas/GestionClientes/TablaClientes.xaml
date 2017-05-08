@@ -53,9 +53,39 @@
                     <DataGrid DataContext="{StaticResource clientesViewSource}" Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" AutoGenerateColumns="False" EnableRowVirtualization="True"
                           ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Binding="{Binding razon_social, UpdateSourceTrigger=PropertyChanged}" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Binding="{Binding nif, UpdateSourceTrigger=PropertyChanged}" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Binding="{Binding email, UpdateSourceTrigger=PropertyChanged}" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Header="Razón social" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                <materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="razon_social" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="100" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '~?!\.]{2,}$" Mensaje="El campo razón social no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="nif" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                <materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="nif" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^[A-Z]-\d{7}$" Mensaje="El campo NIF no tiene un formato válido (L-NNNNNNN)" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                <materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" Mensaje="El campo email no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn>
                             <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tipos_clientesViewSource}}"
                                                 SelectedValuePath="id_tipo_cliente" 
