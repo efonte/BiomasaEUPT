@@ -49,14 +49,22 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 tiposClientesViewSource.Source = context.tipos_clientes.Local;
                 gruposClientesViewSource.Source = context.grupos_clientes.Local;
 
-                ucFiltroTabla.lbFiltro.SelectionChanged += LbFiltro_SelectionChanged;
+                ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbNif.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbCalle.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbPoblacion.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbPoblacion.Unchecked += (s, e1) => { FiltrarTabla(); };
             }
         }
 
-        private void LbFiltro_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FiltrarTabla();
-        }
 
         public void FiltrarTabla()
         {
@@ -73,13 +81,18 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string nif = cliente.nif.ToLower();
             string email = cliente.email.ToLower();
             string calle = cliente.calle.ToLower();
+            string codigoPostal = cliente.direcciones.codigo_postal.ToLower();
+            string poblacion = cliente.direcciones.poblacion.ToLower();
             string tipo = cliente.tipos_clientes.nombre.ToLower();
-
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
             {
-                e.Accepted = razonSocial.Contains(textoBuscado) || nif.Contains(textoBuscado)
-                             || email.Contains(textoBuscado) || calle.Contains(textoBuscado);
+                e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
+                             (ucTablaClientes.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
+                             (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
+                             (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
+                             (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
+                             (ucTablaClientes.cbPoblacion.IsChecked == true ? poblacion.Contains(textoBuscado) : false);
             }
             else
             {
@@ -88,8 +101,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     if (tipoCliente.nombre.ToLower().Equals(tipo))
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
-                        e.Accepted = razonSocial.Contains(textoBuscado) || nif.Contains(textoBuscado)
-                                     || email.Contains(textoBuscado) || calle.Contains(textoBuscado);
+                        e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
+                                     (ucTablaClientes.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
+                                     (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
+                                     (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
+                                     (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
+                                     (ucTablaClientes.cbPoblacion.IsChecked == true ? poblacion.Contains(textoBuscado) : false);
                         break;
                     }
                     else

@@ -84,7 +84,7 @@
                     </TabItem>
 
                     <!-- Pestaña 2 -->
-                    <TabItem>
+                    <TabItem IsSelected="True">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>

@@ -59,7 +59,7 @@
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="100" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '~?!\.]{2,}$" Mensaje="El campo razón social no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" Mensaje="El campo razón social no tiene formato válido." ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
@@ -91,15 +91,22 @@
                                                 SelectedValuePath="id_tipo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource grupos_clientesViewSource}}"
                                                 SelectedValuePath="id_grupo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged}" Header="calle" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="direccion_idColumn" Binding="{Binding direccion_id, UpdateSourceTrigger=PropertyChanged}" Header="direccion id" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            <!--materialDesign:MaterialDataGridTextColumn x:Name="observacionesColumn" Binding="{Binding observaciones}" Header="observaciones" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/-->
-
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle" Width="180" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                <materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="calle" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="calle" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="calle" Min="20" Max="100" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$" Mensaje="El campo calle no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -165,8 +172,49 @@
                     </Expander>
                 </StackPanel>
 
-                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12" materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0" TextChanged="tbBuscar_TextChanged"/>
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0"
+                         TextChanged="tbBuscar_TextChanged"/>
 
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon social" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Población" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbPoblacion" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                    </Grid>
+
+                </materialDesign:PopupBox>
             </Grid>
 
         </GroupBox>
