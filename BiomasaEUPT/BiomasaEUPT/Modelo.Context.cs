@@ -29,6 +29,41 @@ namespace BiomasaEUPT
         {
         }
 
+        public int GuardarCambios<TEntity>() where TEntity : class
+        {
+            // http://stackoverflow.com/questions/33403838/how-can-i-tell-entity-framework-to-save-changes-only-for-a-specific-dbset
+            var original = this.ChangeTracker.Entries()
+                        .Where(x => !typeof(TEntity).IsAssignableFrom(x.Entity.GetType()) && x.State != EntityState.Unchanged)
+                        .GroupBy(x => x.State)
+                        .ToList();
+
+            foreach (var entry in this.ChangeTracker.Entries().Where(x => !typeof(TEntity).IsAssignableFrom(x.Entity.GetType())))
+            {
+                entry.State = EntityState.Unchanged;
+            }
+
+            var rows = base.SaveChanges();
+
+            foreach (var state in original)
+            {
+                foreach (var entry in state)
+                {
+                    entry.State = state.Key;
+                }
+            }
+
+            return rows;
+        }
+
+        public bool HayCambios<TEntity>(bool detectarEstadoInicial = true) where TEntity : class
+        {
+            return this.ChangeTracker.Entries().Where(
+                x => typeof(TEntity).IsAssignableFrom(x.Entity.GetType()) &&
+                x.State != EntityState.Unchanged &&
+                (detectarEstadoInicial && x.State == EntityState.Modified ? (x.OriginalValues.PropertyNames.Where(y => x.OriginalValues[y] != null && x.CurrentValues[y] != null && x.OriginalValues[y].ToString() != x.CurrentValues[y].ToString()).ToList().Count > 0) : true)
+                ).ToList().Count > 0;
+        }
+
         private static string ConnectionString()
         {
             SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();

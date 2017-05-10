@@ -172,15 +172,15 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.ChangeTracker.HasChanges();
+            return context != null && context.HayCambios<usuarios>();
         }
 
         private void ConfirmarCambios()
         {
             /*try
             {*/
-            context.SaveChanges();
-            usuariosViewSource.View.Refresh();
+            context.GuardarCambios<usuarios>();
+            //usuariosViewSource.View.Refresh();
             ActualizarContador();
             /*}
             catch (DbEntityValidationException ex)

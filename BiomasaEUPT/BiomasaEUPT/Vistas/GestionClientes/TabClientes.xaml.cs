@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -143,15 +144,27 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.ChangeTracker.HasChanges();
+            return context != null && context.HayCambios<clientes>();
         }
 
         private void ConfirmarCambios()
         {
-            context.SaveChanges();
-            clientesViewSource.View.Refresh();
+            context.GuardarCambios<clientes>();
+            //clientesViewSource.View.Refresh();
         }
         #endregion
+
+        private bool asd(DbEntityEntry x)
+        {
+            foreach (var prop in x.OriginalValues.PropertyNames)
+            {
+                if (x.OriginalValues[prop].ToString() != x.CurrentValues[prop].ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
         #region Borrar

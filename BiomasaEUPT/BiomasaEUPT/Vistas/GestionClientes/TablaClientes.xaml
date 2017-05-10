@@ -70,7 +70,7 @@
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^[A-Z]-\d{7}$" Mensaje="El campo NIF no tiene un formato válido (L-NNNNNNN)" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" Mensaje="El campo NIF no tiene un formato válido (L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
@@ -137,9 +137,8 @@
                                 </TextBlock.LayoutTransform>
                             </TextBlock>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical" Width="180"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="8,24,16,24">
+                        <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
+                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                             <ToggleButton x:Name="tbEditarObservaciones" Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                           HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
