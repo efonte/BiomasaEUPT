@@ -60,6 +60,7 @@
                                             <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="100" ValidatesOnTargetUpdated="True" />
                                             <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" Mensaje="El campo razón social no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="razon_social"/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
@@ -71,17 +72,19 @@
                                             <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
                                             <validadores:RegexValidationRule ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" Mensaje="El campo NIF no tiene un formato válido (L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
+                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="nif"/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="SizeToHeader" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="254">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
                                             <validadores:RegexValidationRule ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" Mensaje="El campo email no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="email"/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>

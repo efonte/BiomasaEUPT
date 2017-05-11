@@ -51,7 +51,7 @@
                                         <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
                                         <validadores:LongitudValidationRule NombreCampo="nombre" Min="4" Max="10" ValidatesOnTargetUpdated="True" />
                                         <validadores:RegexValidationRule ExpReg="^[a-z]*$" Mensaje="El campo nombre sólo acepta letras minúsculas." ValidatesOnTargetUpdated="True" />
-                                        <!--validadores:UnicoValidationRule CurrentCollection="{StaticResource usuariosViewSource}"  ValidatesOnTargetUpdated="True"/-->
+                                        <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="nombre"/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </materialDesign:MaterialDataGridTextColumn.Binding>
@@ -92,6 +92,7 @@
                                         <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                         <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
                                         <validadores:RegexValidationRule ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" Mensaje="El campo email no tiene formato válido." ValidatesOnTargetUpdated="True" />
+                                        <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="email"/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </materialDesign:MaterialDataGridTextColumn.Binding>
