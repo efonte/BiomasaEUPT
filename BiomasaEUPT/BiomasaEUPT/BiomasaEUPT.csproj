@@ -164,10 +164,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\UsuarioValidationRule.cs" />
     <Compile Include="pedidos.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

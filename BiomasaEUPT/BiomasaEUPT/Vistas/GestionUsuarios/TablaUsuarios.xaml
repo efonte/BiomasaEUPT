@@ -27,25 +27,37 @@
 
                 <DataGrid Grid.Row="0" x:Name="dgUsuarios" DataContext="{StaticResource usuariosViewSource}"
                           RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}"
-                          EnableRowVirtualization="True" AutoGenerateColumns="False">
-                    <!--DataGrid.Resources>
-                <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
-                    <Setter Property="Padding" Value="-2"/>
-                    <Style.Triggers>
-                        <Trigger Property="Validation.HasError" Value="True">
-                            <Setter Property="Background" Value="Red"/>
-                            <Setter Property="ToolTip" 
-                                    Value="{Binding RelativeSource={RelativeSource Self},
-                                    Path=(Validation.Errors)[0].ErrorContent}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </-->
+                          EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All">
+                    <DataGrid.RowValidationErrorTemplate>
+                        <ControlTemplate>
+                            <Grid Margin="2,-2"
+                                      ToolTip="{Binding RelativeSource={RelativeSource
+                                      FindAncestor, AncestorType={x:Type DataGridRow}},
+                                      Path=(Validation.Errors)[0].ErrorContent}">
+                                <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
+                                <TextBlock Text="!" FontSize="18" 
+                                               FontWeight="Bold" Foreground="White" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <!--Label Foreground="Red"
+                                       ToolTip="{Binding RelativeSource={RelativeSource
+                                      FindAncestor, AncestorType={x:Type DataGridRow}},
+                                      Path=(Validation.Errors)[0].ErrorContent}">
+                                    <materialDesign:PackIcon Kind="Exclamation" Height="21" Width="21" />
+                                </-->
+                        </ControlTemplate>
+                    </DataGrid.RowValidationErrorTemplate>
+
+                    <DataGrid.RowValidationRules>
+                        <validadores:UsuarioValidationRule ValidationStep="UpdatedValue"/>
+                    </DataGrid.RowValidationRules>
 
                     <DataGrid.Columns>
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
-                            <materialDesign:MaterialDataGridTextColumn.Binding>
+                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre"
+                                                                   Binding="{Binding nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
+                            <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
@@ -54,7 +66,7 @@
                                         <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="nombre"/>
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn.Binding-->
                         </materialDesign:MaterialDataGridTextColumn>
 
 
@@ -84,9 +96,11 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
 
-                        <!--materialDesign:MaterialDataGridTextColumn x:Name="contrasenaColumn" Width="SizeToHeader" Header="Contraseña" Binding="{Binding contrasena}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="100" Header="Email" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="254">
-                            <materialDesign:MaterialDataGridTextColumn.Binding>
+                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="100" Header="Email"
+                                                                   Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                   MaxLength="254">
+                            <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
@@ -95,7 +109,7 @@
                                         <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="email"/>
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn.Binding-->
                         </materialDesign:MaterialDataGridTextColumn>
                         <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
                         <DataGridComboBoxColumn x:Name="tipos_usuariosColumn" Header="Tipo"

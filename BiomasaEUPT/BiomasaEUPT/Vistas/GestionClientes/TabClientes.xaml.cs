@@ -144,6 +144,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private bool CanConfirmarCambios()
         {
+            Console.WriteLine(Validation.GetHasError(ucTablaClientes.dgClientes));
             return context != null && context.HayCambios<clientes>();
         }
 
