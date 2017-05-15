@@ -30,20 +30,18 @@ namespace BiomasaEUPT.Modelos.Validadores
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string mensajeError = "El campo{0} debe ser único.";
+            string mensajeError = "El campo {0} debe ser único.";
             string valor = (string)value;
             if (Tipo == "usuarios")
             {
                 foreach (var item in (ObservableCollection<usuarios>)Coleccion.Source)
                 {
                     if (Atributo == "nombre" && item.nombre == valor)
-                    {
-                        return new ValidationResult(false, String.Format(mensajeError, " nombre"));
-                    }
-                    else if (Atributo == "email" && item.email == valor)
-                    {
-                        return new ValidationResult(false, String.Format(mensajeError, " email"));
-                    }
+                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                    if (Atributo == "email" && item.email == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "email"));
+
                 }
             }
             else if (Tipo == "clientes")
@@ -51,17 +49,23 @@ namespace BiomasaEUPT.Modelos.Validadores
                 foreach (var item in (ObservableCollection<clientes>)Coleccion.Source)
                 {
                     if (Atributo == "razon_social" && item.razon_social == valor)
-                    {
-                        return new ValidationResult(false, String.Format(mensajeError, " razón social"));
-                    }
-                    else if (Atributo == "nif" && item.nif == valor)
-                    {
-                        return new ValidationResult(false, String.Format(mensajeError, " NIF"));
-                    }
-                    else if (Atributo == "email" && item.email == valor)
-                    {
-                        return new ValidationResult(false, String.Format(mensajeError, " email"));
-                    }
+                        return new ValidationResult(false, String.Format(mensajeError, "razón social"));
+
+                    if (Atributo == "nif" && item.nif == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "NIF"));
+
+                    if (Atributo == "email" && item.email == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "email"));
+
+                }
+            }
+            else if (Tipo == "tiposClientes")
+            {
+                foreach (var item in (ObservableCollection<tipos_clientes>)Coleccion.Source)
+                {
+                    if (Atributo == "nombre" && item.nombre == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
                 }
             }
 

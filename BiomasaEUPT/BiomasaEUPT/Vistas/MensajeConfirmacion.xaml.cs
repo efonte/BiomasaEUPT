@@ -20,15 +20,17 @@ namespace BiomasaEUPT.Vistas
     /// </summary>
     public partial class MensajeConfirmacion : UserControl
     {
+        public string Mensaje { get; set; }
+
         public MensajeConfirmacion()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
-        public MensajeConfirmacion(string mensaje)
+        public MensajeConfirmacion(string _mensaje) : this()
         {
-            InitializeComponent();
-            this.mensaje.Text = mensaje;
+            Mensaje = _mensaje;
         }
     }
 }

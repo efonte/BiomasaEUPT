@@ -7,7 +7,7 @@
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              TextElement.FontSize="15"
-             mc:Ignorable="d" >
+             mc:Ignorable="d">
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -17,9 +17,9 @@
                  Margin="0 6 0 0"
                  FontSize="18" Grid.Row="0"
                  /-->
-        <TextBlock x:Name="mensaje"  TextWrapping="Wrap"
+        <TextBlock x:Name="mensaje" TextWrapping="Wrap" Text="{Binding Mensaje}"
                    Margin="0 6 0 0"
-                    Grid.Row="0"/>
+                   Grid.Row="0"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1"
                     Margin="0 16 0 0">
             <Button IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"

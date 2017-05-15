@@ -1,5 +1,8 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Validadores;
 using BiomasaEUPT.Vistas.GestionClientes;
+using BiomasaEUPT.Vistas.GestionUsuarios;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +28,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     {
         private BiomasaEUPTEntidades context;
         private DependencyObject ucParent;
+        private CollectionViewSource tiposClientesViewSource;
+
         public FiltroTabla()
         {
             InitializeComponent();
@@ -35,7 +40,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
             ucParent = Parent;
-            //lbFiltro.SelectAll();
             while (!(ucParent is UserControl))
             {
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
@@ -45,38 +49,80 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 TabClientes tabClientes = (TabClientes)ucParent;
-                CollectionViewSource tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tipos_clientesViewSource")));
+                tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tipos_clientesViewSource")));
                 ccFiltro.Collection = tiposClientesViewSource.View;
                 //   tabClientes.FiltrarTabla();
             }
 
         }
 
-        private void bNuevoTipo_Click(object sender, RoutedEventArgs e)
+
+        private async void bAnadir_Click(object sender, RoutedEventArgs e)
         {
+            var formTipo = new FormTipo();
+            Binding binding = BindingOperations.GetBinding(formTipo.tbNombre, TextBox.TextProperty);
+
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 TabClientes tabClientes = (TabClientes)ucParent;
-                CollectionViewSource tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tipos_clientesViewSource")));
-                Console.WriteLine("asasasasa");
-                context.tipos_clientes.Add(new tipos_clientes() { nombre = Nombre, descripcion = Descripcion });
+                binding.ValidationRules.Add(new UnicoValidationRule() { Coleccion = tiposClientesViewSource, Tipo = "tiposClientes", Atributo = "nombre" });
+                if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+                {
+                    context.tipos_clientes.Add(new tipos_clientes() { nombre = formTipo.Nombre, descripcion = formTipo.Descripcion });
+                    context.GuardarCambios<tipos_clientes>();
+                }
+            }
+
+
+        }
+
+        private async void bEditar_Click(object sender, RoutedEventArgs e)
+        {
+            var formTipo = new FormTipo();
+            Binding binding = BindingOperations.GetBinding(formTipo.tbNombre, TextBox.TextProperty);
+
+            // Pestaña Clientes
+            if (ucParent.GetType().Equals(typeof(TabClientes)))
+            {
+                var tipoSeleccionado = lbFiltro.SelectedItem as tipos_clientes;
+                formTipo.Nombre = tipoSeleccionado.nombre;
+                formTipo.Descripcion = tipoSeleccionado.descripcion;
+                binding.ValidationRules.Add(new UnicoValidationRule() { Coleccion = tiposClientesViewSource, Tipo = "tiposClientes", Atributo = "nombre" });
+                if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+                {
+                    tipoSeleccionado.nombre = formTipo.Nombre;
+                    tipoSeleccionado.descripcion = formTipo.Descripcion;
+                    tiposClientesViewSource.View.Refresh();
+                    context.GuardarCambios<tipos_clientes>();
+                }
             }
 
         }
 
-        private string _nombre;
-        public string Nombre
+        private async void bBorrar_Click(object sender, RoutedEventArgs e)
         {
-            get { return _nombre; }
-            set { _nombre = value; }
+            var mensajeConf = new MensajeConfirmacion();
+
+            // Pestaña Clientes
+            if (ucParent.GetType().Equals(typeof(TabClientes)))
+            {
+                var tipoSeleccionado = lbFiltro.SelectedItem as tipos_clientes;
+                mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.nombre + "?";
+                if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+                {
+                    if (context.clientes.Where(t => t.tipo_id == tipoSeleccionado.id_tipo_cliente).Count() == 0)
+                    {
+                        context.tipos_clientes.Remove(tipoSeleccionado);
+                        context.GuardarCambios<tipos_clientes>();
+                    }
+                    else
+                    {
+                        await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                    }
+                }
+            }
         }
 
-        private string _descripcion;
-        public string Descripcion
-        {
-            get { return _descripcion; }
-            set { _descripcion = value; }
-        }
     }
 }
