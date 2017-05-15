@@ -14,16 +14,16 @@ namespace BiomasaEUPT.Modelos.Validadores
     public class ClienteValidationRule : ValidationRule
     {
         private int minRazonSocial = 5;
-        private int maxRazonSocial = 100;
+        private int maxRazonSocial = 40;
         private string regexRazonSocial = "^(?!\\s)(?!.*\\s$)[\\p{L}0-9\\s'~?!\\.,@]+$";
         private int minNif = 9;
         private int maxNif = 9;
         private string regexNif = "^([A-Z]-\\d{7})|(\\d{7}-[A-Z])$";
-        private int minEmail = 10;
+        private int minEmail = 5;
         private int maxEmail = 254;
         private string regexEmail = "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
-        private int minCalle = 20;
-        private int maxCalle = 100;
+        private int minCalle = 5;
+        private int maxCalle = 60;
         private string regexCalle = "^(?!\\s)(?!.*\\s$)[\\p{L}0-9\\s'~?!\\.,\\/]+$";
         //private int minObservaciones;
         //private int maxObservaciones;

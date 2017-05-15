@@ -13,10 +13,10 @@ namespace BiomasaEUPT.Modelos.Validadores
 {
     public class UsuarioValidationRule : ValidationRule
     {
-        private int minNombre = 4;
+        private int minNombre = 3;
         private int maxNombre = 10;
         private string regexNombre = "^[a-z]+$";
-        private int minEmail = 10;
+        private int minEmail = 5;
         private int maxEmail = 254;
         private string regexEmail = "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
 
