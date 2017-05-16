@@ -32,6 +32,9 @@ namespace BiomasaEUPT.Vistas
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             // Cargar datos estableciendo la propiedad CollectionViewSource.Source:
             // clientesViewSource.Source = [origen de datos genérico]
+            System.Windows.Data.CollectionViewSource tipos_clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("tipos_clientesViewSource")));
+            // Cargar datos estableciendo la propiedad CollectionViewSource.Source:
+            // tipos_clientesViewSource.Source = [origen de datos genérico]
         }
     }
 }

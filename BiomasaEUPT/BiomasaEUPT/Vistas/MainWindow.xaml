@@ -16,12 +16,12 @@
         Closing="Window_Closing"        
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
+        TextElement.FontSize="15"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Window.Resources>
+    <!--Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
@@ -30,7 +30,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Window.Resources>
+    </Window.Resources-->
 
     <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="280" MinHeight="300">
         <DockPanel>
@@ -68,10 +68,10 @@
 
             <!-- Pestañas -->
             <dockablz:Layout>
-                <dragablz:TabablzControl BorderThickness="0" Margin="0 0 0 0">
+                <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0">
 
                     <!-- Pestaña 1 -->
-                    <TabItem>
+                    <TabItem x:Name="tiUsuarios" Selector.Unselected="tiUsuarios_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -84,7 +84,7 @@
                     </TabItem>
 
                     <!-- Pestaña 2 -->
-                    <TabItem IsSelected="True">
+                    <TabItem x:Name="tiClientes" IsSelected="True" Selector.Unselected="tiClientes_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -92,7 +92,7 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <GestionClientes:TabClientes x:Name="ucClientes" />
+                        <GestionClientes:TabClientes x:Name="ucTabClientes" />
 
                     </TabItem>
 

@@ -9,6 +9,7 @@
         Title="Window1" Height="600" Width="800" Loaded="Window_Loaded" >
     <Window.Resources>
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
+        <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
     </Window.Resources>
 
     <Grid DataContext="{StaticResource clientesViewSource}" >
@@ -25,6 +26,13 @@
                 <DataGridTextColumn x:Name="tipo_idColumn" Binding="{Binding tipo_id}" Header="tipo id" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
+        <ComboBox x:Name="tipos_clientesComboBox" DisplayMemberPath="descripcion" Height="18" ItemsSource="{Binding Source={StaticResource tipos_clientesViewSource}}" Margin="391,447,383,104" SelectedValuePath="descripcion">
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+        </ComboBox>
 
     </Grid>
 </Window>

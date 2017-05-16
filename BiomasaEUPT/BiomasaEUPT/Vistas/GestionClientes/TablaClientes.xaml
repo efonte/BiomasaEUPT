@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
+             xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
@@ -12,14 +13,13 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <!--ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <!-- throw in some extra colour for our floating action button -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries-->
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
@@ -53,7 +53,7 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" DataContext="{StaticResource clientesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"
@@ -160,6 +160,24 @@
                             </Button>
                             <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
                                 <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
+                                <!--Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                        <Setter Property="IsEnabled" Value="false" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding  ElementName=dgClientes, Path=(Validation.HasError)}" 
+                                                               Value="false" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="true" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style-->
+                            </Button>
+
+                            <Button x:Name="bAnadirCliente" ToolTip="Añadir cliente">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
 
                         </StackPanel>

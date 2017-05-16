@@ -63,21 +63,21 @@
                     </DockPanel>
                 </materialDesign:ColorZone>
             </GroupBox.Header>
-
-            <ListBox x:Name="lbFiltro" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
-                <ListBox.ItemsSource>
-                    <CompositeCollection x:Name="cmpc">
-                        <!--ListBoxItem x:Name="lbiTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem-->
-                        <CollectionContainer x:Name="ccFiltro"/>
-                        <!--DataTemplate x:Name="dtFiltro">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ListBox x:Name="lbFiltro" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
+                    <ListBox.ItemsSource>
+                        <CompositeCollection x:Name="cmpc">
+                            <!--ListBoxItem x:Name="lbiTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem-->
+                            <CollectionContainer x:Name="ccFiltro"/>
+                            <!--DataTemplate x:Name="dtFiltro">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Path=nombre}"/>
                                 <TextBlock Text="{Binding Path=descripcion}"/>
                             </StackPanel>
                         </-->
-                    </CompositeCollection>
-                </ListBox.ItemsSource>
-                <!--ListBox.ItemTemplate>
+                        </CompositeCollection>
+                    </ListBox.ItemsSource>
+                    <!--ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
@@ -85,15 +85,16 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate-->
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="8 0 0 0">
-                            <TextBlock FontWeight="Bold" Text="{Binding nombre}" FontSize="14"/>
-                            <TextBlock Text="{Binding descripcion}" FontSize="14"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListBox>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="8 0 0 0">
+                                <TextBlock FontWeight="Bold" Text="{Binding nombre}" FontSize="14"/>
+                                <TextBlock Text="{Binding descripcion}" FontSize="14"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
         </GroupBox>
 
     </Grid>

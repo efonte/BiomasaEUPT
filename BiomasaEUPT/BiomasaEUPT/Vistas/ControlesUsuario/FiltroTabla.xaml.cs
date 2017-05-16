@@ -60,13 +60,14 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bAnadir_Click(object sender, RoutedEventArgs e)
         {
             var formTipo = new FormTipo();
-            Binding binding = BindingOperations.GetBinding(formTipo.tbNombre, TextBox.TextProperty);
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 TabClientes tabClientes = (TabClientes)ucParent;
-                binding.ValidationRules.Add(new UnicoValidationRule() { Coleccion = tiposClientesViewSource, Tipo = "tiposClientes", Atributo = "nombre" });
+                formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
+                formTipo.vNombreUnico.Tipo = "tiposClientes";
+                formTipo.vNombreUnico.Atributo = "nombre";
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     context.tipos_clientes.Add(new tipos_clientes() { nombre = formTipo.Nombre, descripcion = formTipo.Descripcion });
@@ -80,7 +81,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bEditar_Click(object sender, RoutedEventArgs e)
         {
             var formTipo = new FormTipo();
-            Binding binding = BindingOperations.GetBinding(formTipo.tbNombre, TextBox.TextProperty);
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
@@ -88,7 +88,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 var tipoSeleccionado = lbFiltro.SelectedItem as tipos_clientes;
                 formTipo.Nombre = tipoSeleccionado.nombre;
                 formTipo.Descripcion = tipoSeleccionado.descripcion;
-                binding.ValidationRules.Add(new UnicoValidationRule() { Coleccion = tiposClientesViewSource, Tipo = "tiposClientes", Atributo = "nombre" });
+                formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
+                formTipo.vNombreUnico.Tipo = "tiposClientes";
+                formTipo.vNombreUnico.Atributo = "nombre";
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.nombre = formTipo.Nombre;

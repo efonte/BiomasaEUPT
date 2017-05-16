@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiomasaEUPT.Vistas.GestionClientes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,23 @@ namespace BiomasaEUPT
             login.tbUsuario.Text = Properties.Settings.Default.usuario;
             Close();
         }
+
+
+        private void tiUsuarios_Unselected(object sender, RoutedEventArgs e)
+        {
+            // Cancela la inserción de una nueva fila (si no se ha completado)
+            if (ucTabUsuarios != null)
+                ucTabUsuarios.ucTablaUsuarios.dgUsuarios.CancelEdit();
+
+        }
+
+        private void tiClientes_Unselected(object sender, RoutedEventArgs e)
+        {
+            if (ucTabClientes != null)
+                ucTabClientes.ucTablaClientes.dgClientes.CancelEdit();
+
+        }
+
 
     }
 }

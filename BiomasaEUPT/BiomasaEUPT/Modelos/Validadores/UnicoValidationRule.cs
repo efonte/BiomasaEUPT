@@ -63,6 +63,15 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 foreach (var item in (ObservableCollection<tipos_clientes>)Coleccion.Source)
                 {
+                    if (Atributo == "nombre" && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.nombre == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                }
+            }
+            else if (Tipo == "gruposClientes")
+            {
+                foreach (var item in (ObservableCollection<grupos_clientes>)Coleccion.Source)
+                {
                     if (Atributo == "nombre" && item.nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 

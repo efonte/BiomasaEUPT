@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,9 +64,28 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 ucTablaClientes.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbPoblacion.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbPoblacion.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
             }
         }
 
+        private async void BAnadirCliente_Click(object sender, RoutedEventArgs e)
+        {
+            var formCliente = new FormCliente();
+            formCliente.Width = 400;
+            formCliente.Height = 300;
+
+            if ((bool)await DialogHost.Show(formCliente, "RootDialog"))
+            {
+              /*  context.clientes.Add(new clientes()
+                {
+                    razon_social = formCliente.tbRazonSocial.Text,
+                    nif = formCliente.tbNif.Text,
+                    email = formCliente.tbEmail.Text,
+                    calle = formCliente.tbCalle.Text,
+                    observaciones = formCliente.tbObservaciones.Text
+                });*/
+            }
+        }
 
         public void FiltrarTabla()
         {
@@ -144,13 +164,28 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private bool CanConfirmarCambios()
         {
-            Console.WriteLine(Validation.GetHasError(ucTablaClientes.dgClientes));
             return context != null && context.HayCambios<clientes>();
         }
 
-        private void ConfirmarCambios()
+        private async void ConfirmarCambios()
         {
-            context.GuardarCambios<clientes>();
+            try
+            {
+                context.GuardarCambios<clientes>();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("\n", errorMessages);
+
+                await DialogHost.Show(new MensajeInformacion("No pueden guardar los cambios:\n\n" + fullErrorMessage), "RootDialog");
+                //Console.WriteLine(fullErrorMessage);               
+            }
             //clientesViewSource.View.Refresh();
         }
         #endregion
@@ -215,6 +250,36 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
+
+        /*  #region AñadirCliente
+          private ICommand _anadirClienteComando;
+
+          public ICommand AnadirClienteComando
+          {
+              get
+              {
+                  if (_anadirClienteComando == null)
+                  {
+                      _anadirClienteComando = new RelayComando(
+                          param => AnadirCliente(),
+                          param => true
+                      );
+                  }
+                  return _anadirClienteComando;
+              }
+          }
+
+
+          private void AnadirCliente()
+          {
+
+          }
+
+      }
+      #endregion*/
+
+
 
 
     }

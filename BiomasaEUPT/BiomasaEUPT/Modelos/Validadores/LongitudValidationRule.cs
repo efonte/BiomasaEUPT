@@ -33,12 +33,13 @@ namespace BiomasaEUPT.Modelos.Validadores
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             string campo = string.IsNullOrEmpty(NombreCampo) ? "campo" : "campo " + NombreCampo;
+            string cadena = (string)value ?? string.Empty;
 
-            if (((string)value).Length < Min)
+            if (cadena.Length < Min)
             {
                 return new ValidationResult(false, "La longitud del " + campo + " es menor de " + Min + " carácteres.");
             }
-            if (((string)value).Length > Max)
+            if (cadena.Length > Max)
             {
                 return new ValidationResult(false, "La longitud del " + campo + " es mayor de " + Max + " carácteres.");
             }

@@ -10,14 +10,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
     <StackPanel Margin="16">
-        <TextBlock>Nuevo tipo.</TextBlock>
+        <TextBlock x:Name="tbTitulo">Nuevo tipo.</TextBlock>
         <TextBox x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" Margin="10"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}">
             <TextBox.Text>
                 <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="nombre" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
+                        <validadores:RequeridoValidationRule x:Name="vNombreRequerido" NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                        <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
+                        <validadores:UnicoValidationRule x:Name="vNombreUnico" ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -27,8 +28,8 @@
             <TextBox.Text>
                 <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="descripción" Min="5" Max="50" ValidatesOnTargetUpdated="True" />
+                        <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
+                        <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="5" Max="50" ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

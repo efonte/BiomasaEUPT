@@ -37,7 +37,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             TabClientes tabClientes = (TabClientes)ucParent;
 
             tabClientes.FiltrarTabla();
-        }
+        }        
 
         /*  private void ToggleButton_Checked(object sender, RoutedEventArgs e)
           {
