@@ -12,17 +12,24 @@ namespace BiomasaEUPT.Modelos.Validadores
     public class RegexValidationRule : ValidationRule
     {
         private string _expReg;
-        private string _mensaje;
-
         public string ExpReg
         {
             get { return _expReg; }
             set { _expReg = value; }
         }
-        public string Mensaje
+
+        private string _mensajeFormato;
+        public string MensajeFormato
         {
-            get { return _mensaje; }
-            set { _mensaje = value; }
+            get { return _mensajeFormato; }
+            set { _mensajeFormato = value; }
+        }
+
+        private string _nombreCampo;
+        public string NombreCampo
+        {
+            get { return _nombreCampo; }
+            set { _nombreCampo = value; }
         }
 
 
@@ -32,7 +39,7 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 if (!Regex.IsMatch((string)value, ExpReg))
                 {
-                    return new ValidationResult(false, Mensaje);
+                    return new ValidationResult(false, String.Format("El campo{0} no tiene formato válido{1}.", " " + NombreCampo, " " + MensajeFormato));
                 }
             }
 

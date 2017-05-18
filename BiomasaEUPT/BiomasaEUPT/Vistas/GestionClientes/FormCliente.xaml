@@ -4,145 +4,191 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             Height="450" Width="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <Setter Property="Margin" Value="10" />
+                <Setter Property="FontSize" Value="15" />
             </Style>
-            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="Margin" Value="10 8 10 8" />
+                <Setter Property="FontSize" Value="15" />
             </Style>
+            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">Nuevo Cliente</Label>
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbRazonSocial" materialDesign:HintAssist.Hint="Razón social">
-            <TextBox.Text>
-                <Binding Path="RazonSocial" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="razón social" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
-                        <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
+    <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Cliente">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbRazonSocial" materialDesign:HintAssist.Hint="Razón social" MaxLength="40">
+                <TextBox.Text>
+                    <Binding Path="RazonSocial" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="40" ValidatesOnTargetUpdated="True" />
+                            <validadores:RegexValidationRule NombreCampo="razón social" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbNif" materialDesign:HintAssist.Hint="NIF">
-            <TextBox.Text>
-                <Binding Path="Nif" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="NIF" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
-                        <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNif" materialDesign:HintAssist.Hint="NIF" MaxLength="9">
+                <TextBox.Text>
+                    <Binding Path="Nif" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
+                            <validadores:RegexValidationRule NombreCampo="NIF" ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" MensajeFormato="(L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email">
-            <TextBox.Text>
-                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="email" Min="3" Max="254" ValidatesOnTargetUpdated="True" />
-                        <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email" MaxLength="254">
+                <TextBox.Text>
+                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule NombreCampo="email" Min="5" Max="254" ValidatesOnTargetUpdated="True" />
+                            <validadores:RegexValidationRule NombreCampo="email" ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbCalle" materialDesign:HintAssist.Hint="Calle">
-            <TextBox.Text>
-                <Binding Path="Calle" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule NombreCampo="calle" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule NombreCampo="calle" Min="3" Max="254" ValidatesOnTargetUpdated="True" />
-                        <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCalle" materialDesign:HintAssist.Hint="Calle" MaxLength="60">
+                <TextBox.Text>
+                    <Binding Path="Calle" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule NombreCampo="calle" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule NombreCampo="calle" Min="5" Max="60" ValidatesOnTargetUpdated="True" />
+                            <validadores:RegexValidationRule NombreCampo="calle" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-        <ComboBox  Grid.Row="3" Grid.Column="0" x:Name="cbTiposClientes"
-                   DisplayMemberPath="nombre"
-                   ItemsSource="{DynamicResource tipos_clientesViewSource}"
-                   SelectedValuePath="id_tipo_cliente">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
+            <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTiposClientes" materialDesign:HintAssist.Hint="Tipo"
+                      ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
+                      DisplayMemberPath="nombre"
+                      SelectedValuePath="id_tipo_cliente">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
 
-        <ComboBox  Grid.Row="3" Grid.Column="1" x:Name="cbGruposClientes"
-                   DisplayMemberPath="nombre"
-                   ItemsSource="{DynamicResource grupos_clientesViewSource}"
-                   SelectedValuePath="id_grupo_cliente">           
-        </ComboBox>
+            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbGruposClientes" materialDesign:HintAssist.Hint="Grupo"
+                      ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
+                      DisplayMemberPath="nombre"
+                      SelectedValuePath="id_grupo_cliente">
+            </ComboBox>
 
-        <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
+            <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
+                      ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
+                      SelectionChanged="cbPaisesDirecciones_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Height="13" Stretch="Fill" Margin="5" 
+                                   Source="{Binding Converter={StaticResource PaisISOA2ImagenConverter}}"/>
+                            <TextBlock Margin="5" Text="{Binding Converter={StaticResource PaisISOA2NombreCompletoConverter}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
+                      ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
+                      SelectedValuePath="id_direcciones">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} ({1})">
+                                    <Binding Path="codigo_postal"/>
+                                    <Binding Path="poblacion"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                 AcceptsReturn="True" Height="50" MaxLength="150">
-            <TextBox.Text>
-                <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:LongitudValidationRule NombreCampo="observaciones" Min="3" Max="150" ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
+                 AcceptsReturn="True" Height="55" MaxLength="60">
+                <TextBox.Text>
+                    <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:LongitudValidationRule NombreCampo="observaciones" Max="60" ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-        <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=tbRazonSocial, Path=(Validation.HasError)}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=tbNif, Path=(Validation.HasError)}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=tbEmail, Path=(Validation.HasError)}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=tbCalle, Path=(Validation.HasError)}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=tbObservaciones, Path=(Validation.HasError)}" Value="False" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.CommandParameter>
-                    <system:Boolean>True</system:Boolean>
-                </Button.CommandParameter>
-                ACEPTAR
-            </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+            <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=tbRazonSocial, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbNif, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbEmail, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbCalle, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbObservaciones, Path=(Validation.HasError)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                    _ACEPTAR
+                </Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}"
                     IsCancel="True" Margin="0 8 8 0"
                     Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.CommandParameter>
-                    <system:Boolean>False</system:Boolean>
-                </Button.CommandParameter>
-                CANCELAR
-            </Button>
-        </StackPanel>
-    </Grid>
+                    <Button.CommandParameter>
+                        <system:Boolean>False</system:Boolean>
+                    </Button.CommandParameter>
+                    _CANCELAR
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </GroupBox>
 </UserControl>

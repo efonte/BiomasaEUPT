@@ -11,18 +11,20 @@ namespace BiomasaEUPT.Modelos.Validadores
     public class LongitudValidationRule : ValidationRule
     {
         private int _min;
-        private int _max;
-        private string _nombreCampo;
         public int Min
         {
             get { return _min; }
             set { _min = value; }
         }
+
+        private int _max;
         public int Max
         {
             get { return _max; }
             set { _max = value; }
         }
+
+        private string _nombreCampo;
         public string NombreCampo
         {
             get { return _nombreCampo; }

@@ -29,10 +29,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20">
-            <GroupBox.Header>
-                <TextBlock Text="Clientes" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
-            </GroupBox.Header>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Clientes">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -184,7 +181,9 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource clientesViewSource}" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch">
+                <StackPanel DataContext="{StaticResource clientesViewSource}" Grid.Column="1" 
+                            HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
                             <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
@@ -228,7 +227,8 @@
                 </StackPanel>
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
-                         materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">

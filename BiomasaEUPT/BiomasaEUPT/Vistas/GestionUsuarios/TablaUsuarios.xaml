@@ -14,11 +14,7 @@
         <CollectionViewSource x:Key="tipos_usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_usuarios}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20">
-            <GroupBox.Header>
-                <TextBlock Text="Usuarios" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
-            </GroupBox.Header>
-
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -182,7 +178,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <TextBox x:Name="tbBuscar" Grid.Row="1" FontFamily="Roboto" FontSize="12" materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0" TextChanged="tbBuscar_TextChanged"/>
+                <TextBox x:Name="tbBuscar" Grid.Row="1" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         TextChanged="tbBuscar_TextChanged"/>
 
             </Grid>
 

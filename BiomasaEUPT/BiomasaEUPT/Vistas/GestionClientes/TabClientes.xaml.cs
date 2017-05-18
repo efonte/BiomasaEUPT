@@ -71,19 +71,20 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private async void BAnadirCliente_Click(object sender, RoutedEventArgs e)
         {
             var formCliente = new FormCliente();
-            formCliente.Width = 400;
-            formCliente.Height = 300;
 
             if ((bool)await DialogHost.Show(formCliente, "RootDialog"))
             {
-              /*  context.clientes.Add(new clientes()
+                context.clientes.Add(new clientes()
                 {
                     razon_social = formCliente.tbRazonSocial.Text,
                     nif = formCliente.tbNif.Text,
                     email = formCliente.tbEmail.Text,
                     calle = formCliente.tbCalle.Text,
+                    tipos_clientes = formCliente.cbTiposClientes.SelectedItem as tipos_clientes,
+                    grupos_clientes = formCliente.cbGruposClientes.SelectedItem as grupos_clientes,
+                    direcciones = formCliente.cbCodigosPostalesDirecciones.SelectedItem as direcciones,
                     observaciones = formCliente.tbObservaciones.Text
-                });*/
+                });
             }
         }
 
