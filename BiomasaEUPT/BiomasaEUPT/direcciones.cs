@@ -24,7 +24,9 @@ namespace BiomasaEUPT
         public int id_direccion { get; set; }
         public string pais { get; set; }
         public string codigo_postal { get; set; }
-        public string poblacion { get; set; }
+        public string comunidad { get; set; }
+        public string provincia { get; set; }
+        public string municipio { get; set; }
         public double latitud { get; set; }
         public double longitud { get; set; }
     

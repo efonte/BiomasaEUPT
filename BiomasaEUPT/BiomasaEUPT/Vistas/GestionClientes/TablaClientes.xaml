@@ -13,13 +13,6 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <!--ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
-            </ResourceDictionary.MergedDictionaries-->
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="tipos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
@@ -260,13 +253,13 @@
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Población" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
                         <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
                         <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
-                        <CheckBox x:Name="cbPoblacion" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
                     </Grid>
 
                 </materialDesign:PopupBox>

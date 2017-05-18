@@ -17,7 +17,7 @@ namespace BiomasaEUPT.Domain
 
             var cultureInfo = new CultureInfo(value.ToString());
 
-            return cultureInfo.EnglishName;
+            return cultureInfo.DisplayName;
         }
 
         public object ConvertBack(object value, Type targetType,

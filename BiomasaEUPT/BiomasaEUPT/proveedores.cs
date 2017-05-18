@@ -29,9 +29,9 @@ namespace BiomasaEUPT
         public int tipo_id { get; set; }
         public int direccion_id { get; set; }
     
-        public virtual direcciones direcciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<materias_primas> materias_primas { get; set; }
         public virtual tipos_proveedores tipos_proveedores { get; set; }
+        public virtual direcciones direcciones { get; set; }
     }
 }

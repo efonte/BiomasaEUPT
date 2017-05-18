@@ -119,7 +119,6 @@ namespace BiomasaEUPT
 
         public virtual DbSet<almacenes> almacenes { get; set; }
         public virtual DbSet<clientes> clientes { get; set; }
-        public virtual DbSet<direcciones> direcciones { get; set; }
         public virtual DbSet<entradas> entradas { get; set; }
         public virtual DbSet<envasados> envasados { get; set; }
         public virtual DbSet<estados_salidas> estados_salidas { get; set; }
@@ -146,6 +145,7 @@ namespace BiomasaEUPT
         public virtual DbSet<vista_productos_terminados> vista_productos_terminados { get; set; }
         public virtual DbSet<vista_proveedores> vista_proveedores { get; set; }
         public virtual DbSet<vista_usuarios> vista_usuarios { get; set; }
+        public virtual DbSet<direcciones> direcciones { get; set; }
 
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

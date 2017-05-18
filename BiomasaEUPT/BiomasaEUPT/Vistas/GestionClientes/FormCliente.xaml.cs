@@ -27,6 +27,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource gruposClientesViewSource;
         private CollectionViewSource direccionesPaisViewSource;
+        private CollectionViewSource direccionesComunidadViewSource;
+        private CollectionViewSource direccionesProvinciaViewSource;
         private CollectionViewSource direccionesCodigoPostalViewSource;
         public String RazonSocial { get; set; }
         public String Nif { get; set; }
@@ -49,18 +51,37 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tiposClientesViewSource = ((CollectionViewSource)(FindResource("tiposClientesViewSource")));
             gruposClientesViewSource = ((CollectionViewSource)(FindResource("gruposClientesViewSource")));
             direccionesPaisViewSource = ((CollectionViewSource)(FindResource("direccionesPaisViewSource")));
+            direccionesComunidadViewSource = ((CollectionViewSource)(FindResource("direccionesComunidadViewSource")));
+            direccionesProvinciaViewSource = ((CollectionViewSource)(FindResource("direccionesProvinciaViewSource")));
             direccionesCodigoPostalViewSource = ((CollectionViewSource)(FindResource("direccionesCodigoPostalViewSource")));
             context.tipos_clientes.Load();
             context.grupos_clientes.Load();
-            context.direcciones.Load();
+            //context.direcciones.Load();
             tiposClientesViewSource.Source = context.tipos_clientes.Local;
             gruposClientesViewSource.Source = context.grupos_clientes.Local;
-            direccionesPaisViewSource.Source = context.direcciones.Local.Select(d => d.pais).Distinct();
+            //direccionesPaisViewSource.Source = context.direcciones.Local.Select(d => d.pais).Distinct();
+            direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
         }
 
         private void cbPaisesDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            direccionesCodigoPostalViewSource.Source = context.direcciones.Local.Where(d => d.pais == cbPaisesDirecciones.SelectedItem as string).Distinct();
+            //direccionesComunidadViewSource.Source = context.direcciones.Local.Where(d => d.pais == cbPaisesDirecciones.SelectedItem as string).Distinct();
+            //direccionesCodigoPostalViewSource.Source = context.direcciones.Local.Where(d => d.pais == cbPaisesDirecciones.SelectedItem as string).Distinct();
+            direccionesComunidadViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem).OrderBy(d => d.pais).Select(d => d.comunidad).Distinct().ToList();
         }
+
+        private void cbComunidadesDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            direccionesProvinciaViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem && d.comunidad == (string)cbComunidadesDirecciones.SelectedItem).OrderBy(d => d.provincia).Select(d => d.provincia).Distinct().ToList();
+        }
+
+        private void cbProvinciasDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            direccionesCodigoPostalViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem && d.comunidad == (string)cbComunidadesDirecciones.SelectedItem && d.provincia == (string)cbProvinciasDirecciones.SelectedItem).OrderBy(d => d.codigo_postal).Distinct().ToList();
+        }
+
+
+
+
     }
 }

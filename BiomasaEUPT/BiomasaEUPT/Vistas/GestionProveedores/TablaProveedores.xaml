@@ -68,13 +68,13 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="nif"
                                                                        Binding="{Binding nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-                                
+
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100"
                                                                        Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
-                                
+
                             </materialDesign:MaterialDataGridTextColumn>
                             <DataGridComboBoxColumn x:Name="tipos_proveedoresColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tipos_proveedoresViewSource}}"
@@ -139,7 +139,7 @@
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                      MaxHeight="350" TextWrapping="Wrap"/>
-                           
+
                         </StackPanel>
                     </Expander>
                 </StackPanel>
@@ -177,13 +177,13 @@
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Población" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
                         <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
                         <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
-                        <CheckBox x:Name="cbPoblacion" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
                     </Grid>
 
                 </materialDesign:PopupBox>

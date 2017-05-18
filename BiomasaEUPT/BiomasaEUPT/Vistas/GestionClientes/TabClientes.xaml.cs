@@ -62,8 +62,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 ucTablaClientes.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbPoblacion.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbPoblacion.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaClientes.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
             }
         }
@@ -104,7 +104,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string email = cliente.email.ToLower();
             string calle = cliente.calle.ToLower();
             string codigoPostal = cliente.direcciones.codigo_postal.ToLower();
-            string poblacion = cliente.direcciones.poblacion.ToLower();
+            string municipio = cliente.direcciones.municipio.ToLower();
             string tipo = cliente.tipos_clientes.nombre.ToLower();
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
@@ -114,7 +114,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                              (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
-                             (ucTablaClientes.cbPoblacion.IsChecked == true ? poblacion.Contains(textoBuscado) : false);
+                             (ucTablaClientes.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
             }
             else
             {
@@ -128,7 +128,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                                      (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
                                      (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
                                      (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbPoblacion.IsChecked == true ? poblacion.Contains(textoBuscado) : false);
+                                     (ucTablaClientes.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
                         break;
                     }
                     else

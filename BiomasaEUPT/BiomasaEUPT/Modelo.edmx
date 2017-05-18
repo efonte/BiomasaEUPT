@@ -20,9 +20,9 @@
           </Key>
           <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="razon_social" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="nif" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nif" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
-          <Property Name="observaciones" Type="varchar" MaxLength="500" />
+          <Property Name="observaciones" Type="varchar" MaxLength="60" />
           <Property Name="calle" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="direccion_id" Type="int" Nullable="false" />
           <Property Name="grupo_id" Type="int" Nullable="false" />
@@ -33,9 +33,11 @@
             <PropertyRef Name="id_direccion" />
           </Key>
           <Property Name="id_direccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="pais" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="codigo_postal" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="poblacion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pais" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="codigo_postal" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="comunidad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="provincia" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="municipio" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="latitud" Type="float" Nullable="false" />
           <Property Name="longitud" Type="float" Nullable="false" />
         </EntityType>
@@ -73,24 +75,24 @@
             <PropertyRef Name="id_grupo_cliente" />
           </Key>
           <Property Name="id_grupo_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="grupos_materias_primas">
           <Key>
             <PropertyRef Name="id_grupo_materia_prima" />
           </Key>
           <Property Name="id_grupo_materia_prima" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="grupos_productos_terminados">
           <Key>
             <PropertyRef Name="id_grupo_producto_terminado" />
           </Key>
           <Property Name="id_grupo_producto_terminado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="materias_primas">
           <Key>
@@ -152,7 +154,7 @@
           <Property Name="nif" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
           <Property Name="calle" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="observaciones" Type="varchar" MaxLength="500" />
+          <Property Name="observaciones" Type="varchar" MaxLength="60" />
           <Property Name="tipo_id" Type="int" Nullable="false" />
           <Property Name="direccion_id" Type="int" Nullable="false" />
         </EntityType>
@@ -207,48 +209,48 @@
             <PropertyRef Name="id_tipo_cliente" />
           </Key>
           <Property Name="id_tipo_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tipos_materias_primas">
           <Key>
             <PropertyRef Name="id_tipo_materia_prima" />
           </Key>
           <Property Name="id_tipo_materia_prima" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tipos_productos_terminados">
           <Key>
             <PropertyRef Name="id_tipo_producto_terminado" />
           </Key>
           <Property Name="id_tipo_producto_terminado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tipos_proveedores">
           <Key>
             <PropertyRef Name="id_tipo_proveedor" />
           </Key>
           <Property Name="id_tipo_proveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tipos_usuarios">
           <Key>
             <PropertyRef Name="id_tipo_usuario" />
           </Key>
           <Property Name="id_tipo_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="usuarios">
           <Key>
             <PropertyRef Name="id_usuario" />
           </Key>
           <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="contrasena" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
           <Property Name="tipo_id" Type="int" Nullable="false" />
           <Property Name="fecha_alta" Type="datetime" />
@@ -784,29 +786,16 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           </Key>
           <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="razon_social" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nif" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nif" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="calle" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="direccion_id" Type="Int32" Nullable="false" />
           <Property Name="grupo_id" Type="Int32" Nullable="false" />
           <Property Name="tipo_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="direcciones" Relationship="Self.FK_clientes_direccion_id" FromRole="clientes" ToRole="direcciones" />
           <NavigationProperty Name="grupos_clientes" Relationship="Self.FK_clientes_grupo_id" FromRole="clientes" ToRole="grupos_clientes" />
           <NavigationProperty Name="tipos_clientes" Relationship="Self.FK_clientes_tipo_id" FromRole="clientes" ToRole="tipos_clientes" />
-        </EntityType>
-        <EntityType Name="direcciones">
-          <Key>
-            <PropertyRef Name="id_direccion" />
-          </Key>
-          <Property Name="id_direccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="codigo_postal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="poblacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="latitud" Type="Double" Nullable="false" />
-          <Property Name="longitud" Type="Double" Nullable="false" />
-          <NavigationProperty Name="clientes" Relationship="Self.FK_clientes_direccion_id" FromRole="direcciones" ToRole="clientes" />
-          <NavigationProperty Name="proveedores" Relationship="Self.FK_proveedores_direccion_id" FromRole="direcciones" ToRole="proveedores" />
+          <NavigationProperty Name="direcciones" Relationship="BiomasaEUPTModelo.FK_clientes_direccion_id" FromRole="clientes" ToRole="direcciones" />
         </EntityType>
         <EntityType Name="entradas">
           <Key>
@@ -842,8 +831,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_grupo_cliente" />
           </Key>
           <Property Name="id_grupo_cliente" Type="Int32" Nullable="false" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="clientes" Relationship="Self.FK_clientes_grupo_id" FromRole="grupos_clientes" ToRole="clientes" />
         </EntityType>
         <EntityType Name="grupos_materias_primas">
@@ -851,8 +840,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_grupo_materia_prima" />
           </Key>
           <Property Name="id_grupo_materia_prima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="materias_primas" Relationship="Self.FK_materias_primas_grupo_id" FromRole="grupos_materias_primas" ToRole="materias_primas" />
         </EntityType>
         <EntityType Name="grupos_productos_terminados">
@@ -860,8 +849,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_grupo_producto_terminado" />
           </Key>
           <Property Name="id_grupo_producto_terminado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="productos_terminados" Relationship="Self.FK_productos_terminados_grupo_id" FromRole="grupos_productos_terminados" ToRole="productos_terminados" />
         </EntityType>
         <EntityType Name="materias_primas">
@@ -933,12 +922,12 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           <Property Name="nif" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="calle" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="tipo_id" Type="Int32" Nullable="false" />
           <Property Name="direccion_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="direcciones" Relationship="Self.FK_proveedores_direccion_id" FromRole="proveedores" ToRole="direcciones" />
           <NavigationProperty Name="materias_primas" Relationship="Self.FK_materias_primas_proveedor_id" FromRole="proveedores" ToRole="materias_primas" />
           <NavigationProperty Name="tipos_proveedores" Relationship="Self.FK_proveedores_tipo_id" FromRole="proveedores" ToRole="tipos_proveedores" />
+          <NavigationProperty Name="direcciones" Relationship="BiomasaEUPTModelo.FK_proveedores_direccion_id" FromRole="proveedores" ToRole="direcciones" />
         </EntityType>
         <EntityType Name="salidas">
           <Key>
@@ -993,8 +982,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_tipo_cliente" />
           </Key>
           <Property Name="id_tipo_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="clientes" Relationship="Self.FK_clientes_tipo_id" FromRole="tipos_clientes" ToRole="clientes" />
         </EntityType>
         <EntityType Name="tipos_materias_primas">
@@ -1002,8 +991,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_tipo_materia_prima" />
           </Key>
           <Property Name="id_tipo_materia_prima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="materias_primas" Relationship="Self.FK_materias_primas_tipo_id" FromRole="tipos_materias_primas" ToRole="materias_primas" />
         </EntityType>
         <EntityType Name="tipos_productos_terminados">
@@ -1011,8 +1000,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_tipo_producto_terminado" />
           </Key>
           <Property Name="id_tipo_producto_terminado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="productos_terminados" Relationship="Self.FK_productos_terminados_tipo_id" FromRole="tipos_productos_terminados" ToRole="productos_terminados" />
         </EntityType>
         <EntityType Name="tipos_proveedores">
@@ -1020,8 +1009,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_tipo_proveedor" />
           </Key>
           <Property Name="id_tipo_proveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="proveedores" Relationship="Self.FK_proveedores_tipo_id" FromRole="tipos_proveedores" ToRole="proveedores" />
         </EntityType>
         <EntityType Name="tipos_usuarios">
@@ -1029,8 +1018,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_tipo_usuario" />
           </Key>
           <Property Name="id_tipo_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_tipo_id" FromRole="tipos_usuarios" ToRole="usuarios" />
         </EntityType>
         <EntityType Name="usuarios">
@@ -1038,8 +1027,8 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <PropertyRef Name="id_usuario" />
           </Key>
           <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="contrasena" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasena" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tipo_id" Type="Int32" Nullable="false" />
           <Property Name="fecha_alta" Type="DateTime" Precision="3" />
@@ -1182,18 +1171,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           <Property Name="fecha_baja" Type="DateTime" Precision="3" />
           <Property Name="fecha_contrasena" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_clientes_direccion_id">
-          <End Role="direcciones" Type="Self.direcciones" Multiplicity="1" />
-          <End Role="clientes" Type="Self.clientes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="direcciones">
-              <PropertyRef Name="id_direccion" />
-            </Principal>
-            <Dependent Role="clientes">
-              <PropertyRef Name="direccion_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_clientes_grupo_id">
           <End Role="grupos_clientes" Type="Self.grupos_clientes" Multiplicity="1" />
           <End Role="clientes" Type="Self.clientes" Multiplicity="*" />
@@ -1215,18 +1192,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             </Principal>
             <Dependent Role="clientes">
               <PropertyRef Name="tipo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proveedores_direccion_id">
-          <End Role="direcciones" Type="Self.direcciones" Multiplicity="1" />
-          <End Role="proveedores" Type="Self.proveedores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="direcciones">
-              <PropertyRef Name="id_direccion" />
-            </Principal>
-            <Dependent Role="proveedores">
-              <PropertyRef Name="direccion_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1353,7 +1318,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
         <EntityContainer Name="BiomasaEUPTEntidades" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="almacenes" EntityType="Self.almacenes" />
           <EntitySet Name="clientes" EntityType="Self.clientes" />
-          <EntitySet Name="direcciones" EntityType="Self.direcciones" />
           <EntitySet Name="entradas" EntityType="Self.entradas" />
           <EntitySet Name="envasados" EntityType="Self.envasados" />
           <EntitySet Name="estados_salidas" EntityType="Self.estados_salidas" />
@@ -1380,10 +1344,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           <EntitySet Name="vista_productos_terminados" EntityType="Self.vista_productos_terminados" />
           <EntitySet Name="vista_proveedores" EntityType="Self.vista_proveedores" />
           <EntitySet Name="vista_usuarios" EntityType="Self.vista_usuarios" />
-          <AssociationSet Name="FK_clientes_direccion_id" Association="Self.FK_clientes_direccion_id">
-            <End Role="direcciones" EntitySet="direcciones" />
-            <End Role="clientes" EntitySet="clientes" />
-          </AssociationSet>
           <AssociationSet Name="FK_clientes_grupo_id" Association="Self.FK_clientes_grupo_id">
             <End Role="grupos_clientes" EntitySet="grupos_clientes" />
             <End Role="clientes" EntitySet="clientes" />
@@ -1391,10 +1351,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           <AssociationSet Name="FK_clientes_tipo_id" Association="Self.FK_clientes_tipo_id">
             <End Role="tipos_clientes" EntitySet="tipos_clientes" />
             <End Role="clientes" EntitySet="clientes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proveedores_direccion_id" Association="Self.FK_proveedores_direccion_id">
-            <End Role="direcciones" EntitySet="direcciones" />
-            <End Role="proveedores" EntitySet="proveedores" />
           </AssociationSet>
           <AssociationSet Name="FK_materias_primas_grupo_id" Association="Self.FK_materias_primas_grupo_id">
             <End Role="grupos_materias_primas" EntitySet="grupos_materias_primas" />
@@ -1466,6 +1422,15 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="direcciones" EntityType="BiomasaEUPTModelo.direcciones" />
+          <AssociationSet Name="FK_clientes_direccion_id" Association="BiomasaEUPTModelo.FK_clientes_direccion_id">
+            <End Role="direcciones" EntitySet="direcciones" />
+            <End Role="clientes" EntitySet="clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proveedores_direccion_id" Association="BiomasaEUPTModelo.FK_proveedores_direccion_id">
+            <End Role="direcciones" EntitySet="direcciones" />
+            <End Role="proveedores" EntitySet="proveedores" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1478,6 +1443,45 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="direcciones">
+          <Key>
+            <PropertyRef Name="id_direccion" />
+          </Key>
+          <Property Name="id_direccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pais" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_postal" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="comunidad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="provincia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="latitud" Type="Double" Nullable="false" />
+          <Property Name="longitud" Type="Double" Nullable="false" />
+          <NavigationProperty Name="clientes" Relationship="BiomasaEUPTModelo.FK_clientes_direccion_id" FromRole="direcciones" ToRole="clientes" />
+          <NavigationProperty Name="proveedores" Relationship="BiomasaEUPTModelo.FK_proveedores_direccion_id" FromRole="direcciones" ToRole="proveedores" />
+        </EntityType>
+        <Association Name="FK_clientes_direccion_id">
+          <End Type="BiomasaEUPTModelo.direcciones" Role="direcciones" Multiplicity="1" />
+          <End Type="BiomasaEUPTModelo.clientes" Role="clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="direcciones">
+              <PropertyRef Name="id_direccion" />
+            </Principal>
+            <Dependent Role="clientes">
+              <PropertyRef Name="direccion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proveedores_direccion_id">
+          <End Type="BiomasaEUPTModelo.direcciones" Role="direcciones" Multiplicity="1" />
+          <End Type="BiomasaEUPTModelo.proveedores" Role="proveedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="direcciones">
+              <PropertyRef Name="id_direccion" />
+            </Principal>
+            <Dependent Role="proveedores">
+              <PropertyRef Name="direccion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1506,18 +1510,6 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
                 <ScalarProperty Name="direccion_id" ColumnName="direccion_id" />
                 <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
                 <ScalarProperty Name="tipo_id" ColumnName="tipo_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="direcciones">
-            <EntityTypeMapping TypeName="BiomasaEUPTModelo.direcciones">
-              <MappingFragment StoreEntitySet="direcciones">
-                <ScalarProperty Name="id_direccion" ColumnName="id_direccion" />
-                <ScalarProperty Name="pais" ColumnName="pais" />
-                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
-                <ScalarProperty Name="poblacion" ColumnName="poblacion" />
-                <ScalarProperty Name="latitud" ColumnName="latitud" />
-                <ScalarProperty Name="longitud" ColumnName="longitud" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1877,6 +1869,20 @@ advertencia 6002: La tabla o vista 'BiomasaEUPT.dbo.vista_usuarios' no tiene def
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BiomasaEUPTModelo.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BiomasaEUPTModelo.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="direcciones">
+            <EntityTypeMapping TypeName="BiomasaEUPTModelo.direcciones">
+              <MappingFragment StoreEntitySet="direcciones">
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="latitud" ColumnName="latitud" />
+                <ScalarProperty Name="municipio" ColumnName="municipio" />
+                <ScalarProperty Name="provincia" ColumnName="provincia" />
+                <ScalarProperty Name="comunidad" ColumnName="comunidad" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="id_direccion" ColumnName="id_direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -7,7 +7,6 @@
       <Diagram DiagramId="358d8bf1a26f48e2a561ed80e0fde416" Name="Diagram1">
         <EntityTypeShape EntityType="BiomasaEUPTModelo.almacenes" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.clientes" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="BiomasaEUPTModelo.direcciones" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.entradas" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.envasados" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.estados_salidas" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
@@ -34,10 +33,8 @@
         <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_productos_terminados" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_proveedores" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BiomasaEUPTModelo.vista_usuarios" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
-        <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_direccion_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_grupo_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_tipo_id" ManuallyRouted="false" />
-        <AssociationConnector Association="BiomasaEUPTModelo.FK_proveedores_direccion_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_grupo_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_productos_terminados_grupo_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_materias_primas_procedencia_id" ManuallyRouted="false" />
@@ -48,6 +45,9 @@
         <AssociationConnector Association="BiomasaEUPTModelo.FK_productos_terminados_tipo_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_proveedores_tipo_id" ManuallyRouted="false" />
         <AssociationConnector Association="BiomasaEUPTModelo.FK_usuarios_tipo_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BiomasaEUPTModelo.direcciones" Width="1.5" PointX="0.75" PointY="4.25" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_clientes_direccion_id" />
+        <AssociationConnector Association="BiomasaEUPTModelo.FK_proveedores_direccion_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

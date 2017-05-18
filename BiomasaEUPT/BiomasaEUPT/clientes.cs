@@ -24,8 +24,8 @@ namespace BiomasaEUPT
         public int grupo_id { get; set; }
         public int tipo_id { get; set; }
     
-        public virtual direcciones direcciones { get; set; }
         public virtual grupos_clientes grupos_clientes { get; set; }
         public virtual tipos_clientes tipos_clientes { get; set; }
+        public virtual direcciones direcciones { get; set; }
     }
 }

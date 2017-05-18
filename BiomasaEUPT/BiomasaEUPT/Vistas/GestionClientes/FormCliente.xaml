@@ -25,6 +25,8 @@
             <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
             <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
@@ -33,6 +35,7 @@
     <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Cliente">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -115,6 +118,7 @@
 
             <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
                       ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
+                      SelectedValue="ES"
                       SelectionChanged="cbPaisesDirecciones_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -127,7 +131,18 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbComunidadesDirecciones" materialDesign:HintAssist.Hint="Comunidad"
+                      ItemsSource="{Binding Source={StaticResource direccionesComunidadViewSource}}"
+                      SelectedValue="Aragon"
+                      SelectionChanged="cbComunidadesDirecciones_SelectionChanged">
+            </ComboBox>
+
+            <ComboBox Grid.Row="4" Grid.Column="0" x:Name="cbProvinciasDirecciones" materialDesign:HintAssist.Hint="Provincia"
+                      ItemsSource="{Binding Source={StaticResource direccionesProvinciaViewSource}}"
+                      SelectionChanged="cbProvinciasDirecciones_SelectionChanged">
+            </ComboBox>
+
+            <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
                       ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
                       SelectedValuePath="id_direcciones">
                 <ComboBox.ItemTemplate>
@@ -136,7 +151,7 @@
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} ({1})">
                                     <Binding Path="codigo_postal"/>
-                                    <Binding Path="poblacion"/>
+                                    <Binding Path="municipio"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -144,7 +159,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
+            <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                  AcceptsReturn="True" Height="55" MaxLength="60">
                 <TextBox.Text>
@@ -156,7 +171,7 @@
                 </TextBox.Text>
             </TextBox>
 
-            <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <WrapPanel Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                 <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
