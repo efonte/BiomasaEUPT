@@ -9,6 +9,7 @@
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
+        xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
@@ -21,16 +22,6 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <!--Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources-->
 
     <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="280" MinHeight="300">
         <DockPanel>
@@ -93,6 +84,19 @@
                         </TabItem.Header>
 
                         <GestionClientes:TabClientes x:Name="ucTabClientes" />
+
+                    </TabItem>
+
+                    <!-- Pestaña 3 -->
+                    <TabItem x:Name="tiProveedores" IsSelected="True" Selector.Unselected="tiProveedores_Unselected">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Proveedores" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <GestionProveedores:TabProveedores x:Name="ucTabProveedores" />
 
                     </TabItem>
 

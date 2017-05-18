@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
@@ -237,6 +238,9 @@
     </Compile>
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionProveedores\FormProveedor.xaml.cs">
+      <DependentUpon>FormProveedor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionProveedores\TablaProveedores.xaml.cs">
       <DependentUpon>TablaProveedores.xaml</DependentUpon>
@@ -318,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionProveedores\FormProveedor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

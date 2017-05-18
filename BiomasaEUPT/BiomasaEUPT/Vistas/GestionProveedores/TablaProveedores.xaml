@@ -4,9 +4,191 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="800" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:proveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tipos_proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_proveedores}, CreateList=True}"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Proveedores">
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProveedores" DataContext="{StaticResource proveedoresViewSource}"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
+                        <DataGrid.RowValidationErrorTemplate>
+                            <ControlTemplate>
+                                <Grid Margin="2,-2"
+                                      ToolTip="{Binding RelativeSource={RelativeSource
+                                      FindAncestor, AncestorType={x:Type DataGridRow}},
+                                      Path=(Validation.Errors)[0].ErrorContent}">
+                                    <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
+                                    <TextBlock Text="!" FontSize="18" 
+                                               FontWeight="Bold" Foreground="White" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </DataGrid.RowValidationErrorTemplate>
+
+                        <DataGrid.RowValidationRules>
+                            <validadores:ProveedorValidationRule ValidationStep="UpdatedValue"/>
+                        </DataGrid.RowValidationRules>
+
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Header="Razón social" Width="SizeToHeader"
+                                                                       Binding="{Binding razon_social, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="nif"
+                                                                       Binding="{Binding nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
+                                
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100"
+                                                                       Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       MaxLength="254">
+                                
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <DataGridComboBoxColumn x:Name="tipos_proveedoresColumn" Header="Tipo"
+                                                ItemsSource="{Binding Source={StaticResource tipos_proveedoresViewSource}}"
+                                                SelectedValuePath="id_tipo_proveedor" 
+                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle" Width="180"
+                                                                       Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                            </materialDesign:MaterialDataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar proveedores"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button ToolTip="Borrar el proveedor seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
+                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
+                            </Button>
+
+                            <Button x:Name="bAnadirProveedor" ToolTip="Añadir proveedor">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+                <StackPanel DataContext="{StaticResource proveedoresViewSource}" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
+                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                            <ToggleButton x:Name="tbEditarObservaciones" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
+                                <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <RotateTransform Angle="45" />
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="Pin"/>
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                            </ToggleButton>
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
+                                       MaxHeight="350" TextWrapping="Wrap"/>
+                            <TextBox x:Name="tboxObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                     FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                                     MaxHeight="350" TextWrapping="Wrap"/>
+                           
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0"
+                         TextChanged="tbBuscar_TextChanged"/>
+
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon social" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Población" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbPoblacion" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
     </Grid>
 </UserControl>

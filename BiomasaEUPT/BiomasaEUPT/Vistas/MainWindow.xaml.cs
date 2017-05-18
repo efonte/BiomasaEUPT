@@ -84,6 +84,13 @@ namespace BiomasaEUPT
 
         }
 
+        private void tiProveedores_Unselected(object sender, RoutedEventArgs e)
+        {
+            if (ucTabProveedores != null)
+                ucTabProveedores.ucTablaProveedores.dgProveedores.CancelEdit();
+
+        }
+
 
     }
 }
