@@ -10,6 +10,7 @@
         xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
+        xmlns:GestionMateriasPrimas="clr-namespace:BiomasaEUPT.Vistas.GestionMateriasPrimas"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
@@ -61,7 +62,7 @@
             <dockablz:Layout>
                 <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0">
 
-                    <!-- Pestaña 1 -->
+                    <!-- Pestaña Usuarios -->
                     <TabItem x:Name="tiUsuarios" Selector.Unselected="tiUsuarios_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -74,7 +75,7 @@
 
                     </TabItem>
 
-                    <!-- Pestaña 2 -->
+                    <!-- Pestaña Clientes -->
                     <TabItem x:Name="tiClientes" IsSelected="True" Selector.Unselected="tiClientes_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -87,7 +88,7 @@
 
                     </TabItem>
 
-                    <!-- Pestaña 3 -->
+                    <!-- Pestaña Proveedores -->
                     <TabItem x:Name="tiProveedores" IsSelected="True" Selector.Unselected="tiProveedores_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -100,6 +101,17 @@
 
                     </TabItem>
 
+                    <!-- Pestaña Materias primas -->
+                    <TabItem x:Name="tiMateriasPrimas" IsSelected="True" Selector.Unselected="tiMateriasPrimas_Unselected">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Materias primas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <GestionMateriasPrimas:TabMateriasPrimas x:Name="ucTabMateriasPrimas" />
+                    </TabItem>
                 </dragablz:TabablzControl>
             </dockablz:Layout>
 
