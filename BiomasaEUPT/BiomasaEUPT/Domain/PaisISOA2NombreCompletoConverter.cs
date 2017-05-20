@@ -14,10 +14,21 @@ namespace BiomasaEUPT.Domain
         // Listado de paises: http://www.worldatlas.com/aatlas/ctycodes.htm
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            try
+            {
+                RegionInfo regionInfo = new RegionInfo(value.ToString());
+                return regionInfo.DisplayName;
+            }
+            catch (Exception ex)
+            {
+                if (ex is CultureNotFoundException || ex is ArgumentException)
+                {
+                    return value.ToString();
+                }
 
-            var cultureInfo = new CultureInfo(value.ToString());
+                throw;
+            }
 
-            return cultureInfo.DisplayName;
         }
 
         public object ConvertBack(object value, Type targetType,

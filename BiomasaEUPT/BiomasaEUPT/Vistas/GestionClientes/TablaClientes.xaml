@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:ControlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -18,6 +19,7 @@
             <CollectionViewSource x:Key="grupos_clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -97,7 +99,7 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email"
                                                                        Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
@@ -122,7 +124,7 @@
                                                 SelectedValuePath="id_grupo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle" Width="180"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
                                                                        Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -135,6 +137,29 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
+
+                            <DataGridTemplateColumn Header="Dirección">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True">
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                            <Binding Path="direcciones.codigo_postal"/>
+                                                            <Binding Path="direcciones.municipio"/>
+                                                            <Binding Path="direcciones.provincia"/>
+                                                            <Binding Path="direcciones.comunidad"/>
+                                                            <Binding Path="direcciones.pais" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </materialDesign:PopupBox.ToggleContent>
+                                            <ControlesUsuario:FormDirecciones x:Name="ucFormDirecciones"/>
+                                        </materialDesign:PopupBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

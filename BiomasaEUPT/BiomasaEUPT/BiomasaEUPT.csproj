@@ -224,6 +224,9 @@
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FormDirecciones.xaml.cs">
+      <DependentUpon>FormDirecciones.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>
@@ -310,11 +313,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\ControlesUsuario\FormDirecciones.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\Diccionario.xaml">
+    <Page Include="Vistas\Diccionarios\DiccionarioBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Diccionarios\DiccionarioForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

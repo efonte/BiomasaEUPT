@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.ControlesUsuario.FormDirecciones"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
+                  ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
+                  SelectedValue="{Binding DataContext.direcciones.pais, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                  SelectionChanged="cbPaisesDirecciones_SelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="20" Height="13" Stretch="Fill" Margin="5" 
+                                   Source="{Binding Converter={StaticResource PaisISOA2ImagenConverter}}"/>
+                        <TextBlock Margin="5" Text="{Binding Converter={StaticResource PaisISOA2NombreCompletoConverter}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidadesDirecciones" materialDesign:HintAssist.Hint="Comunidad"
+                      ItemsSource="{Binding Source={StaticResource direccionesComunidadViewSource}}"
+                      SelectedValue="{Binding DataContext.direcciones.comunidad, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectionChanged="cbComunidadesDirecciones_SelectionChanged">
+        </ComboBox>
+
+        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvinciasDirecciones" materialDesign:HintAssist.Hint="Provincia"
+                      ItemsSource="{Binding Source={StaticResource direccionesProvinciaViewSource}}"
+                      SelectedValue="{Binding DataContext.direcciones.provincia, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectionChanged="cbProvinciasDirecciones_SelectionChanged">
+        </ComboBox>
+
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
+                  ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
+                  SelectedValue="{Binding DataContext.direcciones, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} ({1})">
+                                <Binding Path="codigo_postal"/>
+                                <Binding Path="municipio"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
+</UserControl>
