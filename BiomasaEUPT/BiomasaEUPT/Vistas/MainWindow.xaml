@@ -45,7 +45,7 @@
                         </MenuItem>
                         <!-- Opciones -->
                         <MenuItem Header="_Opciones" Height="20" Foreground="White" FontFamily="Roboto">
-                            <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30"  />
+                            <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30" Click="menuAjustes_Click"  />
                         </MenuItem>
                         <!-- Ayuda -->
                         <MenuItem Header="A_yuda" Height="20" Foreground="White" FontFamily="Roboto">

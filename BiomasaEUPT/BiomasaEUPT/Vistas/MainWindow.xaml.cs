@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Vistas.GestionClientes;
+﻿using BiomasaEUPT.Vistas.Ajustes;
+using BiomasaEUPT.Vistas.GestionClientes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,6 +29,8 @@ namespace BiomasaEUPT
         public MainWindow()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.VentanaMaximizada)
+                WindowState = WindowState.Maximized;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -100,6 +103,11 @@ namespace BiomasaEUPT
 
         }
 
-
+        private void menuAjustes_Click(object sender, RoutedEventArgs e)
+        {
+            WinAjustes ajustes = new WinAjustes();
+            ajustes.Owner = GetWindow(this);
+            ajustes.ShowDialog();
+        }
     }
 }

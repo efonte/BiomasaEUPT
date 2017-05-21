@@ -6,9 +6,39 @@
         xmlns:local="clr-namespace:BiomasaEUPT"
         mc:Ignorable="d"
         Title="AcercaDe" Height="250" Width="450" WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource MaterialDesignPaper}" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Loaded="Window_Loaded">
-    <Grid Background="#FF0051FF">
-        <Button x:Name="bAceptar" Content="Aceptar" HorizontalAlignment="Left" Margin="334,197,0,0" VerticalAlignment="Top" Click="bAceptar_Click"/>
-        <Label x:Name="lTitulo" Content="Acerca de..." HorizontalAlignment="Left" Margin="165,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Roboto" FontSize="22" FontWeight="Bold"/>
+        Background="{DynamicResource MaterialDesignPaper}" WindowStyle="None"
+        ResizeMode="NoResize" AllowsTransparency="True" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+            <Setter Property="Margin" Value="10" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="{StaticResource PrimaryHueMidBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="lTitulo" Grid.Row="0" Content="Acerca de..." HorizontalAlignment="Center"
+               VerticalAlignment="Top" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+               FontFamily="Roboto" FontSize="22" FontWeight="Black" Margin="10"/>
+
+        <StackPanel Grid.Row="1" Margin="15,0,0,0" VerticalAlignment="Center">
+            <TextBlock Margin="10,5,10,5" FontStyle="Italic" FontWeight="Medium">© Javier Bielsa Hernández 2017</TextBlock>
+            <TextBlock Margin="10,5,10,5" FontStyle="Italic" FontWeight="Medium">© Eduardo Fonte Polo 2017</TextBlock>
+        </StackPanel>
+
+
+        <Button x:Name="bAceptar" Grid.Row="2" Content="Aceptar" HorizontalAlignment="Center"
+                VerticalAlignment="Bottom" 
+                Click="bAceptar_Click"/>
     </Grid>
 </Window>

@@ -221,6 +221,12 @@
     <Compile Include="usuarios.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Ajustes\TabApariencia.xaml.cs">
+      <DependentUpon>TabApariencia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Ajustes\WinAjustes.xaml.cs">
+      <DependentUpon>WinAjustes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>
@@ -306,6 +312,14 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Page Include="Vistas\AcercaDe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Ajustes\TabApariencia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Ajustes\WinAjustes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

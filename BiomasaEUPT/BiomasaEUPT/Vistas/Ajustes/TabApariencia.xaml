@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.Ajustes.TabApariencia"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.Ajustes"
+             mc:Ignorable="d"
+             FontFamily="Roboto"
+             FontWeight="Medium">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource MaterialDesignSeparator}">
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Ventana" HorizontalAlignment="Center" FontWeight="Light" FontSize="23" Margin="0,10,0,0"/>
+        <Separator Grid.Row="1"/>
+        <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Content="Recordar tamaño ventana" Checked="CheckBox_Checked"/>
+        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Content="Recordar ventana maximizada" Checked="CheckBox_Checked"/>
+        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Content="Recordar posición ventana" Checked="CheckBox_Checked"/>
+        <CheckBox x:Name="cbTabActiva" Grid.Row="5" Content="Recordar pestaña activa" Checked="CheckBox_Checked"/>
+        <CheckBox x:Name="cbPosicionTab" Grid.Row="6" Content="Recordar orden de las pestañas" Checked="CheckBox_Checked"/>
+    </Grid>
+</UserControl>

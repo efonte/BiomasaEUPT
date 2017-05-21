@@ -70,5 +70,65 @@ namespace BiomasaEUPT.Properties {
                 this["contrasena"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TamanoVentana {
+            get {
+                return ((string)(this["TamanoVentana"]));
+            }
+            set {
+                this["TamanoVentana"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PosicionVentana {
+            get {
+                return ((string)(this["PosicionVentana"]));
+            }
+            set {
+                this["PosicionVentana"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TabActiva {
+            get {
+                return ((string)(this["TabActiva"]));
+            }
+            set {
+                this["TabActiva"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PosicionTab {
+            get {
+                return ((string)(this["PosicionTab"]));
+            }
+            set {
+                this["PosicionTab"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool VentanaMaximizada {
+            get {
+                return ((bool)(this["VentanaMaximizada"]));
+            }
+            set {
+                this["VentanaMaximizada"] = value;
+            }
+        }
     }
 }
