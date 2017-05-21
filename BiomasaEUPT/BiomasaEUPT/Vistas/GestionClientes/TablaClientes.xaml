@@ -138,10 +138,10 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <DataGridTemplateColumn Header="Dirección">
+                            <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True">
+                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1" StaysOpen="True">
                                             <materialDesign:PopupBox.ToggleContent>
                                                 <TextBlock>
                                                     <TextBlock.Text>
@@ -155,7 +155,7 @@
                                                     </TextBlock.Text>
                                                 </TextBlock>
                                             </materialDesign:PopupBox.ToggleContent>
-                                            <ControlesUsuario:FormDirecciones x:Name="ucFormDirecciones"/>
+                                            <ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/>
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

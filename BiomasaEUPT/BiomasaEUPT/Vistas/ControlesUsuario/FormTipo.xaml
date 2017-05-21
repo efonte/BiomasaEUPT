@@ -7,64 +7,73 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300">
-    <StackPanel Margin="16">
-        <TextBlock x:Name="tbTitulo">Nuevo tipo.</TextBlock>
-        <TextBox x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" Margin="10"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-            <TextBox.Text>
-                <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule x:Name="vNombreRequerido" NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
-                        <validadores:UnicoValidationRule x:Name="vNombreUnico" ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TextBox x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción" Margin="10"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-            <TextBox.Text>
-                <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
-                        <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="5" Max="50" ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" 
-                                                                                   Value="False" />
-                                    <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" 
-                                                                                   Value="False" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.CommandParameter>
-                    <system:Boolean>True</system:Boolean>
-                </Button.CommandParameter>
-                ACEPTAR
-            </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                                        IsCancel="True" Margin="0 8 8 0"
-                                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.CommandParameter>
-                    <system:Boolean>False</system:Boolean>
-                </Button.CommandParameter>
-                CANCELAR
-            </Button>
-        </StackPanel>
-    </StackPanel>
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Tipo">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre">
+                <TextBox.Text>
+                    <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule x:Name="vNombreRequerido" NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule x:Name="vNombreUnico" ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Grid.Row="1" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción">
+                <TextBox.Text>
+                    <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="5" Max="50" ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <WrapPanel Grid.Row="2" Margin="0,15,0,0">
+                <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                    _ACEPTAR
+                </Button>
+                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                    IsCancel="True" Margin="0 8 8 0"
+                    Command="materialDesign:DialogHost.CloseDialogCommand">
+                    <Button.CommandParameter>
+                        <system:Boolean>False</system:Boolean>
+                    </Button.CommandParameter>
+                    _CANCELAR
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </GroupBox>
 </UserControl>

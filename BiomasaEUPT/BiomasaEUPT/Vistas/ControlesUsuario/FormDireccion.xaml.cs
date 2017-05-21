@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
     /// <summary>
-    /// Lógica de interacción para FormDirecciones.xaml
+    /// Lógica de interacción para FormDireccion.xaml
     /// </summary>
-    public partial class FormDirecciones : UserControl
+    public partial class FormDireccion : UserControl
     {
         private BiomasaEUPTEntidades context;
         private CollectionViewSource direccionesPaisViewSource;
@@ -27,7 +27,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private CollectionViewSource direccionesProvinciaViewSource;
         private CollectionViewSource direccionesCodigoPostalViewSource;
 
-        public FormDirecciones()
+        public FormDireccion()
         {
             InitializeComponent();
             DataContext = this;
@@ -36,12 +36,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             direccionesComunidadViewSource = ((CollectionViewSource)(FindResource("direccionesComunidadViewSource")));
             direccionesProvinciaViewSource = ((CollectionViewSource)(FindResource("direccionesProvinciaViewSource")));
             direccionesCodigoPostalViewSource = ((CollectionViewSource)(FindResource("direccionesCodigoPostalViewSource")));
-            direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-          
+           // direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
+            Console.WriteLine("------------------------------------------------------------");
         }
 
         private void cbPaisesDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,6 +54,5 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             direccionesCodigoPostalViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem && d.comunidad == (string)cbComunidadesDirecciones.SelectedItem && d.provincia == (string)cbProvinciasDirecciones.SelectedItem).OrderBy(d => d.codigo_postal).Distinct().ToList();
         }
-
     }
 }

@@ -23,6 +23,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public TablaClientes()
         {
             InitializeComponent();
+            //DataContext = this;
         }
 
         private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
@@ -37,29 +38,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             TabClientes tabClientes = (TabClientes)ucParent;
 
             tabClientes.FiltrarTabla();
-        }        
+        }
 
-        /*  private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-          {
-              tbObservaciones.Visibility = Visibility.Collapsed;
-              rtbObservaciones.Visibility = Visibility.Visible;
-              bObservaciones.IsEnabled = true;
-          }
-
-          private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-          {
-              tbObservaciones.Visibility = Visibility.Visible;
-              rtbObservaciones.Visibility = Visibility.Collapsed;
-              bObservaciones.IsEnabled = false;
-          }
-
-          private void rtbObservaciones_Pasting(object sender, DataObjectPastingEventArgs e)
-          {
-              // Elimina el formato del texto
-              string textoPortapapeles = Clipboard.GetText();
-              Clipboard.SetText(textoPortapapeles);
-              //Console.WriteLine(new TextRange(rtbObservaciones.Document.ContentStart, rtbObservaciones.Document.ContentEnd).Text);
-          }*/
 
     }
 }

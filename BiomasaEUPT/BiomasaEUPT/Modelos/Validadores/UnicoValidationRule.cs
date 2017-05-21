@@ -26,6 +26,13 @@ namespace BiomasaEUPT.Modelos.Validadores
             set { _atributo = value; }
         }
 
+        private string _nombreActual;
+        public string NombreActual
+        {
+            get { return _nombreActual; }
+            set { _nombreActual = value; }
+        }
+
         public CollectionViewSource Coleccion { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
@@ -63,7 +70,7 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 foreach (var item in (ObservableCollection<tipos_clientes>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.nombre == valor)
+                    if (Atributo == "nombre" && item.nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
@@ -72,7 +79,16 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 foreach (var item in (ObservableCollection<grupos_clientes>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.nombre == valor)
+                    if (Atributo == "nombre" && item.nombre != NombreActual && item.nombre == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                }
+            }
+            else if (Tipo == "tiposProveedores")
+            {
+                foreach (var item in (ObservableCollection<tipos_proveedores>)Coleccion.Source)
+                {
+                    if (Atributo == "nombre" && item.nombre != NombreActual && item.nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }

@@ -138,6 +138,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposClientes";
                 formTipo.vNombreUnico.Atributo = "nombre";
+                formTipo.vNombreUnico.NombreActual = (lbFiltro.SelectedItem as tipos_clientes).nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.nombre = formTipo.Nombre;
@@ -156,6 +157,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposProveedores";
                 formTipo.vNombreUnico.Atributo = "nombre";
+                formTipo.vNombreUnico.NombreActual = (lbFiltro.SelectedItem as tipos_proveedores).nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.nombre = formTipo.Nombre;
@@ -174,6 +176,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Coleccion = tiposMateriasPrimasViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposMateriasPrimas";
                 formTipo.vNombreUnico.Atributo = "nombre";
+                formTipo.vNombreUnico.NombreActual = (lbFiltro.SelectedItem as tipos_materias_primas).nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.nombre = formTipo.Nombre;

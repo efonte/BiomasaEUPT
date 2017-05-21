@@ -224,8 +224,8 @@
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\ControlesUsuario\FormDirecciones.xaml.cs">
-      <DependentUpon>FormDirecciones.xaml</DependentUpon>
+    <Compile Include="Vistas\ControlesUsuario\FormDireccion.xaml.cs">
+      <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
@@ -313,7 +313,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\ControlesUsuario\FormDirecciones.xaml">
+    <Page Include="Vistas\ControlesUsuario\FormDireccion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

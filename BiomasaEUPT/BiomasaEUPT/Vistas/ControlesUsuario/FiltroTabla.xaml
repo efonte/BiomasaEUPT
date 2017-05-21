@@ -9,23 +9,12 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="180" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <!-- throw in some extra colour for our floating action button -->
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Grid.RowSpan="2" Style="{DynamicResource MaterialDesignCardGroupBox}" FontSize="20" Margin="0,0,0,0">
+        <GroupBox Grid.Row="0" Grid.RowSpan="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
 
             <GroupBox.Header>
                 <materialDesign:ColorZone Mode="PrimaryMid">
@@ -59,7 +48,7 @@
                                 </Button>
                             </StackPanel>
                         </materialDesign:PopupBox>
-                        <TextBlock Text="Filtrar" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="Filtrar" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
                     </DockPanel>
                 </materialDesign:ColorZone>
             </GroupBox.Header>

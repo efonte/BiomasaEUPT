@@ -13,15 +13,9 @@
              Height="450" Width="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                <Setter Property="Margin" Value="10" />
-                <Setter Property="FontSize" Value="15" />
-            </Style>
-            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="Margin" Value="10 8 10 8" />
-                <Setter Property="FontSize" Value="15" />
-            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
             <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
@@ -174,7 +168,7 @@
                 </TextBox>
 
                 <WrapPanel Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
-                    <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                    <Button x:Name="bNuevoCliente" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                 <Setter Property="IsEnabled" Value="False" />
