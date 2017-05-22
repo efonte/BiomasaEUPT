@@ -25,16 +25,5 @@ namespace BiomasaEUPT.Vistas.Ajustes
             InitializeComponent();
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            var checkBox = e.OriginalSource as CheckBox;
-            if (checkBox == cbVentanaMaximizada)
-                Properties.Settings.Default.VentanaMaximizada = true;
-
-            //if (checkBox == cbTamanoVentana)
-                //Properties.Settings.Default.TamanoVentana =  "x";
-
-            Properties.Settings.Default.Save();
-        }
     }
 }

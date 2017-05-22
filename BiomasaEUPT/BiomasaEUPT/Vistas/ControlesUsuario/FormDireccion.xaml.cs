@@ -36,7 +36,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             direccionesComunidadViewSource = ((CollectionViewSource)(FindResource("direccionesComunidadViewSource")));
             direccionesProvinciaViewSource = ((CollectionViewSource)(FindResource("direccionesProvinciaViewSource")));
             direccionesCodigoPostalViewSource = ((CollectionViewSource)(FindResource("direccionesCodigoPostalViewSource")));
-           // direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
+            direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
             Console.WriteLine("------------------------------------------------------------");
         }
 

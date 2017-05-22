@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,8 +30,7 @@ namespace BiomasaEUPT
         public MainWindow()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.VentanaMaximizada)
-                WindowState = WindowState.Maximized;
+            CargarAjustes();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace BiomasaEUPT
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            GuardarAjustes();
         }
 
         private void menuAcercaDe_Click(object sender, RoutedEventArgs e)
@@ -108,6 +108,42 @@ namespace BiomasaEUPT
             WinAjustes ajustes = new WinAjustes();
             ajustes.Owner = GetWindow(this);
             ajustes.ShowDialog();
+        }
+
+        private void CargarAjustes()
+        {
+            if (Properties.Settings.Default.VentanaMaximizada)
+                WindowState = WindowState.Maximized;
+
+            if (Properties.Settings.Default.TamanoVentana != "")
+            {
+                var m = Regex.Match(Properties.Settings.Default.TamanoVentana, @"(\d+)x(\d+)");
+                if (m.Success)
+                {
+                    Width = Int32.Parse(m.Groups[1].Value);
+                    Height = Int32.Parse(m.Groups[2].Value);
+                }
+            }
+
+            if (Properties.Settings.Default.TabActiva != "")
+                tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva).IsSelected = true;
+        }
+
+        private void GuardarAjustes()
+        {
+            if (Properties.Settings.Default.VentanaMaximizada)
+                Properties.Settings.Default.VentanaMaximizada = (WindowState == WindowState.Maximized);
+
+            if (Properties.Settings.Default.TamanoVentana != "")
+                Properties.Settings.Default.TamanoVentana = Width + "x" + Height;
+
+            if (Properties.Settings.Default.PosicionVentana != "")
+                Properties.Settings.Default.PosicionVentana = Left + "," + Top;
+
+            if (Properties.Settings.Default.TabActiva != "")
+                Properties.Settings.Default.TabActiva = (tcTabs.SelectedItem as TabItem).Name;
+
+            Properties.Settings.Default.Save();
         }
     }
 }

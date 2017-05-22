@@ -29,10 +29,10 @@
 
         <TextBlock Grid.Row="0" Text="Ventana" HorizontalAlignment="Center" FontWeight="Light" FontSize="23" Margin="0,10,0,0"/>
         <Separator Grid.Row="1"/>
-        <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Content="Recordar tamaño ventana" Checked="CheckBox_Checked"/>
-        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Content="Recordar ventana maximizada" Checked="CheckBox_Checked"/>
-        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Content="Recordar posición ventana" Checked="CheckBox_Checked"/>
-        <CheckBox x:Name="cbTabActiva" Grid.Row="5" Content="Recordar pestaña activa" Checked="CheckBox_Checked"/>
-        <CheckBox x:Name="cbPosicionTab" Grid.Row="6" Content="Recordar orden de las pestañas" Checked="CheckBox_Checked"/>
+        <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Content="Recordar tamaño ventana"/>
+        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Content="Recordar ventana maximizada"/>
+        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Content="Recordar posición ventana"/>
+        <CheckBox x:Name="cbTabActiva" Grid.Row="5" Content="Recordar pestaña activa"/>
+        <CheckBox x:Name="cbPosicionTab" Grid.Row="6" Content="Recordar orden de las pestañas"/>
     </Grid>
 </UserControl>

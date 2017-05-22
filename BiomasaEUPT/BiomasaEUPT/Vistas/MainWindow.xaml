@@ -63,7 +63,7 @@
                 <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0">
 
                     <!-- Pestaña Usuarios -->
-                    <TabItem x:Name="tiUsuarios" Selector.Unselected="tiUsuarios_Unselected">
+                    <TabItem x:Name="tiUsuarios" IsSelected="True" Selector.Unselected="tiUsuarios_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -76,7 +76,7 @@
                     </TabItem>
 
                     <!-- Pestaña Clientes -->
-                    <TabItem x:Name="tiClientes" IsSelected="True" Selector.Unselected="tiClientes_Unselected">
+                    <TabItem x:Name="tiClientes" Selector.Unselected="tiClientes_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
