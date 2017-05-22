@@ -248,6 +248,15 @@
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionEntradas\FormEntrada.xaml.cs">
+      <DependentUpon>FormEntrada.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionEntradas\TabEntradas.xaml.cs">
+      <DependentUpon>TabEntradas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionEntradas\TablaEntradas.xaml.cs">
+      <DependentUpon>TablaEntradas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionMateriasPrimas\FormMateriaPrima.xaml.cs">
       <DependentUpon>FormMateriaPrima.xaml</DependentUpon>
     </Compile>
@@ -356,6 +365,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionEntradas\FormEntrada.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionEntradas\TabEntradas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionEntradas\TablaEntradas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEntradas.TablaEntradas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEntradas"
+             xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:entradas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tipos_materias_primasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_materias_primas}, CreateList=True}"/>
+
+
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Entradas">
+
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgEntradas" DataContext="{StaticResource entradasViewSource}"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
+                        <DataGrid.RowValidationErrorTemplate>
+                            <ControlTemplate>
+                                <Grid Margin="2,-2"
+                                      ToolTip="{Binding RelativeSource={RelativeSource
+                                      FindAncestor, AncestorType={x:Type DataGridRow}},
+                                      Path=(Validation.Errors)[0].ErrorContent}">
+                                    <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
+                                    <TextBlock Text="!" FontSize="18" 
+                                               FontWeight="Bold" Foreground="White" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+
+                            </ControlTemplate>
+                        </DataGrid.RowValidationErrorTemplate>
+
+                        <DataGrid.RowValidationRules>
+                            <validadores:ClienteValidationRule ValidationStep="UpdatedValue"/>
+                        </DataGrid.RowValidationRules>
+
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fecha_recepcionColumn" Header="Fecha recepcion" Width="160"
+                                                                       Binding="{Binding fecha_recepcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="mesColumn" Header="Mes" Width="SizeToHeader"
+                                                                       Binding="{Binding mes, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
+
+                            </materialDesign:MaterialDataGridTextColumn>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="anoColumn" Header="Año" Width="SizeToHeader"
+                                                                       Binding="{Binding ano, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       >
+
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="numero_albaranColumn" Header="Número albarán" Width="SizeToHeader"
+                                                                       Binding="{Binding numero_albaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+
+                            </materialDesign:MaterialDataGridTextColumn>
+                            
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar entradas"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button ToolTip="Borrar la entrada seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
+                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
+
+                            </Button>
+
+                            <Button x:Name="bAnadirEntrada" ToolTip="Añadir entrada">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         TextChanged="tbBuscar_TextChanged"/>
+
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha recepción" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Mes" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Año" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Numero albarán" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbMes" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbAno" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

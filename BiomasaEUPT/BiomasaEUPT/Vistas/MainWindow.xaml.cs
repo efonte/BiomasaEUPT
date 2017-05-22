@@ -103,6 +103,13 @@ namespace BiomasaEUPT
 
         }
 
+        private void tiEntradas_Unselected(object sender, RoutedEventArgs e)
+        {
+            if (ucTabEntradas != null)
+                ucTabEntradas.ucTablaEntradas.dgEntradas.CancelEdit();
+
+        }
+
         private void menuAjustes_Click(object sender, RoutedEventArgs e)
         {
             WinAjustes ajustes = new WinAjustes();
