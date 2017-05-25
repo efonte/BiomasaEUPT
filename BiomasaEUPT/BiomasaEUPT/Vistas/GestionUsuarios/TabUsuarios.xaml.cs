@@ -1,5 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Domain;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     /// </summary>
     public partial class TabUsuarios : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource usuariosViewSource;
         private CollectionViewSource tiposUsuariosViewSource;
 
@@ -44,13 +46,13 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+                context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 usuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("usuariosViewSource")));
                 tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tipos_usuariosViewSource")));
-                context.usuarios.Load();
-                context.tipos_usuarios.Load();
-                usuariosViewSource.Source = context.usuarios.Local;
-                tiposUsuariosViewSource.Source = context.tipos_usuarios.Local;
+                context.Usuarios.Load();
+                context.TiposUsuarios.Load();
+                usuariosViewSource.Source = context.Usuarios.Local;
+                tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
                 //var result = from u in context.usuarios select u;
                 //ucTablaUsuarios.dgUsuarios.ItemsSource = result.ToList();
                 ActualizarContador();
@@ -65,12 +67,12 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
                 {
-                    usuarios usuario = e.Row.DataContext as usuarios;
+                    Usuario usuario = e.Row.DataContext as Usuario;
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
                     PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
                     string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
-                    usuario.contrasena = hashContrasena;
+                    usuario.Contrasena = hashContrasena;
                 }
             }
         }
@@ -79,12 +81,12 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                usuarios usuario = e.Row.DataContext as usuarios;
-                Console.WriteLine(usuario.nombre + " - " + usuario.email + " - " + usuario.contrasena + " - " + usuario.tipo_id + " - " + usuario.baneado);
+                Usuario usuario = e.Row.DataContext as Usuario;
+                Console.WriteLine(usuario.Nombre + " - " + usuario.Email + " - " + usuario.Contrasena + " - " + usuario.TipoId + " - " + usuario.Baneado);
                 /*var usuarioExistente = context.usuarios.Where(u => u.id_usuario == usuario.id_usuario).FirstOrDefault();
                 if (usuarioExistente == null)
                 {
-                    usuarios nuevoUsuario = new usuarios()
+                    Usuario nuevoUsuario = new Usuario()
                     {
                         nombre = usuario.nombre,
                         email = usuario.email,
@@ -122,10 +124,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             string tipoFiltrado = tbTiposUsuarios.Content.ToString().ToLower();
             string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
 
-            var usuario = e.Item as usuarios;
-            string nombre = usuario.nombre.ToLower();
-            string email = usuario.email.ToLower();
-            string tipo = usuario.tipos_usuarios.nombre.ToLower();
+            var usuario = e.Item as Usuario;
+            string nombre = usuario.Nombre.ToLower();
+            string email = usuario.Email.ToLower();
+            string tipo = usuario.TipoUsuario.Nombre.ToLower();
 
             if (nombre.Contains(textoBuscado) || email.Contains(textoBuscado))
             {
@@ -145,10 +147,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         public void ActualizarContador()
         {
-            ucInfoUsuarios.tbNumAdministradores.Text = context.usuarios.Local.Where(u => u.tipo_id == 1).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosA.Text = context.usuarios.Local.Where(u => u.tipo_id == 2).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosB.Text = context.usuarios.Local.Where(u => u.tipo_id == 3).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosC.Text = context.usuarios.Local.Where(u => u.tipo_id == 4).Count().ToString();
+            ucInfoUsuarios.tbNumAdministradores.Text = context.Usuarios.Local.Where(u => u.TipoId == 1).Count().ToString();
+            ucInfoUsuarios.tbNumTecnicosA.Text = context.Usuarios.Local.Where(u => u.TipoId == 2).Count().ToString();
+            ucInfoUsuarios.tbNumTecnicosB.Text = context.Usuarios.Local.Where(u => u.TipoId == 3).Count().ToString();
+            ucInfoUsuarios.tbNumTecnicosC.Text = context.Usuarios.Local.Where(u => u.TipoId == 4).Count().ToString();
         }
 
 
@@ -172,14 +174,14 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<usuarios>();
+            return context != null && context.HayCambios<Usuario>();
         }
 
         private void ConfirmarCambios()
         {
             /*try
             {*/
-            context.GuardarCambios<usuarios>();
+            context.GuardarCambios<Usuario>();
             //usuariosViewSource.View.Refresh();
             ActualizarContador();
             /*}
@@ -215,7 +217,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             if (ucTablaUsuarios.dgUsuarios.SelectedIndex != -1)
             {
-                usuarios usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios;
+                Usuario usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as Usuario;
                 //Console.WriteLine(usuarioSeleccionado.nombre);
                 return usuarioSeleccionado != null;
             }
@@ -225,7 +227,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         private async void BorrarUsuario()
         {
             string pregunta = ucTablaUsuarios.dgUsuarios.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar al usuario " + (ucTablaUsuarios.dgUsuarios.SelectedItem as usuarios).nombre + "?"
+                ? "¿Está seguro de que desea borrar al usuario " + (ucTablaUsuarios.dgUsuarios.SelectedItem as Usuario).Nombre + "?"
                 : "¿Está seguro de que desea borrar los usuarios seleccionados?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
@@ -236,7 +238,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             if (resultado)
             {
-                context.usuarios.RemoveRange(ucTablaUsuarios.dgUsuarios.SelectedItems.Cast<usuarios>().ToList());
+                context.Usuarios.RemoveRange(ucTablaUsuarios.dgUsuarios.SelectedItems.Cast<Usuario>().ToList());
             }
         }
         #endregion

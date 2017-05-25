@@ -105,19 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="almacenes.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Clases\BaseDeDatos.cs" />
     <Compile Include="Clases\Comando.cs" />
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\RelayComando.cs" />
-    <Compile Include="clientes.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="direcciones.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Domain\BooleanConverter.cs" />
     <Compile Include="Domain\BooleanToVisibilityConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
@@ -130,42 +121,38 @@
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
-    <Compile Include="entradas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="envasados.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="estados_salidas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="grupos_clientes.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="grupos_materias_primas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="grupos_productos_terminados.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="materias_primas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelo.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Modelos\BiomasaEUPTContext.cs" />
+    <Compile Include="Modelos\ConstantesModelo.cs" />
+    <Compile Include="Modelos\Tablas\Almacen.cs" />
+    <Compile Include="Modelos\Tablas\Cliente.cs" />
+    <Compile Include="Modelos\Tablas\Comunidad.cs" />
+    <Compile Include="Modelos\Tablas\Direccion.cs" />
+    <Compile Include="Modelos\Tablas\Envasado.cs" />
+    <Compile Include="Modelos\Tablas\EstadoRecepcion.cs" />
+    <Compile Include="Modelos\Tablas\EstadoSalida.cs" />
+    <Compile Include="Modelos\Tablas\GrupoCliente.cs" />
+    <Compile Include="Modelos\Tablas\GrupoMateriaPrima.cs" />
+    <Compile Include="Modelos\Tablas\GrupoProductoTerminado.cs" />
+    <Compile Include="Modelos\Tablas\HuecoRecepcion.cs" />
+    <Compile Include="Modelos\Tablas\MateriaPrima.cs" />
+    <Compile Include="Modelos\Tablas\Municipio.cs" />
+    <Compile Include="Modelos\Tablas\Pais.cs" />
+    <Compile Include="Modelos\Tablas\Pedido.cs" />
+    <Compile Include="Modelos\Tablas\Procedencia.cs" />
+    <Compile Include="Modelos\Tablas\ProductoTerminado.cs" />
+    <Compile Include="Modelos\Tablas\Proveedor.cs" />
+    <Compile Include="Modelos\Tablas\Provincia.cs" />
+    <Compile Include="Modelos\Tablas\Recepcion.cs" />
+    <Compile Include="Modelos\Tablas\Salida.cs" />
+    <Compile Include="Modelos\Tablas\SitioRecepcion.cs" />
+    <Compile Include="Modelos\Tablas\SitioRecogida.cs" />
+    <Compile Include="Modelos\Tablas\TipoCliente.cs" />
+    <Compile Include="Modelos\Tablas\TipoMateriaPrima.cs" />
+    <Compile Include="Modelos\Tablas\TipoProductoTerminado.cs" />
+    <Compile Include="Modelos\Tablas\TipoProveedor.cs" />
+    <Compile Include="Modelos\Tablas\TipoUsuario.cs" />
+    <Compile Include="Modelos\Tablas\Usuario.cs" />
     <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
     <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
@@ -173,54 +160,6 @@
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UsuarioValidationRule.cs" />
-    <Compile Include="pedidos.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="procedencias.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="productos_terminados.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="proveedores.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="salidas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sitios_descargas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sitios_recogidas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tipos_clientes.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tipos_materias_primas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tipos_productos_terminados.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tipos_proveedores.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tipos_usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\Ajustes\TabApariencia.xaml.cs">
       <DependentUpon>TabApariencia.xaml</DependentUpon>
     </Compile>
@@ -304,21 +243,6 @@
     </Compile>
     <Compile Include="Vistas\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="vista_clientes.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vista_materias_primas.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vista_productos_terminados.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vista_proveedores.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vista_usuarios.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Page Include="Vistas\AcercaDe.xaml">
       <SubType>Designer</SubType>
@@ -479,18 +403,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Modelo.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Modelo.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Modelo.edmx.diagram">
-      <DependentUpon>Modelo.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\clientes.datasource" />
-    <None Include="Properties\DataSources\grupos_clientes.datasource" />
-    <None Include="Properties\DataSources\tipos_clientes.datasource" />
-    <None Include="Properties\DataSources\vista_clientes.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -745,19 +658,10 @@
     <Resource Include="Resources\Paises\zm.png" />
     <Resource Include="Resources\Paises\zw.png" />
     <Resource Include="Resources\icono.ico" />
-    <Content Include="Modelo.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-      <LastGenOutput>Modelo.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Modelo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Modelo.edmx</DependentUpon>
-      <LastGenOutput>Modelo.cs</LastGenOutput>
-    </Content>
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
     <Folder Include="Vistas\Plantillas\" />
   </ItemGroup>
   <ItemGroup>

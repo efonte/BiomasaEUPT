@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,76 +38,76 @@ namespace BiomasaEUPT.Modelos.Validadores
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            proveedores proveedor = (value as BindingGroup).Items[0] as proveedores;
+            Proveedor proveedor = (value as BindingGroup).Items[0] as Proveedor;
 
             // Razón Social
-            if (string.IsNullOrWhiteSpace(proveedor.razon_social))
+            if (string.IsNullOrWhiteSpace(proveedor.RazonSocial))
                 return new ValidationResult(false, String.Format(errorObligatorio, "razón social"));
 
-            if (proveedor.razon_social.Length < minRazonSocial)
+            if (proveedor.RazonSocial.Length < minRazonSocial)
                 return new ValidationResult(false, String.Format(errorMin, "razón social", minRazonSocial));
 
-            if (proveedor.razon_social.Length > maxRazonSocial)
+            if (proveedor.RazonSocial.Length > maxRazonSocial)
                 return new ValidationResult(false, String.Format(errorMax, "razón social", maxRazonSocial));
 
-            if (!Regex.IsMatch(proveedor.razon_social, regexRazonSocial))
+            if (!Regex.IsMatch(proveedor.RazonSocial, regexRazonSocial))
                 return new ValidationResult(false, String.Format(errorRegex, "razón social"));
 
 
             // NIF
-            if (string.IsNullOrWhiteSpace(proveedor.nif))
+            if (string.IsNullOrWhiteSpace(proveedor.Nif))
                 return new ValidationResult(false, String.Format(errorObligatorio, "NIF"));
 
-            if (proveedor.nif.Length < minNif)
+            if (proveedor.Nif.Length < minNif)
                 return new ValidationResult(false, String.Format(errorMin, "NIF", minRazonSocial));
 
-            if (proveedor.nif.Length > maxNif)
+            if (proveedor.Nif.Length > maxNif)
                 return new ValidationResult(false, String.Format(errorMax, "NIF", maxRazonSocial));
 
-            if (!Regex.IsMatch(proveedor.nif, regexNif))
+            if (!Regex.IsMatch(proveedor.Nif, regexNif))
                 return new ValidationResult(false, String.Format(errorRegex, "NIF", " (L-NNNNNNN o NNNNNNN-L)"));
 
 
             // Email
-            if (string.IsNullOrWhiteSpace(proveedor.email))
+            if (string.IsNullOrWhiteSpace(proveedor.Email))
                 return new ValidationResult(false, String.Format(errorObligatorio, "email"));
 
-            if (proveedor.email.Length < minEmail)
+            if (proveedor.Email.Length < minEmail)
                 return new ValidationResult(false, String.Format(errorMin, "email", minEmail));
 
-            if (proveedor.email.Length > maxEmail)
+            if (proveedor.Email.Length > maxEmail)
                 return new ValidationResult(false, String.Format(errorMax, "email", maxEmail));
 
-            if (!Regex.IsMatch(proveedor.email, regexEmail))
+            if (!Regex.IsMatch(proveedor.Email, regexEmail))
                 return new ValidationResult(false, String.Format(errorRegex, "email"));
 
 
             // Calle
-            if (string.IsNullOrWhiteSpace(proveedor.calle))
+            if (string.IsNullOrWhiteSpace(proveedor.Calle))
                 return new ValidationResult(false, String.Format(errorObligatorio, "calle"));
 
-            if (proveedor.calle.Length < minCalle)
+            if (proveedor.Calle.Length < minCalle)
                 return new ValidationResult(false, String.Format(errorMin, "calle", minCalle));
 
-            if (proveedor.calle.Length > maxCalle)
+            if (proveedor.Calle.Length > maxCalle)
                 return new ValidationResult(false, String.Format(errorMax, "calle", maxCalle));
 
-            if (!Regex.IsMatch(proveedor.calle, regexCalle))
+            if (!Regex.IsMatch(proveedor.Calle, regexCalle))
                 return new ValidationResult(false, String.Format(errorRegex, "calle"));
 
 
             // Valores únicos
-            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTEntidades.proveedores.Local)
+            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTContext.Proveedores.Local)
             {
                 if (c.GetHashCode() != proveedor.GetHashCode())
                 {
-                    if (c.razon_social == proveedor.razon_social)
+                    if (c.RazonSocial == proveedor.RazonSocial)
                         return new ValidationResult(false, String.Format(errorUnico, "razón social"));
 
-                    if (c.nif == proveedor.nif)
+                    if (c.Nif == proveedor.Nif)
                         return new ValidationResult(false, String.Format(errorUnico, "NIF"));
 
-                    if (c.email == proveedor.email)
+                    if (c.Email == proveedor.Email)
                         return new ValidationResult(false, String.Format(errorUnico, "email"));
                 }
             }

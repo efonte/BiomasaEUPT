@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,76 +38,76 @@ namespace BiomasaEUPT.Modelos.Validadores
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            clientes cliente = (value as BindingGroup).Items[0] as clientes;
+            Cliente cliente = (value as BindingGroup).Items[0] as Cliente;
 
             // Razón Social
-            if (string.IsNullOrWhiteSpace(cliente.razon_social))
+            if (string.IsNullOrWhiteSpace(cliente.RazonSocial))
                 return new ValidationResult(false, String.Format(errorObligatorio, "razón social"));
 
-            if (cliente.razon_social.Length < minRazonSocial)
+            if (cliente.RazonSocial.Length < minRazonSocial)
                 return new ValidationResult(false, String.Format(errorMin, "razón social", minRazonSocial));
 
-            if (cliente.razon_social.Length > maxRazonSocial)
+            if (cliente.RazonSocial.Length > maxRazonSocial)
                 return new ValidationResult(false, String.Format(errorMax, "razón social", maxRazonSocial));
 
-            if (!Regex.IsMatch(cliente.razon_social, regexRazonSocial))
+            if (!Regex.IsMatch(cliente.RazonSocial, regexRazonSocial))
                 return new ValidationResult(false, String.Format(errorRegex, "razón social"));
 
 
             // NIF
-            if (string.IsNullOrWhiteSpace(cliente.nif))
+            if (string.IsNullOrWhiteSpace(cliente.Nif))
                 return new ValidationResult(false, String.Format(errorObligatorio, "NIF"));
 
-            if (cliente.nif.Length < minNif)
+            if (cliente.Nif.Length < minNif)
                 return new ValidationResult(false, String.Format(errorMin, "NIF", minRazonSocial));
 
-            if (cliente.nif.Length > maxNif)
+            if (cliente.Nif.Length > maxNif)
                 return new ValidationResult(false, String.Format(errorMax, "NIF", maxRazonSocial));
 
-            if (!Regex.IsMatch(cliente.nif, regexNif))
+            if (!Regex.IsMatch(cliente.Nif, regexNif))
                 return new ValidationResult(false, String.Format(errorRegex, "NIF", " (L-NNNNNNN o NNNNNNN-L)"));
 
 
             // Email
-            if (string.IsNullOrWhiteSpace(cliente.email))
+            if (string.IsNullOrWhiteSpace(cliente.Email))
                 return new ValidationResult(false, String.Format(errorObligatorio, "email"));
 
-            if (cliente.email.Length < minEmail)
+            if (cliente.Email.Length < minEmail)
                 return new ValidationResult(false, String.Format(errorMin, "email", minEmail));
 
-            if (cliente.email.Length > maxEmail)
+            if (cliente.Email.Length > maxEmail)
                 return new ValidationResult(false, String.Format(errorMax, "email", maxEmail));
 
-            if (!Regex.IsMatch(cliente.email, regexEmail))
+            if (!Regex.IsMatch(cliente.Email, regexEmail))
                 return new ValidationResult(false, String.Format(errorRegex, "email"));
 
 
             // Calle
-            if (string.IsNullOrWhiteSpace(cliente.calle))
+            if (string.IsNullOrWhiteSpace(cliente.Calle))
                 return new ValidationResult(false, String.Format(errorObligatorio, "calle"));
 
-            if (cliente.calle.Length < minCalle)
+            if (cliente.Calle.Length < minCalle)
                 return new ValidationResult(false, String.Format(errorMin, "calle", minCalle));
 
-            if (cliente.calle.Length > maxCalle)
+            if (cliente.Calle.Length > maxCalle)
                 return new ValidationResult(false, String.Format(errorMax, "calle", maxCalle));
 
-            if (!Regex.IsMatch(cliente.calle, regexCalle))
+            if (!Regex.IsMatch(cliente.Calle, regexCalle))
                 return new ValidationResult(false, String.Format(errorRegex, "calle"));
 
 
             // Valores únicos
-            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTEntidades.clientes.Local)
+            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTContext.Clientes.Local)
             {
                 if (c.GetHashCode() != cliente.GetHashCode())
                 {
-                    if (c.razon_social == cliente.razon_social)
+                    if (c.RazonSocial == cliente.RazonSocial)
                         return new ValidationResult(false, String.Format(errorUnico, "razón social"));
 
-                    if (c.nif == cliente.nif)
+                    if (c.Nif == cliente.Nif)
                         return new ValidationResult(false, String.Format(errorUnico, "NIF"));
 
-                    if (c.email == cliente.email)
+                    if (c.Email == cliente.Email)
                         return new ValidationResult(false, String.Format(errorUnico, "email"));
                 }
             }

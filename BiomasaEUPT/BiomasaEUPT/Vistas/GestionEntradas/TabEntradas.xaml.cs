@@ -1,4 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
     /// </summary>
     public partial class TabEntradas : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource entradasViewSource;
         private CollectionViewSource tiposMateriasPrimasViewSource;
 
@@ -39,13 +41,13 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+                context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 entradasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("entradasViewSource")));
                 tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("tipos_materias_primasViewSource")));
-                context.entradas.Load();
-                context.tipos_materias_primas.Load();
-                entradasViewSource.Source = context.entradas.Local;
-                tiposMateriasPrimasViewSource.Source = context.tipos_materias_primas.Local;
+                context.Recepciones.Load();
+                context.TiposMateriasPrimas.Load();
+                entradasViewSource.Source = context.Recepciones.Local;
+                tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
 
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaEntradas.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
@@ -84,16 +86,16 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
             string textoBuscado = ucTablaEntradas.tbBuscar.Text.ToLower();
-            var entrada = e.Item as entradas;
-            string fechaRecepcion = entrada.fecha_recepcion.ToLongDateString();
-            string mes = entrada.mes.ToString();
-            string ano = entrada.ano.ToString();
-            string numeroAlbaran = entrada.numero_albaran.ToLower();
-            var tipos = context.materias_primas.Where(m => m.entrada_id == entrada.id_entrada).Select(m => m.tipo_id.ToString().ToLower()).Distinct().ToList();
+            var entrada = e.Item as Recepcion;
+            string fechaRecepcion = entrada.FechaRecepcion.ToLongDateString();
+            //string mes = entrada.mes.ToString();
+            //string ano = entrada.ano.ToString();
+            string numeroAlbaran = entrada.NumeroAlbaran.ToLower();
+            var tipos = context.MateriasPrimas.Where(m => m.RecepcionId == entrada.RecepcionId).Select(m => m.TipoId.ToString().ToLower()).Distinct().ToList();
 
             var condicion = (ucTablaEntradas.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
-                         (ucTablaEntradas.cbMes.IsChecked == true ? mes.Contains(textoBuscado) : false) ||
-                         (ucTablaEntradas.cbAno.IsChecked == true ? ano.Contains(textoBuscado) : false) ||
+                         //(ucTablaEntradas.cbMes.IsChecked == true ? mes.Contains(textoBuscado) : false) ||
+                         //(ucTablaEntradas.cbAno.IsChecked == true ? ano.Contains(textoBuscado) : false) ||
                          (ucTablaEntradas.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false);
 
             // Filtra todos
@@ -103,9 +105,9 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
             }
             else
             {
-                foreach (tipos_materias_primas tipoMateriaPrima in ucFiltroTabla.lbFiltro.SelectedItems)
+                foreach (TipoMateriaPrima tipoMateriaPrima in ucFiltroTabla.lbFiltro.SelectedItems)
                 {
-                    if (tipos.Where(t => t == tipoMateriaPrima.nombre.ToLower()).Count() > 0)
+                    if (tipos.Where(t => t == tipoMateriaPrima.Nombre.ToLower()).Count() > 0)
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
                         e.Accepted = condicion;
@@ -139,14 +141,14 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<clientes>();
+            return context != null && context.HayCambios<Cliente>();
         }
 
         private async void ConfirmarCambios()
         {
             try
             {
-                context.GuardarCambios<clientes>();
+                context.GuardarCambios<Cliente>();
             }
             catch (DbEntityValidationException ex)
             {
@@ -200,7 +202,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
         {
             if (ucTablaEntradas.dgEntradas.SelectedIndex != -1)
             {
-                entradas entradaSeleccionada = ucTablaEntradas.dgEntradas.SelectedItem as entradas;
+                Recepcion entradaSeleccionada = ucTablaEntradas.dgEntradas.SelectedItem as Recepcion;
                 return entradaSeleccionada != null;
             }
             return false;
@@ -209,7 +211,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
         private async void BorrarEntrada()
         {
             string pregunta = ucTablaEntradas.dgEntradas.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar la entrada " + (ucTablaEntradas.dgEntradas.SelectedItem as entradas).numero_albaran + "?"
+                ? "¿Está seguro de que desea borrar la entrada " + (ucTablaEntradas.dgEntradas.SelectedItem as Recepcion).NumeroAlbaran + "?"
                 : "¿Está seguro de que desea borrar las entradas seleccionadas?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
@@ -220,7 +222,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
 
             if (resultado)
             {
-                context.entradas.RemoveRange(ucTablaEntradas.dgEntradas.SelectedItems.Cast<entradas>().ToList());
+                context.Recepciones.RemoveRange(ucTablaEntradas.dgEntradas.SelectedItems.Cast<Recepcion>().ToList());
             }
         }
         #endregion

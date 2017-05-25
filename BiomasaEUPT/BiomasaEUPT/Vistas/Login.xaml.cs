@@ -1,5 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Domain;
+using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Vistas;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -48,9 +49,9 @@ namespace BiomasaEUPT
 
         public bool IniciarSesion(String usuario, String hashContrasena)
         {
-            using (var context = new BiomasaEUPTEntidades())
+            using (var context = new BiomasaEUPTContext())
             {
-                return context.usuarios.Where(s => s.nombre == usuario && s.contrasena == hashContrasena).FirstOrDefault() != null;
+                return context.Usuarios.Where(s => s.Nombre == usuario && s.Contrasena == hashContrasena).FirstOrDefault() != null;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +45,13 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
                 CollectionViewSource tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tipos_usuariosViewSource")));
-                foreach (tipos_usuarios tipoUsuario in tiposUsuariosViewSource.View)
+                foreach (TipoUsuario tipoUsuario in tiposUsuariosViewSource.View)
                 {
-                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.nombre, FontSize = 14 });
+                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
                 }
                 /*foreach (var tipoUsuario in context.tipos_usuarios.ToList())
                 {
-                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.nombre, FontSize = 14 });
+                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
                 }*/
             }
 

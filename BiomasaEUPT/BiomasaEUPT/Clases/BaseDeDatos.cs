@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiomasaEUPT.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,14 @@ namespace BiomasaEUPT.Clases
         //public BiomasaEUPTDataSet biomasaEUPTDataSet;
         //public BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
         //public BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter biomasaEUPTDataSettipos_usuariosTableAdapter;
-        public BiomasaEUPTEntidades biomasaEUPTEntidades;
+        public BiomasaEUPTContext biomasaEUPTContext;
 
         private BaseDeDatos()
         {
             //biomasaEUPTDataSet = new BiomasaEUPTDataSet();
             //biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
             //biomasaEUPTDataSettipos_usuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.tipos_usuariosTableAdapter();
-            biomasaEUPTEntidades = new BiomasaEUPTEntidades();
+            biomasaEUPTContext = new BiomasaEUPTContext();
             //biomasaEUPTEntidades.Configuration.ProxyCreationEnabled = false;
         }
 

@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class FormDireccion : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource direccionesPaisViewSource;
         private CollectionViewSource direccionesComunidadViewSource;
         private CollectionViewSource direccionesProvinciaViewSource;
@@ -31,28 +32,28 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             InitializeComponent();
             DataContext = this;
-            context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+            context = BaseDeDatos.Instancia.biomasaEUPTContext;
             direccionesPaisViewSource = ((CollectionViewSource)(FindResource("direccionesPaisViewSource")));
             direccionesComunidadViewSource = ((CollectionViewSource)(FindResource("direccionesComunidadViewSource")));
             direccionesProvinciaViewSource = ((CollectionViewSource)(FindResource("direccionesProvinciaViewSource")));
             direccionesCodigoPostalViewSource = ((CollectionViewSource)(FindResource("direccionesCodigoPostalViewSource")));
-            direccionesPaisViewSource.Source = context.direcciones.Select(d => d.pais).Distinct().ToList();
+            direccionesPaisViewSource.Source = context.Direcciones.Select(d => d.Pais).Distinct().ToList();
             Console.WriteLine("------------------------------------------------------------");
         }
 
         private void cbPaisesDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            direccionesComunidadViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem).OrderBy(d => d.pais).Select(d => d.comunidad).Distinct().ToList();
+            direccionesComunidadViewSource.Source = context.Direcciones.Where(d => d.Pais == (string)cbPaisesDirecciones.SelectedItem).OrderBy(d => d.Pais).Select(d => d.Comunidad).Distinct().ToList();
         }
 
         private void cbComunidadesDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            direccionesProvinciaViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem && d.comunidad == (string)cbComunidadesDirecciones.SelectedItem).OrderBy(d => d.provincia).Select(d => d.provincia).Distinct().ToList();
+            direccionesProvinciaViewSource.Source = context.Direcciones.Where(d => d.Pais == (string)cbPaisesDirecciones.SelectedItem && d.Comunidad == (string)cbComunidadesDirecciones.SelectedItem).OrderBy(d => d.Provincia).Select(d => d.Provincia).Distinct().ToList();
         }
 
         private void cbProvinciasDirecciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            direccionesCodigoPostalViewSource.Source = context.direcciones.Where(d => d.pais == (string)cbPaisesDirecciones.SelectedItem && d.comunidad == (string)cbComunidadesDirecciones.SelectedItem && d.provincia == (string)cbProvinciasDirecciones.SelectedItem).OrderBy(d => d.codigo_postal).Distinct().ToList();
+            direccionesCodigoPostalViewSource.Source = context.Direcciones.Where(d => d.Pais == (string)cbPaisesDirecciones.SelectedItem && d.Comunidad == (string)cbComunidadesDirecciones.SelectedItem && d.Provincia == (string)cbProvinciasDirecciones.SelectedItem).OrderBy(d => d.CodigoPostal).Distinct().ToList();
         }
     }
 }

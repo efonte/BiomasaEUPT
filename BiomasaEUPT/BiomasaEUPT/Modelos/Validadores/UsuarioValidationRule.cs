@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,44 +29,44 @@ namespace BiomasaEUPT.Modelos.Validadores
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            usuarios usuario = (value as BindingGroup).Items[0] as usuarios;
+            Usuario usuario = (value as BindingGroup).Items[0] as Usuario;
 
             // Nombre
-            if (string.IsNullOrWhiteSpace(usuario.nombre))
+            if (string.IsNullOrWhiteSpace(usuario.Nombre))
                 return new ValidationResult(false, String.Format(errorObligatorio, "nombre"));
 
-            if (usuario.nombre.Length < minNombre)
+            if (usuario.Nombre.Length < minNombre)
                 return new ValidationResult(false, String.Format(errorMin, "nombre", minNombre));
 
-            if (usuario.nombre.Length > maxNombre)
+            if (usuario.Nombre.Length > maxNombre)
                 return new ValidationResult(false, String.Format(errorMax, "nombre", maxNombre));
 
-            if (!Regex.IsMatch(usuario.nombre, regexNombre))
+            if (!Regex.IsMatch(usuario.Nombre, regexNombre))
                 return new ValidationResult(false, "El campo nombre sólo acepta letras minúsculas.");
 
 
             // Email
-            if (string.IsNullOrWhiteSpace(usuario.email))
+            if (string.IsNullOrWhiteSpace(usuario.Email))
                 return new ValidationResult(false, String.Format(errorObligatorio, "email"));
 
-            if (usuario.email.Length < minEmail)
+            if (usuario.Email.Length < minEmail)
                 return new ValidationResult(false, String.Format(errorMin, "email", minEmail));
 
-            if (usuario.email.Length > maxEmail)
+            if (usuario.Email.Length > maxEmail)
                 return new ValidationResult(false, String.Format(errorMax, "email", maxEmail));
 
-            if (!Regex.IsMatch(usuario.email, regexEmail))
+            if (!Regex.IsMatch(usuario.Email, regexEmail))
                 return new ValidationResult(false, String.Format(errorRegex, "email"));
 
             // Valores únicos
-            foreach (var u in BaseDeDatos.Instancia.biomasaEUPTEntidades.usuarios.Local)
+            foreach (var u in BaseDeDatos.Instancia.biomasaEUPTContext.Usuarios.Local)
             {
                 if (u.GetHashCode() != usuario.GetHashCode())
                 {
-                    if (u.nombre == usuario.nombre)
+                    if (u.Nombre == usuario.Nombre)
                         return new ValidationResult(false, String.Format(errorUnico, "nombre"));
 
-                    if (u.email == usuario.email)
+                    if (u.Email == usuario.Email)
                         return new ValidationResult(false, String.Format(errorUnico, "email"));
                 }
             }

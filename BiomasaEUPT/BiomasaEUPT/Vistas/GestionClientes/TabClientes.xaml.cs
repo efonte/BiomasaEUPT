@@ -1,4 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
     /// </summary>
     public partial class TabClientes : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource clientesViewSource;
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource gruposClientesViewSource;
@@ -40,16 +42,16 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+                context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
                 tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tipos_clientesViewSource")));
                 gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("grupos_clientesViewSource")));
-                context.clientes.Load();
-                context.tipos_clientes.Load();
-                context.grupos_clientes.Load();
-                clientesViewSource.Source = context.clientes.Local;
-                tiposClientesViewSource.Source = context.tipos_clientes.Local;
-                gruposClientesViewSource.Source = context.grupos_clientes.Local;
+                context.Clientes.Load();
+                context.TiposClientes.Load();
+                context.GruposClientes.Load();
+                clientesViewSource.Source = context.Clientes.Local;
+                tiposClientesViewSource.Source = context.TiposClientes.Local;
+                gruposClientesViewSource.Source = context.GruposClientes.Local;
 
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -74,16 +76,16 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
             if ((bool)await DialogHost.Show(formCliente, "RootDialog"))
             {
-                context.clientes.Add(new clientes()
+                context.Clientes.Add(new Cliente()
                 {
-                    razon_social = formCliente.tbRazonSocial.Text,
-                    nif = formCliente.tbNif.Text,
-                    email = formCliente.tbEmail.Text,
-                    calle = formCliente.tbCalle.Text,
-                    tipos_clientes = formCliente.cbTiposClientes.SelectedItem as tipos_clientes,
-                    grupos_clientes = formCliente.cbGruposClientes.SelectedItem as grupos_clientes,
-                    direcciones = formCliente.cbCodigosPostalesDirecciones.SelectedItem as direcciones,
-                    observaciones = formCliente.tbObservaciones.Text
+                    RazonSocial = formCliente.tbRazonSocial.Text,
+                    Nif = formCliente.tbNif.Text,
+                    Email = formCliente.tbEmail.Text,
+                    Calle = formCliente.tbCalle.Text,
+                    TipoCliente = formCliente.cbTiposClientes.SelectedItem as TipoCliente,
+                    GrupoCliente = formCliente.cbGruposClientes.SelectedItem as GrupoCliente,
+                    Direccion = formCliente.cbCodigosPostalesDirecciones.SelectedItem as Direccion,
+                    Observaciones = formCliente.tbObservaciones.Text
                 });
             }
         }
@@ -98,14 +100,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             /* try
              {*/
             string textoBuscado = ucTablaClientes.tbBuscar.Text.ToLower();
-            var cliente = e.Item as clientes;
-            string razonSocial = cliente.razon_social.ToLower();
-            string nif = cliente.nif.ToLower();
-            string email = cliente.email.ToLower();
-            string calle = cliente.calle.ToLower();
-            string codigoPostal = cliente.direcciones.codigo_postal.ToLower();
-            string municipio = cliente.direcciones.municipio.ToLower();
-            string tipo = cliente.tipos_clientes.nombre.ToLower();
+            var cliente = e.Item as Cliente;
+            string razonSocial = cliente.RazonSocial.ToLower();
+            string nif = cliente.Nif.ToLower();
+            string email = cliente.Email.ToLower();
+            string calle = cliente.Calle.ToLower();
+            string codigoPostal = cliente.Direccion.CodigoPostal.ToLower();
+            string municipio = cliente.Direccion.Municipio.ToLower();
+            string tipo = cliente.TipoCliente.Nombre.ToLower();
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
             {
@@ -118,9 +120,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
             else
             {
-                foreach (tipos_clientes tipoCliente in ucFiltroTabla.lbFiltro.SelectedItems)
+                foreach (TipoCliente tipoCliente in ucFiltroTabla.lbFiltro.SelectedItems)
                 {
-                    if (tipoCliente.nombre.ToLower().Equals(tipo))
+                    if (tipoCliente.Nombre.ToLower().Equals(tipo))
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
                         e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
@@ -165,14 +167,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<clientes>();
+            return context != null && context.HayCambios<Cliente>();
         }
 
         private async void ConfirmarCambios()
         {
             try
             {
-                context.GuardarCambios<clientes>();
+                context.GuardarCambios<Cliente>();
             }
             catch (DbEntityValidationException ex)
             {
@@ -226,7 +228,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             if (ucTablaClientes.dgClientes.SelectedIndex != -1)
             {
-                clientes clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as clientes;
+                Cliente clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as Cliente;
                 //Console.WriteLine(clienteSeleccionado.razon_social);
                 return clienteSeleccionado != null;
             }
@@ -236,7 +238,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private async void BorrarCliente()
         {
             string pregunta = ucTablaClientes.dgClientes.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar al cliente " + (ucTablaClientes.dgClientes.SelectedItem as clientes).razon_social + "?"
+                ? "¿Está seguro de que desea borrar al cliente " + (ucTablaClientes.dgClientes.SelectedItem as Cliente).RazonSocial + "?"
                 : "¿Está seguro de que desea borrar los clientes seleccionados?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
@@ -247,7 +249,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
             if (resultado)
             {
-                context.clientes.RemoveRange(ucTablaClientes.dgClientes.SelectedItems.Cast<clientes>().ToList());
+                context.Clientes.RemoveRange(ucTablaClientes.dgClientes.SelectedItems.Cast<Cliente>().ToList());
             }
         }
         #endregion

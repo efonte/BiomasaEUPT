@@ -1,4 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
     /// </summary>
     public partial class TabMateriasPrimas : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource materiasPrimasViewSource;
         private CollectionViewSource tipos_materiasPrimasViewSource;
         private CollectionViewSource grupos_materiasPrimasViewSource;
@@ -45,7 +47,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+                context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource")));
                 grupos_materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("grupos_materiasPrimasViewSource")));
                 tipos_materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tipos_materiasPrimasViewSource")));
@@ -54,20 +56,20 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("proveedoresViewSource")));
                 procedenciasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource")));
 
-                context.materias_primas.Load();
-                context.tipos_materias_primas.Load();
-                context.grupos_materias_primas.Load();
-                context.entradas.Load();
-                context.sitios_descargas.Load();
-                context.proveedores.Load();
-                context.procedencias.Load();
-                materiasPrimasViewSource.Source = context.materias_primas.Local;
-                tipos_materiasPrimasViewSource.Source = context.tipos_materias_primas.Local;
-                grupos_materiasPrimasViewSource.Source = context.grupos_materias_primas.Local;
-                entradasViewSource.Source = context.entradas.Local;
-                sitiosDescargasViewSource.Source = context.sitios_descargas.Local;
-                proveedoresViewSource.Source = context.proveedores.Local;
-                procedenciasViewSource.Source = context.procedencias.Local;
+                context.MateriasPrimas.Load();
+                context.TiposMateriasPrimas.Load();
+                context.GruposMateriasPrimas.Load();
+                context.Recepciones.Load();
+                context.SitiosRecepciones.Load();
+                context.Proveedores.Load();
+                //context.procedencias.Load();
+                materiasPrimasViewSource.Source = context.MateriasPrimas.Local;
+                tipos_materiasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
+                grupos_materiasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
+                entradasViewSource.Source = context.Recepciones.Local;
+                sitiosDescargasViewSource.Source = context.SitiosRecepciones.Local;
+                proveedoresViewSource.Source = context.Proveedores.Local;
+                //procedenciasViewSource.Source = context.procedencias.Local;
 
                 /*ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -183,14 +185,14 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<materias_primas>();
+            return context != null && context.HayCambios<MateriaPrima>();
         }
 
         private async void ConfirmarCambios()
         {
             try
             {
-                context.GuardarCambios<materias_primas>();
+                context.GuardarCambios<MateriaPrima>();
             }
             catch (DbEntityValidationException ex)
             {
@@ -243,7 +245,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
         {
             if (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedIndex != -1)
             {
-                materias_primas materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as materias_primas;
+                MateriaPrima materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
                 return materiaPrimaSeleccionada != null;
             }
             return false;
@@ -252,7 +254,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
         private async void BorrarMateriaPrima()
         {
             string pregunta = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar la materia prima " + (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as materias_primas).codigo + "?"
+                ? "¿Está seguro de que desea borrar la materia prima " + (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima).Codigo + "?"
                 : "¿Está seguro de que desea borrar la materia prima seleccionada?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
@@ -263,7 +265,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
 
             if (resultado)
             {
-                context.materias_primas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<materias_primas>().ToList());
+                context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
             }
         }
         #endregion

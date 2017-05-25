@@ -1,4 +1,6 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
     /// </summary>
     public partial class TabProveedores : UserControl
     {
-        private BiomasaEUPTEntidades context;
+        private BiomasaEUPTContext context;
         private CollectionViewSource proveedoresViewSource;
         private CollectionViewSource tiposProveedoresViewSource;
 
@@ -39,13 +41,13 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+                context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
                 tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tipos_proveedoresViewSource")));
-                context.proveedores.Load();
-                context.tipos_proveedores.Load();
-                proveedoresViewSource.Source = context.proveedores.Local;
-                tiposProveedoresViewSource.Source = context.tipos_proveedores.Local;
+                context.Proveedores.Load();
+                context.TiposProveedores.Load();
+                proveedoresViewSource.Source = context.Proveedores.Local;
+                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
 
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -93,14 +95,14 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             /* try
              {*/
             string textoBuscado = ucTablaProveedores.tbBuscar.Text.ToLower();
-            var proveedor = e.Item as proveedores;
-            string razonSocial = proveedor.razon_social.ToLower();
-            string nif = proveedor.nif.ToLower();
-            string email = proveedor.email.ToLower();
-            string calle = proveedor.calle.ToLower();
-            string codigoPostal = proveedor.direcciones.codigo_postal.ToLower();
-            string municipio = proveedor.direcciones.municipio.ToLower();
-            string tipo = proveedor.tipos_proveedores.nombre.ToLower();
+            var proveedor = e.Item as Proveedor;
+            string razonSocial = proveedor.RazonSocial.ToLower();
+            string nif = proveedor.Nif.ToLower();
+            string email = proveedor.Email.ToLower();
+            string calle = proveedor.Calle.ToLower();
+            string codigoPostal = proveedor.Direccion.CodigoPostal.ToLower();
+            string municipio = proveedor.Direccion.Municipio.ToLower();
+            string tipo = proveedor.TipoProveedor.Nombre.ToLower();
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
             {
@@ -113,9 +115,9 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             }
             else
             {
-                foreach (tipos_proveedores tipoProveedor in ucFiltroTabla.lbFiltro.SelectedItems)
+                foreach (TipoProveedor tipoProveedor in ucFiltroTabla.lbFiltro.SelectedItems)
                 {
-                    if (tipoProveedor.nombre.ToLower().Equals(tipo))
+                    if (tipoProveedor.Nombre.ToLower().Equals(tipo))
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
                         e.Accepted = (ucTablaProveedores.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
@@ -160,14 +162,14 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<clientes>();
+            return context != null && context.HayCambios<Proveedor>();
         }
 
         private async void ConfirmarCambios()
         {
             try
             {
-                context.GuardarCambios<proveedores>();
+                context.GuardarCambios<Proveedor>();
             }
             catch (DbEntityValidationException ex)
             {
@@ -221,7 +223,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             if (ucTablaProveedores.dgProveedores.SelectedIndex != -1)
             {
-                proveedores proveedorSeleccionado = ucTablaProveedores.dgProveedores.SelectedItem as proveedores;
+                Proveedor proveedorSeleccionado = ucTablaProveedores.dgProveedores.SelectedItem as Proveedor;
                 //Console.WriteLine(clienteSeleccionado.razon_social);
                 return proveedorSeleccionado != null;
             }
@@ -231,7 +233,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         private async void BorrarProveedor()
         {
             string pregunta = ucTablaProveedores.dgProveedores.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar al proveedor " + (ucTablaProveedores.dgProveedores.SelectedItem as proveedores).razon_social + "?"
+                ? "¿Está seguro de que desea borrar al proveedor " + (ucTablaProveedores.dgProveedores.SelectedItem as Proveedor).RazonSocial + "?"
                 : "¿Está seguro de que desea borrar los proveedores seleccionados?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
@@ -242,7 +244,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
             if (resultado)
             {
-                context.proveedores.RemoveRange(ucTablaProveedores.dgProveedores.SelectedItems.Cast<proveedores>().ToList());
+                context.Proveedores.RemoveRange(ucTablaProveedores.dgProveedores.SelectedItems.Cast<Proveedor>().ToList());
             }
         }
         #endregion

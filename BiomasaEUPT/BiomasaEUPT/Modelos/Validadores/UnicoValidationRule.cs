@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiomasaEUPT.Modelos.Tablas;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -41,54 +42,54 @@ namespace BiomasaEUPT.Modelos.Validadores
             string valor = (string)value;
             if (Tipo == "usuarios")
             {
-                foreach (var item in (ObservableCollection<usuarios>)Coleccion.Source)
+                foreach (var item in (ObservableCollection<Usuario>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.nombre == valor)
+                    if (Atributo == "nombre" && item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
-                    if (Atributo == "email" && item.email == valor)
+                    if (Atributo == "email" && item.Email == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "email"));
 
                 }
             }
             else if (Tipo == "clientes")
             {
-                foreach (var item in (ObservableCollection<clientes>)Coleccion.Source)
+                foreach (var item in (ObservableCollection<Cliente>)Coleccion.Source)
                 {
-                    if (Atributo == "razon_social" && item.razon_social == valor)
+                    if (Atributo == "razon_social" && item.RazonSocial == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "razón social"));
 
-                    if (Atributo == "nif" && item.nif == valor)
+                    if (Atributo == "nif" && item.Nif == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "NIF"));
 
-                    if (Atributo == "email" && item.email == valor)
+                    if (Atributo == "email" && item.Email == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "email"));
 
                 }
             }
             else if (Tipo == "tiposClientes")
             {
-                foreach (var item in (ObservableCollection<tipos_clientes>)Coleccion.Source)
+                foreach (var item in (ObservableCollection<TipoCliente>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.nombre == valor)
+                    if (Atributo == "nombre" && item.Nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
             }
             else if (Tipo == "gruposClientes")
             {
-                foreach (var item in (ObservableCollection<grupos_clientes>)Coleccion.Source)
+                foreach (var item in (ObservableCollection<GrupoCliente>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.nombre != NombreActual && item.nombre == valor)
+                    if (Atributo == "nombre" && item.Nombre != NombreActual && item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
             }
             else if (Tipo == "tiposProveedores")
             {
-                foreach (var item in (ObservableCollection<tipos_proveedores>)Coleccion.Source)
+                foreach (var item in (ObservableCollection<TipoProveedor>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.nombre != NombreActual && item.nombre == valor)
+                    if (Atributo == "nombre" && item.Nombre != NombreActual && item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
