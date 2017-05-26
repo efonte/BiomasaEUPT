@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:entradas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tipos_materias_primasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_materias_primas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tiposMateriasPrimas}, CreateList=True}"/>
 
 
 

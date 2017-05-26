@@ -122,7 +122,6 @@
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />
     <Compile Include="Modelos\ConstantesModelo.cs" />
     <Compile Include="Modelos\Tablas\Almacen.cs" />

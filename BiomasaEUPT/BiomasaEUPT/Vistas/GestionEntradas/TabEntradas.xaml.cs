@@ -43,7 +43,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 entradasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("entradasViewSource")));
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("tipos_materias_primasViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("tiposMateriasPrimasViewSource")));
                 context.Recepciones.Load();
                 context.TiposMateriasPrimas.Load();
                 entradasViewSource.Source = context.Recepciones.Local;

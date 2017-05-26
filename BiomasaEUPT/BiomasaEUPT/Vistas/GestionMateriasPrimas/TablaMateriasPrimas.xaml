@@ -14,8 +14,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:materias_primas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tipos_materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_materias_primas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="grupos_materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_materias_primas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_materias_primas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_materias_primas}, CreateList=True}"/>
             <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:entradas}, CreateList=True}"/>
             <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:sitios_descargas}, CreateList=True}"/>
             <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:proveedores}, CreateList=True}"/>
@@ -83,13 +83,13 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             
                             <DataGridComboBoxColumn x:Name="tipos_materiasPrimasColumn" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tipos_materiasPrimasViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
                                                 SelectedValuePath="id_tipo_materia_prima" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             
                             <DataGridComboBoxColumn x:Name="grupos_materiasPrimasColumn" Header="Grupo"
-                                                ItemsSource="{Binding Source={StaticResource grupos_materiasPrimasViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
                                                 SelectedValuePath="id_grupo_materia_prima" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />

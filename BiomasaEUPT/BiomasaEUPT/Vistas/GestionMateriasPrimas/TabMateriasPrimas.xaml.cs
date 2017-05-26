@@ -29,8 +29,8 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
     {
         private BiomasaEUPTContext context;
         private CollectionViewSource materiasPrimasViewSource;
-        private CollectionViewSource tipos_materiasPrimasViewSource;
-        private CollectionViewSource grupos_materiasPrimasViewSource;
+        private CollectionViewSource tiposMateriasPrimasViewSource;
+        private CollectionViewSource gruposMateriasPrimasViewSource;
         private CollectionViewSource entradasViewSource;
         private CollectionViewSource sitiosDescargasViewSource;
         private CollectionViewSource proveedoresViewSource;
@@ -49,8 +49,8 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource")));
-                grupos_materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("grupos_materiasPrimasViewSource")));
-                tipos_materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tipos_materiasPrimasViewSource")));
+                gruposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource")));
                 entradasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("entradasViewSource")));
                 sitiosDescargasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("sitiosDescargasViewSource")));
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("proveedoresViewSource")));
@@ -64,8 +64,8 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
                 context.Proveedores.Load();
                 //context.procedencias.Load();
                 materiasPrimasViewSource.Source = context.MateriasPrimas.Local;
-                tipos_materiasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
-                grupos_materiasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
+                tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
+                gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
                 entradasViewSource.Source = context.Recepciones.Local;
                 sitiosDescargasViewSource.Source = context.SitiosRecepciones.Local;
                 proveedoresViewSource.Source = context.Proveedores.Local;

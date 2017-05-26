@@ -11,7 +11,7 @@
              d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:usuarios}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tipos_usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_usuarios}, CreateList=True}"/>
+        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_usuarios}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">
@@ -109,7 +109,7 @@
                         </materialDesign:MaterialDataGridTextColumn>
                         <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
                         <DataGridComboBoxColumn x:Name="tipos_usuariosColumn" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
                                                 SelectedValuePath="id_tipo_usuario" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />

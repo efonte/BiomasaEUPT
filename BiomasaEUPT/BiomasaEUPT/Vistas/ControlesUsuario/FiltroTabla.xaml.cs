@@ -64,7 +64,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 TabProveedores tabProveedores = (TabProveedores)ucParent;
-                tiposProveedoresViewSource = ((CollectionViewSource)(tabProveedores.ucTablaProveedores.FindResource("tipos_proveedoresViewSource")));
+                tiposProveedoresViewSource = ((CollectionViewSource)(tabProveedores.ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
                 ccFiltro.Collection = tiposProveedoresViewSource.View;
                 //   tabProveedores.FiltrarTabla();
             }
@@ -72,7 +72,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)))
             {
                 TabMateriasPrimas tabMateriasPrimas = (TabMateriasPrimas)ucParent;
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabMateriasPrimas.ucTablaMateriasPrimas.FindResource("tipos_materiasPrimasViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabMateriasPrimas.ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource")));
                 ccFiltro.Collection = tiposMateriasPrimasViewSource.View;
                 //   tabMateriasPrimas.FiltrarTabla();
             }
@@ -81,7 +81,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabEntradas)))
             {
                 TabEntradas tabEntradas = (TabEntradas)ucParent;
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabEntradas.ucTablaEntradas.FindResource("tipos_materias_primasViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabEntradas.ucTablaEntradas.FindResource("tiposMateriasPrimasViewSource")));
                 ccFiltro.Collection = tiposMateriasPrimasViewSource.View;
                 //   tabMateriasPrimas.FiltrarTabla();
             }

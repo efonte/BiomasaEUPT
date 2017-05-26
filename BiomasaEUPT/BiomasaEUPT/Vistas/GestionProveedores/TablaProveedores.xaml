@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:proveedores}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tipos_proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_proveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_proveedores}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
@@ -77,7 +77,7 @@
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <DataGridComboBoxColumn x:Name="tipos_proveedoresColumn" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tipos_proveedoresViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource tiposProveedoresViewSource}}"
                                                 SelectedValuePath="id_tipo_proveedor" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />

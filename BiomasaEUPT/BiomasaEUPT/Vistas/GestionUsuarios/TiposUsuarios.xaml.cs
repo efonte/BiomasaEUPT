@@ -44,7 +44,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             if (ucParent.GetType().Equals(typeof(TabUsuarios)))
             {
                 TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
-                CollectionViewSource tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tipos_usuariosViewSource")));
+                CollectionViewSource tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
                 foreach (TipoUsuario tipoUsuario in tiposUsuariosViewSource.View)
                 {
                     lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });

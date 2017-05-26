@@ -48,7 +48,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 usuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("usuariosViewSource")));
-                tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tipos_usuariosViewSource")));
+                tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
                 context.Usuarios.Load();
                 context.TiposUsuarios.Load();
                 usuariosViewSource.Source = context.Usuarios.Local;

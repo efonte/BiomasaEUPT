@@ -43,7 +43,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
-                tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tipos_proveedoresViewSource")));
+                tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
                 context.Proveedores.Load();
                 context.TiposProveedores.Load();
                 proveedoresViewSource.Source = context.Proveedores.Local;
