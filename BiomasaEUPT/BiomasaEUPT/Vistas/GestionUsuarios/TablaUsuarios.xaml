@@ -10,8 +10,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:usuarios}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_usuarios}, CreateList=True}"/>
+        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Usuario}, CreateList=True}"/>
+        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposUsuarios}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">

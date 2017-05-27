@@ -44,8 +44,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
-                tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tipos_clientesViewSource")));
-                gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("grupos_clientesViewSource")));
+                tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
+                gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
                 context.Clientes.Load();
                 context.TiposClientes.Load();
                 context.GruposClientes.Load();

@@ -13,13 +13,13 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:materias_primas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_materias_primas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_materias_primas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:entradas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:sitios_descargas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:proveedores}, CreateList=True}"/>
-            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:procedencias}, CreateList=True}"/>
+            <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:MateriasPrimas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposMateriasPrimas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:GruposMateriasPrimas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Entradas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:SitiosDescargas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Proveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Procedencias}, CreateList=True}"/>
 
 
 

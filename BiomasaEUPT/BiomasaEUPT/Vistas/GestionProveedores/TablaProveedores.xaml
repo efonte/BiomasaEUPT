@@ -12,8 +12,8 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:proveedores}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_proveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Proveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposProveedores}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
