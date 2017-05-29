@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -12,8 +13,8 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Proveedores}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposProveedores}, CreateList=True}"/>
+            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProveedor}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>

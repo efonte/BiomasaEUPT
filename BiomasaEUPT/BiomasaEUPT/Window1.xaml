@@ -1,0 +1,30 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BiomasaEUPT"
+        xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas" x:Class="BiomasaEUPT.Window1"
+        mc:Ignorable="d"
+        Title="Window1" Height="300" Width="300" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="clienteViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource clienteViewSource}">
+
+        <DataGrid x:Name="clienteDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,10,-108,59" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="calleColumn" Width="SizeToHeader" Header="Calle" Binding="{Binding Calle}"/>
+                <DataGridTextColumn x:Name="clienteIdColumn" Width="SizeToHeader" Header="Cliente Id" Binding="{Binding ClienteId}"/>
+                <DataGridTextColumn x:Name="direccionIdColumn" Width="SizeToHeader" Header="Direccion Id" Binding="{Binding DireccionId}"/>
+                <DataGridTextColumn x:Name="emailColumn" Width="SizeToHeader" Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn x:Name="grupoIdColumn" Width="SizeToHeader" Header="Grupo Id" Binding="{Binding GrupoId}"/>
+                <DataGridTextColumn x:Name="nifColumn" Width="SizeToHeader" Header="NIF" Binding="{Binding Nif}"/>
+                <DataGridTextColumn x:Name="observacionesColumn" Width="SizeToHeader" Header="Observaciones" Binding="{Binding Observaciones}"/>
+                <DataGridTextColumn x:Name="razonSocialColumn" Width="SizeToHeader" Header="Razón social" Binding="{Binding RazonSocial}"/>
+                <DataGridTextColumn x:Name="tipoIdColumn" Width="SizeToHeader" Header="Tipo Id" Binding="{Binding TipoId}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

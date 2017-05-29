@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:ControlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
@@ -14,9 +15,9 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Clientes}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposClientes}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:GruposClientes}, CreateList=True}"/>
+            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoCliente}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoCliente}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
@@ -115,12 +116,12 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
                             <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tipos_clientesViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
                                                 SelectedValuePath="id_tipo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Grupo"
-                                                ItemsSource="{Binding Source={StaticResource grupos_clientesViewSource}}"
+                                                ItemsSource="{Binding Source={StaticResource grupoclientesViewSource}}"
                                                 SelectedValuePath="id_grupo_cliente" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />

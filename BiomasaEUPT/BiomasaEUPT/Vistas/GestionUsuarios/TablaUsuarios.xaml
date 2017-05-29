@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Usuario}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposUsuarios}, CreateList=True}"/>
+        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Usuario}, CreateList=True}"/>
+        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoUsuario}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionMateriasPrimas"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,13 +14,13 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:MateriasPrimas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposMateriasPrimas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:GruposMateriasPrimas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Entradas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:SitiosDescargas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Proveedores}, CreateList=True}"/>
-            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Procedencias}, CreateList=True}"/>
+            <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:MateriaPrima}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoMateriaPrima}, CreateList=True}"/>
+            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:SitioRecepcion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
+            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
 
 
 

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
@@ -16,12 +17,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:tipos_clientes}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:grupos_clientes}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:direcciones}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoCliente}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoCliente}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
