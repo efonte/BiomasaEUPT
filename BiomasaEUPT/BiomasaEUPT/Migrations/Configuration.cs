@@ -66,7 +66,7 @@ namespace BiomasaEUPT.Migrations
 
                context.Usuarios.AddOrUpdate(c => c.UsuarioId, usuarios.ToArray());*/
 
-            new SeedCodigosPostales(context);
+            //new SeedCodigosPostales(context);
 
 
         }

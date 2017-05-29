@@ -16,8 +16,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int MunicipioId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
+        [MinLength(1)]
+        [MaxLength(80)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 

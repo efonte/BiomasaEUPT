@@ -25,7 +25,7 @@ namespace BiomasaEUPT.Migrations
             // Paises(context);
             // Comunidades(context);
             // Provincias(context);
-            Municipios(context);
+            // Municipios(context);
         }
 
         void Paises(BiomasaEUPTContext context)
@@ -91,7 +91,7 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
         }
 
-        void Municipios(BiomasaEUPTContext context)
+        void MunicipiosLENTO(BiomasaEUPTContext context)
         {
             context.Provincias.Load();
             string resourceName = "BiomasaEUPT.Migrations.DatosSeed.SeedMunicipios.csv";
@@ -112,6 +112,39 @@ namespace BiomasaEUPT.Migrations
                 }
             }
             context.SaveChanges();
+        }
+
+        void Municipios(BiomasaEUPTContext context)
+        {
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Provincias.Load();
+            var municipios = new List<Municipio>();
+            string resourceName = "BiomasaEUPT.Migrations.DatosSeed.SeedMunicipios.csv";
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    CsvReader csvReader = new CsvReader(reader);
+                    csvReader.Configuration.WillThrowOnMissingField = false;
+                    csvReader.Configuration.Delimiter = ";";
+                    while (csvReader.Read())
+                    {
+                        var municipio = csvReader.GetRecord<Municipio>();
+                        var codigoProvincia = csvReader.GetField<string>("CodigoProvincia");
+                        municipio.Provincia = context.Provincias.Local.Single(c => c.Codigo == codigoProvincia);
+                        municipios.Add(municipio);
+                        //  context.Municipios.AddOrUpdate(p => p.MunicipioId, municipio);
+                    }
+                }
+            }
+
+            int cantidad = 2500;
+            for (int i = 0; i < municipios.Count; i += cantidad)
+            {
+                var listaMunicipios = municipios.GetRange(i, Math.Min(cantidad, municipios.Count - i));
+                context.Municipios.AddOrUpdate(p => p.MunicipioId, listaMunicipios.ToArray());
+                context.SaveChanges();
+            }
         }
     }
 }
