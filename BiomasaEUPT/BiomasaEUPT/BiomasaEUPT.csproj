@@ -196,14 +196,14 @@
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionEntradas\FormEntrada.xaml.cs">
-      <DependentUpon>FormEntrada.xaml</DependentUpon>
+    <Compile Include="Vistas\GestionRecepciones\FormRecepcion.xaml.cs">
+      <DependentUpon>FormRecepcion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionEntradas\TabEntradas.xaml.cs">
-      <DependentUpon>TabEntradas.xaml</DependentUpon>
+    <Compile Include="Vistas\GestionRecepciones\TabRecepciones.xaml.cs">
+      <DependentUpon>TabRecepciones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionEntradas\TablaEntradas.xaml.cs">
-      <DependentUpon>TablaEntradas.xaml</DependentUpon>
+    <Compile Include="Vistas\GestionRecepciones\TablaRecepciones.xaml.cs">
+      <DependentUpon>TablaRecepciones.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionMateriasPrimas\FormMateriaPrima.xaml.cs">
       <DependentUpon>FormMateriaPrima.xaml</DependentUpon>
@@ -301,15 +301,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionEntradas\FormEntrada.xaml">
+    <Page Include="Vistas\GestionRecepciones\FormRecepcion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionEntradas\TabEntradas.xaml">
+    <Page Include="Vistas\GestionRecepciones\TabRecepciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionEntradas\TablaEntradas.xaml">
+    <Page Include="Vistas\GestionRecepciones\TablaRecepciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

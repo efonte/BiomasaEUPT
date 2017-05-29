@@ -20,7 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BiomasaEUPT.Vistas.GestionEntradas;
+using BiomasaEUPT.Vistas.GestionRecepciones;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 
@@ -77,11 +77,11 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 //   tabMateriasPrimas.FiltrarTabla();
             }
 
-            // Pestaña Entradas
-            if (ucParent.GetType().Equals(typeof(TabEntradas)))
+            // Pestaña Recepciones
+            if (ucParent.GetType().Equals(typeof(TabRecepciones)))
             {
-                TabEntradas tabEntradas = (TabEntradas)ucParent;
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabEntradas.ucTablaEntradas.FindResource("tiposMateriasPrimasViewSource")));
+                TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(tabRecepciones.ucTablaRecepciones.FindResource("tiposMateriasPrimasViewSource")));
                 ccFiltro.Collection = tiposMateriasPrimasViewSource.View;
                 //   tabMateriasPrimas.FiltrarTabla();
             }
@@ -120,8 +120,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             }
 
-            // Pestaña Materias primas y Entradas
-            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabEntradas)))
+            // Pestaña Materias primas y Recepciones
+            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabRecepciones)))
             {
                 //TabMateriasPrimas tabMateriasPrimas = (TabMateriasPrimas)ucParent;
                 formTipo.vNombreUnico.Coleccion = tiposMateriasPrimasViewSource;
@@ -178,8 +178,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             }
 
-            // Pestaña Materias primas y Entradas
-            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabEntradas)))
+            // Pestaña Materias primas y Recepciones
+            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabRecepciones)))
             {
                 var tipoSeleccionado = lbFiltro.SelectedItem as TipoMateriaPrima;
                 formTipo.Nombre = tipoSeleccionado.Nombre;
@@ -241,8 +241,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             }
 
-            // Pestaña Materias primas y Entradas
-            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabEntradas)))
+            // Pestaña Materias primas y Recepciones
+            if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabRecepciones)))
             {
                 var tipoSeleccionado = lbFiltro.SelectedItem as TipoMateriaPrima;
                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";

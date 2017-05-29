@@ -11,7 +11,7 @@
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionMateriasPrimas="clr-namespace:BiomasaEUPT.Vistas.GestionMateriasPrimas"
-        xmlns:GestionEntradas="clr-namespace:BiomasaEUPT.Vistas.GestionEntradas"
+        xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
@@ -114,16 +114,16 @@
                         <GestionMateriasPrimas:TabMateriasPrimas x:Name="ucTabMateriasPrimas" />
                     </TabItem>
 
-                    <!-- Pestaña Entradas -->
-                    <TabItem x:Name="tiEntradas" IsSelected="True" Selector.Unselected="tiEntradas_Unselected">
+                    <!-- Pestaña Recepciones -->
+                    <TabItem x:Name="tiRecepciones" IsSelected="True" Selector.Unselected="tiRecepciones_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Entradas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Recepciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
-                        <GestionEntradas:TabEntradas x:Name="ucTabEntradas" />
+                        <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
                     </TabItem>
                 </dragablz:TabablzControl>
             </dockablz:Layout>

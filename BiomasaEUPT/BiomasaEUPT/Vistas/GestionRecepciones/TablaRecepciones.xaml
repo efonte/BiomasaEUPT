@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEntradas.TablaEntradas"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionRecepciones.TablaRecepciones"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEntradas"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,8 +14,8 @@
              d:DesignHeight="600" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="entradasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:Entradas}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type BiomasaEUPT:TiposMateriasPrimas}, CreateList=True}"/>
+            <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
 
 
 
@@ -24,7 +25,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Entradas">
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Recepciones">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -43,7 +44,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgEntradas" DataContext="{StaticResource entradasViewSource}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgRecepciones" DataContext="{StaticResource recepcionesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
                         <DataGrid.RowValidationErrorTemplate>
@@ -98,10 +99,10 @@
                                  HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                  PlacementMode="RightAndAlignMiddles"
                                  UnfurlOrientation="Horizontal"
-                                 ToolTip="Gestionar entradas"
+                                 ToolTip="Gestionar recepciones"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar la entrada seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                            <Button ToolTip="Borrar la recepcion seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
@@ -109,7 +110,7 @@
 
                             </Button>
 
-                            <Button x:Name="bAnadirEntrada" ToolTip="Añadir entrada">
+                            <Button x:Name="bAnadirRecepcion" ToolTip="Añadir recepcion">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
 

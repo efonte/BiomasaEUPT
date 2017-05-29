@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionEntradas
+namespace BiomasaEUPT.Vistas.GestionRecepciones
 {
     /// <summary>
-    /// Lógica de interacción para TablaClientes.xaml
+    /// Lógica de interacción para TablaRecepciones.xaml
     /// </summary>
-    public partial class TablaEntradas : UserControl
+    public partial class TablaRecepciones : UserControl
     {
-        public TablaEntradas()
+        public TablaRecepciones()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
             }
 
-            TabEntradas tabEntradas = (TabEntradas)ucParent;
+            TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
 
             //tabEntradas.FiltrarTabla();
         }

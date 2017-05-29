@@ -77,8 +77,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="8 0 0 0">
-                                <TextBlock FontWeight="Bold" Text="{Binding nombre}" FontSize="14"/>
-                                <TextBlock Text="{Binding descripcion}" FontSize="14"/>
+                                <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

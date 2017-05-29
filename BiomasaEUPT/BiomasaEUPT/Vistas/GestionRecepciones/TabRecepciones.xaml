@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEntradas.TabEntradas"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionRecepciones.TabRecepciones"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEntradas"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded">
@@ -24,7 +24,7 @@
             <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <local:TablaEntradas Grid.Column="1" x:Name="ucTablaEntradas" Margin="10 10 0 10" />
+        <local:TablaRecepciones Grid.Column="1" x:Name="ucTablaRecepciones" Margin="10 10 0 10" />
 
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>

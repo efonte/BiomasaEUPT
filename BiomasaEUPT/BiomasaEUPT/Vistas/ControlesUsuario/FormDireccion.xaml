@@ -33,7 +33,7 @@
         </Grid.ColumnDefinitions>
         <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
                   ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
-                  SelectedValue="{Binding DataContext.direcciones.pais, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                  SelectedValue="{Binding DataContext.Direcciones.Pais, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
                   SelectionChanged="cbPaisesDirecciones_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -48,26 +48,26 @@
 
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidadesDirecciones" materialDesign:HintAssist.Hint="Comunidad"
                       ItemsSource="{Binding Source={StaticResource direccionesComunidadViewSource}}"
-                      SelectedValue="{Binding DataContext.direcciones.comunidad, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectedValue="{Binding DataContext.Direcciones.Comunidad, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
                       SelectionChanged="cbComunidadesDirecciones_SelectionChanged">
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvinciasDirecciones" materialDesign:HintAssist.Hint="Provincia"
                       ItemsSource="{Binding Source={StaticResource direccionesProvinciaViewSource}}"
-                      SelectedValue="{Binding DataContext.direcciones.provincia, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectedValue="{Binding DataContext.Direcciones.Provincia, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
                       SelectionChanged="cbProvinciasDirecciones_SelectionChanged">
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
                   ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
-                  SelectedValue="{Binding DataContext.direcciones, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+                  SelectedValue="{Binding DataContext.Direcciones, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} ({1})">
-                                <Binding Path="codigo_postal"/>
-                                <Binding Path="municipio"/>
+                                <Binding Path="CodigoPostal"/>
+                                <Binding Path="Municipio"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>

@@ -97,8 +97,8 @@
 
                 <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTiposClientes" materialDesign:HintAssist.Hint="Tipo"
                       ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
-                      DisplayMemberPath="nombre"
-                      SelectedValuePath="id_tipo_cliente">
+                      DisplayMemberPath="Nombre"
+                      SelectedValuePath="TipoClienteId">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -108,8 +108,8 @@
 
                 <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbGruposClientes" materialDesign:HintAssist.Hint="Grupo"
                       ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
-                      DisplayMemberPath="nombre"
-                      SelectedValuePath="id_grupo_cliente">
+                      DisplayMemberPath="Nombre"
+                      SelectedValuePath="GrupoClienteId">
                 </ComboBox>
 
                 <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
@@ -141,14 +141,14 @@
 
                 <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
                       ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
-                      SelectedValuePath="id_direcciones">
+                      SelectedValuePath="DireccionesId">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} ({1})">
-                                        <Binding Path="codigo_postal"/>
-                                        <Binding Path="municipio"/>
+                                        <Binding Path="CodigoPostal"/>
+                                        <Binding Path="Municipio"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>

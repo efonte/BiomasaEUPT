@@ -103,10 +103,10 @@ namespace BiomasaEUPT
 
         }
 
-        private void tiEntradas_Unselected(object sender, RoutedEventArgs e)
+        private void tiRecepciones_Unselected(object sender, RoutedEventArgs e)
         {
-            if (ucTabEntradas != null)
-                ucTabEntradas.ucTablaEntradas.dgEntradas.CancelEdit();
+            if (ucTabRecepciones != null)
+                ucTabRecepciones.ucTablaRecepciones.dgRecepciones.CancelEdit();
 
         }
 

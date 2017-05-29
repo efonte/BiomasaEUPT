@@ -20,18 +20,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionEntradas
+namespace BiomasaEUPT.Vistas.GestionRecepciones
 {
     /// <summary>
-    /// Lógica de interacción para TabEntradas.xaml
+    /// Lógica de interacción para TabRecepciones.xaml
     /// </summary>
-    public partial class TabEntradas : UserControl
+    public partial class TabRecepciones : UserControl
     {
         private BiomasaEUPTContext context;
-        private CollectionViewSource entradasViewSource;
+        private CollectionViewSource recepcionesViewSource;
         private CollectionViewSource tiposMateriasPrimasViewSource;
 
-        public TabEntradas()
+        public TabRecepciones()
         {
             InitializeComponent();
             DataContext = this;
@@ -42,27 +42,27 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
             using (new CursorEspera())
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
-                entradasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("entradasViewSource")));
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaEntradas.FindResource("tiposMateriasPrimasViewSource")));
+                recepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("tiposMateriasPrimasViewSource")));
                 context.Recepciones.Load();
                 context.TiposMateriasPrimas.Load();
-                entradasViewSource.Source = context.Recepciones.Local;
+                recepcionesViewSource.Source = context.Recepciones.Local;
                 tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
 
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbMes.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbMes.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbAno.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbAno.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaEntradas.bAnadirEntrada.Click += BAnadirEntrada_Click;
+                ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbMes.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbMes.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbAno.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbAno.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
+                ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             }
         }
 
-        private async void BAnadirEntrada_Click(object sender, RoutedEventArgs e)
+        private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)
         {
             /*var formEntrada = new FormEntrada();
 
@@ -80,12 +80,12 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
 
         public void FiltrarTabla()
         {
-            entradasViewSource.Filter += new FilterEventHandler(FiltroTabla);
+            recepcionesViewSource.Filter += new FilterEventHandler(FiltroTabla);
         }
 
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
-            string textoBuscado = ucTablaEntradas.tbBuscar.Text.ToLower();
+            string textoBuscado = ucTablaRecepciones.tbBuscar.Text.ToLower();
             var entrada = e.Item as Recepcion;
             string fechaRecepcion = entrada.FechaRecepcion.ToLongDateString();
             //string mes = entrada.mes.ToString();
@@ -93,10 +93,10 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
             string numeroAlbaran = entrada.NumeroAlbaran.ToLower();
             var tipos = context.MateriasPrimas.Where(m => m.RecepcionId == entrada.RecepcionId).Select(m => m.TipoId.ToString().ToLower()).Distinct().ToList();
 
-            var condicion = (ucTablaEntradas.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
+            var condicion = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
                          //(ucTablaEntradas.cbMes.IsChecked == true ? mes.Contains(textoBuscado) : false) ||
                          //(ucTablaEntradas.cbAno.IsChecked == true ? ano.Contains(textoBuscado) : false) ||
-                         (ucTablaEntradas.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false);
+                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false);
 
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
@@ -200,19 +200,19 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
 
         private bool CanBorrar()
         {
-            if (ucTablaEntradas.dgEntradas.SelectedIndex != -1)
+            if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
             {
-                Recepcion entradaSeleccionada = ucTablaEntradas.dgEntradas.SelectedItem as Recepcion;
-                return entradaSeleccionada != null;
+                Recepcion recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
+                return recepcionSeleccionada != null;
             }
             return false;
         }
 
         private async void BorrarEntrada()
         {
-            string pregunta = ucTablaEntradas.dgEntradas.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar la entrada " + (ucTablaEntradas.dgEntradas.SelectedItem as Recepcion).NumeroAlbaran + "?"
-                : "¿Está seguro de que desea borrar las entradas seleccionadas?";
+            string pregunta = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
+                ? "¿Está seguro de que desea borrar la recepción " + (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).NumeroAlbaran + "?"
+                : "¿Está seguro de que desea borrar las recepciones seleccionadas?";
 
             var mensaje = new MensajeConfirmacion(pregunta);
             mensaje.MaxHeight = ActualHeight;
@@ -222,7 +222,7 @@ namespace BiomasaEUPT.Vistas.GestionEntradas
 
             if (resultado)
             {
-                context.Recepciones.RemoveRange(ucTablaEntradas.dgEntradas.SelectedItems.Cast<Recepcion>().ToList());
+                context.Recepciones.RemoveRange(ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList());
             }
         }
         #endregion

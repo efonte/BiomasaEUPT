@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionEntradas
+namespace BiomasaEUPT.Vistas.GestionRecepciones
 {
     /// <summary>
-    /// Lógica de interacción para FormEntrada.xaml
+    /// Lógica de interacción para FormRecepcion.xaml
     /// </summary>
-    public partial class FormEntrada : UserControl
+    public partial class FormRecepcion : UserControl
     {
-        public FormEntrada()
+        public FormRecepcion()
         {
             InitializeComponent();
         }

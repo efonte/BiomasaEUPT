@@ -73,7 +73,7 @@
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Header="Razón social" Width="SizeToHeader"
-                                                                       Binding="{Binding razon_social, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="razon_social" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -87,7 +87,7 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="nif"
-                                                                       Binding="{Binding nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -101,7 +101,7 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email"
-                                                                       Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -126,7 +126,7 @@
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
-                                                                       Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="calle" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -224,7 +224,7 @@
                                     <materialDesign:PackIcon Kind="Pin"/>
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
                                        MaxHeight="350" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"

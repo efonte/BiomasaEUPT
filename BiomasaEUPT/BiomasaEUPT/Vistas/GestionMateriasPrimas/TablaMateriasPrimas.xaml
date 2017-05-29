@@ -78,18 +78,18 @@
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fecha_bajaColumn" Header="Fecha baja" Width="SizeToHeader"
-                                                                       Binding="{Binding fecha_baja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding FechaBaja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
 
                             </materialDesign:MaterialDataGridTextColumn>
                             
-                            <DataGridComboBoxColumn x:Name="tipos_materiasPrimasColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="tiposMateriasPrimasColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="id_tipo_materia_prima" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="TipoMateriaPrimaId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             
-                            <DataGridComboBoxColumn x:Name="grupos_materiasPrimasColumn" Header="Grupo"
+                            <DataGridComboBoxColumn x:Name="gruposMateriasPrimasColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
                                                 SelectedValuePath="id_grupo_materia_prima" 
                                                 DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
