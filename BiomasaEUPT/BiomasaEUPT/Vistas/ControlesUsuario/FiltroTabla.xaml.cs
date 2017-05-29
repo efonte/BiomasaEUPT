@@ -56,7 +56,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 TabClientes tabClientes = (TabClientes)ucParent;
-                tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tipos_clientesViewSource")));
+                tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tiposClientesViewSource")));
                 ccFiltro.Collection = tiposClientesViewSource.View;
                 //   tabClientes.FiltrarTabla();
             }

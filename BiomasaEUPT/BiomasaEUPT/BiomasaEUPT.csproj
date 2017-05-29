@@ -52,6 +52,9 @@
     <ApplicationIcon>icono.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Dragablz, Version=0.0.3.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.186\lib\net45\Dragablz.dll</HintPath>
     </Reference>
@@ -124,6 +127,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />
     <Compile Include="Modelos\ConstantesModelo.cs" />
+    <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Modelos\Tablas\Almacen.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
@@ -160,6 +164,11 @@
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UsuarioValidationRule.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Ajustes\TabApariencia.xaml.cs">
       <DependentUpon>TabApariencia.xaml</DependentUpon>
     </Compile>
@@ -389,11 +398,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -403,6 +407,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\DatosSeed\SeedComunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SeedMunicipios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SeedPaises.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SeedProvincias.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

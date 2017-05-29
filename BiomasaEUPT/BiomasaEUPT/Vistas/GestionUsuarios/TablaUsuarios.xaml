@@ -52,7 +52,7 @@
                     <DataGrid.Columns>
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
                         <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre"
-                                                                   Binding="{Binding nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                   Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
                             <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
@@ -77,7 +77,7 @@
                                                     <Setter Property="Text" Value="●●●●●●" />
                                                 </Style.Setters>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding nombre}" Value="{x:Null}">
+                                                    <DataTrigger Binding="{Binding Nombre}" Value="{x:Null}">
                                                         <Setter Property="Text" Value="" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -94,7 +94,7 @@
                         </DataGridTemplateColumn>
 
                         <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="100" Header="Email"
-                                                                   Binding="{Binding email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                   Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                    MaxLength="254">
                             <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -111,11 +111,11 @@
                         <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
                         <DataGridComboBoxColumn x:Name="tipos_usuariosColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
-                                                SelectedValuePath="id_tipo_usuario" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="TipoUsuarioId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                        <DataGridCheckBoxColumn x:Name="baneadoColumn" Width="SizeToHeader" Header="Baneado" Binding="{Binding baneado, UpdateSourceTrigger=PropertyChanged}"
+                        <DataGridCheckBoxColumn x:Name="baneadoColumn" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
                             <!--DataGridCheckBoxColumn.CellStyle>

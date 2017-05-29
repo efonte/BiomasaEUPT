@@ -117,13 +117,13 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
-                                                SelectedValuePath="id_tipo_cliente" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="TipoClienteId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Grupo"
-                                                ItemsSource="{Binding Source={StaticResource grupoclientesViewSource}}"
-                                                SelectedValuePath="id_grupo_cliente" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
+                                                SelectedValuePath="GrupoClienteId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
                                                                        Binding="{Binding calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
