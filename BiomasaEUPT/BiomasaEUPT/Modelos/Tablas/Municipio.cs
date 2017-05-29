@@ -21,9 +21,15 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        public double? Latitud { get; set; }
+        [Required]
+        [MinLength(5)]
+        [MaxLength(15)]
+        [DisplayName("Código Postal"), Display(Name = "Código Postal")]
+        public string CodigoPostal { get; set; }
 
-        public double? Longitud { get; set; }
+        public string Latitud { get; set; }
+
+        public string Longitud { get; set; }
 
         public int ProvinciaId { get; set; }
 
