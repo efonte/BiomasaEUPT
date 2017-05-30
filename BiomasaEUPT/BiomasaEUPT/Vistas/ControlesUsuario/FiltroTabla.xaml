@@ -8,84 +8,170 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="180" Loaded="UserControl_Loaded">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Grid.RowSpan="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+             Height="250" Width="170" Loaded="UserControl_Loaded">
 
-            <GroupBox.Header>
-                <materialDesign:ColorZone Mode="PrimaryMid">
-                    <DockPanel>
-                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
-                            <StackPanel>
-                                <Button x:Name="bAnadir" Content="Añadir" Click="bAnadir_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button x:Name="bEditar" Content="Editar" Click="bEditar_Click">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=lbFiltro, Path=SelectedItems.Count}" Value="1">
-                                                    <Setter Property="IsEnabled" Value="True" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                                <Button x:Name="bBorrar" Content="Borrar" Click="bBorrar_Click">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=lbFiltro, Path=SelectedItems.Count}" Value="1">
-                                                    <Setter Property="IsEnabled" Value="True" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </StackPanel>
-                        </materialDesign:PopupBox>
-                        <TextBlock Text="Filtrar" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
-                    </DockPanel>
+    <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Padding="5" Margin="0">
+        <materialDesign:Flipper.FrontContent>
+            <Grid Height="240" Width="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                    <GroupBox.Header>
+                        <materialDesign:ColorZone Mode="PrimaryMid">
+                            <DockPanel>
+                                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
+                                    <StackPanel>
+                                        <Button x:Name="bAnadirTipo" Content="Añadir" Click="bAnadirTipo_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                        <Button x:Name="bEditarTipo" Content="Editar" Click="bEditarTipo_Click">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=lbFiltroTipo, Path=SelectedItems.Count}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <Button x:Name="bBorrarTipo" Content="Borrar" Click="bBorrarTipo_Click">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=lbFiltroTipo, Path=SelectedItems.Count}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <TextBlock Text="Filtro Tipo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+                    </GroupBox.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <ListBox x:Name="lbFiltroTipo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
+                            <ListBox.ItemsSource>
+                                <CompositeCollection x:Name="cmpcTipo">
+                                    <!--ListBoxItem x:Name="lbiTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem-->
+                                    <CollectionContainer x:Name="ccFiltroTipo"/>
+                                    <!--DataTemplate x:Name="dtFiltro">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=nombre}"/>
+                                            <TextBlock Text="{Binding Path=descripcion}"/>
+                                        </StackPanel>
+                                    </DataTemplate-->
+                                </CompositeCollection>
+                            </ListBox.ItemsSource>
+                            <!--ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding descripcion}" FontSize="14"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate-->
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="8 0 0 0">
+                                        <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                        <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </GroupBox>
+
+                <materialDesign:ColorZone Grid.Row="1" x:Name="czGrupos" Mode="PrimaryMid">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">GRUPOS</TextBlock>
+                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                            <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right"/>
+                        </Button>
+                    </StackPanel>
                 </materialDesign:ColorZone>
-            </GroupBox.Header>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="lbFiltro" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
-                    <ListBox.ItemsSource>
-                        <CompositeCollection x:Name="cmpc">
-                            <!--ListBoxItem x:Name="lbiTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem-->
-                            <CollectionContainer x:Name="ccFiltro"/>
-                            <!--DataTemplate x:Name="dtFiltro">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=nombre}"/>
-                                <TextBlock Text="{Binding Path=descripcion}"/>
-                            </StackPanel>
-                        </-->
-                        </CompositeCollection>
-                    </ListBox.ItemsSource>
-                    <!--ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding descripcion}" FontSize="14"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate-->
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="8 0 0 0">
-                                <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
-                                <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
-        </GroupBox>
+            </Grid>
+        </materialDesign:Flipper.FrontContent>
+        <materialDesign:Flipper.BackContent>
+            <Grid Height="240" Width="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                    <GroupBox.Header>
+                        <materialDesign:ColorZone Mode="PrimaryMid">
+                            <DockPanel>
+                                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
+                                    <StackPanel>
+                                        <Button x:Name="bAnadirGrupo" Content="Añadir" Click="bAnadirGrupo_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                        <Button x:Name="bEditarGrupo" Content="Editar" Click="bEditarGrupo_Click">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=lbFiltroGrupo, Path=SelectedItems.Count}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <Button x:Name="bBorrarGrupo" Content="Borrar" Click="bBorrarGrupo_Click">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=lbFiltroGrupo, Path=SelectedItems.Count}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <TextBlock Text="Filtro Grupo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+                    </GroupBox.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <ListBox x:Name="lbFiltroGrupo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
+                            <ListBox.ItemsSource>
+                                <CompositeCollection x:Name="cmpcGrupo">
+                                    <CollectionContainer x:Name="ccFiltroGrupo"/>
+                                </CompositeCollection>
+                            </ListBox.ItemsSource>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="8 0 0 0">
+                                        <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                        <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </GroupBox>
 
-    </Grid>
-    <!--/-->
+                <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                            <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Left"/>
+                        </Button>
+                        <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">TIPOS</TextBlock>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+        </materialDesign:Flipper.BackContent>
+    </materialDesign:Flipper>
+
 </UserControl>

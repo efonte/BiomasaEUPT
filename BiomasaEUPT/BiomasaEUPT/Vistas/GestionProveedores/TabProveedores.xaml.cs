@@ -49,7 +49,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 proveedoresViewSource.Source = context.Proveedores.Local;
                 tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
 
-                ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
+                ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaProveedores.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaProveedores.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
@@ -104,7 +104,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             string municipio = proveedor.Municipio.Nombre.ToLower();
             string tipo = proveedor.TipoProveedor.Nombre.ToLower();
             // Filtra todos
-            if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
+            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
             {
                 e.Accepted = (ucTablaProveedores.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
@@ -115,7 +115,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             }
             else
             {
-                foreach (TipoProveedor tipoProveedor in ucFiltroTabla.lbFiltro.SelectedItems)
+                foreach (TipoProveedor tipoProveedor in ucFiltroTabla.lbFiltroTipo.SelectedItems)
                 {
                     if (tipoProveedor.Nombre.ToLower().Equals(tipo))
                     {

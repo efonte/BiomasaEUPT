@@ -19,7 +19,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/>
+            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom" MostrarGrupo="False"/>
         </Grid>
 
         <local:TablaProveedores Grid.Column="1" x:Name="ucTablaProveedores" Margin="10 10 0 10" />

@@ -16,9 +16,6 @@
         <ResourceDictionary>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
-
-
-
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>

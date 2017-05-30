@@ -54,7 +54,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 tiposClientesViewSource.Source = context.TiposClientes.Local;
                 gruposClientesViewSource.Source = context.GruposClientes.Local;
 
-                ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
+                ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaClientes.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
@@ -110,7 +110,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string municipio = cliente.Municipio.Nombre.ToLower();
             string tipo = cliente.TipoCliente.Nombre.ToLower();
             // Filtra todos
-            if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
+            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
             {
                 e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
@@ -121,7 +121,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
             else
             {
-                foreach (TipoCliente tipoCliente in ucFiltroTabla.lbFiltro.SelectedItems)
+                foreach (TipoCliente tipoCliente in ucFiltroTabla.lbFiltroTipo.SelectedItems)
                 {
                     if (tipoCliente.Nombre.ToLower().Equals(tipo))
                     {

@@ -14,10 +14,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="paisesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Pais}, CreateList=True}"/>
+            <CollectionViewSource x:Key="comunidadesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Comunidad}, CreateList=True}"/>
+            <CollectionViewSource x:Key="provinciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Provincia}, CreateList=True}"/>
+            <CollectionViewSource x:Key="municipiosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Municipio}, CreateList=True}"/>
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
@@ -31,10 +31,10 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
-                  ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
+        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
+                  ItemsSource="{Binding Source={StaticResource paisesViewSource}}"
                   SelectedValue="{Binding DataContext.Direcciones.Pais, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
-                  SelectionChanged="cbPaisesDirecciones_SelectionChanged">
+                  SelectionChanged="cbPaises_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -46,20 +46,20 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidadesDirecciones" materialDesign:HintAssist.Hint="Comunidad"
-                      ItemsSource="{Binding Source={StaticResource direccionesComunidadViewSource}}"
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
+                      ItemsSource="{Binding Source={StaticResource comunidadesViewSource}}"
                       SelectedValue="{Binding DataContext.Direcciones.Comunidad, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
-                      SelectionChanged="cbComunidadesDirecciones_SelectionChanged">
+                      SelectionChanged="cbComunidades_SelectionChanged">
         </ComboBox>
 
-        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvinciasDirecciones" materialDesign:HintAssist.Hint="Provincia"
-                      ItemsSource="{Binding Source={StaticResource direccionesProvinciaViewSource}}"
+        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
+                      ItemsSource="{Binding Source={StaticResource provinciasViewSource}}"
                       SelectedValue="{Binding DataContext.Direcciones.Provincia, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
-                      SelectionChanged="cbProvinciasDirecciones_SelectionChanged">
+                      SelectionChanged="cbProvincias_SelectionChanged">
         </ComboBox>
 
-        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
-                  ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
+                  ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
                   SelectedValue="{Binding DataContext.Direcciones, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -67,7 +67,7 @@
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} ({1})">
                                 <Binding Path="CodigoPostal"/>
-                                <Binding Path="Municipio"/>
+                                <Binding Path="Nombre"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
