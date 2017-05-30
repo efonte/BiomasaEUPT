@@ -10,7 +10,6 @@
         xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
-        xmlns:GestionMateriasPrimas="clr-namespace:BiomasaEUPT.Vistas.GestionMateriasPrimas"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
@@ -100,18 +99,6 @@
 
                         <GestionProveedores:TabProveedores x:Name="ucTabProveedores" />
 
-                    </TabItem>
-
-                    <!-- Pestaña Materias primas -->
-                    <TabItem x:Name="tiMateriasPrimas" IsSelected="True" Selector.Unselected="tiMateriasPrimas_Unselected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Materias primas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionMateriasPrimas:TabMateriasPrimas x:Name="ucTabMateriasPrimas" />
                     </TabItem>
 
                     <!-- Pestaña Recepciones -->

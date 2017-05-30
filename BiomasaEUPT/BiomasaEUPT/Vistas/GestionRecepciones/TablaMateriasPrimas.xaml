@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionMateriasPrimas.TablaMateriasPrimas"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionRecepciones.TablaMateriasPrimas"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionMateriasPrimas"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
@@ -72,73 +72,53 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fecha_altaColumn" Header="Fecha alta" Width="SizeToHeader"
-                                                                       Binding="{Binding fecha_alta, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-
-                            </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fecha_bajaColumn" Header="Fecha baja" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-
-                            </materialDesign:MaterialDataGridTextColumn>
-                            
+                                                        
                             <DataGridComboBoxColumn x:Name="tiposMateriasPrimasColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="TipoMateriaPrimaId" 
+                                                SelectedValuePath="TipoId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             
                             <DataGridComboBoxColumn x:Name="gruposMateriasPrimasColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="id_grupo_materia_prima" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="GrupoId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="pesoColumn" Header="Peso" Width="SizeToHeader"
-                                                                       Binding="{Binding peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        >
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader"
-                                                                       Binding="{Binding peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Volumen, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="unidadesColumn" Header="Unidades" Width="SizeToHeader"
-                                                                       Binding="{Binding peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding Unidades, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="entradasColumn" Header="Entradas" Width="SizeToHeader"
-                                                ItemsSource="{Binding Source={StaticResource entradasViewSource}}"
-                                                SelectedValuePath="id_entrada" 
-                                                DisplayMemberPath="fecha_recepcion" SelectedValueBinding="{Binding entrada_id, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                            <DataGridComboBoxColumn x:Name="sitiosDescargasPrimasColumn" Header="Sitios"
+                            <DataGridComboBoxColumn x:Name="HuecoRecepcionColumn" Header="Hueco"
                                                 ItemsSource="{Binding Source={StaticResource sitiosDescargasViewSource}}"
-                                                SelectedValuePath="id_sitio_descarga" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding sitio_id, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                SelectedValuePath="HuecoId" 
+                                                DisplayMemberPath="Volumen" SelectedValueBinding="{Binding HuecoRecepcionId, UpdateSourceTrigger=PropertyChanged}"
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}">
+                                
+                            </DataGridComboBoxColumn>
 
-                            <DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor"
+                            <DataGridComboBoxColumn x:Name="procedenciaColumn" Header="Procedencia" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource proveedoresViewSource}}"
-                                                SelectedValuePath="id_proveedor" 
-                                                DisplayMemberPath="razon_social" SelectedValueBinding="{Binding proveedor_id, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="ProcedenciaId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding ProcedenciaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                            <DataGridComboBoxColumn x:Name="tipos_procedenciasColumn" Header="Procedencias"
-                                                ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
-                                                SelectedValuePath="id_procedencia" 
-                                                DisplayMemberPath="nombre" SelectedValueBinding="{Binding procedencia_id, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumn" Header="Código" Width="SizeToHeader"
-                                                                       Binding="{Binding codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                                       >
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumn" Header="Fecha baja" Width="SizeToHeader"
+                                                                       Binding="{Binding FechaBaja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
 
                             </materialDesign:MaterialDataGridTextColumn>
 
@@ -161,7 +141,7 @@
 
                             </Button>
 
-                            <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir cliente">
+                            <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
 
@@ -193,7 +173,7 @@
                                     <materialDesign:PackIcon Kind="Pin"/>
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
                                        MaxHeight="350" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"

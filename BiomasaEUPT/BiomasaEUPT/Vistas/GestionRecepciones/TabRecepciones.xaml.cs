@@ -39,7 +39,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            using (new CursorEspera())
+            /*using (new CursorEspera())
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 recepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource")));
@@ -59,7 +59,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
-            }
+            }*/
         }
 
         private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)
@@ -99,7 +99,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                          (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false);
 
             // Filtra todos
-            if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
+            /*if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
             {
                 e.Accepted = condicion;
             }
@@ -118,7 +118,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                         e.Accepted = false;
                     }
                 }
-            }
+            }*/
         }
 
         #region ConfirmarCambios

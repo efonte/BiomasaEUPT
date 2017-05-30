@@ -96,13 +96,6 @@ namespace BiomasaEUPT
 
         }
 
-        private void tiMateriasPrimas_Unselected(object sender, RoutedEventArgs e)
-        {
-            if (ucTabMateriasPrimas != null)
-                ucTabMateriasPrimas.ucTablaMateriasPrimas.dgMateriasPrimas.CancelEdit();
-
-        }
-
         private void tiRecepciones_Unselected(object sender, RoutedEventArgs e)
         {
             if (ucTabRecepciones != null)

@@ -198,20 +198,14 @@
     <Compile Include="Vistas\GestionRecepciones\FormRecepcion.xaml.cs">
       <DependentUpon>FormRecepcion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionRecepciones\TablaMateriasPrimas.xaml.cs">
+      <DependentUpon>TablaMateriasPrimas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionRecepciones\TabRecepciones.xaml.cs">
       <DependentUpon>TabRecepciones.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionRecepciones\TablaRecepciones.xaml.cs">
       <DependentUpon>TablaRecepciones.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionMateriasPrimas\FormMateriaPrima.xaml.cs">
-      <DependentUpon>FormMateriaPrima.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionMateriasPrimas\TablaMateriasPrimas.xaml.cs">
-      <DependentUpon>TablaMateriasPrimas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionMateriasPrimas\TabMateriasPrimas.xaml.cs">
-      <DependentUpon>TabMateriasPrimas.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionProveedores\FormProveedor.xaml.cs">
       <DependentUpon>FormProveedor.xaml</DependentUpon>
@@ -304,23 +298,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionRecepciones\TablaMateriasPrimas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Vistas\GestionRecepciones\TabRecepciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionRecepciones\TablaRecepciones.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionMateriasPrimas\FormMateriaPrima.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionMateriasPrimas\TablaMateriasPrimas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionMateriasPrimas\TabMateriasPrimas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

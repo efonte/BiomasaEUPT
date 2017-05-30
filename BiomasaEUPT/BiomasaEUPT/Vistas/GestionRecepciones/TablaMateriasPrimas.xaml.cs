@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
+namespace BiomasaEUPT.Vistas.GestionRecepciones
 {
     /// <summary>
-    /// Lógica de interacción para TablaClientes.xaml
+    /// Lógica de interacción para TablaMateriasPrimas.xaml
     /// </summary>
     public partial class TablaMateriasPrimas : UserControl
     {
@@ -34,7 +34,7 @@ namespace BiomasaEUPT.Vistas.GestionMateriasPrimas
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
             }
 
-            TabMateriasPrimas tabMateriasPrimas = (TabMateriasPrimas)ucParent;
+            TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
 
             //tabMateriasPrimas.FiltrarTabla();
         }
