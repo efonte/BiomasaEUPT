@@ -19,10 +19,10 @@
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoCliente}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoCliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesPaisViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesComunidadViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesProvinciaViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="direccionesCodigoPostalViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Direccion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="paisesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Pais}, CreateList=True}"/>
+            <CollectionViewSource x:Key="comunidadesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Comunidad}, CreateList=True}"/>
+            <CollectionViewSource x:Key="provinciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Provincia}, CreateList=True}"/>
+            <CollectionViewSource x:Key="municipiosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Municipio}, CreateList=True}"/>
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
@@ -112,43 +112,48 @@
                       SelectedValuePath="GrupoClienteId">
                 </ComboBox>
 
-                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaisesDirecciones" materialDesign:HintAssist.Hint="País"
-                      ItemsSource="{Binding Source={StaticResource direccionesPaisViewSource}}"
+                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
+                      ItemsSource="{Binding Source={StaticResource paisesViewSource}}"
                       SelectedValue="ES"
-                      SelectionChanged="cbPaisesDirecciones_SelectionChanged">
+                      SelectedValuePath="Codigo"
+                      SelectionChanged="cbPaises_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="20" Height="13" Stretch="Fill" Margin="5" 
-                                   Source="{Binding Converter={StaticResource PaisISOA2ImagenConverter}}"/>
-                                <TextBlock Margin="5" Text="{Binding Converter={StaticResource PaisISOA2NombreCompletoConverter}}"/>
+                                   Source="{Binding Codigo, Converter={StaticResource PaisISOA2ImagenConverter}}"/>
+                                <TextBlock Margin="5" Text="{Binding Codigo, Converter={StaticResource PaisISOA2NombreCompletoConverter}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbComunidadesDirecciones" materialDesign:HintAssist.Hint="Comunidad"
-                      ItemsSource="{Binding Source={StaticResource direccionesComunidadViewSource}}"
-                      SelectedValue="Aragon"
-                      SelectionChanged="cbComunidadesDirecciones_SelectionChanged">
+                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
+                          ItemsSource="{Binding Source={StaticResource comunidadesViewSource}}"
+                          SelectedValue="Aragon"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="Nombre"
+                          SelectionChanged="cbComunidades_SelectionChanged">
                 </ComboBox>
 
-                <ComboBox Grid.Row="4" Grid.Column="0" x:Name="cbProvinciasDirecciones" materialDesign:HintAssist.Hint="Provincia"
-                      ItemsSource="{Binding Source={StaticResource direccionesProvinciaViewSource}}"
-                      SelectedValue="Teruel"
-                      SelectionChanged="cbProvinciasDirecciones_SelectionChanged">
+                <ComboBox Grid.Row="4" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
+                          ItemsSource="{Binding Source={StaticResource provinciasViewSource}}"
+                          SelectedValue="Teruel"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="Nombre"
+                          SelectionChanged="cbProvincias_SelectionChanged">
                 </ComboBox>
 
-                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbCodigosPostalesDirecciones" materialDesign:HintAssist.Hint="Código Postal"
-                      ItemsSource="{Binding Source={StaticResource direccionesCodigoPostalViewSource}}"
-                      SelectedValuePath="DireccionesId">
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
+                      ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
+                      SelectedValuePath="MunicipioId">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} ({1})">
                                         <Binding Path="CodigoPostal"/>
-                                        <Binding Path="Municipio"/>
+                                        <Binding Path="Nombre"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>

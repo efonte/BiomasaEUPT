@@ -100,8 +100,8 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             string nif = proveedor.Nif.ToLower();
             string email = proveedor.Email.ToLower();
             string calle = proveedor.Calle.ToLower();
-            string codigoPostal = proveedor.Direccion.CodigoPostal.ToLower();
-            string municipio = proveedor.Direccion.Municipio.ToLower();
+            string codigoPostal = proveedor.Municipio.CodigoPostal.ToLower();
+            string municipio = proveedor.Municipio.Nombre.ToLower();
             string tipo = proveedor.TipoProveedor.Nombre.ToLower();
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)

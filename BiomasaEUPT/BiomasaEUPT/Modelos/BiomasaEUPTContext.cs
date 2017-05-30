@@ -125,7 +125,6 @@
         public DbSet<GrupoCliente> GruposClientes { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<TipoProveedor> TiposProveedores { get; set; }
-        public DbSet<Direccion> Direcciones { get; set; }
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<TipoMateriaPrima> TiposMateriasPrimas { get; set; }
         public DbSet<GrupoMateriaPrima> GruposMateriasPrimas { get; set; }

@@ -31,7 +31,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class FiltroTabla : UserControl
     {
-        private BiomasaEUPTContext context;
+        //private BiomasaEUPTContext context;
         private DependencyObject ucParent;
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource tiposProveedoresViewSource;
@@ -45,7 +45,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            context = BaseDeDatos.Instancia.biomasaEUPTContext;
+            //context = BaseDeDatos.Instancia.biomasaEUPTContext;
             ucParent = Parent;
             while (!(ucParent is UserControl))
             {
@@ -101,8 +101,11 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Atributo = "nombre";
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
-                    context.TiposClientes.Add(new TipoCliente() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-                    context.GuardarCambios<TipoCliente>();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        context.TiposClientes.Add(new TipoCliente() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
+                        context.GuardarCambios<TipoCliente>();
+                    }
                 }
             }
 
@@ -115,8 +118,12 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Atributo = "nombre";
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
-                    context.TiposProveedores.Add(new TipoProveedor() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-                    context.GuardarCambios<TipoProveedor>();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        context.TiposProveedores.Add(new TipoProveedor() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
+                        //context.GuardarCambios<TipoProveedor>();
+                        context.SaveChanges();
+                    }
                 }
             }
 
@@ -129,8 +136,12 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.vNombreUnico.Atributo = "nombre";
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
-                    context.TiposMateriasPrimas.Add(new TipoMateriaPrima() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-                    context.GuardarCambios<TipoMateriaPrima>();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        context.TiposMateriasPrimas.Add(new TipoMateriaPrima() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
+                        //context.GuardarCambios<TipoMateriaPrima>();
+                        context.SaveChanges();
+                    }
                 }
             }
 
@@ -146,6 +157,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 var tipoSeleccionado = lbFiltro.SelectedItem as TipoCliente;
                 formTipo.Nombre = tipoSeleccionado.Nombre;
                 formTipo.Descripcion = tipoSeleccionado.Descripcion;
+                var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposClientes";
                 formTipo.vNombreUnico.Atributo = "nombre";
@@ -155,7 +167,14 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     tipoSeleccionado.Nombre = formTipo.Nombre;
                     tipoSeleccionado.Descripcion = formTipo.Descripcion;
                     tiposClientesViewSource.View.Refresh();
-                    context.GuardarCambios<TipoCliente>();
+                    //context.GuardarCambios<TipoCliente>();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        var tipoCliente = context.TiposClientes.Single(tc => tc.Nombre == nombreViejo);
+                        tipoCliente.Nombre = formTipo.Nombre;
+                        tipoCliente.Descripcion = formTipo.Descripcion;
+                        context.SaveChanges();
+                    }
                 }
             }
 
@@ -165,6 +184,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 var tipoSeleccionado = lbFiltro.SelectedItem as TipoProveedor;
                 formTipo.Nombre = tipoSeleccionado.Nombre;
                 formTipo.Descripcion = tipoSeleccionado.Descripcion;
+                var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposProveedores";
                 formTipo.vNombreUnico.Atributo = "nombre";
@@ -174,11 +194,18 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     tipoSeleccionado.Nombre = formTipo.Nombre;
                     tipoSeleccionado.Descripcion = formTipo.Descripcion;
                     tiposClientesViewSource.View.Refresh();
-                    context.GuardarCambios<TipoProveedor>();
+                    //context.GuardarCambios<TipoProveedor>();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        var tipoProveedor = context.TiposProveedores.Single(tc => tc.Nombre == nombreViejo);
+                        tipoProveedor.Nombre = formTipo.Nombre;
+                        tipoProveedor.Descripcion = formTipo.Descripcion;
+                        context.SaveChanges();
+                    }
                 }
             }
 
-            // Pestaña Materias primas y Recepciones
+            // Pestaña Recepciones
             if (ucParent.GetType().Equals(typeof(TabMateriasPrimas)) || ucParent.GetType().Equals(typeof(TabRecepciones)))
             {
                 var tipoSeleccionado = lbFiltro.SelectedItem as TipoMateriaPrima;
@@ -193,7 +220,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     tipoSeleccionado.Nombre = formTipo.Nombre;
                     tipoSeleccionado.Descripcion = formTipo.Descripcion;
                     tiposClientesViewSource.View.Refresh();
-                    context.GuardarCambios<TipoMateriaPrima>();
+                    //context.GuardarCambios<TipoMateriaPrima>();
                 }
             }
 
@@ -210,14 +237,18 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
                 if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
                 {
-                    if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoClienteId).Count() == 0)
+                    using (var context = new BiomasaEUPTContext())
                     {
-                        context.TiposClientes.Remove(tipoSeleccionado);
-                        context.GuardarCambios<TipoCliente>();
-                    }
-                    else
-                    {
-                        await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoClienteId).Count() == 0)
+                        {
+                            context.TiposClientes.Remove(tipoSeleccionado);
+                            //context.GuardarCambios<TipoCliente>();
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        }
                     }
                 }
             }
@@ -229,14 +260,18 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
                 if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
                 {
-                    if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoProveedorId).Count() == 0)
+                    using (var context = new BiomasaEUPTContext())
                     {
-                        context.TiposProveedores.Remove(tipoSeleccionado);
-                        context.GuardarCambios<TipoProveedor>();
-                    }
-                    else
-                    {
-                        await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoProveedorId).Count() == 0)
+                        {
+                            context.TiposProveedores.Remove(tipoSeleccionado);
+                            //context.GuardarCambios<TipoProveedor>();
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        }
                     }
                 }
             }
@@ -248,14 +283,18 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
                 if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
                 {
-                    if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoMateriaPrimaId).Count() == 0)
+                    using (var context = new BiomasaEUPTContext())
                     {
-                        context.TiposMateriasPrimas.Remove(tipoSeleccionado);
-                        context.GuardarCambios<TipoMateriaPrima>();
-                    }
-                    else
-                    {
-                        await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoMateriaPrimaId).Count() == 0)
+                        {
+                            context.TiposMateriasPrimas.Remove(tipoSeleccionado);
+                            //context.GuardarCambios<TipoMateriaPrima>();
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        }
                     }
                 }
             }

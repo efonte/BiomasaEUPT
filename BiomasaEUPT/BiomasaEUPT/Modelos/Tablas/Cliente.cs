@@ -47,14 +47,14 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Calle"), Display(Name = "Calle")]
         public string Calle { get; set; }
 
-        public int DireccionId { get; set; }
+        public int MunicipioId { get; set; }
 
         public int GrupoId { get; set; }
 
         public int TipoId { get; set; }
 
-        [ForeignKey("DireccionId")]
-        public virtual Direccion Direccion { get; set; }
+        [ForeignKey("MunicipioId")]
+        public virtual Municipio Municipio { get; set; }
 
         [ForeignKey("GrupoId")]
         public virtual GrupoCliente GrupoCliente { get; set; }

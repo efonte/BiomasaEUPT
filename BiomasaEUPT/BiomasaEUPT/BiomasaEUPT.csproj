@@ -131,7 +131,6 @@
     <Compile Include="Modelos\Tablas\Almacen.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
-    <Compile Include="Modelos\Tablas\Direccion.cs" />
     <Compile Include="Modelos\Tablas\Envasado.cs" />
     <Compile Include="Modelos\Tablas\EstadoRecepcion.cs" />
     <Compile Include="Modelos\Tablas\EstadoSalida.cs" />

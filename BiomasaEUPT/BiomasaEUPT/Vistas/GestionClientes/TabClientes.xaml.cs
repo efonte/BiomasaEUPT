@@ -42,7 +42,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTContext;
+                //context = BaseDeDatos.Instancia.biomasaEUPTContext;
+                context = new BiomasaEUPTContext();
                 clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
                 tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
                 gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
@@ -84,7 +85,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     Calle = formCliente.tbCalle.Text,
                     TipoCliente = formCliente.cbTiposClientes.SelectedItem as TipoCliente,
                     GrupoCliente = formCliente.cbGruposClientes.SelectedItem as GrupoCliente,
-                    Direccion = formCliente.cbCodigosPostalesDirecciones.SelectedItem as Direccion,
+                    Municipio = formCliente.cbMunicipios.SelectedItem as Municipio,
                     Observaciones = formCliente.tbObservaciones.Text
                 });
             }
@@ -105,8 +106,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string nif = cliente.Nif.ToLower();
             string email = cliente.Email.ToLower();
             string calle = cliente.Calle.ToLower();
-            string codigoPostal = cliente.Direccion.CodigoPostal.ToLower();
-            string municipio = cliente.Direccion.Municipio.ToLower();
+            string codigoPostal = cliente.Municipio.CodigoPostal.ToLower();
+            string municipio = cliente.Municipio.Nombre.ToLower();
             string tipo = cliente.TipoCliente.Nombre.ToLower();
             // Filtra todos
             if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
