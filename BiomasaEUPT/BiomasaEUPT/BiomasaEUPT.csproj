@@ -128,7 +128,6 @@
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />
     <Compile Include="Modelos\ConstantesModelo.cs" />
     <Compile Include="Migrations\SeedCodigosPostales.cs" />
-    <Compile Include="Modelos\Tablas\Almacen.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
     <Compile Include="Modelos\Tablas\Envasado.cs" />
@@ -137,6 +136,7 @@
     <Compile Include="Modelos\Tablas\GrupoCliente.cs" />
     <Compile Include="Modelos\Tablas\GrupoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\GrupoProductoTerminado.cs" />
+    <Compile Include="Modelos\Tablas\HuecoAlmacenaje.cs" />
     <Compile Include="Modelos\Tablas\HuecoRecepcion.cs" />
     <Compile Include="Modelos\Tablas\MateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\Municipio.cs" />
@@ -144,12 +144,13 @@
     <Compile Include="Modelos\Tablas\Pedido.cs" />
     <Compile Include="Modelos\Tablas\Procedencia.cs" />
     <Compile Include="Modelos\Tablas\ProductoTerminado.cs" />
+    <Compile Include="Modelos\Tablas\HuecoProducto.cs" />
     <Compile Include="Modelos\Tablas\Proveedor.cs" />
     <Compile Include="Modelos\Tablas\Provincia.cs" />
     <Compile Include="Modelos\Tablas\Recepcion.cs" />
     <Compile Include="Modelos\Tablas\Salida.cs" />
+    <Compile Include="Modelos\Tablas\SitioAlmacenaje.cs" />
     <Compile Include="Modelos\Tablas\SitioRecepcion.cs" />
-    <Compile Include="Modelos\Tablas\SitioRecogida.cs" />
     <Compile Include="Modelos\Tablas\TipoCliente.cs" />
     <Compile Include="Modelos\Tablas\TipoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\TipoProductoTerminado.cs" />

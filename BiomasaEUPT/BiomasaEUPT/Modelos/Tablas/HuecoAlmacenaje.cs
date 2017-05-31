@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
-    [Table("HuecosRecepciones")]
-    public class HuecoRecepcion
+    [Table("HuecosAlmacenajes")]
+    public class HuecoAlmacenaje
     {
         [Key]
-        public int HuecoRecepcionId { get; set; }
+        public int HuecoAlmacenajeId { get; set; }
 
         [DisplayName("Volumen totales"), Display(Name = "Volumen totales")]
         public float? VolumenTotales { get; set; }
@@ -25,6 +25,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int SitioId { get; set; }
 
         [ForeignKey("SitioId")]
-        public virtual SitioRecepcion SitioRecepcion { get; set; }
+        public virtual SitioAlmacenaje SitioAlmacenaje { get; set; }
+
+        public virtual List<HuecoProducto> HuecosProductos { get; set; }
     }
 }

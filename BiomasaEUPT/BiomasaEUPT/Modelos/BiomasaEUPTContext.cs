@@ -23,7 +23,7 @@
         //: base("metadata=res://*/Modelo.csdl|res://*/;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
         //: base(nameOrConnectionString: ConnectionString())       
         {
-            Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
+            //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
 
             // CUIDADO -> Borra la tabla y la vuelve a crear
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BiomasaEUPTContext>());
@@ -135,11 +135,12 @@
         public DbSet<ProductoTerminado> ProductosTerminados { get; set; }
         public DbSet<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public DbSet<GrupoProductoTerminado> GruposProductosTerminados { get; set; }
+        public DbSet<SitioAlmacenaje> SitiosAlmacenajes { get; set; }
+        public DbSet<HuecoAlmacenaje> HuecoAlmacenajes { get; set; }
+        public DbSet<HuecoProducto> HuecosProductos { get; set; }
         public DbSet<Salida> Salidas { get; set; }
         public DbSet<EstadoSalida> EstadosSalidas { get; set; }
-        public DbSet<SitioRecogida> SitiosRecogidas { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<Almacen> Almacenes { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Comunidad> Comunidades { get; set; }
         public DbSet<Provincia> Provincias { get; set; }

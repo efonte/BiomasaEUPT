@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
-    [Table("SitiosRecogidas")]
-    public class SitioRecogida
+    [Table("SitiosAlmacenajes")]
+    public class SitioAlmacenaje
     {
         [Key]
-        public int SitioRecogidaId { get; set; }
+        public int SitioAlmacenajeId { get; set; }
 
         [Required]
         [MinLength(3)]
@@ -28,11 +28,11 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        public float? Volumen { get; set; }
+        public int? TipoProductoTerminadoId { get; set; }
 
-        [Range(0, 1000)]
-        public int? Unidades { get; set; }
+        [ForeignKey("TipoProductoTerminadoId")]
+        public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
 
-        public virtual List<ProductoTerminado> ProductosTerminados { get; set; }
+        public virtual List<HuecoAlmacenaje> HuecosAlmacenajes { get; set; }
     }
 }

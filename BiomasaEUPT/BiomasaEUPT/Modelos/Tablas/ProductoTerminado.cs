@@ -39,8 +39,6 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int GrupoId { get; set; }
 
-        public int SitioId { get; set; }
-
         [Required]
         [StringLength(10)]
         [DisplayName("Código"), Display(Name = "Código")]
@@ -52,7 +50,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("GrupoId")]
         public virtual GrupoProductoTerminado GrupoProductoTerminado { get; set; }
 
-        [ForeignKey("SitioId")]
-        public virtual SitioRecogida SitioRecogida { get; set; }
+        public virtual List<HuecoProducto> HuecosProductos { get; set; }
     }
 }
