@@ -16,7 +16,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int HuecoRecepcionId { get; set; }
 
         [DisplayName("Volumen totales"), Display(Name = "Volumen totales")]
-        public float? VolumenTotales { get; set; }
+        public double? VolumenTotales { get; set; }
 
         [Range(0, 1000)]
         [DisplayName("Unidades totales"), Display(Name = "Unidades totales")]
@@ -26,5 +26,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("SitioId")]
         public virtual SitioRecepcion SitioRecepcion { get; set; }
+
+        public virtual List<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
     }
 }

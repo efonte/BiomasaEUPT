@@ -38,8 +38,6 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int RecepcionId { get; set; }
 
-        public int HuecoId { get; set; }
-
         public int ProcedenciaId { get; set; }
 
         [Required]
@@ -56,11 +54,9 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("RecepcionId")]
         public virtual Recepcion Recepcion { get; set; }
 
-        [ForeignKey("HuecoId")]
-        public virtual HuecoRecepcion HuecoRecepcion { get; set; }
-
         [ForeignKey("ProcedenciaId")]
         public virtual Procedencia Procedencia { get; set; }
 
+        public virtual List<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
     }
 }

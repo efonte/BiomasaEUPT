@@ -132,6 +132,7 @@
         public DbSet<EstadoRecepcion> EstadosRecepciones { get; set; }
         public DbSet<SitioRecepcion> SitiosRecepciones { get; set; }
         public DbSet<HuecoRecepcion> HuecosRecepciones { get; set; }
+        public DbSet<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
         public DbSet<ProductoTerminado> ProductosTerminados { get; set; }
         public DbSet<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public DbSet<GrupoProductoTerminado> GruposProductosTerminados { get; set; }

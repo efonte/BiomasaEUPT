@@ -28,10 +28,10 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        public int? TipoProductoTerminadoId { get; set; }
+        //public int? TipoProductoTerminadoId { get; set; }
 
-        [ForeignKey("TipoProductoTerminadoId")]
-        public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
+        //[ForeignKey("TipoProductoTerminadoId")]
+        //public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
 
         public virtual List<HuecoAlmacenaje> HuecosAlmacenajes { get; set; }
     }
