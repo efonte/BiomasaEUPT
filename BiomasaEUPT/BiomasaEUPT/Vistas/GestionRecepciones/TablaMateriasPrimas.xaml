@@ -21,9 +21,6 @@
             <CollectionViewSource x:Key="sitiosDescargasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:SitioRecepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
             <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
-
-
-
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
@@ -72,13 +69,12 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                                                        
                             <DataGridComboBoxColumn x:Name="tiposMateriasPrimasColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
                                                 SelectedValuePath="TipoId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            
+
                             <DataGridComboBoxColumn x:Name="gruposMateriasPrimasColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
                                                 SelectedValuePath="GrupoId" 
@@ -87,19 +83,17 @@
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="pesoColumn" Header="Peso" Width="SizeToHeader"
                                                                        Binding="{Binding Peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                                       >
-
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
+                            
                             <materialDesign:MaterialDataGridTextColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader"
                                                                        Binding="{Binding Volumen, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-
                             </materialDesign:MaterialDataGridTextColumn>
+                            
                             <materialDesign:MaterialDataGridTextColumn x:Name="unidadesColumn" Header="Unidades" Width="SizeToHeader"
                                                                        Binding="{Binding Unidades, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <DataGridComboBoxColumn x:Name="HuecoRecepcionColumn" Header="Hueco"
@@ -107,7 +101,6 @@
                                                 SelectedValuePath="HuecoId" 
                                                 DisplayMemberPath="Volumen" SelectedValueBinding="{Binding HuecoRecepcionId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}">
-                                
                             </DataGridComboBoxColumn>
 
                             <DataGridComboBoxColumn x:Name="procedenciaColumn" Header="Procedencia" Width="SizeToHeader"
@@ -116,14 +109,13 @@
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding ProcedenciaId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumn" Header="Fecha baja" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumn" Header="Fecha baja/caducidad" Width="SizeToHeader"
                                                                        Binding="{Binding FechaBaja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-
                             </materialDesign:MaterialDataGridTextColumn>
 
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
 
                     <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
@@ -180,7 +172,7 @@
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                      MaxHeight="350" TextWrapping="Wrap"/>
-              
+
                         </StackPanel>
                     </Expander>
                 </StackPanel>

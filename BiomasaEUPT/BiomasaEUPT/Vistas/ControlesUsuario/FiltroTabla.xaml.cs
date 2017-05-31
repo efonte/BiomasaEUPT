@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using System.Data.Entity;
 
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
@@ -30,11 +31,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class FiltroTabla : UserControl
     {
-        //private BiomasaEUPTContext context;
         private DependencyObject ucParent;
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource tiposProveedoresViewSource;
-
         private CollectionViewSource gruposClientesViewSource;
 
         public bool MostrarGrupo { get; set; } = true;
@@ -57,7 +56,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             InitializeComponent();
             DataContext = this;
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -67,7 +65,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 czGrupos.Visibility = Visibility.Collapsed;
             }
 
-            //context = BaseDeDatos.Instancia.biomasaEUPTContext;
             ucParent = Parent;
             while (!(ucParent is UserControl))
             {
@@ -82,7 +79,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 ccFiltroTipo.Collection = tiposClientesViewSource.View;
                 gruposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("gruposClientesViewSource")));
                 ccFiltroGrupo.Collection = gruposClientesViewSource.View;
-                //   tabClientes.FiltrarTabla();
+                // tabClientes.FiltrarTabla();
             }
             // Pestaña Proveedores
             if (ucParent.GetType().Equals(typeof(TabProveedores)))
@@ -90,7 +87,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 TabProveedores tabProveedores = (TabProveedores)ucParent;
                 tiposProveedoresViewSource = ((CollectionViewSource)(tabProveedores.ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
                 ccFiltroTipo.Collection = tiposProveedoresViewSource.View;
-                //   tabProveedores.FiltrarTabla();
+                // tabProveedores.FiltrarTabla();
             }
         }
 
@@ -129,13 +126,11 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     context.SaveChanges();
                 }
             }
-
-
         }
 
         private async void bEditarTipo_Click(object sender, RoutedEventArgs e)
         {
-            var formTipo = new FormTipo();
+            var formTipo = new FormTipo("Editar Tipo");
             formTipo.vNombreUnico.Atributo = "nombre";
 
             // Pestaña Clientes
@@ -147,7 +142,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposClientes";
-                formTipo.vNombreUnico.NombreActual = (lbFiltroTipo.SelectedItem as TipoCliente).Nombre;
+                formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.Nombre = formTipo.Nombre;
@@ -172,7 +167,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposProveedores";
-                formTipo.vNombreUnico.NombreActual = (lbFiltroTipo.SelectedItem as TipoProveedor).Nombre;
+                formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
                     tipoSeleccionado.Nombre = formTipo.Nombre;
@@ -187,7 +182,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     }
                 }
             }
-
         }
 
         private async void bBorrarTipo_Click(object sender, RoutedEventArgs e)
@@ -205,8 +199,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     {
                         if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoClienteId).Count() == 0)
                         {
+                            var tipo = context.TiposClientes.Where(tc => tc.TipoClienteId == tipoSeleccionado.TipoClienteId).First();
                             context.TiposClientes.Remove(tipoSeleccionado);
-                            //context.GuardarCambios<TipoCliente>();
                             context.SaveChanges();
                         }
                         else
@@ -228,8 +222,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     {
                         if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoProveedorId).Count() == 0)
                         {
-                            context.TiposProveedores.Remove(tipoSeleccionado);
-                            //context.GuardarCambios<TipoProveedor>();
+                            var tipo = context.TiposProveedores.Where(tc => tc.TipoProveedorId == tipoSeleccionado.TipoProveedorId).First();
                             context.SaveChanges();
                         }
                         else
@@ -239,45 +232,92 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     }
                 }
             }
+        }
 
-            // Pestaña Materias primas y Recepciones
-            if (ucParent.GetType().Equals(typeof(TabRecepciones)))
+        private async void bAnadirGrupo_Click(object sender, RoutedEventArgs e)
+        {
+            var formGrupo = new FormTipo("Nuevo Grupo");
+            formGrupo.vNombreUnico.Atributo = "nombre";
+
+            // Pestaña Clientes
+            if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
-                var tipoSeleccionado = lbFiltroTipo.SelectedItem as TipoMateriaPrima;
-                mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
+                formGrupo.vNombreUnico.Coleccion = gruposClientesViewSource;
+                formGrupo.vNombreUnico.Tipo = "gruposClientes";
+            }
+
+            if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
+            {
+                using (var context = new BiomasaEUPTContext())
+                {
+                    if (ucParent.GetType().Equals(typeof(TabClientes)))
+                        context.GruposClientes.Add(new GrupoCliente() { Nombre = formGrupo.Nombre, Descripcion = formGrupo.Descripcion });
+
+                    context.SaveChanges();
+                    //context.GruposClientes.Load();
+                    //gruposClientesViewSource.Source = context.GruposClientes.Local;
+                    gruposClientesViewSource.View.Refresh();
+                }
+            }
+        }
+
+        private async void bEditarGrupo_Click(object sender, RoutedEventArgs e)
+        {
+            var formGrupo = new FormTipo("Editar Grupo");
+            formGrupo.vNombreUnico.Atributo = "nombre";
+
+            // Pestaña Clientes
+            if (ucParent.GetType().Equals(typeof(TabClientes)))
+            {
+                var grupoSeleccionado = lbFiltroGrupo.SelectedItem as GrupoCliente;
+                formGrupo.Nombre = grupoSeleccionado.Nombre;
+                formGrupo.Descripcion = grupoSeleccionado.Descripcion;
+                var nombreViejo = formGrupo.Nombre;
+                formGrupo.vNombreUnico.Coleccion = gruposClientesViewSource;
+                formGrupo.vNombreUnico.Tipo = "gruposClientes";
+                formGrupo.vNombreUnico.NombreActual = grupoSeleccionado.Nombre;
+                if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
+                {
+                    grupoSeleccionado.Nombre = formGrupo.Nombre;
+                    grupoSeleccionado.Descripcion = formGrupo.Descripcion;
+                    gruposClientesViewSource.View.Refresh();
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        var grupoCliente = context.GruposClientes.Single(gc => gc.Nombre == nombreViejo);
+                        grupoCliente.Nombre = formGrupo.Nombre;
+                        grupoCliente.Descripcion = formGrupo.Descripcion;
+                        context.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        private async void bBorrarGrupo_Click(object sender, RoutedEventArgs e)
+        {
+            var mensajeConf = new MensajeConfirmacion();
+
+            // Pestaña Clientes
+            if (ucParent.GetType().Equals(typeof(TabClientes)))
+            {
+                var grupoSeleccionado = lbFiltroGrupo.SelectedItem as GrupoCliente;
+                mensajeConf.Mensaje = "¿Está seguro de que desea borrar el grupo " + grupoSeleccionado.Nombre + "?";
                 if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoMateriaPrimaId).Count() == 0)
+                        if (context.Clientes.Where(t => t.GrupoId == grupoSeleccionado.GrupoClienteId).Count() == 0)
                         {
-                            context.TiposMateriasPrimas.Remove(tipoSeleccionado);
-                            //context.GuardarCambios<TipoMateriaPrima>();
+                            var grupo = context.GruposClientes.Where(gc => gc.GrupoClienteId == grupoSeleccionado.GrupoClienteId).First();
+                            context.GruposClientes.Remove(grupo);
                             context.SaveChanges();
                         }
                         else
                         {
-                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso"), "RootDialog");
                         }
                     }
                 }
             }
-
-        }
-
-        private void bAnadirGrupo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void bEditarGrupo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void bBorrarGrupo_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

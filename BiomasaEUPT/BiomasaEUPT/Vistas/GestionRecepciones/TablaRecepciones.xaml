@@ -64,7 +64,11 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fecha_recepcionColumn" Header="Fecha recepcion" Width="160"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumn" Header="Número albarán" Width="SizeToHeader"
+                                                                       Binding="{Binding numero_albaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha recepcion" Width="SizeToHeader"
                                                                        Binding="{Binding fecha_recepcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
@@ -77,16 +81,9 @@
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="anoColumn" Header="Año" Width="SizeToHeader"
                                                                        Binding="{Binding ano, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                                       >
-
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="numero_albaranColumn" Header="Número albarán" Width="SizeToHeader"
-                                                                       Binding="{Binding numero_albaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
-                            </materialDesign:MaterialDataGridTextColumn>
-                            
 
                         </DataGrid.Columns>
 

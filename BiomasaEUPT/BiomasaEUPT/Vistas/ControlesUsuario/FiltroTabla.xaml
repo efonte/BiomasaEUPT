@@ -8,11 +8,11 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="250" Width="170" Loaded="UserControl_Loaded">
+             Height="250" Width="180" Loaded="UserControl_Loaded">
 
-    <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Padding="5" Margin="0">
+    <materialDesign:Flipper VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <materialDesign:Flipper.FrontContent>
-            <Grid Height="240" Width="150">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
@@ -88,19 +88,19 @@
                     </ScrollViewer>
                 </GroupBox>
 
-                <materialDesign:ColorZone Grid.Row="1" x:Name="czGrupos" Mode="PrimaryMid">
+                <materialDesign:ColorZone Grid.Row="1" x:Name="czGrupos" Mode="PrimaryMid" Margin="0 5 0 0" Height="20" CornerRadius="2 10 10 2">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">GRUPOS</TextBlock>
                         <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
-                                Command="{x:Static materialDesign:Flipper.FlipCommand}">
-                            <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right"/>
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right" />
                         </Button>
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>
         </materialDesign:Flipper.FrontContent>
         <materialDesign:Flipper.BackContent>
-            <Grid Height="240" Width="150">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
@@ -161,10 +161,10 @@
                     </ScrollViewer>
                 </GroupBox>
 
-                <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid">
+                <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid" Margin="0 5 0 0" Height="20" CornerRadius="10 2 2 10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
-                                Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Left"/>
                         </Button>
                         <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">TIPOS</TextBlock>

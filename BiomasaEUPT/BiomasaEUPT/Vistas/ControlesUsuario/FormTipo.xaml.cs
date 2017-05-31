@@ -42,5 +42,11 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             DataContext = this;
         }
 
+
+        public FormTipo(string _titulo) : this()
+        {
+            gbTitulo.Header = _titulo;
+        }
+
     }
 }
