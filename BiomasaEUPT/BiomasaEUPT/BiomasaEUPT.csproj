@@ -165,6 +165,7 @@
     <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
     <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\RecepcionValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\UnicoValidationRule.cs" />

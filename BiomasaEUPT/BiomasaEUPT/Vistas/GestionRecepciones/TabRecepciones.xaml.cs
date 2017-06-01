@@ -28,8 +28,17 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     public partial class TabRecepciones : UserControl
     {
         private BiomasaEUPTContext context;
-        private CollectionViewSource recepcionesViewSource;
+        private CollectionViewSource materiasPrimasViewSource;
         private CollectionViewSource tiposMateriasPrimasViewSource;
+        private CollectionViewSource gruposMateriasPrimasViewSource;
+        private CollectionViewSource sitiosRecepcionesViewSource;
+        private CollectionViewSource procedenciasViewSource;
+        private CollectionViewSource recepcionesViewSource;
+        private CollectionViewSource proveedoresViewSource;
+        private CollectionViewSource estadosRecepcionesViewSource;
+
+
+
 
         public TabRecepciones()
         {
@@ -39,16 +48,33 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            /*using (new CursorEspera())
+            using (new CursorEspera())
             {
                 context = BaseDeDatos.Instancia.biomasaEUPTContext;
+                materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource")));
+                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource")));
+                gruposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource")));
+                procedenciasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource")));
                 recepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource")));
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("tiposMateriasPrimasViewSource")));
-                context.Recepciones.Load();
-                context.TiposMateriasPrimas.Load();
-                recepcionesViewSource.Source = context.Recepciones.Local;
-                tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
+                proveedoresViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource")));
+                estadosRecepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource")));
 
+                context.MateriasPrimas.Load();
+                context.TiposMateriasPrimas.Load();
+                context.GruposMateriasPrimas.Load();
+                context.Procedencias.Load();
+                context.Recepciones.Load();
+                context.Proveedores.Load();
+                context.EstadosRecepciones.Load();
+
+                materiasPrimasViewSource.Source = context.MateriasPrimas.Local;
+                tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
+                gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
+                procedenciasViewSource.Source = context.Procedencias.Local;
+                recepcionesViewSource.Source = context.Recepciones.Local;
+                proveedoresViewSource.Source = context.Proveedores.Local;
+                estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
+                /*
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTabla(); };
@@ -58,8 +84,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbAno.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
-            }*/
+                ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;*/
+            }
         }
 
         private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)

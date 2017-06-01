@@ -129,6 +129,7 @@
         public DbSet<TipoMateriaPrima> TiposMateriasPrimas { get; set; }
         public DbSet<GrupoMateriaPrima> GruposMateriasPrimas { get; set; }
         public DbSet<Recepcion> Recepciones { get; set; }
+        public DbSet<Procedencia> Procedencias { get; set; }
         public DbSet<EstadoRecepcion> EstadosRecepciones { get; set; }
         public DbSet<SitioRecepcion> SitiosRecepciones { get; set; }
         public DbSet<HuecoRecepcion> HuecosRecepciones { get; set; }

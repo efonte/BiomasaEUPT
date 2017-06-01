@@ -15,7 +15,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
+            <CollectionViewSource x:Key="estadosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoRecepcion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="proveedoresPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
@@ -60,29 +61,31 @@
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <validadores:ClienteValidationRule ValidationStep="UpdatedValue"/>
+                            <validadores:RecepcionValidationRule ValidationStep="UpdatedValue"/>
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumn" Header="Número albarán" Width="SizeToHeader"
-                                                                       Binding="{Binding numero_albaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha recepcion" Width="SizeToHeader"
-                                                                       Binding="{Binding fecha_recepcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding FechaRecepcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="mesColumn" Header="Mes" Width="SizeToHeader"
-                                                                       Binding="{Binding mes, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
 
-                            </materialDesign:MaterialDataGridTextColumn>
+                            <DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
+                                                ItemsSource="{Binding Source={StaticResource proveedoresPrimasViewSource}}"
+                                                SelectedValuePath="ProveedorId" 
+                                                DisplayMemberPath="RazonSocial" SelectedValueBinding="{Binding ProveedorId, UpdateSourceTrigger=PropertyChanged}"
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="anoColumn" Header="Año" Width="SizeToHeader"
-                                                                       Binding="{Binding ano, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                            </materialDesign:MaterialDataGridTextColumn>
+                            <DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado recepción" Width="SizeToHeader"
+                                                ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
+                                                SelectedValuePath="EstadoId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoRecepcionId, UpdateSourceTrigger=PropertyChanged}"
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
 
                         </DataGrid.Columns>
