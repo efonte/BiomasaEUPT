@@ -131,12 +131,14 @@
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
     <Compile Include="Modelos\Tablas\Envasado.cs" />
+    <Compile Include="Modelos\Tablas\EstadoElaboracion.cs" />
     <Compile Include="Modelos\Tablas\EstadoRecepcion.cs" />
     <Compile Include="Modelos\Tablas\EstadoSalida.cs" />
     <Compile Include="Modelos\Tablas\GrupoCliente.cs" />
     <Compile Include="Modelos\Tablas\GrupoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\GrupoProductoTerminado.cs" />
     <Compile Include="Modelos\Tablas\HuecoAlmacenaje.cs" />
+    <Compile Include="Modelos\Tablas\HuecoElaboracion.cs" />
     <Compile Include="Modelos\Tablas\HuecoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\HuecoRecepcion.cs" />
     <Compile Include="Modelos\Tablas\MateriaPrima.cs" />

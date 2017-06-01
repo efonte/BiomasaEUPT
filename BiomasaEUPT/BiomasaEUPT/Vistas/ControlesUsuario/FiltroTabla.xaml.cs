@@ -125,6 +125,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
                     context.SaveChanges();
                 }
+                RefrescarListaTipos();
             }
         }
 
@@ -180,6 +181,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         tipoProveedor.Descripcion = formTipo.Descripcion;
                         context.SaveChanges();
                     }
+                    RefrescarListaTipos();
                 }
             }
         }
@@ -200,7 +202,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoClienteId).Count() == 0)
                         {
                             var tipo = context.TiposClientes.Where(tc => tc.TipoClienteId == tipoSeleccionado.TipoClienteId).First();
-                            context.TiposClientes.Remove(tipoSeleccionado);
+                            context.TiposClientes.Remove(tipo);
                             context.SaveChanges();
                         }
                         else
@@ -208,6 +210,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                             await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
                         }
                     }
+                    RefrescarListaTipos();
                 }
             }
 
@@ -230,6 +233,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                             await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
                         }
                     }
+                    RefrescarListaTipos();
                 }
             }
         }
@@ -254,10 +258,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         context.GruposClientes.Add(new GrupoCliente() { Nombre = formGrupo.Nombre, Descripcion = formGrupo.Descripcion });
 
                     context.SaveChanges();
-                    //context.GruposClientes.Load();
-                    //gruposClientesViewSource.Source = context.GruposClientes.Local;
-                    gruposClientesViewSource.View.Refresh();
                 }
+                RefrescarListaGrupos();
             }
         }
 
@@ -288,6 +290,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         grupoCliente.Descripcion = formGrupo.Descripcion;
                         context.SaveChanges();
                     }
+                    RefrescarListaGrupos();
                 }
             }
         }
@@ -314,8 +317,44 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         else
                         {
                             await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso"), "RootDialog");
-                        }
+                        }                        
                     }
+                    RefrescarListaGrupos();
+                }
+            }
+        }
+
+        private void RefrescarListaTipos()
+        {
+            using (var context = new BiomasaEUPTContext())
+            {
+                if (ucParent.GetType().Equals(typeof(TabClientes)))
+                {
+                    context.TiposClientes.Load();
+                    tiposClientesViewSource.Source = context.TiposClientes.Local;
+                    tiposClientesViewSource.View.Refresh();
+                    ccFiltroTipo.Collection = tiposClientesViewSource.View;
+                }
+                if (ucParent.GetType().Equals(typeof(TabProveedores)))
+                {
+                    context.TiposProveedores.Load();
+                    tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
+                    tiposProveedoresViewSource.View.Refresh();
+                    ccFiltroTipo.Collection = tiposProveedoresViewSource.View;
+                }
+            }
+        }
+
+        private void RefrescarListaGrupos()
+        {
+            using (var context = new BiomasaEUPTContext())
+            {
+                if (ucParent.GetType().Equals(typeof(TabClientes)))
+                {
+                    context.GruposClientes.Load();
+                    gruposClientesViewSource.Source = context.GruposClientes.Local;
+                    gruposClientesViewSource.View.Refresh();
+                    ccFiltroGrupo.Collection = gruposClientesViewSource.View;
                 }
             }
         }

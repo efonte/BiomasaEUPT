@@ -22,12 +22,12 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
-        [DisplayName("Volumen utilizado"), Display(Name = "Volumen utilizado")]
-        public double? VolumenUtilizado { get; set; }
+        [DisplayName("Volumen restantes"), Display(Name = "Volumen restantes")]
+        public double? VolumenRestantes { get; set; }
 
         [Range(0, 1000)]
-        [DisplayName("Unidades utilizadas"), Display(Name = "Unidades utilizadas")]
-        public int? UnidadesUtilizadas { get; set; }
+        [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
+        public int? UnidadesRestantes { get; set; }
 
         public int MateriaPrimaId { get; set; }
 
@@ -38,5 +38,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("HuecoRecepcionId")]
         public virtual HuecoRecepcion HuecoRecepcion { get; set; }
+
+        public virtual List<HuecoElaboracion> HuecosElaboraciones { get; set; }
     }
 }

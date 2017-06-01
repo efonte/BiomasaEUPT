@@ -15,8 +15,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int HuecoRecepcionId { get; set; }
 
-        [DisplayName("Volumen totales"), Display(Name = "Volumen totales")]
-        public double? VolumenTotales { get; set; }
+        [DisplayName("Volumen total"), Display(Name = "Volumen total")]
+        public double? VolumenTotal { get; set; }
 
         [Range(0, 1000)]
         [DisplayName("Unidades totales"), Display(Name = "Unidades totales")]
