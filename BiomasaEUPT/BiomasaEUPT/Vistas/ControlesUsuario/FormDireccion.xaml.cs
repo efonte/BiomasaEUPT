@@ -3,6 +3,7 @@ using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             provinciasViewSource = ((CollectionViewSource)(FindResource("provinciasViewSource")));
             municipiosViewSource = ((CollectionViewSource)(FindResource("municipiosViewSource")));
             //direccionesPaisViewSource.Source = context.Direcciones.Select(d => d.Pais).Distinct().ToList();
+            context.Paises.Load();
+            paisesViewSource.Source = context.Paises.Local;
             Console.WriteLine("------------------------------------------------------------");
         }
 

@@ -42,7 +42,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             using (new CursorEspera())
             {
-                //context = BaseDeDatos.Instancia.biomasaEUPTContext;
                 context = new BiomasaEUPTContext();
                 clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
                 tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
@@ -88,6 +87,21 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     Municipio = formCliente.cbMunicipios.SelectedItem as Municipio,
                     Observaciones = formCliente.tbObservaciones.Text
                 });
+                /*    using (var context = new BiomasaEUPTContext())
+                {
+                    context.Clientes.Add(new Cliente()
+                    {
+                        RazonSocial = formCliente.tbRazonSocial.Text,
+                        Nif = formCliente.tbNif.Text,
+                        Email = formCliente.tbEmail.Text,
+                        Calle = formCliente.tbCalle.Text,
+                        TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId,
+                        GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId,
+                        MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId,
+                        Observaciones = formCliente.tbObservaciones.Text
+                    });
+                }*/
+                context.SaveChanges();
             }
         }
 

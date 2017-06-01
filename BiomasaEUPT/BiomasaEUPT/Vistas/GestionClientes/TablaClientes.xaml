@@ -72,7 +72,7 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="razon_socialColumn" Header="Razón social" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumn" Header="Razón social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -86,7 +86,7 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="nif"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -115,15 +115,15 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="tipos_clientesColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="tiposClientesColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
                                                 SelectedValuePath="TipoClienteId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding tipo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <DataGridComboBoxColumn x:Name="grupos_clientesColumn" Header="Grupo"
+                            <DataGridComboBoxColumn x:Name="gruposClientesColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
                                                 SelectedValuePath="GrupoClienteId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding grupo_id, UpdateSourceTrigger=PropertyChanged}"
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
@@ -147,11 +147,11 @@
                                                 <TextBlock>
                                                     <TextBlock.Text>
                                                         <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
-                                                            <Binding Path="direcciones.codigo_postal"/>
-                                                            <Binding Path="direcciones.municipio"/>
-                                                            <Binding Path="direcciones.provincia"/>
-                                                            <Binding Path="direcciones.comunidad"/>
-                                                            <Binding Path="direcciones.pais" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                            <Binding Path="Municipio.CodigoPostal"/>
+                                                            <Binding Path="Municipio.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
                                                         </MultiBinding>
                                                     </TextBlock.Text>
                                                 </TextBlock>
