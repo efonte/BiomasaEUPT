@@ -163,7 +163,9 @@
     <Compile Include="Modelos\Tablas\TipoUsuario.cs" />
     <Compile Include="Modelos\Tablas\Usuario.cs" />
     <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\FechaValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\MateriaPrimaValidationRule.cs" />
     <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RecepcionValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />

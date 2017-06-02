@@ -65,8 +65,7 @@
 
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
                   ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
-                  SelectedValue="{Binding DataContext.Municipio.MunicipioId, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
-                  SelectedValuePath="MunicipioId">
+                  SelectedValue="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

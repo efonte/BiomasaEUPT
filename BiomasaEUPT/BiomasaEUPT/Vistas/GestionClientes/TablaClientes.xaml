@@ -142,7 +142,7 @@
                             <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1" StaysOpen="True">
+                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1" StaysOpen="True" Opened="pbDireccion_Opened">
                                             <materialDesign:PopupBox.ToggleContent>
                                                 <TextBlock>
                                                     <TextBlock.Text>
@@ -156,11 +156,11 @@
                                                     </TextBlock.Text>
                                                 </TextBlock>
                                             </materialDesign:PopupBox.ToggleContent>
-                                            <ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/>
+                                            <!--ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/-->
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn>                            
                         </DataGrid.Columns>
                     </DataGrid>
 

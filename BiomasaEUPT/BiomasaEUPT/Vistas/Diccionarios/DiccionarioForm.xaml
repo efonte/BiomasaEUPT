@@ -13,4 +13,9 @@
         <Setter Property="FontSize" Value="15" />
     </Style>
 
+    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="10 18 10 10" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
 </ResourceDictionary>

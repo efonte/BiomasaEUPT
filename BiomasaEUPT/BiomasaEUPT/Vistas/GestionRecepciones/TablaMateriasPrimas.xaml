@@ -11,7 +11,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" >
+             d:DesignHeight="300" d:DesignWidth="700" >
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:MateriaPrima}, CreateList=True}"/>
@@ -25,7 +25,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Materias primas">
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Materias Primas">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -63,65 +63,59 @@
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <validadores:ClienteValidationRule ValidationStep="UpdatedValue"/>
+                            <validadores:MateriaPrimaValidationRule ValidationStep="UpdatedValue"/>
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn x:Name="tiposMateriasPrimasColumn" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="TipoId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="TipoMateriaPrimaId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
                             <DataGridComboBoxColumn x:Name="gruposMateriasPrimasColumn" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="GrupoId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoMateriaPrimaId, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="GrupoMateriaPrimaId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="pesoColumn" Header="Peso" Width="SizeToHeader"
                                                                        Binding="{Binding Peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                            </materialDesign:MaterialDataGridTextColumn>
-                            
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
                             <materialDesign:MaterialDataGridTextColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader"
                                                                        Binding="{Binding Volumen, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                            </materialDesign:MaterialDataGridTextColumn>
-                            
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+
                             <materialDesign:MaterialDataGridTextColumn x:Name="unidadesColumn" Header="Unidades" Width="SizeToHeader"
                                                                        Binding="{Binding Unidades, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                            </materialDesign:MaterialDataGridTextColumn>
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumn" Header="Fecha baja/caducidad" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-                            </materialDesign:MaterialDataGridTextColumn>
+                                                                       Binding="{Binding FechaBaja, ConverterCulture=es-ES, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
                             <DataGridComboBoxColumn x:Name="procedenciaColumn" Header="Procedencia" Width="SizeToHeader"
-                                                ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
-                                                SelectedValuePath="ProcedenciaId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding ProcedenciaId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-
+                                                    ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
+                                                    SelectedValuePath="ProcedenciaId" 
+                                                    DisplayMemberPath="Nombre" SelectedValueBinding="{Binding ProcedenciaId, UpdateSourceTrigger=PropertyChanged}"
+                                                    EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                         </DataGrid.Columns>
 
                     </DataGrid>
 
                     <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                 PlacementMode="RightAndAlignMiddles"
-                                 UnfurlOrientation="Horizontal"
-                                 ToolTip="Gestionar materias primas"
-                                 Margin="15 15 15 30" Width="40" Height="40">
+                                     HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                     PlacementMode="RightAndAlignMiddles"
+                                     UnfurlOrientation="Horizontal"
+                                     ToolTip="Gestionar materias primas"
+                                     Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Button ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
                                 <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
-
                             </Button>
 
                             <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima">

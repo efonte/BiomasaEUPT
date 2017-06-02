@@ -87,20 +87,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     Municipio = formCliente.cbMunicipios.SelectedItem as Municipio,
                     Observaciones = formCliente.tbObservaciones.Text
                 });
-                /*    using (var context = new BiomasaEUPTContext())
-                {
-                    context.Clientes.Add(new Cliente()
-                    {
-                        RazonSocial = formCliente.tbRazonSocial.Text,
-                        Nif = formCliente.tbNif.Text,
-                        Email = formCliente.tbEmail.Text,
-                        Calle = formCliente.tbCalle.Text,
-                        TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId,
-                        GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId,
-                        MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId,
-                        Observaciones = formCliente.tbObservaciones.Text
-                    });
-                }*/
                 context.SaveChanges();
             }
         }
@@ -111,9 +97,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
 
         private void FiltroTabla(object sender, FilterEventArgs e)
-        {
-            /* try
-             {*/
+        {           
             string textoBuscado = ucTablaClientes.tbBuscar.Text.ToLower();
             var cliente = e.Item as Cliente;
             string razonSocial = cliente.RazonSocial.ToLower();
@@ -153,13 +137,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                         e.Accepted = false;
                     }
                 }
-            }
-            /* }
-             // Ocurre cuando insertas una columna en la tabla pero no están todos los campos establecidos
-             catch (NullReferenceException ex)
-             {
-                 e.Accepted = false;
-             }*/
+            }         
         }
 
         #region ConfirmarCambios
@@ -182,7 +160,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private bool CanConfirmarCambios()
         {
-            return context != null && context.HayCambios<Cliente>();
+            //return context != null && context.HayCambios<Cliente>();
+            return context != null && context.ChangeTracker.HasChanges();
+           // return true;
         }
 
         private async void ConfirmarCambios()

@@ -31,7 +31,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private CollectionViewSource materiasPrimasViewSource;
         private CollectionViewSource tiposMateriasPrimasViewSource;
         private CollectionViewSource gruposMateriasPrimasViewSource;
-        private CollectionViewSource sitiosRecepcionesViewSource;
+        //private CollectionViewSource sitiosRecepcionesViewSource;
         private CollectionViewSource procedenciasViewSource;
         private CollectionViewSource recepcionesViewSource;
         private CollectionViewSource proveedoresViewSource;
@@ -50,7 +50,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTContext;
+                context = new BiomasaEUPTContext();
                 materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource")));
                 tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource")));
                 gruposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource")));
@@ -59,7 +59,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource")));
                 estadosRecepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource")));
 
-                context.MateriasPrimas.Load();
                 context.TiposMateriasPrimas.Load();
                 context.GruposMateriasPrimas.Load();
                 context.Procedencias.Load();
@@ -67,13 +66,14 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 context.Proveedores.Load();
                 context.EstadosRecepciones.Load();
 
-                materiasPrimasViewSource.Source = context.MateriasPrimas.Local;
                 tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
                 gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
                 procedenciasViewSource.Source = context.Procedencias.Local;
                 recepcionesViewSource.Source = context.Recepciones.Local;
                 proveedoresViewSource.Source = context.Proveedores.Local;
                 estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
+
+                ucTablaRecepciones.dgRecepciones.SelectionChanged += DgRecepciones_SelectionChanged;
                 /*
                 ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
@@ -84,24 +84,32 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbAno.Unchecked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
                 ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;*/
+                */
+                ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             }
+        }
+
+        private void DgRecepciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var recepcion = (sender as DataGrid).SelectedItem as Recepcion;
+            materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
         }
 
         private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)
         {
-            /*var formEntrada = new FormEntrada();
+            var formRecepcion = new FormRecepcion();
 
-            if ((bool)await DialogHost.Show(formEntrada, "RootDialog"))
+            if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
             {
-                context.clientes.Add(new clientes()
+                context.Recepciones.Add(new Recepcion()
                 {
-                    fecha_recepcion = formEntrada.tbFechaRecepcion.Text,
-                    mes = formEntrada.tbMes.Text,
-                    ano = formEntrada.tbAno.Text,
-                    numero_albaran = formEntrada.tbNumeroAlbaran.Text,
+                    NumeroAlbaran = formRecepcion.tbNumeroAlbaran.Text,
+                    FechaRecepcion = formRecepcion.dpFechaRecepcion.DisplayDate,
+                    ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
+                    EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
                 });
-            }*/
+                context.SaveChanges();
+            }
         }
 
         public void FiltrarTabla()

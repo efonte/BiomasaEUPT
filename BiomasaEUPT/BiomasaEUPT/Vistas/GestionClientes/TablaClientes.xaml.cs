@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Vistas.ControlesUsuario;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +43,16 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tabClientes.FiltrarTabla();
         }
 
-
+        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+        {
+            // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
+            // a PopupContent. No se añade en TabClientes.xaml para que así no cargue en memoria cada uno
+            // de los PopupBox hasta que se quiera editar.
+            using (new CursorEspera())
+            {
+                PopupBox popupBox = sender as PopupBox;
+                popupBox.PopupContent = new FormDireccion();
+            }
+        }      
     }
 }

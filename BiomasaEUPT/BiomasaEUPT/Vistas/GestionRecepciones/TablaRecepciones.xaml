@@ -11,14 +11,12 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" >
+             d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="estadosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoRecepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="proveedoresPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -30,11 +28,6 @@
                     <RowDefinition />
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
 
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
@@ -65,15 +58,13 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumn" Header="Número albarán" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumn" Header="Albarán" Width="SizeToHeader"
                                                                        Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                            </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha recepcion" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaRecepcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
-                            </materialDesign:MaterialDataGridTextColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha" Width="auto"
+                                                                       Binding="{Binding FechaRecepcion, ConverterCulture=es-ES, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
                             <DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource proveedoresPrimasViewSource}}"
@@ -81,13 +72,11 @@
                                                 DisplayMemberPath="RazonSocial" SelectedValueBinding="{Binding ProveedorId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                            <DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado recepción" Width="SizeToHeader"
+                            <DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
                                                 SelectedValuePath="EstadoId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoRecepcionId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-
-
                         </DataGrid.Columns>
 
                     </DataGrid>
