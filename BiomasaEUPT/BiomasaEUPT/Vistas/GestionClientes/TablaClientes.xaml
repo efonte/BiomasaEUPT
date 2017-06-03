@@ -12,7 +12,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" >
+             d:DesignHeight="300" d:DesignWidth="850" >
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
@@ -72,11 +72,11 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumn" Header="Razón social" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumna" Header="Razón Social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="razon_social" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="RazonSocial" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="100" ValidatesOnTargetUpdated="True" />
@@ -86,11 +86,11 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="NIF"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
@@ -100,12 +100,12 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="email" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Email" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
@@ -115,12 +115,12 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="tiposClientesColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="tiposClientesColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
                                                 SelectedValuePath="TipoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
-                            <DataGridComboBoxColumn x:Name="gruposClientesColumn" Header="Grupo"
+                            <DataGridComboBoxColumn x:Name="gruposClientesColumna" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
                                                 SelectedValuePath="GrupoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
@@ -227,7 +227,7 @@
                             <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
                                        MaxHeight="350" TextWrapping="Wrap"/>
-                            <TextBox x:Name="tboxObservaciones" Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                      MaxHeight="350" TextWrapping="Wrap"/>
@@ -236,7 +236,7 @@
                                          DataObject.Pasting="rtbObservaciones_Pasting">
                                 <FlowDocument>
                                     <Paragraph>
-                                        <Run Text="{Binding observaciones, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Run Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}" />
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
@@ -274,7 +274,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon social" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon Social" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>

@@ -50,7 +50,7 @@
                                 <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="40" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="razón social" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" ValidatesOnTargetUpdated="True" />
-                                <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                                <validadores:UnicoValidationRule x:Name="vUnicoRazonSocial" Online="True" Tipo="Cliente" Atributo="RazonSocial" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -63,7 +63,7 @@
                                 <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="NIF" ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" MensajeFormato="(L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
-                                <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                                <validadores:UnicoValidationRule x:Name="vUnicoNif" Online="True" Tipo="Cliente" Atributo="Nif" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -76,7 +76,7 @@
                                 <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="email" Min="5" Max="254" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="email" ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" ValidatesOnTargetUpdated="True" />
-                                <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
+                                <validadores:UnicoValidationRule x:Name="vUnicoEmail" Online="True" Tipo="Cliente" Atributo="Email" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
