@@ -37,9 +37,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private CollectionViewSource proveedoresViewSource;
         private CollectionViewSource estadosRecepcionesViewSource;
 
-
-
-
         public TabRecepciones()
         {
             InitializeComponent();
@@ -84,6 +81,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
 
                 ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
+
+                Style rowStyle = new Style(typeof(DataGridRow));
+                rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
+                ucTablaRecepciones.dgRecepciones.RowStyle = rowStyle;
             }
         }
 
@@ -252,7 +253,35 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
       #endregion*/
 
 
-
+        private async void RowRecepciones_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var fila = sender as DataGridRow;
+            var recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
+            var formRecepcion = new FormRecepcion("Editar Recepción")
+            {
+                NumeroAlbaran = recepcionSeleccionada.NumeroAlbaran,
+                Fecha = recepcionSeleccionada.FechaRecepcion,
+                Hora = recepcionSeleccionada.FechaRecepcion
+            };
+            var albaranViejo = formRecepcion.NumeroAlbaran;
+            formRecepcion.vAlbaranUnico.NombreActual = recepcionSeleccionada.NumeroAlbaran;
+            if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
+            {
+                recepcionSeleccionada.NumeroAlbaran = formRecepcion.NumeroAlbaran;
+                recepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
+                recepcionSeleccionada.ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId;
+                recepcionSeleccionada.EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId;
+                recepcionesViewSource.View.Refresh();
+                context.SaveChanges();
+                /* using (var context = new BiomasaEUPTContext())
+                 {
+                     var recepcion = context.Recepciones.Single(tc => tc.NumeroAlbaran == albaranViejo);
+                     recepcion.NumeroAlbaran = formTipo.Nombre;
+                     tipoCliente.Descripcion = formTipo.Descripcion;
+                     context.SaveChanges();
+                 }*/
+            }
+        }
 
     }
 }

@@ -39,6 +39,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             Hora = DateTime.Now;
         }
 
+        public FormRecepcion(string _titulo) : this()
+        {
+            gbTitulo.Header = _titulo;
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             using (var context = new BiomasaEUPTContext())

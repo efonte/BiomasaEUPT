@@ -378,6 +378,20 @@ namespace BiomasaEUPT.Migrations
                     });
             context.SaveChanges();
 
+            context.Procedencias.AddOrUpdate(
+                tc => tc.Nombre,
+                new Procedencia()
+                {
+                    Nombre = "Procedencia 1",
+                    Descripcion = "Esta es la Procedencia 1",
+                },
+                new Procedencia()
+                {
+                    Nombre = "Procedencia 2",
+                    Descripcion = "Esta es la Procedencia 2",
+                });
+            context.SaveChanges();
+
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)
                   .All()
                       .With(c => c.Nombre = Faker.Internet.UserName())

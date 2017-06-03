@@ -13,6 +13,13 @@ namespace BiomasaEUPT.Modelos.Validadores
 {
     public class UnicoValidationRule : ValidationRule
     {
+        private bool _online;
+        public bool Online
+        {
+            get { return _online; }
+            set { _online = value; }
+        }
+
         private string _tipo;
         public string Tipo
         {
@@ -85,7 +92,7 @@ namespace BiomasaEUPT.Modelos.Validadores
 
                 }
             }
-            else if (Tipo == "tipoProveedor")
+            else if (Tipo == "TipoProveedor")
             {
                 foreach (var item in (ObservableCollection<TipoProveedor>)Coleccion.Source)
                 {
@@ -95,13 +102,21 @@ namespace BiomasaEUPT.Modelos.Validadores
                 }
             }
 
-            else if (Tipo == "Recepcion")
+            if (Online)
             {
-                foreach (var item in (ObservableCollection<Recepcion>)Coleccion.Source)
+                if (Tipo == "Recepcion")
                 {
-                    if (Atributo == "NumeroAlbaran" && item.NumeroAlbaran != NombreActual && item.NumeroAlbaran == valor)
-                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        if (Atributo == "NumeroAlbaran")
+                        {
+                            if (context.Recepciones.Any(r => r.NumeroAlbaran == valor && r.NumeroAlbaran != NombreActual))
+                            {
+                                return new ValidationResult(false, String.Format(mensajeError, "nº albarán"));
+                            }
+                        }
 
+                    }
                 }
             }
 

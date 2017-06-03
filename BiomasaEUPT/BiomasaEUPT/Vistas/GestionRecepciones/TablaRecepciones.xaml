@@ -37,46 +37,33 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgRecepciones" DataContext="{StaticResource recepcionesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
-                        <DataGrid.RowValidationErrorTemplate>
-                            <ControlTemplate>
-                                <Grid Margin="2,-2"
-                                      ToolTip="{Binding RelativeSource={RelativeSource
-                                      FindAncestor, AncestorType={x:Type DataGridRow}},
-                                      Path=(Validation.Errors)[0].ErrorContent}">
-                                    <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
-                                    <TextBlock Text="!" FontSize="18" 
-                                               FontWeight="Bold" Foreground="White" 
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Grid>
-
-                            </ControlTemplate>
-                        </DataGrid.RowValidationErrorTemplate>
-
-                        <DataGrid.RowValidationRules>
-                            <validadores:RecepcionValidationRule ValidationStep="UpdatedValue"/>
-                        </DataGrid.RowValidationRules>
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumn" Header="Albarán" Width="SizeToHeader"
-                                                                       Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumna" Header="Albarán" Width="SizeToHeader" IsReadOnly="True"
+                                                                       Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha" Width="auto"
-                                                                       Binding="{Binding FechaRecepcion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumna" Header="Fecha" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding FechaRecepcion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="proveedorColumna" Header="Proveedor" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding Proveedor.RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Proveedor" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding EstadoRecepcion.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <!--DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource proveedoresPrimasViewSource}}"
                                                 SelectedValuePath="ProveedorId" 
                                                 DisplayMemberPath="RazonSocial" SelectedValueBinding="{Binding ProveedorId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" /-->
 
-                            <DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado" Width="SizeToHeader"
+                            <!--DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
                                                 SelectedValuePath="EstadoRecepcionId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" /-->
                         </DataGrid.Columns>
 
                     </DataGrid>

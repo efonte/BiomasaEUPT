@@ -40,7 +40,7 @@
                                 <validadores:RequeridoValidationRule NombreCampo="nº albarán" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="nº albarán" Min="3" Max="10" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="nº albarán" ExpReg="^([A-Z]-[\dA-Z]{1,8})$" MensajeFormato=" (Ej: A-13, B-15A25870)" ValidatesOnTargetUpdated="True" />
-                                <!--validadores:UnicoValidationRule Coleccion="{StaticResource recepcionesViewSource}" Atributo="NumeroAlbaran" Tipo="Recepcion" ValidatesOnTargetUpdated="True" /-->
+                                <validadores:UnicoValidationRule x:Name="vAlbaranUnico" Online="True" Tipo="Recepcion" Atributo="NumeroAlbaran" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
