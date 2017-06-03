@@ -21,6 +21,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [Required]
         [StringLength(10)]
+        [Index(IsUnique = true)]
         [DisplayName("Número de albarán"), Display(Name = "Número de albarán")]
         public string NumeroAlbaran { get; set; }
 

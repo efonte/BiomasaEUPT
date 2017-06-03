@@ -31,16 +31,16 @@ namespace BiomasaEUPT.Modelos.Validadores
 
             // Número albarán
             if (string.IsNullOrWhiteSpace(recepcion.NumeroAlbaran))
-                return new ValidationResult(false, String.Format(errorObligatorio, "número albarán"));
+                return new ValidationResult(false, String.Format(errorObligatorio, "nº albarán"));
 
             if (recepcion.NumeroAlbaran.Length < minNumeroAlbaran)
-                return new ValidationResult(false, String.Format(errorMin, "número albarán", minNumeroAlbaran));
+                return new ValidationResult(false, String.Format(errorMin, "nº albarán", minNumeroAlbaran));
 
             if (recepcion.NumeroAlbaran.Length > maxNumeroAlbaran)
-                return new ValidationResult(false, String.Format(errorMax, "número albarán", maxNumeroAlbaran));
+                return new ValidationResult(false, String.Format(errorMax, "nº albarán", maxNumeroAlbaran));
 
             if (!Regex.IsMatch(recepcion.NumeroAlbaran, regexNumeroAlbaran))
-                return new ValidationResult(false, String.Format(errorRegex, "número albarán"," (Ej: A-13, B-15A25870)"));
+                return new ValidationResult(false, String.Format(errorRegex, "nº albarán", " (Ej: A-13, B-15A25870)"));
 
 
             using (var context = new BiomasaEUPTContext())

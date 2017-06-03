@@ -74,17 +74,15 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
 
                 ucTablaRecepciones.dgRecepciones.SelectionChanged += DgRecepciones_SelectionChanged;
-                /*
-                ucFiltroTabla.lbFiltro.SelectionChanged += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbMes.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbMes.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbAno.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbAno.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTabla(); };
-                */
+                ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbEstado.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbEstado.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbProveedor.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
+                ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
+
                 ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             }
         }
@@ -92,7 +90,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private void DgRecepciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var recepcion = (sender as DataGrid).SelectedItem as Recepcion;
-            materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+            if (recepcion != null)
+            {
+                Console.WriteLine(recepcion.NumeroAlbaran);
+                materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+            }
         }
 
         private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)
@@ -103,8 +105,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             {
                 context.Recepciones.Add(new Recepcion()
                 {
-                    NumeroAlbaran = formRecepcion.tbNumeroAlbaran.Text,
-                    FechaRecepcion = formRecepcion.dpFechaRecepcion.DisplayDate,
+                    NumeroAlbaran = formRecepcion.NumeroAlbaran,
+                    FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second),
                     ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
                     EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
                 });
@@ -112,47 +114,25 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             }
         }
 
-        public void FiltrarTabla()
+        public void FiltrarTablaRecepciones()
         {
-            recepcionesViewSource.Filter += new FilterEventHandler(FiltroTabla);
+            recepcionesViewSource.Filter += new FilterEventHandler(FiltroTablaRecepciones);
         }
 
-        private void FiltroTabla(object sender, FilterEventArgs e)
+        private void FiltroTablaRecepciones(object sender, FilterEventArgs e)
         {
             string textoBuscado = ucTablaRecepciones.tbBuscar.Text.ToLower();
-            var entrada = e.Item as Recepcion;
-            string fechaRecepcion = entrada.FechaRecepcion.ToLongDateString();
-            //string mes = entrada.mes.ToString();
-            //string ano = entrada.ano.ToString();
-            string numeroAlbaran = entrada.NumeroAlbaran.ToLower();
-            var tipos = context.MateriasPrimas.Where(m => m.RecepcionId == entrada.RecepcionId).Select(m => m.TipoId.ToString().ToLower()).Distinct().ToList();
+            var recepcion = e.Item as Recepcion;
+            string fechaRecepcion = recepcion.FechaRecepcion.ToString();
+            string numeroAlbaran = recepcion.NumeroAlbaran.ToLower();
+            string proveedor = recepcion.Proveedor.RazonSocial.ToLower();
+            string estado = recepcion.EstadoRecepcion.Nombre.ToLower();
 
-            var condicion = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
-                         //(ucTablaEntradas.cbMes.IsChecked == true ? mes.Contains(textoBuscado) : false) ||
-                         //(ucTablaEntradas.cbAno.IsChecked == true ? ano.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false);
+            e.Accepted = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbProveedor.IsChecked == true ? proveedor.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbEstado.IsChecked == true ? estado.Contains(textoBuscado) : false);
 
-            // Filtra todos
-            /*if (ucFiltroTabla.lbFiltro.SelectedItems.Count == 0)
-            {
-                e.Accepted = condicion;
-            }
-            else
-            {
-                foreach (TipoMateriaPrima tipoMateriaPrima in ucFiltroTabla.lbFiltro.SelectedItems)
-                {
-                    if (tipos.Where(t => t == tipoMateriaPrima.Nombre.ToLower()).Count() > 0)
-                    {
-                        // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
-                        e.Accepted = condicion;
-                        break;
-                    }
-                    else
-                    {
-                        e.Accepted = false;
-                    }
-                }
-            }*/
         }
 
         #region ConfirmarCambios
@@ -199,20 +179,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             }
             //clientesViewSource.View.Refresh();
         }
-        #endregion
-
-        private bool asd(DbEntityEntry x)
-        {
-            foreach (var prop in x.OriginalValues.PropertyNames)
-            {
-                if (x.OriginalValues[prop].ToString() != x.CurrentValues[prop].ToString())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+        #endregion       
 
         #region Borrar
         private ICommand _borrarComando;
@@ -224,7 +191,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 if (_borrarComando == null)
                 {
                     _borrarComando = new RelayComando(
-                        param => BorrarEntrada(),
+                        param => BorrarRecepcion(),
                         param => CanBorrar()
                     );
                 }
@@ -242,21 +209,16 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             return false;
         }
 
-        private async void BorrarEntrada()
+        private async void BorrarRecepcion()
         {
             string pregunta = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
                 ? "¿Está seguro de que desea borrar la recepción " + (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).NumeroAlbaran + "?"
                 : "¿Está seguro de que desea borrar las recepciones seleccionadas?";
 
-            var mensaje = new MensajeConfirmacion(pregunta);
-            mensaje.MaxHeight = ActualHeight;
-            mensaje.MaxWidth = ActualWidth;
-
-            var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
-
-            if (resultado)
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
                 context.Recepciones.RemoveRange(ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList());
+                context.SaveChanges();
             }
         }
         #endregion

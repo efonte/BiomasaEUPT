@@ -97,7 +97,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
 
         private void FiltroTabla(object sender, FilterEventArgs e)
-        {           
+        {
             string textoBuscado = ucTablaClientes.tbBuscar.Text.ToLower();
             var cliente = e.Item as Cliente;
             string razonSocial = cliente.RazonSocial.ToLower();
@@ -107,15 +107,18 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string codigoPostal = cliente.Municipio.CodigoPostal.ToLower();
             string municipio = cliente.Municipio.Nombre.ToLower();
             string tipo = cliente.TipoCliente.Nombre.ToLower();
-            // Filtra todos
-            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
-            {
-                e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
+
+            var condicion = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
                              (ucTablaClientes.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
+
+            // Filtra todos
+            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
+            {
+                e.Accepted = condicion;
             }
             else
             {
@@ -124,12 +127,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     if (tipoCliente.Nombre.ToLower().Equals(tipo))
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
-                        e.Accepted = (ucTablaClientes.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
-                                     (ucTablaClientes.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
+                        e.Accepted = condicion;
                         break;
                     }
                     else
@@ -137,7 +135,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                         e.Accepted = false;
                     }
                 }
-            }         
+            }
         }
 
         #region ConfirmarCambios
@@ -162,7 +160,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             //return context != null && context.HayCambios<Cliente>();
             return context != null && context.ChangeTracker.HasChanges();
-           // return true;
+            // return true;
         }
 
         private async void ConfirmarCambios()
@@ -182,7 +180,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 var fullErrorMessage = string.Join("\n", errorMessages);
 
                 await DialogHost.Show(new MensajeInformacion("No pueden guardar los cambios:\n\n" + fullErrorMessage), "RootDialog");
-                //Console.WriteLine(fullErrorMessage);               
             }
             //clientesViewSource.View.Refresh();
         }

@@ -28,11 +28,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        //public int? TipoMateriaId { get; set; }
-
-        //[ForeignKey("TipoMateriaId")]
-        //public virtual TipoMateriaPrima TipoMateriaPrima { get; set; }
-
         public virtual List<HuecoRecepcion> HuecosRecepciones { get; set; }
     }
 }

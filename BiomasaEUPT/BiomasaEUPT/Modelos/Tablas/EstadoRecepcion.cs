@@ -17,9 +17,17 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [Required]
         [MinLength(3)]
-        [StringLength(10)]
+        [MaxLength(20)]
+        [StringLength(20, MinimumLength = 3)]
+        [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
+
+        [Required]
+        [MinLength(5)]
+        [MaxLength(50)]
+        [DisplayName("Descripción"), Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
 
         public virtual List<Recepcion> Recepciones { get; set; }
     }

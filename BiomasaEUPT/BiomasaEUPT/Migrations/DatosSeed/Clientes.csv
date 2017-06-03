@@ -1,0 +1,3 @@
+﻿ClienteId;RazonSocial;Nif;Email;Calle;MunicipioId;GrupoId;TipoId;Observaciones
+1;Cliente 1;A-11111111;Calle 1;10;1;1;
+2;Cliente 2;22222222-B;Calle 2;2;1;1;Cliente majo

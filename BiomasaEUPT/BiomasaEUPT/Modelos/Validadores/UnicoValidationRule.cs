@@ -40,14 +40,14 @@ namespace BiomasaEUPT.Modelos.Validadores
         {
             string mensajeError = "El campo {0} debe ser único.";
             string valor = (string)value;
-            if (Tipo == "usuarios")
+            if (Tipo == "Usuario")
             {
                 foreach (var item in (ObservableCollection<Usuario>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.Nombre == valor)
+                    if (Atributo == "Nombre" && item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
-                    if (Atributo == "email" && item.Email == valor)
+                    if (Atributo == "Email" && item.Email == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "email"));
 
                 }
@@ -56,40 +56,50 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 foreach (var item in (ObservableCollection<Cliente>)Coleccion.Source)
                 {
-                    if (Atributo == "razon_social" && item.RazonSocial == valor)
+                    if (Atributo == "RazonSocial" && item.RazonSocial == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "razón social"));
 
-                    if (Atributo == "nif" && item.Nif == valor)
+                    if (Atributo == "Nif" && item.Nif == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "NIF"));
 
-                    if (Atributo == "email" && item.Email == valor)
+                    if (Atributo == "Email" && item.Email == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "email"));
 
                 }
             }
-            else if (Tipo == "tiposClientes")
+            else if (Tipo == "tipoCliente")
             {
                 foreach (var item in (ObservableCollection<TipoCliente>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.Nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.Nombre == valor)
+                    if (Atributo == "Nombre" && item.Nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
             }
-            else if (Tipo == "gruposClientes")
+            else if (Tipo == "GrupoCliente")
             {
                 foreach (var item in (ObservableCollection<GrupoCliente>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.Nombre != NombreActual && item.Nombre == valor)
+                    if (Atributo == "Nombre" && item.Nombre != NombreActual && item.Nombre == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }
             }
-            else if (Tipo == "tiposProveedores")
+            else if (Tipo == "tipoProveedor")
             {
                 foreach (var item in (ObservableCollection<TipoProveedor>)Coleccion.Source)
                 {
-                    if (Atributo == "nombre" && item.Nombre != NombreActual && item.Nombre == valor)
+                    if (Atributo == "Nombre" && item.Nombre != NombreActual && item.Nombre == valor)
+                        return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                }
+            }
+
+            else if (Tipo == "Recepcion")
+            {
+                foreach (var item in (ObservableCollection<Recepcion>)Coleccion.Source)
+                {
+                    if (Atributo == "NumeroAlbaran" && item.NumeroAlbaran != NombreActual && item.NumeroAlbaran == valor)
                         return new ValidationResult(false, String.Format(mensajeError, "nombre"));
 
                 }

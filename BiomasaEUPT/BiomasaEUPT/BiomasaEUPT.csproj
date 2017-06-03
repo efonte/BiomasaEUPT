@@ -125,7 +125,9 @@
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\SeedTablas.cs" />
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />
+    <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
     <Compile Include="Modelos\ConstantesModelo.cs" />
     <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
@@ -203,6 +205,9 @@
     </Compile>
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionRecepciones\FormMateriaPrima.xaml.cs">
+      <DependentUpon>FormMateriaPrima.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionRecepciones\FormRecepcion.xaml.cs">
       <DependentUpon>FormRecepcion.xaml</DependentUpon>
@@ -300,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionRecepciones\FormMateriaPrima.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -401,10 +410,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DatosSeed\SeedComunidades.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\SeedMunicipios.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\SeedPaises.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\SeedProvincias.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedMunicipios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedPaises.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedProvincias.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Clientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Usuarios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposClientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Proveedores.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\GruposClientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Recepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Provincias.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposUsuarios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Municipios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosElaboraciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Paises.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Comunidades.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

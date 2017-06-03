@@ -24,7 +24,7 @@
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>
-                ACEPTAR
+                _ACEPTAR
             </Button>         
         </StackPanel>
     </Grid>

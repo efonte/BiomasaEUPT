@@ -24,20 +24,22 @@
         //: base(nameOrConnectionString: ConnectionString())       
         {
             //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
-
+            //Database.SetInitializer(new BiomasaEUPTContextInitializer());   
             // CUIDADO -> Borra la tabla y la vuelve a crear
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BiomasaEUPTContext>());
         }
 
+
+
         public int GuardarCambios<TEntity>() where TEntity : class
         {
             // http://stackoverflow.com/questions/33403838/how-can-i-tell-entity-framework-to-save-changes-only-for-a-specific-dbset
-            var original = this.ChangeTracker.Entries()
+            var original = ChangeTracker.Entries()
                         .Where(x => !typeof(TEntity).IsAssignableFrom(x.Entity.GetType()) && x.State != EntityState.Unchanged)
                         .GroupBy(x => x.State)
                         .ToList();
 
-            foreach (var entry in this.ChangeTracker.Entries().Where(x => !typeof(TEntity).IsAssignableFrom(x.Entity.GetType())))
+            foreach (var entry in ChangeTracker.Entries().Where(x => !typeof(TEntity).IsAssignableFrom(x.Entity.GetType())))
             {
                 entry.State = EntityState.Unchanged;
             }

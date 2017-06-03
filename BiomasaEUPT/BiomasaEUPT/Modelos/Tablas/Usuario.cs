@@ -35,8 +35,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Email"), Display(Name = "Email")]
         public string Email { get; set; }
 
-        //[DefaultValue("getutcdate()")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Fecha alta"), Display(Name = "Fecha alta")]
         public DateTime? FechaAlta { get; set; }
 
@@ -46,10 +45,9 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Fecha contraseña"), Display(Name = "Fecha contraseña")]
         public DateTime? FechaContrasena { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DefaultValue(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Baneado"), Display(Name = "Baneado")]
-        public bool Baneado { get; set; }
+        public bool? Baneado { get; set; }
 
         public int TipoId { get; set; }
 

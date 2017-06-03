@@ -38,7 +38,5 @@ namespace BiomasaEUPT.Modelos.Tablas
         public bool? MedidoEnUnidades { get; set; }
 
         public virtual List<MateriaPrima> MateriasPrimas { get; set; }
-
-        public virtual List<SitioRecepcion> SitiosRecepciones { get; set; }
     }
 }

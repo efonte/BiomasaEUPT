@@ -17,11 +17,12 @@ namespace BiomasaEUPT.Modelos.Validadores
                 DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces,
                 out DateTime dateTime)
                 ? ValidationResult.ValidResult
-                : new ValidationResult(false, "Fecha incorrecta.");*/
-            return DateTime.TryParse((value ?? "").ToString(), out DateTime dateTime)
-            ? ValidationResult.ValidResult
-            : new ValidationResult(false, "Fecha incorrecta.");
+                : new ValidationResult(false, "Fecha incorrecta.");/*
 
+           /* return DateTime.TryParse((value ?? "").ToString(), out DateTime dateTime)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, "Fecha incorrecta.");*/
+            return ValidationResult.ValidResult;
         }
     }
 }

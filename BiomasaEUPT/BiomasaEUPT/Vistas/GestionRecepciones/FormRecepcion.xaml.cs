@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -21,13 +24,33 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     /// </summary>
     public partial class FormRecepcion : UserControl
     {
+        private CollectionViewSource proveedoresViewSource;
+        private CollectionViewSource estadosRecepcionesViewSource;
+
+        public String NumeroAlbaran { get; set; }
+        public DateTime Fecha { get; set; }
+        public DateTime Hora { get; set; }
+
         public FormRecepcion()
         {
             InitializeComponent();
+            DataContext = this;
+            Fecha = DateTime.Now;
+            Hora = DateTime.Now;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            using (var context = new BiomasaEUPTContext())
+            {
+                proveedoresViewSource = ((CollectionViewSource)(FindResource("proveedoresViewSource")));
+                estadosRecepcionesViewSource = ((CollectionViewSource)(FindResource("estadosRecepcionesViewSource")));
+                context.Proveedores.Load();
+                context.EstadosRecepciones.Load();
+                proveedoresViewSource.Source = context.Proveedores.Local;
+                estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
+            }
+
             dpFechaRecepcion.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
     }

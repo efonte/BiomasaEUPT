@@ -36,7 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
             TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
 
-            //tabEntradas.FiltrarTabla();
+            tabRecepciones.FiltrarTablaRecepciones();
         }      
     }
 }

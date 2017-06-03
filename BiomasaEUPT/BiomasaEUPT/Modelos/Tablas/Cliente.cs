@@ -23,9 +23,9 @@ namespace BiomasaEUPT.Modelos.Tablas
         public string RazonSocial { get; set; }
 
         [Required]
-        [MinLength(9)]
-        [MaxLength(9)]
-        [StringLength(9, MinimumLength = 9)]
+        [MinLength(10)]
+        [MaxLength(10)]
+        [StringLength(10, MinimumLength = 10)]
         [DisplayName("NIF"), Display(Name = "NIF")]
         public string Nif { get; set; }
 

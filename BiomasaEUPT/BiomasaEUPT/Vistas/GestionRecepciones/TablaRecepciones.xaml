@@ -63,7 +63,7 @@
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaRecepcionColumn" Header="Fecha" Width="auto"
-                                                                       Binding="{Binding FechaRecepcion, ConverterCulture=es-ES, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                                       Binding="{Binding FechaRecepcion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
                             <DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
@@ -74,8 +74,8 @@
 
                             <DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
-                                                SelectedValuePath="EstadoId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoRecepcionId, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="EstadoRecepcionId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
                         </DataGrid.Columns>
 
@@ -134,14 +134,14 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha recepción" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Mes" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Año" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Numero albarán" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbMes" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbAno" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Albarán" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Proveedor" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Estado" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbProveedor" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

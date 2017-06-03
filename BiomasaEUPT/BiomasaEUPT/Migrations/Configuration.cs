@@ -1,5 +1,6 @@
 namespace BiomasaEUPT.Migrations
 {
+    using BiomasaEUPT.Domain;
     using BiomasaEUPT.Modelos.Tablas;
     using System;
     using System.Data.Entity;
@@ -33,7 +34,348 @@ namespace BiomasaEUPT.Migrations
                     Nombre = "Técnico B",
                     Descripcion = "Este es un técnico B"
                 });
+            context.SaveChanges();
 
+            context.Usuarios.AddOrUpdate(
+                   u => u.Nombre,
+                   new Usuario()
+                   {
+                       Nombre = "admin",
+                       Contrasena = ContrasenaHashing.obtenerHashSHA256("admin"),
+                       Email = "admin@biomasaeupt.es",
+                       TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Administrador").TipoUsuarioId
+                   },
+                   new Usuario()
+                   {
+                       Nombre = "tecnico1",
+                       Contrasena = ContrasenaHashing.obtenerHashSHA256("tecnico1"),
+                       Email = "tecnico1@biomasaeupt.es",
+                       TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Técnico A").TipoUsuarioId
+                   });
+            context.SaveChanges();
+
+            context.TiposClientes.AddOrUpdate(
+                tc => tc.Nombre,
+                new TipoCliente()
+                {
+                    Nombre = "TipoCliente 1",
+                    Descripcion = "Este es el TipoCliente 1",
+                },
+                new TipoCliente()
+                {
+                    Nombre = "TipoCliente 2",
+                    Descripcion = "Este es el TipoCliente 2",
+                });
+            context.SaveChanges();
+
+            context.TiposProveedores.AddOrUpdate(
+                tp => tp.Nombre,
+                new TipoProveedor()
+                {
+                    Nombre = "TipoProveedor 1",
+                    Descripcion = "Este es el TipoProveedor 1",
+                },
+                new TipoProveedor()
+                {
+                    Nombre = "TipoProveedor 2",
+                    Descripcion = "Este es el TipoProveedor 2",
+                });
+            context.SaveChanges();
+
+            context.GruposClientes.AddOrUpdate(
+               gc => gc.Nombre,
+               new GrupoCliente()
+               {
+                   Nombre = "GrupoCliente 1",
+                   Descripcion = "Este es el GrupoCliente 1",
+               },
+               new GrupoCliente()
+               {
+                   Nombre = "GrupoCliente 2",
+                   Descripcion = "Este es el GrupoCliente 2",
+               });
+            context.SaveChanges();
+
+            context.Paises.AddOrUpdate(
+                  p => p.Codigo,
+                  new Pais()
+                  {
+                      Codigo = "ES",
+                      Nombre = "España",
+                  },
+                  new Pais()
+                  {
+                      Codigo = "FR",
+                      Nombre = "Francia",
+                  });
+            context.SaveChanges();
+
+            context.Comunidades.AddOrUpdate(
+                c => c.Codigo,
+                new Comunidad()
+                {
+                    Codigo = "ES-AR",
+                    Nombre = "Aragón",
+                    PaisId = context.Paises.Local.Single(p => p.Codigo == "ES").PaisId
+                },
+                new Comunidad()
+                {
+                    Codigo = "ES-VC",
+                    Nombre = "Comunidad Valenciana",
+                    PaisId = context.Paises.Local.Single(p => p.Codigo == "ES").PaisId
+                },
+                new Comunidad()
+                {
+                    Codigo = "FR-11",
+                    Nombre = "Île-de-France",
+                    PaisId = context.Paises.Local.Single(p => p.Codigo == "FR").PaisId
+                });
+            context.SaveChanges();
+
+            context.Provincias.AddOrUpdate(
+                p => p.Codigo,
+                new Provincia()
+                {
+                    Codigo = "ES-CS",
+                    Nombre = "Castellón",
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId,
+                },
+                new Provincia()
+                {
+                    Codigo = "FR-75",
+                    Nombre = "París",
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "FR-11").ComunidadId,
+                },
+                new Provincia()
+                {
+                    Codigo = "ES-TE",
+                    Nombre = "Teruel",
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId,
+                },
+                new Provincia()
+                {
+                    Codigo = "ES-V",
+                    Nombre = "Valencia",
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId,
+                },
+                new Provincia()
+                {
+                    Codigo = "ES-Z",
+                    Nombre = "Zaragoza",
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId,
+                });
+            context.SaveChanges();
+
+            context.Municipios.AddOrUpdate(
+                m => m.CodigoPostal,
+                new Municipio()
+                {
+                    CodigoPostal = "44500",
+                    Nombre = "Andorra",
+                    Latitud = "40.9766",
+                    Longitud = "-0.4472",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-TE").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "44600",
+                    Nombre = "Alcañiz",
+                    Latitud = "41.05",
+                    Longitud = "-0.1333",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-TE").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "12449",
+                    Nombre = "Benafer",
+                    Latitud = "39.9333",
+                    Longitud = "-0.5667",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-CS").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "46100",
+                    Nombre = "Burjassot",
+                    Latitud = "39.5167",
+                    Longitud = "-0.4167",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-V").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "46176",
+                    Nombre = "Chelva",
+                    Latitud = "39.7493",
+                    Longitud = "-0.9968",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-V").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "50376",
+                    Nombre = "Cubel",
+                    Latitud = "41.096",
+                    Longitud = "-1.6373",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-Z").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "12122",
+                    Nombre = "Figueroles",
+                    Latitud = "40.1167",
+                    Longitud = "-0.2333",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-CS").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "75000",
+                    Nombre = "Paris",
+                    Latitud = "48.8534",
+                    Longitud = "2.3488",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "FR-75").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "75020",
+                    Nombre = "Paris",
+                    Latitud = "48.8534",
+                    Longitud = "2.3488",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "FR-75").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "44003",
+                    Nombre = "Teruel",
+                    Latitud = "40.3456",
+                    Longitud = "-1.1065",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-TE").ProvinciaId
+                },
+                new Municipio()
+                {
+                    CodigoPostal = "50580",
+                    Nombre = "Vera De Moncayo",
+                    Latitud = "41.824",
+                    Longitud = "-1.688",
+                    ProvinciaId = context.Provincias.Local.Single(p => p.Codigo == "ES-Z").ProvinciaId
+                });
+            context.SaveChanges();
+
+            context.Clientes.AddOrUpdate(
+                 c => c.RazonSocial,
+                 new Cliente()
+                 {
+                     RazonSocial = "Cliente 1",
+                     Nif = "A-11111111",
+                     Email = "cliente1@biomasaeupt.es",
+                     TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
+                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
+                     MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "44003").MunicipioId,
+                     Calle = "Calle 1"
+                 },
+                 new Cliente()
+                 {
+                     RazonSocial = "Cliente 2",
+                     Nif = "11111111-B",
+                     Email = "cliente2@biomasaeupt.es",
+                     TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
+                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
+                     MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "50580").MunicipioId,
+                     Calle = "Calle 2"
+                 });
+            context.SaveChanges();
+
+            context.Proveedores.AddOrUpdate(
+                 p => p.RazonSocial,
+                 new Proveedor()
+                 {
+                     RazonSocial = "Proveedor 1",
+                     Nif = "C-11111111",
+                     Email = "proveedor1@biomasaeupt.es",
+                     TipoId = context.TiposProveedores.Local.Single(tp => tp.Nombre == "TipoProveedor 1").TipoProveedorId,
+                     MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "44600").MunicipioId,
+                     Calle = "Calle 3"
+                 },
+                 new Proveedor()
+                 {
+                     RazonSocial = "Proveedor 2",
+                     Nif = "D-11111111",
+                     Email = "proveedor2@biomasaeupt.es",
+                     TipoId = context.TiposProveedores.Local.Single(tp => tp.Nombre == "TipoProveedor 2").TipoProveedorId,
+                     MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "75020").MunicipioId,
+                     Calle = "Calle 4"
+                 });
+            context.SaveChanges();
+
+            context.EstadosRecepciones.AddOrUpdate(
+                 sr => sr.Nombre,
+                 new EstadoRecepcion()
+                 {
+                     Nombre = "Disponible",
+                     Descripcion = "Las materias primas aún no se ha descargado"
+                 },
+                 new EstadoRecepcion()
+                 {
+                     Nombre = "Aceptada",
+                     Descripcion = "Las materias primas se han descargado"
+                 });
+            context.SaveChanges();
+
+            context.SitiosRecepciones.AddOrUpdate(
+                 sr => sr.Nombre,
+                 new SitioRecepcion()
+                 {
+                     Nombre = "Sitio A",
+                     Descripcion = "Este es el Sitio A"
+                 },
+                  new SitioRecepcion()
+                  {
+                      Nombre = "Sitio B",
+                      Descripcion = "Este es el Sitio A"
+                  });
+            context.SaveChanges();
+
+            context.HuecosRecepciones.AddOrUpdate(
+                 hr => hr.HuecoRecepcionId,
+                 new HuecoRecepcion()
+                 {
+                     HuecoRecepcionId = 1,
+                     UnidadesTotales = 30,
+                     VolumenTotal = 20,
+                     SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                 },
+                  new HuecoRecepcion()
+                  {
+                      HuecoRecepcionId = 2,
+                      UnidadesTotales = 25,
+                      VolumenTotal = 15,
+                      SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                  },
+                   new HuecoRecepcion()
+                   {
+                       HuecoRecepcionId = 3,
+                       UnidadesTotales = 60,
+                       VolumenTotal = 50,
+                       SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                   },
+                    new HuecoRecepcion()
+                    {
+                        HuecoRecepcionId = 4,
+                        UnidadesTotales = 10,
+                        VolumenTotal = 5,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                    },
+                    new HuecoRecepcion()
+                    {
+                        HuecoRecepcionId = 5,
+                        UnidadesTotales = 60,
+                        VolumenTotal = 50,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
+                    },
+                    new HuecoRecepcion()
+                    {
+                        HuecoRecepcionId = 6,
+                        UnidadesTotales = 50,
+                        VolumenTotal = 40,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
+                    });
             context.SaveChanges();
 
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)
@@ -54,8 +396,9 @@ namespace BiomasaEUPT.Migrations
 
                context.Usuarios.AddOrUpdate(c => c.UsuarioId, usuarios.ToArray());*/
 
-            //new SeedCodigosPostales(context);
+            //new SeedCodigosPostales(context); 
 
+            // new SeedTablas(context);
 
         }
     }

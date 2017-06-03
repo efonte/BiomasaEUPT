@@ -1,0 +1,3 @@
+﻿UsuarioId;Nombre;Contrasena;Email;TipoId
+1;admin;8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918;admin@biomasaeupt.es;1
+2;tecnico1;8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918;tecnico1@biomasaeupt.es;2
