@@ -34,8 +34,6 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int TipoId { get; set; }
 
-        public int GrupoId { get; set; }
-
         public int RecepcionId { get; set; }
 
         public int ProcedenciaId { get; set; }
@@ -47,9 +45,6 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("TipoId")]
         public virtual TipoMateriaPrima TipoMateriaPrima { get; set; }
-
-        [ForeignKey("GrupoId")]
-        public virtual GrupoMateriaPrima GrupoMateriaPrima { get; set; }
 
         [ForeignKey("RecepcionId")]
         public virtual Recepcion Recepcion { get; set; }

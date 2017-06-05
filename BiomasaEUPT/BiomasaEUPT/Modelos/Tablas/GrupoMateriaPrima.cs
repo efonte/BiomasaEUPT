@@ -27,6 +27,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        public virtual List<MateriaPrima> MateriasPrimas { get; set; }
+        public virtual List<TipoMateriaPrima> TiposMateriasPrimas { get; set; }
     }
 }

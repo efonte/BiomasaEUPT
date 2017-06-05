@@ -83,7 +83,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     Email = formCliente.tbEmail.Text,
                     Calle = formCliente.tbCalle.Text,
                     TipoCliente = formCliente.cbTiposClientes.SelectedItem as TipoCliente,
-                    GrupoCliente = formCliente.cbGruposClientes.SelectedItem as GrupoCliente,
                     Municipio = formCliente.cbMunicipios.SelectedItem as Municipio,
                     Observaciones = formCliente.tbObservaciones.Text
                 });

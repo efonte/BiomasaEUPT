@@ -54,20 +54,6 @@ namespace BiomasaEUPT.Migrations
                    });
             context.SaveChanges();
 
-            context.TiposClientes.AddOrUpdate(
-                tc => tc.Nombre,
-                new TipoCliente()
-                {
-                    Nombre = "TipoCliente 1",
-                    Descripcion = "Este es el TipoCliente 1",
-                },
-                new TipoCliente()
-                {
-                    Nombre = "TipoCliente 2",
-                    Descripcion = "Este es el TipoCliente 2",
-                });
-            context.SaveChanges();
-
             context.TiposProveedores.AddOrUpdate(
                 tp => tp.Nombre,
                 new TipoProveedor()
@@ -93,6 +79,22 @@ namespace BiomasaEUPT.Migrations
                {
                    Nombre = "GrupoCliente 2",
                    Descripcion = "Este es el GrupoCliente 2",
+               });
+            context.SaveChanges();
+
+            context.TiposClientes.AddOrUpdate(
+               tc => tc.Nombre,
+               new TipoCliente()
+               {
+                   Nombre = "TipoCliente 1",
+                   Descripcion = "Este es el TipoCliente 1",
+                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
+               },
+               new TipoCliente()
+               {
+                   Nombre = "TipoCliente 2",
+                   Descripcion = "Este es el TipoCliente 2",
+                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
                });
             context.SaveChanges();
 
@@ -266,7 +268,6 @@ namespace BiomasaEUPT.Migrations
                      Nif = "A-11111111",
                      Email = "cliente1@biomasaeupt.es",
                      TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
-                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
                      MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "44003").MunicipioId,
                      Calle = "Calle 1"
                  },
@@ -276,7 +277,6 @@ namespace BiomasaEUPT.Migrations
                      Nif = "11111111-B",
                      Email = "cliente2@biomasaeupt.es",
                      TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
-                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
                      MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "50580").MunicipioId,
                      Calle = "Calle 2"
                  });
@@ -397,6 +397,80 @@ namespace BiomasaEUPT.Migrations
                     Descripcion = "Esta es la Procedencia 2",
                 });
             context.SaveChanges();
+
+            context.Recepciones.AddOrUpdate(
+                rc => rc.NumeroAlbaran,
+                new Recepcion()
+                {
+                    NumeroAlbaran = "A-0100B",
+                    FechaRecepcion = new DateTime(2017, 02, 10),
+                    ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 1).ProveedorId,
+                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 1).EstadoRecepcionId,
+                },
+                new Recepcion()
+                {
+                    NumeroAlbaran = "A-010VB",
+                    FechaRecepcion = new DateTime(2017, 01, 20),
+                    ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 2).ProveedorId,
+                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 2).EstadoRecepcionId,
+                });
+            context.SaveChanges();
+
+            context.GruposMateriasPrimas.AddOrUpdate(
+                gmp => gmp.Nombre,
+                new GrupoMateriaPrima()
+                {
+                    Nombre = "GrupoMateriaPrima 1",
+                    Descripcion = "Descripción para Grupo 1",
+                },
+                new GrupoMateriaPrima()
+                {
+                    Nombre = "GrupoMateriaPrima 2",
+                    Descripcion = "Descripción para Grupo 2",
+                });
+            context.SaveChanges();
+
+
+            context.TiposMateriasPrimas.AddOrUpdate(
+                tmp => tmp.Nombre,
+                new TipoMateriaPrima()
+                {
+                    Nombre = "Tipo 1",
+                    Descripcion = "Descripción para Tipo 1",
+                    MedidoEnUnidades = true,
+                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 1").GrupoMateriaPrimaId,
+                },
+                new TipoMateriaPrima()
+                {
+                    Nombre = "Tipo 2",
+                    Descripcion = "Descripción para Tipo 2",
+                    MedidoEnVolumen = true,
+                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 2").GrupoMateriaPrimaId,
+                });
+            context.SaveChanges();
+
+
+            context.MateriasPrimas.AddOrUpdate(
+                mp => mp.Codigo,
+                new MateriaPrima()
+                {
+                    TipoId= context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "Tipo 1").TipoMateriaPrimaId,
+                    Unidades = 20,
+                    Observaciones = "Es muy rico",
+                    RecepcionId = context.Recepciones.Local.Single(r => r.RecepcionId == 1).RecepcionId,
+                    ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 1").ProcedenciaId,
+                    Codigo="1000000000"
+                },
+                new MateriaPrima()
+                {
+                    TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "Tipo 2").TipoMateriaPrimaId,
+                    Volumen = 50,
+                    Observaciones = "Falta de respeto",
+                    RecepcionId = context.Recepciones.Local.Single(r => r.RecepcionId == 2).RecepcionId,
+                    ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 2").ProcedenciaId,
+                    Codigo = "1000000001"
+                });
+
 
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)
                   .All()

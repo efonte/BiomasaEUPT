@@ -29,6 +29,11 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
+        public int GrupoId { get; set; }
+
+        [ForeignKey("GrupoId")]
+        public virtual GrupoCliente GrupoCliente { get; set; }
+
         public virtual List<Cliente> Clientes { get; set; }
 
     }

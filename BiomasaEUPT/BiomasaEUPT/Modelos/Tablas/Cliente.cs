@@ -51,15 +51,10 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int MunicipioId { get; set; }
 
-        public int GrupoId { get; set; }
-
         public int TipoId { get; set; }
 
         [ForeignKey("MunicipioId")]
         public virtual Municipio Municipio { get; set; }
-
-        [ForeignKey("GrupoId")]
-        public virtual GrupoCliente GrupoCliente { get; set; }
 
         [ForeignKey("TipoId")]
         public virtual TipoCliente TipoCliente { get; set; }

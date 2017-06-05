@@ -308,7 +308,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (context.Clientes.Where(t => t.GrupoId == grupoSeleccionado.GrupoClienteId).Count() == 0)
+                        if (context.Clientes.Where(t => t.TipoCliente.GrupoId == grupoSeleccionado.GrupoClienteId).Count() == 0)
                         {
                             var grupo = context.GruposClientes.Where(gc => gc.GrupoClienteId == grupoSeleccionado.GrupoClienteId).First();
                             context.GruposClientes.Remove(grupo);

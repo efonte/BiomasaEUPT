@@ -29,5 +29,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         public string Descripcion { get; set; }
 
         public virtual List<Cliente> Clientes { get; set; }
+
+        public virtual List<TipoCliente> TiposClientes { get; set; }
+
     }
 }
