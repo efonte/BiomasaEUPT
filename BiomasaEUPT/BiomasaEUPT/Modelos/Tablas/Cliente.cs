@@ -19,6 +19,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [MinLength(5)]
         [MaxLength(40)]
         [StringLength(40, MinimumLength = 5)]
+        [Index(IsUnique = true)]
         [DisplayName("Razón social"), Display(Name = "Razón social")]
         public string RazonSocial { get; set; }
 
@@ -26,6 +27,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [MinLength(10)]
         [MaxLength(10)]
         [StringLength(10, MinimumLength = 10)]
+        [Index(IsUnique = true)]
         [DisplayName("NIF"), Display(Name = "NIF")]
         public string Nif { get; set; }
 

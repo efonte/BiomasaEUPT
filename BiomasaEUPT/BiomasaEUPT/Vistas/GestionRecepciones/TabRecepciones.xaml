@@ -9,7 +9,7 @@
              d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" MinWidth="200"/>
+            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="450"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" MinWidth="300"/>
         </Grid.ColumnDefinitions>

@@ -81,6 +81,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
 
                 ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
+                ucTablaMateriasPrimas.bAnadirMateriaPrima.Click += BAnadirMateriaPrima_Click;
 
                 Style rowStyle = new Style(typeof(DataGridRow));
                 rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
@@ -112,6 +113,23 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
                 });
                 context.SaveChanges();
+            }
+        }
+
+        private async void BAnadirMateriaPrima_Click(object sender, RoutedEventArgs e)
+        {
+            var formRecepcion = new FormMateriaPrima();
+
+            if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
+            {
+               /* context.MateriasPrimas.Add(new MateriaPrima()
+                {
+                    NumeroAlbaran = formRecepcion.NumeroAlbaran,
+                    FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second),
+                    ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
+                    EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
+                });
+                context.SaveChanges();*/
             }
         }
 

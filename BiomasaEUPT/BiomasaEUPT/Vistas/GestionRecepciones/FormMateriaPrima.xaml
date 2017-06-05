@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="400" Width="400" Loaded="UserControl_Loaded">
+             Height="400" Width="350" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoMateriaPrima}, CreateList=True}"/>
-            <CollectionViewSource x:Key="procedenciasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
+            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
             <CollectionViewSource x:Key="sitiosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:SitioRecepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="huecosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:HuecoRecepcion}, CreateList=True}"/>
         </ResourceDictionary>
@@ -28,6 +28,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -49,7 +50,7 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>                
+                </TextBox>
 
                 <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo"
                           ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
@@ -64,12 +65,25 @@
                 </ComboBox>
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProcedencias" materialDesign:HintAssist.Hint="Procedencia"
-                          ItemsSource="{Binding Source={StaticResource procedenciasPrimasViewSource}}"
+                          ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="ProcedenciaId">
                 </ComboBox>
 
-                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="3">
+                    <TextBox.Text>
+                        <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^(\d{1,3})$" ValidatesOnTargetUpdated="True" />
+                                <!--validadores:UnicoValidationRule Coleccion="{StaticResource recepcionesViewSource}" Atributo="NumeroAlbaran" Tipo="Recepcion" ValidatesOnTargetUpdated="True" /-->
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"
                                 SelectedDate="{x:Static system:DateTime.Now}"            
                                 materialDesign:HintAssist.Hint="Fecha Cad.">
@@ -86,7 +100,7 @@
                         </DatePicker.Text>
                     </DatePicker>
 
-                    <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="3" Grid.Column="3" Width="60"
+                    <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="2" Grid.Column="3" Width="60"
                                    materialDesign:HintAssist.Hint="Hora"
                                    IsInvalidTextAllowed="True"
                                    Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -100,7 +114,63 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbSitiosRecepciones" materialDesign:HintAssist.Hint="Sitios"
+                          ItemsSource="{Binding Source={StaticResource sitiosRecepcionesViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="SitioRecepcionId"
+                          SelectionChanged="cbSitiosRecepciones_SelectionChanged"
+                          VerticalAlignment="Top">
+                </ComboBox>
+
+                <ListBox Grid.Row="3" Grid.Column="4" x:Name="lbHuecosRecepciones" Margin="0 0 0 0" Height="100"
+                         ItemsSource="{Binding Source={StaticResource huecosRecepcionesViewSource}}"
+                         PreviewMouseLeftButtonDown="lbHuecosRecepciones_PreviewMouseLeftButtonDown">
+                    <!--ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding descripcion}" FontSize="14"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate-->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="8 0 0 0">
+                                <TextBlock FontWeight="Bold" FontSize="14">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Hueco {0}">
+                                            <Binding Path="Nombre"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} m³ y {1} ud.">
+                                            <Binding Path="VolumenTotal"/>
+                                            <Binding Path="UnidadesTotales"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="2" x:Name="spHuecosRecepciones"
+                            Orientation="Horizontal" Background="AliceBlue" MinHeight="50"
+                            Drop="spHuecosRecepciones_Drop">
+                    <materialDesign:Chip Content="15 m³."
+                                 IsDeletable="True"
+                                 Margin="0 0 4 4"
+                                 x:Name="cHueco"
+                                 ToolTip="Hueco recepción"
+                                 DeleteToolTip="Eliminar hueco">
+                        <materialDesign:Chip.Icon>
+                            <TextBlock FontSize="15">A01</TextBlock>
+                        </materialDesign:Chip.Icon>
+                    </materialDesign:Chip>
+                </StackPanel>
+
+                <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoProveedor" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

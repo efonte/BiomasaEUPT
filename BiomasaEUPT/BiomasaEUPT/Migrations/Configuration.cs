@@ -333,45 +333,51 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
 
             context.HuecosRecepciones.AddOrUpdate(
-                 hr => hr.HuecoRecepcionId,
+                 hr => hr.Nombre,
                  new HuecoRecepcion()
                  {
-                     HuecoRecepcionId = 1,
+                     //HuecoRecepcionId = 1,
+                     Nombre = "A01",
                      UnidadesTotales = 30,
                      VolumenTotal = 20,
                      SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
                  },
                   new HuecoRecepcion()
                   {
-                      HuecoRecepcionId = 2,
+                      //HuecoRecepcionId = 2,
+                      Nombre = "A02",
                       UnidadesTotales = 25,
                       VolumenTotal = 15,
                       SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
                   },
                    new HuecoRecepcion()
                    {
-                       HuecoRecepcionId = 3,
+                       //HuecoRecepcionId = 3,
+                       Nombre = "A03",
                        UnidadesTotales = 60,
                        VolumenTotal = 50,
                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
                    },
                     new HuecoRecepcion()
                     {
-                        HuecoRecepcionId = 4,
+                        //HuecoRecepcionId = 4,
+                        Nombre = "B01",
                         UnidadesTotales = 10,
                         VolumenTotal = 5,
                         SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
                     },
                     new HuecoRecepcion()
                     {
-                        HuecoRecepcionId = 5,
+                        //HuecoRecepcionId = 5,
+                        Nombre = "B02",
                         UnidadesTotales = 60,
                         VolumenTotal = 50,
                         SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
                     },
                     new HuecoRecepcion()
                     {
-                        HuecoRecepcionId = 6,
+                        //HuecoRecepcionId = 6,
+                        Nombre = "B03",
                         UnidadesTotales = 50,
                         VolumenTotal = 40,
                         SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
