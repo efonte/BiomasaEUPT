@@ -1,8 +1,10 @@
 ﻿using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,12 +31,21 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private CollectionViewSource gruposMateriasPrimasViewSource;
         private CollectionViewSource procedenciasViewSource;
         private CollectionViewSource sitiosRecepcionesViewSource;
-        private CollectionViewSource huecosRecepcionesViewSource;
         private BiomasaEUPTContext context;
+        //public ObservableCollection<TipoMateriaPrima> TiposMateriasPrimas { get; set; }
+        public TipoMateriaPrima TipoMateriaPrimaSeleccionada { get; set; }
+        public ObservableCollection<HuecoRecepcion> HuecosRecepcionesDisponibles { get; set; }
+        public ObservableCollection<HuecoRecepcion> HuecosRecepciones { get; set; }
+        public int Unidades { get; set; }
+        public double Volumen { get; set; }
+
         public FormMateriaPrima()
         {
             InitializeComponent();
             DataContext = this;
+            //TiposMateriasPrimas = new ObservableCollection<TipoMateriaPrima>();
+            HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>();
+            HuecosRecepciones = new ObservableCollection<HuecoRecepcion>();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -44,32 +56,39 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             gruposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("gruposMateriasPrimasViewSource")));
             procedenciasViewSource = ((CollectionViewSource)(FindResource("procedenciasViewSource")));
             sitiosRecepcionesViewSource = ((CollectionViewSource)(FindResource("sitiosRecepcionesViewSource")));
-            huecosRecepcionesViewSource = ((CollectionViewSource)(FindResource("huecosRecepcionesViewSource")));
-            context.TiposMateriasPrimas.Load();
+
             context.GruposMateriasPrimas.Load();
             context.Procedencias.Load();
             context.SitiosRecepciones.Load();
-            tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
             gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
             procedenciasViewSource.Source = context.Procedencias.Local;
             sitiosRecepcionesViewSource.Source = context.SitiosRecepciones.Local;
+        }
 
+        private void cbGruposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList();
+            //TiposMateriasPrimas.Clear();
+            //context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList().ForEach(TiposMateriasPrimas.Add);
+            //cbTiposMateriasPrimas.SelectedIndex = 0;
+            Console.WriteLine(TipoMateriaPrimaSeleccionada.Nombre);
         }
 
         private void cbSitiosRecepciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            huecosRecepcionesViewSource.Source = context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList();
+            // No se puede crear un nuevo ObservableCollection ya que sino no se actualiza la vista. Hay que añadirlos al ya existente.
+            HuecosRecepcionesDisponibles.Clear();
+            context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
         }
 
         private void lbHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-           ListBox parent = (ListBox)sender;
-            //dragSource = parent;
-            object data = GetDataFromListBox(lbHuecosRecepciones, e.GetPosition(parent));
-
-            if (data != null)
+            var parent = sender as ListBox;
+            var huecoRecepcion = GetDataFromListBox(lbHuecosRecepciones, e.GetPosition(parent)) as HuecoRecepcion;
+            if (huecoRecepcion != null)
             {
-                DragDrop.DoDragDrop(parent, data, DragDropEffects.Move);
+                DataObject dragData = new DataObject("HuecoRecepcion", huecoRecepcion);
+                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
             }
         }
 
@@ -105,10 +124,22 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void spHuecosRecepciones_Drop(object sender, DragEventArgs e)
         {
-            ListBox parent = (ListBox)sender;
-            object data = e.Data.GetData(typeof(string));
-            ((IList)lbHuecosRecepciones.ItemsSource).Remove(data);
-            parent.Items.Add(data);
+            var huecoRecepcion = e.Data.GetData("HuecoRecepcion") as HuecoRecepcion;
+            HuecosRecepciones.Add(huecoRecepcion);
+            HuecosRecepcionesDisponibles.Remove(huecoRecepcion);
+        }
+
+        private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            var chip = sender as Chip;
+            int huecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
+            HuecoRecepcion huecoRecepcion = (from hr in HuecosRecepciones where hr.HuecoRecepcionId == huecoRecepcionId select hr).First();
+
+            HuecosRecepciones.Remove(huecoRecepcion);
+            if (huecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
+            {
+                HuecosRecepcionesDisponibles.Add(huecoRecepcion);
+            }
         }
     }
 }

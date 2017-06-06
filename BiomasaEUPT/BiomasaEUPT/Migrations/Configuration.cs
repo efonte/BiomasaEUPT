@@ -364,7 +364,7 @@ namespace BiomasaEUPT.Migrations
                         Nombre = "B01",
                         UnidadesTotales = 10,
                         VolumenTotal = 5,
-                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
                     },
                     new HuecoRecepcion()
                     {

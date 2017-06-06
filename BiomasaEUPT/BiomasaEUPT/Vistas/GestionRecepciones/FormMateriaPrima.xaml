@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="400" Width="350" Loaded="UserControl_Loaded">
+             Height="400" Width="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,35 +39,34 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNumeroAlbaran" materialDesign:HintAssist.Hint="Nº Albarán" MaxLength="10">
+                <!--TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNumeroAlbaran" materialDesign:HintAssist.Hint="Nº Albarán" MaxLength="10">
                     <TextBox.Text>
                         <Binding Path="NumeroAlbaran" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="nº albarán" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="nº albarán" Min="3" Max="10" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="nº albarán" ExpReg="^([A-Z]-[\dA-Z]{1,8})$" MensajeFormato=" (Ej: A-13, B-15A25870)" ValidatesOnTargetUpdated="True" />
-                                <!--validadores:UnicoValidationRule Coleccion="{StaticResource recepcionesViewSource}" Atributo="NumeroAlbaran" Tipo="Recepcion" ValidatesOnTargetUpdated="True" /-->
+                                <validadores:UnicoValidationRule Coleccion="{StaticResource recepcionesViewSource}" Atributo="NumeroAlbaran" Tipo="Recepcion" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>
+                </TextBox-->
 
-                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo"
-                          ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="TipoMateriaPrimaId">
+                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbGruposMateriasPrimas" materialDesign:HintAssist.Hint="Grupo"
+                          ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoMateriaPrimaId"
+                          SelectionChanged="cbGruposMateriasPrimas_SelectionChanged">
                 </ComboBox>
 
-                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbGruposMateriasPrimas" materialDesign:HintAssist.Hint="Grupo"
-                          ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="GrupoMateriaPrimaId">
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo"
+                          ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
+                          SelectedItem="{Binding TipoMateriaPrimaSeleccionada, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProcedencias" materialDesign:HintAssist.Hint="Procedencia"
                           ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="ProcedenciaId">
+                          DisplayMemberPath="Nombre" SelectedValuePath="ProcedenciaId">
                 </ComboBox>
 
                 <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="3">
@@ -121,30 +120,22 @@
                           VerticalAlignment="Top">
                 </ComboBox>
 
-                <ListBox Grid.Row="3" Grid.Column="4" x:Name="lbHuecosRecepciones" Margin="0 0 0 0" Height="100"
-                         ItemsSource="{Binding Source={StaticResource huecosRecepcionesViewSource}}"
+                <ListBox Grid.Row="3" Grid.Column="4" x:Name="lbHuecosRecepciones" Height="100"
+                         ItemsSource="{Binding HuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}"
                          PreviewMouseLeftButtonDown="lbHuecosRecepciones_PreviewMouseLeftButtonDown">
-                    <!--ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
-                                        <TextBlock Text="{Binding descripcion}" FontSize="14"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate-->
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="8 0 0 0">
-                                <TextBlock FontWeight="Bold" FontSize="14">
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}Hueco {0}">
                                             <Binding Path="Nombre"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock FontSize="14">
+                                <TextBlock FontSize="14" FontStyle="Italic">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} m³ y {1} ud.">
+                                        <MultiBinding StringFormat="{}{0} m³ / {1} ud.">
                                             <Binding Path="VolumenTotal"/>
                                             <Binding Path="UnidadesTotales"/>
                                         </MultiBinding>
@@ -155,20 +146,72 @@
                     </ItemsControl.ItemTemplate>
                 </ListBox>
 
-                <StackPanel Grid.Row="4" Grid.ColumnSpan="2" x:Name="spHuecosRecepciones"
-                            Orientation="Horizontal" Background="AliceBlue" MinHeight="50"
-                            Drop="spHuecosRecepciones_Drop">
-                    <materialDesign:Chip Content="15 m³."
+                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" x:Name="wpHuecosRecepciones"
+                           Orientation="Horizontal" Background="AliceBlue" MinHeight="40" Width="350"
+                           AllowDrop="True" Drop="spHuecosRecepciones_Drop">
+                    <ItemsControl ItemsSource="{Binding HuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Chip IsDeletable="True"  Margin="5"
+                                 DeleteToolTip="Eliminar hueco" CommandParameter="{Binding HuecoRecepcionId}"
+                                 DeleteClick="cHueco_DeleteClick">
+                                    <materialDesign:Chip.Content>
+                                        <TextBlock FontSize="14" FontStyle="Italic">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text">
+                                                        <Setter.Value>
+                                                            <MultiBinding StringFormat="{}{0} m³" >
+                                                                <Binding Path="VolumenTotal" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} ud." >
+                                                                        <Binding Path="UnidadesTotales" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                            <!--TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} m³ / {1} ud.">
+                                                    <Binding Path="VolumenTotal"/>
+                                                    <Binding Path="UnidadesTotales"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text-->
+                                        </TextBlock>
+                                    </materialDesign:Chip.Content>
+                                    <materialDesign:Chip.Icon>
+                                        <TextBlock FontSize="15" Text="{Binding Nombre}"></TextBlock>
+                                    </materialDesign:Chip.Icon>
+                                </materialDesign:Chip>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <!--materialDesign:Chip Content="15 m³"
                                  IsDeletable="True"
-                                 Margin="0 0 4 4"
+                                 Margin="5"
                                  x:Name="cHueco"
                                  ToolTip="Hueco recepción"
-                                 DeleteToolTip="Eliminar hueco">
+                                 DeleteToolTip="Eliminar hueco"
+                                 DeleteClick="cHueco_DeleteClick">
                         <materialDesign:Chip.Icon>
                             <TextBlock FontSize="15">A01</TextBlock>
                         </materialDesign:Chip.Icon>
-                    </materialDesign:Chip>
-                </StackPanel>
+                    </materialDesign:Chip-->
+                </WrapPanel>
 
                 <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoProveedor" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
