@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,10 +33,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private CollectionViewSource procedenciasViewSource;
         private CollectionViewSource sitiosRecepcionesViewSource;
         private BiomasaEUPTContext context;
-        //public ObservableCollection<TipoMateriaPrima> TiposMateriasPrimas { get; set; }
-        public TipoMateriaPrima TipoMateriaPrimaSeleccionada { get; set; }
+        public TipoMateriaPrima TipoMateriaPrima { get; set; }
         public ObservableCollection<HuecoRecepcion> HuecosRecepcionesDisponibles { get; set; }
-        public ObservableCollection<HuecoRecepcion> HuecosRecepciones { get; set; }
+        //public ObservableCollection<HuecoRecepcion> HuecosRecepciones { get; set; }
+        public ObservableCollection<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
         public int Unidades { get; set; }
         public double Volumen { get; set; }
 
@@ -43,9 +44,9 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             InitializeComponent();
             DataContext = this;
-            //TiposMateriasPrimas = new ObservableCollection<TipoMateriaPrima>();
             HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>();
-            HuecosRecepciones = new ObservableCollection<HuecoRecepcion>();
+            //HuecosRecepciones = new ObservableCollection<HuecoRecepcion>();
+            HuecosMateriasPrimas = new ObservableCollection<HuecoMateriaPrima>();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -68,17 +69,21 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private void cbGruposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList();
-            //TiposMateriasPrimas.Clear();
-            //context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList().ForEach(TiposMateriasPrimas.Add);
-            //cbTiposMateriasPrimas.SelectedIndex = 0;
-            Console.WriteLine(TipoMateriaPrimaSeleccionada.Nombre);
         }
 
         private void cbSitiosRecepciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // No se puede crear un nuevo ObservableCollection ya que sino no se actualiza la vista. Hay que añadirlos al ya existente.
             HuecosRecepcionesDisponibles.Clear();
-            context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+            //context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+            //HuecosRecepcionesDisponibles.ToList().RemoveAll(h => h.HuecosMateriasPrimas.Contains(HuecosMateriasPrimas));
+            // var huecosRecepcionesExcluidos=HuecosMateriasPrimas.Where(hmp=>hmp.)
+            //   context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except().ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+
+            // Se añaden todos los HuecosRecepciones del SitioRecepcion seleccionado
+            context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+            // Se borran los HuecosRecepciones que ya se han añadido (convertidos en HuecosMateriasPrimas)
+            HuecosMateriasPrimas.ToList().ForEach(hmp => HuecosRecepcionesDisponibles.Remove(hmp.HuecoRecepcion));
         }
 
         private void lbHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -92,7 +97,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             }
         }
 
-        private static object GetDataFromListBox(ListBox source, Point point)
+        private object GetDataFromListBox(ListBox source, Point point)
         {
             UIElement element = source.InputHitTest(point) as UIElement;
             if (element != null)
@@ -125,21 +130,76 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private void spHuecosRecepciones_Drop(object sender, DragEventArgs e)
         {
             var huecoRecepcion = e.Data.GetData("HuecoRecepcion") as HuecoRecepcion;
-            HuecosRecepciones.Add(huecoRecepcion);
+            var huecoMateriaPrima = new HuecoMateriaPrima() { HuecoRecepcion = huecoRecepcion };
+            HuecosMateriasPrimas.Add(huecoMateriaPrima);
+            //HuecosMateriasPrimas.Add(huecoRecepcion);
             HuecosRecepcionesDisponibles.Remove(huecoRecepcion);
+            CalcularUnidadesVolumen();
         }
 
         private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
         {
             var chip = sender as Chip;
             int huecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
-            HuecoRecepcion huecoRecepcion = (from hr in HuecosRecepciones where hr.HuecoRecepcionId == huecoRecepcionId select hr).First();
-
-            HuecosRecepciones.Remove(huecoRecepcion);
-            if (huecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
+            /* HuecoRecepcion huecoRecepcion = (from hr in HuecosRecepciones where hr.HuecoRecepcionId == huecoRecepcionId select hr).First();
+              HuecosRecepciones.Remove(huecoRecepcion);            
+              if (huecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
+              {
+                  HuecosRecepcionesDisponibles.Add(huecoRecepcion);
+              }*/
+            HuecoMateriaPrima huecoMateriaPrima = (from hmp in HuecosMateriasPrimas where hmp.HuecoRecepcion.HuecoRecepcionId == huecoRecepcionId select hmp).First();
+            HuecosMateriasPrimas.Remove(huecoMateriaPrima);
+            if (huecoMateriaPrima.HuecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
             {
-                HuecosRecepcionesDisponibles.Add(huecoRecepcion);
+                HuecosRecepcionesDisponibles.Add(huecoMateriaPrima.HuecoRecepcion);
+            }
+            CalcularUnidadesVolumen();
+
+        }
+
+        private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalcularUnidadesVolumen();
+        }
+
+        private void tbUnidades_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalcularUnidadesVolumen();
+        }
+
+        private void CalcularUnidadesVolumen()
+        {
+
+            if (TipoMateriaPrima != null && TipoMateriaPrima.MedidoEnUnidades == true)
+            {
+                var unidadesRestantes = Unidades;
+                //var nuevosHuecosMateriasPrimas = HuecosMateriasPrimas.Select(c => { c.Unidades = 4; return c; }).ToList();
+                //HuecosMateriasPrimas.Clear();
+                //nuevosHuecosMateriasPrimas.ForEach(HuecosMateriasPrimas.Add);
+                foreach (var hmp in HuecosMateriasPrimas)
+                {
+                    if (hmp.HuecoRecepcion.UnidadesTotales <= unidadesRestantes)
+                    {
+                        unidadesRestantes -= hmp.HuecoRecepcion.UnidadesTotales;
+                        hmp.Unidades = hmp.HuecoRecepcion.UnidadesTotales;
+                        Console.WriteLine(unidadesRestantes);
+                    }
+                    else
+                    {
+                        hmp.Unidades = unidadesRestantes;
+                        unidadesRestantes = 0;
+                    }
+                }
+                var nuevosHuecosMateriasPrimas = HuecosMateriasPrimas.ToList();
+                HuecosMateriasPrimas.Clear();
+                nuevosHuecosMateriasPrimas.ForEach(HuecosMateriasPrimas.Add);
+            }
+            else
+            {
+
             }
         }
+
+
     }
 }
