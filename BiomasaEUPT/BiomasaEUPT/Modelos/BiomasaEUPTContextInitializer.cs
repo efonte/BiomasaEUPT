@@ -13,6 +13,7 @@ namespace BiomasaEUPT.Modelos
 @"
 ALTER TABLE Usuarios ADD CONSTRAINT DF_UsuariosFechaAlta DEFAULT GETDATE() FOR FechaAlta;
 ALTER TABLE Usuarios ADD CONSTRAINT DF_UsuariosBaneado DEFAULT 0 FOR Baneado;
+ALTER TABLE ProductosTerminados ADD CONSTRAINT DF_ProductosTerminadosFechaElaboracion DEFAULT GETDATE() FOR FechaElaboracion;
 "
                 );
             base.Seed(context);

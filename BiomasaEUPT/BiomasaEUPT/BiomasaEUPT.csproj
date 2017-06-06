@@ -140,7 +140,6 @@
     <Compile Include="Modelos\Tablas\GrupoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\GrupoProductoTerminado.cs" />
     <Compile Include="Modelos\Tablas\HuecoAlmacenaje.cs" />
-    <Compile Include="Modelos\Tablas\HuecoElaboracion.cs" />
     <Compile Include="Modelos\Tablas\HuecoMateriaPrima.cs" />
     <Compile Include="Modelos\Tablas\HuecoRecepcion.cs" />
     <Compile Include="Modelos\Tablas\MateriaPrima.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="Modelos\Tablas\Pais.cs" />
     <Compile Include="Modelos\Tablas\Pedido.cs" />
     <Compile Include="Modelos\Tablas\Procedencia.cs" />
+    <Compile Include="Modelos\Tablas\ProductoMateria.cs" />
     <Compile Include="Modelos\Tablas\ProductoTerminado.cs" />
     <Compile Include="Modelos\Tablas\HuecoProducto.cs" />
     <Compile Include="Modelos\Tablas\Proveedor.cs" />

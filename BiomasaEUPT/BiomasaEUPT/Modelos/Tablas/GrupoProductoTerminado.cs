@@ -18,6 +18,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Required]
         [MinLength(3)]
         [MaxLength(20)]
+        [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
@@ -28,5 +29,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public string Descripcion { get; set; }
 
         public virtual List<ProductoTerminado> ProductosTerminados { get; set; }
+
+        public virtual List<TipoProductoTerminado> TiposProductosTerminados { get; set; }
     }
 }

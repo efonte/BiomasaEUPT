@@ -455,7 +455,7 @@ namespace BiomasaEUPT.Migrations
                 new MateriaPrima()
                 {
                     TipoId= context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "Tipo 1").TipoMateriaPrimaId,
-                    Unidades = 20,
+                    Unidades = 35,
                     Observaciones = "Es muy rico",
                     RecepcionId = context.Recepciones.Local.Single(r => r.RecepcionId == 1).RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 1").ProcedenciaId,
@@ -470,6 +470,53 @@ namespace BiomasaEUPT.Migrations
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 2").ProcedenciaId,
                     Codigo = "1000000001"
                 });
+            context.SaveChanges();
+
+            context.HuecosMateriasPrimas.AddOrUpdate(
+                hmp => hmp.HuecoMateriaPrimaId,
+                new HuecoMateriaPrima()
+                {
+                    Unidades = 30,
+                    UnidadesRestantes= 30,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre =="A01" ).HuecoRecepcionId,
+                },
+                new HuecoMateriaPrima()
+                {
+                    Volumen = 5,
+                    VolumenRestantes = 5,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId,
+                },
+                
+                new HuecoMateriaPrima()
+                {
+                    Volumen = 50,
+                    VolumenRestantes = 50,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId,
+                });
+            context.SaveChanges();
+
+            context.EstadosElaboraciones.AddOrUpdate(
+                 ee => ee.Nombre,
+                 new EstadoElaboracion()
+                 {
+                     Nombre = "Nuevo",
+                     Descripcion = "La orden de elaboracion es nueva"
+                 },
+                 new EstadoElaboracion()
+                 {
+                     Nombre = "Procesado",
+                     Descripcion = "La orden de elaboración se está procesando"
+                 },
+                  new EstadoElaboracion()
+                  {
+                      Nombre = "Finalizado",
+                      Descripcion = "La orden de elaboración ha finalizado"
+                  });
+            context.SaveChanges();
+
 
 
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)

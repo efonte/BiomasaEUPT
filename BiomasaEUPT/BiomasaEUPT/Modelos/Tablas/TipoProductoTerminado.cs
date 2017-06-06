@@ -22,20 +22,22 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
-        [DisplayName("Descripción"), Display(Name = "Descripción")]
-        public string Descripcion { get; set; }
+        [DisplayName("Tamaño"), Display(Name = "Tamaño")]
+        public string Tamano { get; set; }
 
-        [DisplayName("Medido en peso"), Display(Name = "Medido en peso")]
-        public bool? MedidoEnPeso { get; set; }
+        [DisplayName("Humedad"), Display(Name = "Humedad")]
+        public double? Humedad { get; set; }
 
         [DisplayName("Medido en volumen"), Display(Name = "Medido en volumen")]
         public bool? MedidoEnVolumen { get; set; }
 
         [DisplayName("Medido en unidades"), Display(Name = "Medido en unidades")]
         public bool? MedidoEnUnidades { get; set; }
+
+        public int GrupoId { get; set; }
+
+        [ForeignKey("GrupoId")]
+        public virtual GrupoProductoTerminado GrupoProductoTerminado { get; set; }
 
         public virtual List<ProductoTerminado> ProductosTerminados { get; set; }
     }

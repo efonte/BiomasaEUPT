@@ -22,6 +22,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
+        // Unidades y Volumen restantes son para realizar las elaboraciones
         [DisplayName("Volumen restantes"), Display(Name = "Volumen restantes")]
         public double? VolumenRestantes { get; set; }
 
@@ -39,6 +40,5 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("HuecoRecepcionId")]
         public virtual HuecoRecepcion HuecoRecepcion { get; set; }
 
-        public virtual List<HuecoElaboracion> HuecosElaboraciones { get; set; }
     }
 }

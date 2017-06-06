@@ -15,9 +15,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int ProductoTerminadoId { get; set; }
 
-        [DisplayName("Peso"), Display(Name = "Peso")]
-        public double? Peso { get; set; }
-
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }
 
@@ -29,15 +26,16 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
-        [DisplayName("Fecha alta"), Display(Name = "Fecha alta")]
-        public DateTime FechaAlta { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DisplayName("Fecha elaboración"), Display(Name = "Fecha elaboración")]
+        public DateTime? FechaElaboracion { get; set; }
 
         [DisplayName("Fecha baja"), Display(Name = "Fecha baja")]
         public DateTime? FechaBaja { get; set; }
 
         public int TipoId { get; set; }
 
-        public int GrupoId { get; set; }
+        public int OrdenId { get; set; }
 
         [Required]
         [StringLength(10)]
@@ -47,8 +45,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("TipoId")]
         public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
 
-        [ForeignKey("GrupoId")]
-        public virtual GrupoProductoTerminado GrupoProductoTerminado { get; set; }
+        [ForeignKey("OrdenId")]
+        public virtual OrdenElaboracion OrdenElaboracion { get; set; }
 
         public virtual List<HuecoProducto> HuecosProductos { get; set; }
     }

@@ -15,9 +15,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int MateriaPrimaId { get; set; }
 
-        [DisplayName("Peso"), Display(Name = "Peso")]
-        public double? Peso { get; set; }
-
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }
 
