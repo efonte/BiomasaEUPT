@@ -46,60 +46,50 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgMateriasPrimas" DataContext="{StaticResource materiasPrimasViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
-                        <DataGrid.RowValidationErrorTemplate>
-                            <ControlTemplate>
-                                <Grid Margin="2,-2"
-                                      ToolTip="{Binding RelativeSource={RelativeSource
-                                      FindAncestor, AncestorType={x:Type DataGridRow}},
-                                      Path=(Validation.Errors)[0].ErrorContent}">
-                                    <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
-                                    <TextBlock Text="!" FontSize="18" 
-                                               FontWeight="Bold" Foreground="White" 
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Grid>
-
-                            </ControlTemplate>
-                        </DataGrid.RowValidationErrorTemplate>
-
-                        <DataGrid.RowValidationRules>
-                            <validadores:MateriaPrimaValidationRule ValidationStep="UpdatedValue"/>
-                        </DataGrid.RowValidationRules>
-
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn x:Name="tiposMateriasPrimasColumn" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="TipoMateriaPrimaId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoColuman" Header="Tipo"
+                                                                       Binding="{Binding TipoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <DataGridComboBoxColumn x:Name="gruposMateriasPrimasColumn" Header="Grupo"
-                                                ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
-                                                SelectedValuePath="GrupoMateriaPrimaId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                            <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo"
+                                                                       Binding="{Binding TipoMateriaPrima.GrupoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="pesoColumn" Header="Peso" Width="SizeToHeader"
-                                                                       Binding="{Binding Peso, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text">
+                                                        <Setter.Value>
+                                                            <MultiBinding StringFormat="{}{0} m³" >
+                                                                <Binding Path="Volumen" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} ud." >
+                                                                        <Binding Path="Unidades" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader"
-                                                                       Binding="{Binding Volumen, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="procedenciaColumna" Header="Procedencia" Width="SizeToHeader"
+                                                                       Binding="{Binding Procedencia.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="unidadesColumn" Header="Unidades" Width="SizeToHeader"
-                                                                       Binding="{Binding Unidades, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumn" Header="Fecha baja/caducidad" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, ConverterCulture=es-ES, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-
-                            <DataGridComboBoxColumn x:Name="procedenciaColumn" Header="Procedencia" Width="SizeToHeader"
-                                                    ItemsSource="{Binding Source={StaticResource procedenciasViewSource}}"
-                                                    SelectedValuePath="ProcedenciaId" 
-                                                    DisplayMemberPath="Nombre" SelectedValueBinding="{Binding ProcedenciaId, UpdateSourceTrigger=PropertyChanged}"
-                                                    EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
+                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                         </DataGrid.Columns>
 
                     </DataGrid>

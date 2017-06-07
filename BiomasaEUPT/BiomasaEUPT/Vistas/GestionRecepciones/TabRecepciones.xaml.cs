@@ -4,6 +4,7 @@ using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -86,6 +87,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 Style rowStyle = new Style(typeof(DataGridRow));
                 rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
                 ucTablaRecepciones.dgRecepciones.RowStyle = rowStyle;
+                ucTablaRecepciones.dgRecepciones.SelectedIndex = -1;
             }
         }
 
@@ -94,7 +96,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             var recepcion = (sender as DataGrid).SelectedItem as Recepcion;
             if (recepcion != null)
             {
-                Console.WriteLine(recepcion.NumeroAlbaran);
                 materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
             }
         }
@@ -118,18 +119,38 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private async void BAnadirMateriaPrima_Click(object sender, RoutedEventArgs e)
         {
-            var formRecepcion = new FormMateriaPrima();
+            var formMateriaPrima = new FormMateriaPrima();
 
-            if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
+            if ((bool)await DialogHost.Show(formMateriaPrima, "RootDialog"))
             {
-               /* context.MateriasPrimas.Add(new MateriaPrima()
+                var materiaPrima = new MateriaPrima()
                 {
-                    NumeroAlbaran = formRecepcion.NumeroAlbaran,
-                    FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second),
-                    ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
-                    EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
-                });
-                context.SaveChanges();*/
+                    RecepcionId = (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).RecepcionId,
+                    Observaciones = formMateriaPrima.Observaciones,
+                    Codigo = formMateriaPrima.Codigo,
+                    ProcedenciaId = (formMateriaPrima.cbProcedencias.SelectedItem as Procedencia).ProcedenciaId,
+                    TipoId = (formMateriaPrima.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId
+                };
+                if (formMateriaPrima.FechaBaja != null)
+                    materiaPrima.FechaBaja = new DateTime(formMateriaPrima.FechaBaja.Value.Year, formMateriaPrima.FechaBaja.Value.Month, formMateriaPrima.FechaBaja.Value.Day, formMateriaPrima.HoraBaja.Value.Hour, formMateriaPrima.HoraBaja.Value.Minute, formMateriaPrima.HoraBaja.Value.Second);
+
+                context.MateriasPrimas.Add(materiaPrima);
+                context.SaveChanges();
+                Console.WriteLine(materiaPrima.MateriaPrimaId);
+                List<HuecoMateriaPrima> huecosMateriasPrimas = new List<HuecoMateriaPrima>();
+                foreach (var hmp in formMateriaPrima.HuecosMateriasPrimas)
+                {
+                    var a = hmp.HuecoRecepcion.HuecoRecepcionId;
+                    if (hmp.Unidades != 0 && hmp.Volumen != 0)
+                    {
+                        hmp.HuecoRecepcion = null;
+                        hmp.HuecoRecepcionId = a;
+                        hmp.MateriaPrimaId = materiaPrima.MateriaPrimaId;
+                        huecosMateriasPrimas.Add(hmp);
+                    }
+                }
+                context.HuecosMateriasPrimas.AddRange(huecosMateriasPrimas);
+                context.SaveChanges();
             }
         }
 

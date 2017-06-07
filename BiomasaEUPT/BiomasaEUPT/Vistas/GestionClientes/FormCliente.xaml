@@ -162,8 +162,8 @@
                 </ComboBox>
 
                 <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                 AcceptsReturn="True" Height="55" MaxLength="60">
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                         AcceptsReturn="True" Height="55" MaxLength="60">
                     <TextBox.Text>
                         <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
