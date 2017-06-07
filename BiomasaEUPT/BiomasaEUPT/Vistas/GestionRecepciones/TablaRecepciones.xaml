@@ -50,7 +50,7 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="proveedorColumna" Header="Proveedor" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding Proveedor.RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Proveedor" Width="auto" IsReadOnly="True"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding EstadoRecepcion.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <!--DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
@@ -75,7 +75,7 @@
                                  ToolTip="Gestionar recepciones"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar la recepcion seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                            <Button ToolTip="Borrar la recepcion seleccionada" Command="{Binding BorrarRecepcionComando}" IsEnabled="{Binding CanBorrarRecepcion}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">

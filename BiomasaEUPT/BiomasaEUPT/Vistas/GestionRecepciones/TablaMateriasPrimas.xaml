@@ -101,7 +101,7 @@
                                      ToolTip="Gestionar materias primas"
                                      Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                            <Button ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}" IsEnabled="{Binding CanBorrarMateriaPrima}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">

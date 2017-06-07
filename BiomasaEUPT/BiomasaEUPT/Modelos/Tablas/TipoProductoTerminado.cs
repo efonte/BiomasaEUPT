@@ -17,7 +17,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [Required]
         [MinLength(3)]
-        [MaxLength(20)]
+        [MaxLength(30)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }

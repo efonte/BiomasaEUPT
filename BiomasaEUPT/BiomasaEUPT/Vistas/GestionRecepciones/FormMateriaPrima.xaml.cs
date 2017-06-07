@@ -37,7 +37,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public ObservableCollection<HuecoRecepcion> HuecosRecepcionesDisponibles { get; set; }
         //public ObservableCollection<HuecoRecepcion> HuecosRecepciones { get; set; }
         public ObservableCollection<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
-        private ObservableCollection<HuecoRecepcion> HuecoRecepcionesUsados { get; set; }
         public int Unidades { get; set; }
         public double Volumen { get; set; }
         public String Codigo { get; set; }
@@ -45,10 +44,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public DateTime? FechaBaja { get; set; }
         public DateTime? HoraBaja { get; set; }
 
-        public FormMateriaPrima()
+        public FormMateriaPrima(BiomasaEUPTContext context)
         {
             InitializeComponent();
             DataContext = this;
+            this.context = context;
             HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>();
             //HuecosRecepciones = new ObservableCollection<HuecoRecepcion>();
             HuecosMateriasPrimas = new ObservableCollection<HuecoMateriaPrima>();
@@ -56,7 +56,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            context = new BiomasaEUPTContext();
+            // context = new BiomasaEUPTContext();
 
             tiposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("tiposMateriasPrimasViewSource")));
             gruposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("gruposMateriasPrimasViewSource")));
@@ -84,7 +84,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             //context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
 
             // Se añaden todos los HuecosRecepciones del SitioRecepcion seleccionado
-            context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+            context.HuecosRecepciones.Where(hr => hr.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId && !hr.Ocupado).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
             // Se borran los HuecosRecepciones que ya se han añadido (convertidos en HuecosMateriasPrimas)
             HuecosMateriasPrimas.ToList().ForEach(hmp => HuecosRecepcionesDisponibles.Remove(hmp.HuecoRecepcion));
         }

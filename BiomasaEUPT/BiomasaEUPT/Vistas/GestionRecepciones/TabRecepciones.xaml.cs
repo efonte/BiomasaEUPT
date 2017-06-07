@@ -119,7 +119,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private async void BAnadirMateriaPrima_Click(object sender, RoutedEventArgs e)
         {
-            var formMateriaPrima = new FormMateriaPrima();
+            var formMateriaPrima = new FormMateriaPrima(context);
 
             if ((bool)await DialogHost.Show(formMateriaPrima, "RootDialog"))
             {
@@ -129,14 +129,14 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     Observaciones = formMateriaPrima.Observaciones,
                     Codigo = formMateriaPrima.Codigo,
                     ProcedenciaId = (formMateriaPrima.cbProcedencias.SelectedItem as Procedencia).ProcedenciaId,
-                    TipoId = (formMateriaPrima.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId
+                    TipoId = (formMateriaPrima.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId,
+                    Volumen = formMateriaPrima.Volumen,
+                    Unidades = formMateriaPrima.Unidades
                 };
                 if (formMateriaPrima.FechaBaja != null)
                     materiaPrima.FechaBaja = new DateTime(formMateriaPrima.FechaBaja.Value.Year, formMateriaPrima.FechaBaja.Value.Month, formMateriaPrima.FechaBaja.Value.Day, formMateriaPrima.HoraBaja.Value.Hour, formMateriaPrima.HoraBaja.Value.Minute, formMateriaPrima.HoraBaja.Value.Second);
 
                 context.MateriasPrimas.Add(materiaPrima);
-                context.SaveChanges();
-                Console.WriteLine(materiaPrima.MateriaPrimaId);
                 List<HuecoMateriaPrima> huecosMateriasPrimas = new List<HuecoMateriaPrima>();
                 foreach (var hmp in formMateriaPrima.HuecosMateriasPrimas)
                 {
@@ -145,7 +145,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     {
                         hmp.HuecoRecepcion = null;
                         hmp.HuecoRecepcionId = a;
-                        hmp.MateriaPrimaId = materiaPrima.MateriaPrimaId;
+                        hmp.MateriaPrima = materiaPrima;
                         huecosMateriasPrimas.Add(hmp);
                     }
                 }
@@ -221,25 +221,25 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         }
         #endregion       
 
-        #region Borrar
-        private ICommand _borrarComando;
+        #region BorrarRecepcion
+        private ICommand _borrarRecepcionComando;
 
-        public ICommand BorrarComando
+        public ICommand BorrarRecepcionComando
         {
             get
             {
-                if (_borrarComando == null)
+                if (_borrarRecepcionComando == null)
                 {
-                    _borrarComando = new RelayComando(
+                    _borrarRecepcionComando = new RelayComando(
                         param => BorrarRecepcion(),
-                        param => CanBorrar()
+                        param => CanBorrarRecepcion()
                     );
                 }
-                return _borrarComando;
+                return _borrarRecepcionComando;
             }
         }
 
-        private bool CanBorrar()
+        private bool CanBorrarRecepcion()
         {
             if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
             {
@@ -263,34 +263,48 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         }
         #endregion
 
+        #region BorrarMateriaPrima
+        private ICommand _borrarMateriaPrimaComando;
 
-        /*  #region AñadirCliente
-          private ICommand _anadirClienteComando;
+        public ICommand BorrarMateriaPrimaComando
+        {
+            get
+            {
+                if (_borrarMateriaPrimaComando == null)
+                {
+                    _borrarMateriaPrimaComando = new RelayComando(
+                        param => BorrarMateriaPrima(),
+                        param => CanBorrarMateriaPrima()
+                    );
+                }
+                return _borrarMateriaPrimaComando;
+            }
+        }
 
-          public ICommand AnadirClienteComando
-          {
-              get
-              {
-                  if (_anadirClienteComando == null)
-                  {
-                      _anadirClienteComando = new RelayComando(
-                          param => AnadirCliente(),
-                          param => true
-                      );
-                  }
-                  return _anadirClienteComando;
-              }
-          }
+        private bool CanBorrarMateriaPrima()
+        {
+            if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
+            {
+                Recepcion recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
+                return recepcionSeleccionada != null;
+            }
+            return false;
+        }
 
+        private async void BorrarMateriaPrima()
+        {
+            string pregunta = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
+                ? "¿Está seguro de que desea borrar la materia prima " + (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima).Codigo + "?"
+                : "¿Está seguro de que desea borrar las materias primas seleccionadas?";
 
-          private void AnadirCliente()
-          {
-
-          }
-
-      }
-      #endregion*/
-
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
+            {
+                context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
+                context.SaveChanges();
+                ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
+            }
+        }
+        #endregion
 
         private async void RowRecepciones_DoubleClick(object sender, MouseButtonEventArgs e)
         {
