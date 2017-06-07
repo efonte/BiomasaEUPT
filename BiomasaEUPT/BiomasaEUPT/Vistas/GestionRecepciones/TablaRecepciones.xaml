@@ -78,19 +78,12 @@
                             <Button ToolTip="Borrar la recepcion seleccionada" Command="{Binding BorrarRecepcionComando}" IsEnabled="{Binding CanBorrarRecepcion}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
-                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
-
-                            </Button>
-
                             <Button x:Name="bAnadirRecepcion" ToolTip="Añadir recepcion">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
-
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"

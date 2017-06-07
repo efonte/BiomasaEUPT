@@ -33,11 +33,30 @@ BEGIN
     FROM   inserted i
     WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId
 END
-' 
-
+'
 ALTER TABLE [dbo].[HuecosMateriasPrimas] ENABLE TRIGGER [TR_HuecosMateriasPrimas_I];
 
 
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[TR_HuecosMateriasPrimas_D]'))
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_HuecosMateriasPrimas_D]
+    ON [dbo].[HuecosMateriasPrimas]
+    AFTER DELETE
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+
+    UPDATE HuecosRecepciones
+    SET    Ocupado = 0
+    FROM   deleted d
+    WHERE  HuecosRecepciones.HuecoRecepcionId = d.HuecoRecepcionId
+END
+'
+ALTER TABLE [dbo].[HuecosMateriasPrimas] ENABLE TRIGGER [TR_HuecosMateriasPrimas_D];
 "
                 );
             base.Seed(context);

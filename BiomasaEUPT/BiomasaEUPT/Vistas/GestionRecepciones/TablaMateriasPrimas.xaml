@@ -104,14 +104,9 @@
                             <Button ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}" IsEnabled="{Binding CanBorrarMateriaPrima}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
-                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
-                            </Button>
-
                             <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
@@ -178,21 +173,18 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <!--TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon social" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
-                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" /-->
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Procedencia" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="F. Baja/Caducidad" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbProcedencia" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
                     </Grid>
 
                 </materialDesign:PopupBox>

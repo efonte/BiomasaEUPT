@@ -81,6 +81,17 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaRecepciones.cbProveedor.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
                 ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
 
+                ucTablaMateriasPrimas.cbTipo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbTipo.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbGrupo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbGrupo.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbVolUni.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbVolUni.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbProcedencia.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbProcedencia.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbFechaBaja.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+                ucTablaMateriasPrimas.cbFechaBaja.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
+
                 ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
                 ucTablaMateriasPrimas.bAnadirMateriaPrima.Click += BAnadirMateriaPrima_Click;
 
@@ -102,7 +113,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private async void BAnadirRecepcion_Click(object sender, RoutedEventArgs e)
         {
-            var formRecepcion = new FormRecepcion();
+            var formRecepcion = new FormRecepcion(context);
 
             if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
             {
@@ -175,51 +186,26 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         }
 
-        #region ConfirmarCambios
-        private ICommand _confirmarCambiosComando;
-
-        public ICommand ConfirmarCambiosComando
+        public void FiltrarTablaMateriasPrimas()
         {
-            get
-            {
-                if (_confirmarCambiosComando == null)
-                {
-                    _confirmarCambiosComando = new RelayComando(
-                        param => ConfirmarCambios(),
-                        param => CanConfirmarCambios()
-                    );
-                }
-                return _confirmarCambiosComando;
-            }
+            materiasPrimasViewSource.Filter += new FilterEventHandler(FiltroTablaMateriasPrimas);
         }
 
-        private bool CanConfirmarCambios()
+        private void FiltroTablaMateriasPrimas(object sender, FilterEventArgs e)
         {
-            return context != null && context.HayCambios<Cliente>();
+          /*  string textoBuscado = ucTablaMateriasPrimas.tbBuscar.Text.ToLower();
+            var materiaPrima = e.Item as MateriaPrima;
+            string fechaBaja = materiaPrima.FechaBaja.ToString();
+            string numeroAlbaran = recepcion.NumeroAlbaran.ToLower();
+            string proveedor = recepcion.Proveedor.RazonSocial.ToLower();
+            string estado = recepcion.EstadoRecepcion.Nombre.ToLower();
+
+            e.Accepted = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbProveedor.IsChecked == true ? proveedor.Contains(textoBuscado) : false) ||
+                         (ucTablaRecepciones.cbEstado.IsChecked == true ? estado.Contains(textoBuscado) : false);*/
+
         }
-
-        private async void ConfirmarCambios()
-        {
-            try
-            {
-                context.GuardarCambios<Cliente>();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                // Retrieve the error messages as a list of strings.
-                var errorMessages = ex.EntityValidationErrors
-                        .SelectMany(x => x.ValidationErrors)
-                        .Select(x => x.ErrorMessage);
-
-                // Join the list to a single string.
-                var fullErrorMessage = string.Join("\n", errorMessages);
-
-                await DialogHost.Show(new MensajeInformacion("No pueden guardar los cambios:\n\n" + fullErrorMessage), "RootDialog");
-                //Console.WriteLine(fullErrorMessage);               
-            }
-            //clientesViewSource.View.Refresh();
-        }
-        #endregion       
 
         #region BorrarRecepcion
         private ICommand _borrarRecepcionComando;
@@ -310,7 +296,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             var fila = sender as DataGridRow;
             var recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
-            var formRecepcion = new FormRecepcion("Editar Recepción")
+            var formRecepcion = new FormRecepcion(context, "Editar Recepción")
             {
                 NumeroAlbaran = recepcionSeleccionada.NumeroAlbaran,
                 Fecha = recepcionSeleccionada.FechaRecepcion,
@@ -318,6 +304,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             };
             var albaranViejo = formRecepcion.NumeroAlbaran;
             formRecepcion.vAlbaranUnico.NombreActual = recepcionSeleccionada.NumeroAlbaran;
+            formRecepcion.cbEstadosRecepciones.SelectedValue = recepcionSeleccionada.EstadoRecepcion.EstadoRecepcionId;
+            formRecepcion.cbProveedores.SelectedValue = recepcionSeleccionada.Proveedor.ProveedorId;
             if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
             {
                 recepcionSeleccionada.NumeroAlbaran = formRecepcion.NumeroAlbaran;

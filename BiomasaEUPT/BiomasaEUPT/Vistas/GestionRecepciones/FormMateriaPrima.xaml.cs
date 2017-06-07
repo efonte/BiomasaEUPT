@@ -56,8 +56,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // context = new BiomasaEUPTContext();
-
             tiposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("tiposMateriasPrimasViewSource")));
             gruposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("gruposMateriasPrimasViewSource")));
             procedenciasViewSource = ((CollectionViewSource)(FindResource("procedenciasViewSource")));

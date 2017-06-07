@@ -30,31 +30,31 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public String NumeroAlbaran { get; set; }
         public DateTime Fecha { get; set; }
         public DateTime Hora { get; set; }
+        private BiomasaEUPTContext context;
 
-        public FormRecepcion()
+
+        public FormRecepcion(BiomasaEUPTContext context)
         {
             InitializeComponent();
             DataContext = this;
             Fecha = DateTime.Now;
             Hora = DateTime.Now;
+            this.context = context;
         }
 
-        public FormRecepcion(string _titulo) : this()
+        public FormRecepcion(BiomasaEUPTContext context, string _titulo) : this(context)
         {
             gbTitulo.Header = _titulo;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            using (var context = new BiomasaEUPTContext())
-            {
-                proveedoresViewSource = ((CollectionViewSource)(FindResource("proveedoresViewSource")));
-                estadosRecepcionesViewSource = ((CollectionViewSource)(FindResource("estadosRecepcionesViewSource")));
-                context.Proveedores.Load();
-                context.EstadosRecepciones.Load();
-                proveedoresViewSource.Source = context.Proveedores.Local;
-                estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
-            }
+            proveedoresViewSource = ((CollectionViewSource)(FindResource("proveedoresViewSource")));
+            estadosRecepcionesViewSource = ((CollectionViewSource)(FindResource("estadosRecepcionesViewSource")));
+            context.Proveedores.Load();
+            context.EstadosRecepciones.Load();
+            proveedoresViewSource.Source = context.Proveedores.Local;
+            estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
 
             dpFechaRecepcion.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
