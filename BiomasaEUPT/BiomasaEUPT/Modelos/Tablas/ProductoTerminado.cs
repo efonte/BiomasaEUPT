@@ -26,10 +26,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [DisplayName("Fecha elaboración"), Display(Name = "Fecha elaboración")]
-        public DateTime? FechaElaboracion { get; set; }
-
         [DisplayName("Fecha baja"), Display(Name = "Fecha baja")]
         public DateTime? FechaBaja { get; set; }
 

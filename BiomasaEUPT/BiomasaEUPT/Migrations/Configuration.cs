@@ -59,12 +59,12 @@ namespace BiomasaEUPT.Migrations
                 new TipoProveedor()
                 {
                     Nombre = "TipoProveedor 1",
-                    Descripcion = "Este es el TipoProveedor 1",
+                    Descripcion = "Este es el TipoProveedor 1"
                 },
                 new TipoProveedor()
                 {
                     Nombre = "TipoProveedor 2",
-                    Descripcion = "Este es el TipoProveedor 2",
+                    Descripcion = "Este es el TipoProveedor 2"
                 });
             context.SaveChanges();
 
@@ -73,12 +73,12 @@ namespace BiomasaEUPT.Migrations
                new GrupoCliente()
                {
                    Nombre = "GrupoCliente 1",
-                   Descripcion = "Este es el GrupoCliente 1",
+                   Descripcion = "Este es el GrupoCliente 1"
                },
                new GrupoCliente()
                {
                    Nombre = "GrupoCliente 2",
-                   Descripcion = "Este es el GrupoCliente 2",
+                   Descripcion = "Este es el GrupoCliente 2"
                });
             context.SaveChanges();
 
@@ -88,13 +88,13 @@ namespace BiomasaEUPT.Migrations
                {
                    Nombre = "TipoCliente 1",
                    Descripcion = "Este es el TipoCliente 1",
-                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
+                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId
                },
                new TipoCliente()
                {
                    Nombre = "TipoCliente 2",
                    Descripcion = "Este es el TipoCliente 2",
-                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
+                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId
                });
             context.SaveChanges();
 
@@ -103,12 +103,12 @@ namespace BiomasaEUPT.Migrations
                   new Pais()
                   {
                       Codigo = "ES",
-                      Nombre = "España",
+                      Nombre = "España"
                   },
                   new Pais()
                   {
                       Codigo = "FR",
-                      Nombre = "Francia",
+                      Nombre = "Francia"
                   });
             context.SaveChanges();
 
@@ -140,31 +140,31 @@ namespace BiomasaEUPT.Migrations
                 {
                     Codigo = "ES-CS",
                     Nombre = "Castellón",
-                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId,
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId
                 },
                 new Provincia()
                 {
                     Codigo = "FR-75",
                     Nombre = "París",
-                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "FR-11").ComunidadId,
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "FR-11").ComunidadId
                 },
                 new Provincia()
                 {
                     Codigo = "ES-TE",
                     Nombre = "Teruel",
-                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId,
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId
                 },
                 new Provincia()
                 {
                     Codigo = "ES-V",
                     Nombre = "Valencia",
-                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId,
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-VC").ComunidadId
                 },
                 new Provincia()
                 {
                     Codigo = "ES-Z",
                     Nombre = "Zaragoza",
-                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId,
+                    ComunidadId = context.Comunidades.Local.Single(c => c.Codigo == "ES-AR").ComunidadId
                 });
             context.SaveChanges();
 
@@ -340,7 +340,7 @@ namespace BiomasaEUPT.Migrations
                      Nombre = "A01",
                      UnidadesTotales = 30,
                      VolumenTotal = 20,
-                     SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                     SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId
                  },
                   new HuecoRecepcion()
                   {
@@ -348,7 +348,7 @@ namespace BiomasaEUPT.Migrations
                       Nombre = "A02",
                       UnidadesTotales = 25,
                       VolumenTotal = 15,
-                      SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                      SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId
                   },
                    new HuecoRecepcion()
                    {
@@ -356,7 +356,7 @@ namespace BiomasaEUPT.Migrations
                        Nombre = "A03",
                        UnidadesTotales = 60,
                        VolumenTotal = 50,
-                       SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId,
+                       SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio A").SitioRecepcionId
                    },
                     new HuecoRecepcion()
                     {
@@ -364,7 +364,7 @@ namespace BiomasaEUPT.Migrations
                         Nombre = "B01",
                         UnidadesTotales = 10,
                         VolumenTotal = 5,
-                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId
                     },
                     new HuecoRecepcion()
                     {
@@ -372,7 +372,7 @@ namespace BiomasaEUPT.Migrations
                         Nombre = "B02",
                         UnidadesTotales = 60,
                         VolumenTotal = 50,
-                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId
                     },
                     new HuecoRecepcion()
                     {
@@ -380,7 +380,7 @@ namespace BiomasaEUPT.Migrations
                         Nombre = "B03",
                         UnidadesTotales = 50,
                         VolumenTotal = 40,
-                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId,
+                        SitioId = context.SitiosRecepciones.Local.Single(sr => sr.Nombre == "Sitio B").SitioRecepcionId
                     });
             context.SaveChanges();
 
@@ -389,12 +389,12 @@ namespace BiomasaEUPT.Migrations
                 new Procedencia()
                 {
                     Nombre = "Procedencia 1",
-                    Descripcion = "Esta es la Procedencia 1",
+                    Descripcion = "Esta es la Procedencia 1"
                 },
                 new Procedencia()
                 {
                     Nombre = "Procedencia 2",
-                    Descripcion = "Esta es la Procedencia 2",
+                    Descripcion = "Esta es la Procedencia 2"
                 });
             context.SaveChanges();
 
@@ -405,14 +405,14 @@ namespace BiomasaEUPT.Migrations
                     NumeroAlbaran = "A-0100B",
                     FechaRecepcion = new DateTime(2017, 02, 10),
                     ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 1).ProveedorId,
-                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 1).EstadoRecepcionId,
+                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 1).EstadoRecepcionId
                 },
                 new Recepcion()
                 {
                     NumeroAlbaran = "A-010VB",
                     FechaRecepcion = new DateTime(2017, 01, 20),
                     ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 2).ProveedorId,
-                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 2).EstadoRecepcionId,
+                    EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 2).EstadoRecepcionId
                 });
             context.SaveChanges();
 
@@ -421,12 +421,12 @@ namespace BiomasaEUPT.Migrations
                 new GrupoMateriaPrima()
                 {
                     Nombre = "GrupoMateriaPrima 1",
-                    Descripcion = "Descripción para Grupo 1",
+                    Descripcion = "Descripción para Grupo 1"
                 },
                 new GrupoMateriaPrima()
                 {
                     Nombre = "GrupoMateriaPrima 2",
-                    Descripcion = "Descripción para Grupo 2",
+                    Descripcion = "Descripción para Grupo 2"
                 });
             context.SaveChanges();
 
@@ -438,14 +438,14 @@ namespace BiomasaEUPT.Migrations
                     Nombre = "Tipo 1",
                     Descripcion = "Descripción para Tipo 1",
                     MedidoEnUnidades = true,
-                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 1").GrupoMateriaPrimaId,
+                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 1").GrupoMateriaPrimaId
                 },
                 new TipoMateriaPrima()
                 {
                     Nombre = "Tipo 2",
                     Descripcion = "Descripción para Tipo 2",
                     MedidoEnVolumen = true,
-                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 2").GrupoMateriaPrimaId,
+                    GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "GrupoMateriaPrima 2").GrupoMateriaPrimaId
                 });
             context.SaveChanges();
 
@@ -479,14 +479,14 @@ namespace BiomasaEUPT.Migrations
                     Unidades = 30,
                     UnidadesRestantes= 30,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
-                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre =="A01" ).HuecoRecepcionId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre =="A01" ).HuecoRecepcionId
                 },
                 new HuecoMateriaPrima()
                 {
                     Volumen = 5,
                     VolumenRestantes = 5,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
-                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId
                 },
                 
                 new HuecoMateriaPrima()
@@ -494,7 +494,7 @@ namespace BiomasaEUPT.Migrations
                     Volumen = 50,
                     VolumenRestantes = 50,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
-                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId,
+                    HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId
                 });
             context.SaveChanges();
 
@@ -507,7 +507,7 @@ namespace BiomasaEUPT.Migrations
                  },
                  new EstadoElaboracion()
                  {
-                     Nombre = "Procesado",
+                     Nombre = "Procesando",
                      Descripcion = "La orden de elaboración se está procesando"
                  },
                   new EstadoElaboracion()
@@ -515,6 +515,92 @@ namespace BiomasaEUPT.Migrations
                       Nombre = "Finalizado",
                       Descripcion = "La orden de elaboración ha finalizado"
                   });
+            context.SaveChanges();
+
+            context.GruposProductosTerminados.AddOrUpdate(
+                gpt => gpt.Nombre,
+                new GrupoProductoTerminado()
+                {
+                    Nombre = "GrupoProductoTerminado 1",
+                    Descripcion = "Descripción para GPT 1"
+                },
+                new GrupoProductoTerminado()
+                {
+                    Nombre = "GrupoProductoTerminado 2",
+                    Descripcion = "Descripción para GPT 2"
+                });
+            context.SaveChanges();
+
+            context.TiposProductosTerminados.AddOrUpdate(
+                tpt => tpt.Nombre,
+                new TipoProductoTerminado()
+                {
+                    Nombre = "TipoProductoTerminado 1",
+                    Tamano = "0.75",
+                    Humedad = 75,
+                    MedidoEnVolumen=true,
+                    GrupoId = context.GruposProductosTerminados.Local.Single(gi => gi.Nombre == "GrupoProductoTerminado 1").GrupoProductoTerminadoId
+
+                },
+                new TipoProductoTerminado()
+                {
+                    Nombre = "TipoProductoTerminado 2",
+                    Tamano = "0.80",
+                    Humedad = 85,
+                    MedidoEnUnidades = true,
+                    GrupoId = context.GruposProductosTerminados.Local.Single(gi => gi.Nombre == "GrupoProductoTerminado 2").GrupoProductoTerminadoId
+                });
+            context.SaveChanges();
+
+            context.OrdenesElaboraciones.AddOrUpdate(
+                oe => oe.OrdenElaboracionId,
+                new OrdenElaboracion()
+                {
+                    EstadoElaboracionId = context.EstadosElaboraciones.Local.Single(ee => ee.Nombre=="Nuevo").EstadoElaboracionId
+                },
+                new OrdenElaboracion()
+                {
+                    EstadoElaboracionId = context.EstadosElaboraciones.Local.Single(ee => ee.Nombre == "Procesando").EstadoElaboracionId
+                },
+                new OrdenElaboracion()
+                {
+                    EstadoElaboracionId = context.EstadosElaboraciones.Local.Single(ee => ee.Nombre == "Finalizado").EstadoElaboracionId
+                });
+            context.SaveChanges();
+
+            context.ProductosTerminados.AddOrUpdate(
+                pt => pt.ProductoTerminadoId,
+                new ProductoTerminado()
+                {
+                    Unidades=20,
+                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 1").TipoProductoTerminadoId,
+                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
+                    Codigo = "2000000000"
+                },
+                new ProductoTerminado()
+                {
+                    Volumen = 50,
+                    Observaciones = "Observaciones .......",
+                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,
+                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 2).OrdenElaboracionId,
+                    Codigo = "2000000001"
+                });
+            context.SaveChanges();
+
+            context.ProductosMaterias.AddOrUpdate(
+                pm => pm.ProductoMateriaId,
+                new ProductoMateria()
+                {
+                    Unidades=20,
+                    HuecoMateriaId = context.HuecosMateriasPrimas.Local.Single(hm => hm.HuecoMateriaPrimaId == 1).HuecoMateriaPrimaId,
+                    ProductoId = context.ProductosTerminados.Local.Single(p => p.ProductoTerminadoId == 1).ProductoTerminadoId
+                },
+                new ProductoMateria()
+                {
+                    Volumen = 20,
+                    HuecoMateriaId = context.HuecosMateriasPrimas.Local.Single(hm => hm.HuecoMateriaPrimaId == 2).HuecoMateriaPrimaId,
+                    ProductoId = context.ProductosTerminados.Local.Single(p => p.ProductoTerminadoId == 2).ProductoTerminadoId
+                });
             context.SaveChanges();
 
 

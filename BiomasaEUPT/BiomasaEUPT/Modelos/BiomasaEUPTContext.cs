@@ -138,6 +138,7 @@
         public DbSet<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
         public DbSet<OrdenElaboracion> OrdenesElaboraciones { get; set; }
         public DbSet<EstadoElaboracion> EstadosElaboraciones { get; set; }
+        public DbSet<ProductoMateria> ProductosMaterias { get; set; }
         public DbSet<ProductoTerminado> ProductosTerminados { get; set; }
         public DbSet<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public DbSet<GrupoProductoTerminado> GruposProductosTerminados { get; set; }

@@ -17,8 +17,9 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int EstadoElaboracionId { get; set; }
 
-        [DisplayName("Fecha alta"), Display(Name = "Fecha alta")]
-        public DateTime? FechaAlta { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DisplayName("Fecha elaboración"), Display(Name = "Fecha elaboración")]
+        public DateTime? FechaElaboracion { get; set; }
 
         [ForeignKey("EstadoElaboracionId")]
         public virtual EstadoElaboracion EstadoElaboracion { get; set; }
