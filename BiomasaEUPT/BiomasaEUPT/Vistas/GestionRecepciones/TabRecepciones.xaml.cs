@@ -207,7 +207,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                          (ucTablaMateriasPrimas.cbGrupo.IsChecked == true ? grupo.Contains(textoBuscado) : false) ||
                          (ucTablaMateriasPrimas.cbVolUni.IsChecked == true ? (volumen.Contains(textoBuscado) || unidades.Contains(textoBuscado)) : false) ||
                          (ucTablaMateriasPrimas.cbProcedencia.IsChecked == true ? procedencia.Contains(textoBuscado) : false);
-
         }
 
         #region BorrarRecepcion
@@ -241,13 +240,31 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private async void BorrarRecepcion()
         {
             string pregunta = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar la recepción " + (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).NumeroAlbaran + "?"
-                : "¿Está seguro de que desea borrar las recepciones seleccionadas?";
+                   ? "¿Está seguro de que desea borrar la recepción " + (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).NumeroAlbaran + "?"
+                   : "¿Está seguro de que desea borrar las recepciones seleccionadas?";
 
             if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
-                context.Recepciones.RemoveRange(ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList());
+                List<Recepcion> recepcionesABorrar = new List<Recepcion>();
+                var recepcionesSeleccionadas = ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList();
+                foreach (var recepcion in recepcionesSeleccionadas)
+                {
+                    if (!context.MateriasPrimas.Any(mp => mp.RecepcionId == recepcion.RecepcionId))
+                    {
+                        recepcionesABorrar.Add(recepcion);
+                    }
+                }
+                context.Recepciones.RemoveRange(recepcionesABorrar);
                 context.SaveChanges();
+                if (recepcionesSeleccionadas.Count != recepcionesABorrar.Count)
+                {
+                    string mensaje = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
+                           ? "No se ha podido borrar la recepción seleccionada."
+                           : "No se han podido borrar todas las recepciones seleccionadas.";
+                    mensaje += "\n\nAsegurese de no que no exista ninguna materia prima asociada a dicha recepción.";
+                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                }
+
             }
         }
         #endregion
@@ -283,12 +300,23 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private async void BorrarMateriaPrima()
         {
             string pregunta = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar la materia prima " + (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima).Codigo + "?"
+                ? "¿Está seguro de que desea borrar la materia prima con código " + (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima).Codigo + "?"
                 : "¿Está seguro de que desea borrar las materias primas seleccionadas?";
 
             if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
-                context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
+
+                List<MateriaPrima> materiasPrimasABorrar = new List<MateriaPrima>();
+                var materiasPrimasSeleccionadas = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList();
+
+                foreach (var materias in materiasPrimasSeleccionadas)
+                {
+                    /*if (!context.MateriasPrimas.Any(mp => mp.RecepcionId == recepcion.RecepcionId))
+                    {
+
+                    }*/
+                }
+                    context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
                 context.SaveChanges();
                 ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
             }

@@ -199,7 +199,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoClienteId).Count() == 0)
+                        if (!context.Clientes.Any(t => t.TipoId == tipoSeleccionado.TipoClienteId))
                         {
                             var tipo = context.TiposClientes.Where(tc => tc.TipoClienteId == tipoSeleccionado.TipoClienteId).First();
                             context.TiposClientes.Remove(tipo);
@@ -223,9 +223,10 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (context.Clientes.Where(t => t.TipoId == tipoSeleccionado.TipoProveedorId).Count() == 0)
+                        if (!context.Proveedores.Any(t => t.TipoId == tipoSeleccionado.TipoProveedorId))
                         {
                             var tipo = context.TiposProveedores.Where(tc => tc.TipoProveedorId == tipoSeleccionado.TipoProveedorId).First();
+                            context.TiposProveedores.Remove(tipo);
                             context.SaveChanges();
                         }
                         else
@@ -308,7 +309,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (context.Clientes.Where(t => t.TipoCliente.GrupoId == grupoSeleccionado.GrupoClienteId).Count() == 0)
+                        if (!context.Clientes.Any(t => t.TipoCliente.GrupoId == grupoSeleccionado.GrupoClienteId))
                         {
                             var grupo = context.GruposClientes.Where(gc => gc.GrupoClienteId == grupoSeleccionado.GrupoClienteId).First();
                             context.GruposClientes.Remove(grupo);
