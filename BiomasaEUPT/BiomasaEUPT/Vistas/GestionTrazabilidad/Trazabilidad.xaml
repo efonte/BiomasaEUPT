@@ -15,7 +15,7 @@
     <Grid x:Name="gTrazabilidad">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="rdCodigo"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition x:Name="rdTrazabilidad" Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,7 +26,7 @@
                  MaxLength="10" FontSize="15" FontWeight="Bold" MaxWidth="100" TextChanged="tbCodigo_TextChanged">
         </TextBox>
         <StackPanel x:Name="spTrazabilidad" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                    Orientation="Horizontal" HorizontalAlignment="Center">
+                    Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
         </StackPanel>
         

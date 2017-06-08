@@ -41,12 +41,14 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             // Grid.SetColumn(tbCodigo, 0);
             Grid.SetColumnSpan(tbCodigo, 2);
             rdCodigo.Height = new GridLength(1, GridUnitType.Star);
+            rdTrazabilidad.Height = GridLength.Auto;
 
             if (codigo.Length == 10)
             {
                 // Grid.SetColumn(tbCodigo, 0);
                 Grid.SetColumnSpan(tbCodigo, 1);
                 rdCodigo.Height = GridLength.Auto;
+                rdTrazabilidad.Height = new GridLength(1, GridUnitType.Star);
 
                 switch (codigo[0].ToString())
                 {
@@ -55,12 +57,26 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         {
                             var materiaPrima = context.MateriasPrimas.Single(mp => mp.Codigo == codigo);
                             Console.WriteLine(materiaPrima.Recepcion.NumeroAlbaran);
-                            var pRecepcion = new PlantillaRecepcion();
-                            pRecepcion.DataContext = materiaPrima.Recepcion;
-                            spTrazabilidad.Children.Add(pRecepcion);
-                            //Grid.SetRow(pRecepcion, 1);
-                            //Grid.SetColumn(pRecepcion, 0);
+                            spTrazabilidad.Children.Add(new PlantillaRecepcion() { DataContext = materiaPrima.Recepcion, Margin=new Thickness(10,10,10,10) });
+                            spTrazabilidad.Children.Add(new PlantillaMateriaPrima() { Margin = new Thickness(10, 10, 10, 10) });
+                            //var huecosMateriasPrimas = context.HuecosMateriasPrimas.Where(hmp => hmp.MateriaPrima == materiaPrima).ToList();
+                            // 1726251362
+                            var sitiosRecepciones = (from hmp in context.HuecosMateriasPrimas
+                                                     join hr in context.HuecosRecepciones on hmp.HuecoRecepcionId equals hr.HuecoRecepcionId
+                                                     join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
+                                                     where hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId
+                                                     select new
+                                                     {
+                                                         sr
+                                                     });
 
+
+                            var spSitiosAlmacenajes = new StackPanel();
+                            spTrazabilidad.Children.Add(spSitiosAlmacenajes);
+                            foreach (var sitioRecepcion in sitiosRecepciones.Select(sr => sr.sr).ToList())
+                            {
+                                spSitiosAlmacenajes.Children.Add(new PlantillaSitioRecepcion() { DataContext = sitioRecepcion });
+                            }
                         }
                         break;
                     case Constantes.CODIGO_ELABORACIONES:

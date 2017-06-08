@@ -229,8 +229,14 @@
     <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
       <DependentUpon>TabProveedores.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\PlantillaMateriaPrima.xaml.cs">
+      <DependentUpon>PlantillaMateriaPrima.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionTrazabilidad\PlantillaRecepcion.xaml.cs">
       <DependentUpon>PlantillaRecepcion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\PlantillaSitioRecepcion.xaml.cs">
+      <DependentUpon>PlantillaSitioRecepcion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionTrazabilidad\Trazabilidad.xaml.cs">
       <DependentUpon>Trazabilidad.xaml</DependentUpon>
@@ -348,7 +354,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionTrazabilidad\PlantillaMateriaPrima.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\GestionTrazabilidad\PlantillaRecepcion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionTrazabilidad\PlantillaSitioRecepcion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
