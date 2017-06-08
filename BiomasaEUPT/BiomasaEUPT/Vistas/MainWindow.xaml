@@ -11,6 +11,7 @@
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+        xmlns:GestionTrazabilidad="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
         Loaded="Window_Loaded"
@@ -111,6 +112,18 @@
                         </TabItem.Header>
 
                         <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
+                    </TabItem>
+
+                    <!-- Pestaña Trazabilidad -->
+                    <TabItem x:Name="tiTrazabilidad" IsSelected="True" Selector.Unselected="tiRecepciones_Unselected">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <GestionTrazabilidad:TabTrazabilidad x:Name="ucTabTrazabilidad" />
                     </TabItem>
                 </dragablz:TabablzControl>
             </dockablz:Layout>

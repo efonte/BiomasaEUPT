@@ -193,17 +193,20 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void FiltroTablaMateriasPrimas(object sender, FilterEventArgs e)
         {
-          /*  string textoBuscado = ucTablaMateriasPrimas.tbBuscar.Text.ToLower();
+            string textoBuscado = ucTablaMateriasPrimas.tbBuscar.Text.ToLower();
             var materiaPrima = e.Item as MateriaPrima;
+            string tipo = materiaPrima.TipoMateriaPrima.Nombre.ToLower();
+            string grupo = materiaPrima.TipoMateriaPrima.GrupoMateriaPrima.Nombre.ToLower();
+            string volumen = materiaPrima.Volumen.ToString();
+            string unidades = materiaPrima.Unidades.ToString();
+            string procedencia = materiaPrima.Procedencia.Nombre.ToLower();
             string fechaBaja = materiaPrima.FechaBaja.ToString();
-            string numeroAlbaran = recepcion.NumeroAlbaran.ToLower();
-            string proveedor = recepcion.Proveedor.RazonSocial.ToLower();
-            string estado = recepcion.EstadoRecepcion.Nombre.ToLower();
 
-            e.Accepted = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbProveedor.IsChecked == true ? proveedor.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbEstado.IsChecked == true ? estado.Contains(textoBuscado) : false);*/
+            e.Accepted = (ucTablaMateriasPrimas.cbFechaBaja.IsChecked == true ? fechaBaja.Contains(textoBuscado) : false) ||
+                         (ucTablaMateriasPrimas.cbTipo.IsChecked == true ? tipo.Contains(textoBuscado) : false) ||
+                         (ucTablaMateriasPrimas.cbGrupo.IsChecked == true ? grupo.Contains(textoBuscado) : false) ||
+                         (ucTablaMateriasPrimas.cbVolUni.IsChecked == true ? (volumen.Contains(textoBuscado) || unidades.Contains(textoBuscado)) : false) ||
+                         (ucTablaMateriasPrimas.cbProcedencia.IsChecked == true ? procedencia.Contains(textoBuscado) : false);
 
         }
 

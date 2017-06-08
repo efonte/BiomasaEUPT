@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos
 {
-    public static class ConstantesModelo
+    public static class Constantes
     {
+
+        public const string CODIGO_MATERIAS_PRIMAS = "1";
+        public const string CODIGO_ELABORACIONES = "2";
     }
 }

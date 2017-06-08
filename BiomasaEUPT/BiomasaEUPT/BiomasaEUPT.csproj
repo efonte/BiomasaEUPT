@@ -128,7 +128,7 @@
     <Compile Include="Migrations\SeedTablas.cs" />
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />
     <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
-    <Compile Include="Modelos\ConstantesModelo.cs" />
+    <Compile Include="Modelos\Constantes.cs" />
     <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
@@ -167,7 +167,6 @@
     <Compile Include="Modelos\Validadores\ClienteValidationRule.cs" />
     <Compile Include="Modelos\Validadores\FechaValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
-    <Compile Include="Modelos\Validadores\MateriaPrimaValidationRule.cs" />
     <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RecepcionValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
@@ -230,6 +229,12 @@
     <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
       <DependentUpon>TabProveedores.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\PlantillaRecepcion.xaml.cs">
+      <DependentUpon>PlantillaRecepcion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\Trazabilidad.xaml.cs">
+      <DependentUpon>Trazabilidad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
       <DependentUpon>InfoUsuarios.xaml</DependentUpon>
     </Compile>
@@ -256,6 +261,9 @@
     </Compile>
     <Compile Include="Vistas\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\TabTrazabilidad.xaml.cs">
+      <DependentUpon>TabTrazabilidad.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
@@ -340,6 +348,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionTrazabilidad\PlantillaRecepcion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionTrazabilidad\Trazabilidad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\GestionUsuarios\InfoUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -389,6 +405,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Splash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionTrazabilidad\TabTrazabilidad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
