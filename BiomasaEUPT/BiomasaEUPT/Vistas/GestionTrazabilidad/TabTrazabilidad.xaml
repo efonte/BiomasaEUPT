@@ -8,10 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <local:TrazabilidadCodigos Grid.Column="0" x:Name="trazabilidadCodigos" Margin="10 10 0 10"/>
+       
+        <local:TrazabilidadCodigos Grid.Column="0" x:Name="trazabilidadCodigos" Margin="10"/>
     </Grid>
 </UserControl>
