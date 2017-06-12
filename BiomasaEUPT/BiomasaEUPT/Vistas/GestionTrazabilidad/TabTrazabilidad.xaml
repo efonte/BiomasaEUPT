@@ -6,39 +6,12 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
     <Grid>
-        <!--local:Trazabilidad x:Name="ucTrazabilidad" Margin="10 10 10 10" /-->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="tbCodigo" Grid.Row="0" Grid.Column="0"
-                 materialDesign:HintAssist.Hint="Código" HorizontalAlignment="Center"
-                 MaxLength="10" FontSize="15" FontWeight="Bold">
-        </TextBox>
-        <Border Grid.Row="1" Grid.Column="0" Background="{StaticResource MaterialDesignBackground}" Margin="10 10 0 10">
-            <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Almacenamiento" Style="{StaticResource MaterialDesignGroupBox}" >
-                <ScrollViewer x:Name="svAlmacenamiento" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                </ScrollViewer>
-            </GroupBox>
-        </Border>
-        <Border Grid.Row="1" Grid.Column="1" Background="{StaticResource MaterialDesignBackground}" Margin="10 10 0 10">
-            <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Elaboración" Style="{StaticResource MaterialDesignGroupBox}" >
-                <ScrollViewer x:Name="svElaboracion" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                </ScrollViewer>
-            </GroupBox>
-        </Border>
-        <Border Grid.Row="1" Grid.Column="2" Background="{StaticResource MaterialDesignBackground}" Margin="10 10 10 10">
-            <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Venta" Style="{StaticResource MaterialDesignGroupBox}" >
-                <ScrollViewer x:Name="svVenta" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                </ScrollViewer>
-            </GroupBox>
-        </Border>
+        <local:TrazabilidadCodigos Grid.Column="0" x:Name="trazabilidadCodigos" Margin="10 10 0 10"/>
     </Grid>
 </UserControl>

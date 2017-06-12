@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 {
     /// <summary>
-    /// Lógica de interacción para PlantillaSitioRecepcion.xaml
+    /// Lógica de interacción para TrazabilidadCodigos.xaml
     /// </summary>
-    public partial class PlantillaSitioRecepcion : UserControl
+    public partial class TrazabilidadCodigos : UserControl
     {
-        public PlantillaSitioRecepcion()
+        public TrazabilidadCodigos()
         {
             InitializeComponent();
         }

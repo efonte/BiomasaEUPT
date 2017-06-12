@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BiomasaEUPT.Modelos;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,71 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
     /// </summary>
     public partial class TabTrazabilidad : UserControl
     {
+        private BiomasaEUPTContext context;
         public TabTrazabilidad()
         {
             InitializeComponent();
+            context = new BiomasaEUPTContext();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            trazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
+        }
+
+        private void TbCodigo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string codigo = (sender as TextBox).Text;
+            trazabilidadCodigos.tvAlmacenamiento.Items.Clear();
+            if (codigo.Length == 10)
+            {
+                switch (codigo[0].ToString())
+                {
+                    case Constantes.CODIGO_MATERIAS_PRIMAS:
+                        if (context.MateriasPrimas.Any(mp => mp.Codigo == codigo))
+                        {
+                            var materiaPrima = context.MateriasPrimas.Single(mp => mp.Codigo == codigo);
+                            var tviProveedor = TreeViewItemIcono(materiaPrima.Recepcion.Proveedor.RazonSocial, PackIconKind.Worker);
+                            trazabilidadCodigos.tvAlmacenamiento.Items.Add(tviProveedor);
+                            var tviRecepcion = TreeViewItemIcono(materiaPrima.Recepcion.NumeroAlbaran, PackIconKind.Truck);
+                            tviProveedor.Items.Add(tviRecepcion);
+                            var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
+                            tviRecepcion.Items.Add(tviMateriaPrima);
+                            var sitiosRecepciones = (from hmp in context.HuecosMateriasPrimas
+                                                     join hr in context.HuecosRecepciones on hmp.HuecoRecepcionId equals hr.HuecoRecepcionId
+                                                     join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
+                                                     where hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId
+                                                     select new { sr });
+
+                            foreach (var sitioRecepcion in sitiosRecepciones.Select(sr => sr.sr).Distinct().ToList())
+                            {
+                                var tviSitioRecepcion = TreeViewItemIcono(sitioRecepcion.Nombre, PackIconKind.Texture);
+                                tviMateriaPrima.Items.Add(tviSitioRecepcion);
+                                foreach (var huecoMateriaPrima in context.HuecosMateriasPrimas.Where(hmp => hmp.HuecoRecepcion.SitioId == sitioRecepcion.SitioRecepcionId && hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList())
+                                {
+                                    var tviHuecoMateriaPrima = TreeViewItemIcono(huecoMateriaPrima.HuecoRecepcion.Nombre, PackIconKind.Tree);
+                                    tviSitioRecepcion.Items.Add(tviHuecoMateriaPrima);
+                                }
+                            }
+                        }
+                        break;
+                    case Constantes.CODIGO_ELABORACIONES:
+                        break;
+                    case Constantes.CODIGO_VENTAS:
+                        break;
+                }
+            }
+        }
+
+        private TreeViewItem TreeViewItemIcono(string texto, PackIconKind icono)
+        {
+            var tviTexto = new TextBlock() { Text = texto, Margin = new Thickness(8, 0, 0, 0) };
+            var tviIcono = new PackIcon() { Kind = icono };
+            var tviHeader = new StackPanel() { Orientation = Orientation.Horizontal };
+            tviHeader.Children.Add(tviIcono);
+            tviHeader.Children.Add(tviTexto);
+            return new TreeViewItem() { Header = tviHeader, IsExpanded = true };
+        }      
+     
     }
 }

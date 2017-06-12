@@ -11,5 +11,6 @@ namespace BiomasaEUPT.Modelos
 
         public const string CODIGO_MATERIAS_PRIMAS = "1";
         public const string CODIGO_ELABORACIONES = "2";
+        public const string CODIGO_VENTAS = "3";
     }
 }
