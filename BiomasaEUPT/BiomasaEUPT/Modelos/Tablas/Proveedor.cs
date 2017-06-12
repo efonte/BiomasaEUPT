@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Proveedor que suministra las materias primas
+    /// </summary>
     [Table("Proveedores")]
     public class Proveedor
     {

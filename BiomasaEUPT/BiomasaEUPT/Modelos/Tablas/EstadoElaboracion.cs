@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Tipología de los estados del proceso de elaboración (Nuevo, Procesado y Finalizado)
+    /// </summary>
     [Table("EstadosElaboraciones")]
     public class EstadoElaboracion
     {

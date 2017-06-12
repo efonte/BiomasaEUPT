@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Explanada o almacén que contiene materias primas
+    /// </summary>
     [Table("SitiosRecepciones")]
     public class SitioRecepcion
     {

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Distintos proveedores que existen en la aplicación
+    /// </summary>
     [Table("TiposProveedores")]
     public class TipoProveedor
     {

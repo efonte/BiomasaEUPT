@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Cada una de las recepciones que llegan con materias primas
+    /// </summary>
     [Table("Recepciones")]
     public class Recepcion
     {

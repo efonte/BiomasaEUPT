@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Códigos postales, nombre, latitud y longitud de los municipios de un país
+    /// </summary>
     [Table("Municipios")]
     public class Municipio
     {

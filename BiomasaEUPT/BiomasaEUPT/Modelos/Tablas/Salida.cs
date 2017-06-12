@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Envío del producto terminado al cliente
+    /// </summary>
     [Table("Salidas")]
     public class Salida
     {

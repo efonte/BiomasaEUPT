@@ -693,6 +693,7 @@
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Vistas\GestionElaboraciones\" />
     <Folder Include="Vistas\Plantillas\" />
   </ItemGroup>
   <ItemGroup>

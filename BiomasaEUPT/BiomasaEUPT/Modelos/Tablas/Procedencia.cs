@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Lugar de procedencia de la materia prima
+    /// </summary>
     [Table("Procedencias")]
     public class Procedencia
     {

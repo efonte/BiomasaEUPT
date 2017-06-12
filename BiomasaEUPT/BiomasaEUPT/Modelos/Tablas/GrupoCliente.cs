@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Topología de grupos de clientes. Cada tipo de cliente está asociado a un grupo.
+    /// </summary>
+    /// <example>
+    /// Grupos varios (compran de todo), Grupo Pellets
+    /// </example>
     [Table("GruposClientes")]
     public class GrupoCliente
     {
@@ -30,7 +36,6 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public virtual List<Cliente> Clientes { get; set; }
 
-        public virtual List<TipoCliente> TiposClientes { get; set; }
 
     }
 }

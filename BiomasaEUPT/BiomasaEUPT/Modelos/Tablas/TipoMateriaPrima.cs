@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Distintos tipos de materias primas que existen dentro de la base de datos
+    /// </summary>
     [Table("TiposMateriasPrimas")]
     public class TipoMateriaPrima
     {

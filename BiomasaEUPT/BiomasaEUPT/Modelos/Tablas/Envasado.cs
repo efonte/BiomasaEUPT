@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Producto final listo para venta
+    /// </summary>
     [Table("Envasados")]
     public class Envasado
     {

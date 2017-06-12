@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Topología de grupos de materias primas. Cada tipo de tipo de materia prima está asociado a un grupo.
+    /// </summary>
+    /// <example>
+    /// Grupo Troncos, Grupo Pellets, Grupo Tablones
+    /// </example>
     [Table("GruposMateriasPrimas")]
     public class GrupoMateriaPrima
     {

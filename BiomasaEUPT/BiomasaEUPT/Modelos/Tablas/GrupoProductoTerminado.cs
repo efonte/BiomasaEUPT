@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Topología de grupos de productos terminados que están relacionados con los tipos.
+    /// Cada tipo de producto termiando está asociado a un grupo.
+    /// </summary>
+    /// <example>
+    /// Grupos Pellets, Grupos Tablones
+    /// </example>
     [Table("GruposProductosTerminados")]
     public class GrupoProductoTerminado
     {

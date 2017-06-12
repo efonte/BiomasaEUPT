@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Distintos tipos de clientes con los que la aplicación trabaja
+    /// Cada tipo está asociado con un grupo de clientes
+    /// </summary>
     [Table("TiposClientes")]
     public class TipoCliente
     {
@@ -28,11 +32,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [MaxLength(50)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
-
-        public int GrupoId { get; set; }
-
-        [ForeignKey("GrupoId")]
-        public virtual GrupoCliente GrupoCliente { get; set; }
 
         public virtual List<Cliente> Clientes { get; set; }
 

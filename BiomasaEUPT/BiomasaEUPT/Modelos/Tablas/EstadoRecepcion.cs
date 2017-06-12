@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Tipología de estados que puede tener una recepción (Disponible y Aceptado)
+    /// </summary>
     [Table("EstadosRecepciones")]
     public class EstadoRecepcion
     {

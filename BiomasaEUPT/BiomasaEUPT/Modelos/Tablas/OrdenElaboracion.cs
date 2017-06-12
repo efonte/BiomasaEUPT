@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Orden de elaboración para crear un producto terminado usando materias primas
+    /// </summary>
     [Table("OrdenesElaboraciones")]
     public class OrdenElaboracion
     {
@@ -23,6 +26,8 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("EstadoElaboracionId")]
         public virtual EstadoElaboracion EstadoElaboracion { get; set; }
+
+        public virtual List<ProductoTerminado> ProductoTerminado { get; set; }
 
     }
 }

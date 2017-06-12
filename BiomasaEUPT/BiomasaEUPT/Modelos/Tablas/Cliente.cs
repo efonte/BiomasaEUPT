@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Cliente al que se le vendes los productos ventas
+    /// </summary>
     [Table("Clientes")]
     public class Cliente
     {
@@ -53,10 +56,15 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int TipoId { get; set; }
 
+        public int GrupoId { get; set; }
+
         [ForeignKey("MunicipioId")]
         public virtual Municipio Municipio { get; set; }
 
         [ForeignKey("TipoId")]
         public virtual TipoCliente TipoCliente { get; set; }
+
+        [ForeignKey("GrupoId")]
+        public virtual GrupoCliente GrupoCliente { get; set; }
     }
 }

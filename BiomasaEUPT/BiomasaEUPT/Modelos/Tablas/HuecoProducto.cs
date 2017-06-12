@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Tabla que relaciona los productos terminados que ha habido o hay en cada uno de los huecos almacenaje
+    /// </summary>
     [Table("HuecosProductos")]
     public class HuecoProducto
     {

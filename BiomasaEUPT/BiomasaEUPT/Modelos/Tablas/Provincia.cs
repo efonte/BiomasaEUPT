@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Provincias de un país
+    /// </summary>
     [Table("Provincias")]
     public class Provincia
     {

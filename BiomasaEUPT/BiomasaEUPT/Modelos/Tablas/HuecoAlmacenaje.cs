@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Dentro del sitio de almacenaje, cada una de las partes en las que se encuentra dividido
+    /// </summary>
     [Table("HuecosAlmacenajes")]
     public class HuecoAlmacenaje
     {

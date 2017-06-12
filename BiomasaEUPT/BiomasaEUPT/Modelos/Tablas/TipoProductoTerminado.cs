@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Distintos tipos de productos terminados una vez que se han elaborado.
+    /// Cada uno se asocia con un grupo de producto terminado.
+    /// </summary>
     [Table("TiposProductosTerminados")]
     public class TipoProductoTerminado
     {

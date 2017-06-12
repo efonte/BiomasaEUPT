@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Topología de los distintos tipos de estados que puede tener una salida (Procesada y Enviada)
+    /// </summary>
     [Table("EstadosSalidas")]
     public class EstadoSalida
     {

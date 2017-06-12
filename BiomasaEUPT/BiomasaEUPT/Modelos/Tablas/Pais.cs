@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Código ISO_3166-1 de cada país con su nombre
+    /// </summary>
     [Table("Paises")]
     public class Pais
     {

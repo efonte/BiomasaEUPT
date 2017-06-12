@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Tabla que relaciona las materias primas que ha habido o hay en cada uno de los huecos recepción
+    /// </summary>
     [Table("HuecosMateriasPrimas")]
     public class HuecoMateriaPrima
     {

@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Distintos tipos de usuarios que hay en la aplicación (administrador y técnico)
+    /// Cada tipo de cliente se asocia a un grupo de cliente
+    /// </summary>
     [Table("TiposUsuarios")]
     public class TipoUsuario
     {

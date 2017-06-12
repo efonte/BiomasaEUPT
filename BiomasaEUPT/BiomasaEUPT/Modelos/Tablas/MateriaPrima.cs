@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Materia prima que será usada para fabricar un producto terminado
+    /// </summary>
     [Table("MateriasPrimas")]
     public class MateriaPrima
     {

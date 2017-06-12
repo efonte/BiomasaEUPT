@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Producto obtenido al final del proceso de elaboración. Se utilizan materias primas
+    /// </summary>
     [Table("ProductosTerminados")]
     public class ProductoTerminado
     {

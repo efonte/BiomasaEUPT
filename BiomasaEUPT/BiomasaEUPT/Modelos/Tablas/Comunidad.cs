@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Comunidades de un país
+    /// </summary>
     [Table("Comunidades")]
     public class Comunidad
     {

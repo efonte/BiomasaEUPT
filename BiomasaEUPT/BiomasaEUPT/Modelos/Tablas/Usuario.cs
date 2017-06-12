@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Usuarios que están registrados en el sistema para utilizar la aplicación
+    /// </summary>
     [Table("Usuarios")]
     public class Usuario
     {
