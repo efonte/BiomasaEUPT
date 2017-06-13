@@ -82,7 +82,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             //context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
 
             // Se añaden todos los HuecosRecepciones del SitioRecepcion seleccionado
-            context.HuecosRecepciones.Where(hr => hr.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId && !hr.Ocupado).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
+            context.HuecosRecepciones.Where(hr => hr.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId && !hr.Ocupado.Value).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
             // Se borran los HuecosRecepciones que ya se han añadido (convertidos en HuecosMateriasPrimas)
             HuecosMateriasPrimas.ToList().ForEach(hmp => HuecosRecepcionesDisponibles.Remove(hmp.HuecoRecepcion));
         }

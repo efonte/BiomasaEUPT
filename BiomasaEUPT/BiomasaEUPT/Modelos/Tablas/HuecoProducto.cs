@@ -25,12 +25,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
-        [DisplayName("Volumen utilizado"), Display(Name = "Volumen utilizado")]
-        public double? VolumenUtilizado { get; set; }
+        // Unidades y Volumen restantes son para realizar los envasados
+        [DisplayName("Volumen restante"), Display(Name = "Volumen restante")]
+        public double? VolumenRestante { get; set; }
 
         [Range(0, 1000)]
-        [DisplayName("Unidades utilizadas"), Display(Name = "Unidades utilizadas")]
-        public int? UnidadesUtilizadas { get; set; }
+        [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
+        public int? UnidadesRestantes { get; set; }
 
         public int ProductoTerminadoId { get; set; }
 

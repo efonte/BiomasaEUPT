@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
+    /// <summary>
+    /// Tabla que relaciona las materias primas que se necesitan para fabricar un producto terminado
+    /// </summary>
     [Table("ProductosMaterias")]
     public class ProductoMateria
     {
-
         [Key]
         public int ProductoMateriaId { get; set; }
 

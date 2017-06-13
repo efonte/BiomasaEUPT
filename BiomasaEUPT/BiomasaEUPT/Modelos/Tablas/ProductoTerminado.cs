@@ -48,5 +48,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public virtual OrdenElaboracion OrdenElaboracion { get; set; }
 
         public virtual List<HuecoProducto> HuecosProductos { get; set; }
+
+        public virtual List<ProductoMateria> ProductosMaterias { get; set; }
     }
 }

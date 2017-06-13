@@ -33,8 +33,9 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades totales"), Display(Name = "Unidades totales")]
         public int UnidadesTotales { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Ocupado"), Display(Name = "Ocupado")]
-        public bool Ocupado { get; set; }
+        public bool? Ocupado { get; set; }
 
         public int SitioId { get; set; }
 
