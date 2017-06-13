@@ -77,13 +77,13 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             using (new CursorEspera())
             {
                 context = new BiomasaEUPTContext();
-                materiasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource")));
-                tiposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource")));
-                gruposMateriasPrimasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource")));
-                procedenciasViewSource = ((CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource")));
-                recepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource")));
-                proveedoresViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource")));
-                estadosRecepcionesViewSource = ((CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource")));
+                materiasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource"));
+                tiposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource"));
+                gruposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource"));
+                procedenciasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource"));
+                recepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource"));
+                proveedoresViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource"));
+                estadosRecepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource"));
 
                 context.TiposMateriasPrimas.Load();
                 context.GruposMateriasPrimas.Load();

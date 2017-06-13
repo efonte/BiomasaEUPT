@@ -205,6 +205,18 @@
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\FormOrdenElaboracion.xaml.cs">
+      <DependentUpon>FormOrdenElaboracion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\TabElaboraciones.xaml.cs">
+      <DependentUpon>TabElaboraciones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\TablaElaboraciones.xaml.cs">
+      <DependentUpon>TablaElaboraciones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\TablaProductosTerminados.xaml.cs">
+      <DependentUpon>TablaProductosTerminados.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionRecepciones\FormMateriaPrima.xaml.cs">
       <DependentUpon>FormMateriaPrima.xaml</DependentUpon>
     </Compile>
@@ -307,6 +319,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionClientes\TablaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionElaboraciones\FormOrdenElaboracion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionElaboraciones\TabElaboraciones.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionElaboraciones\TablaElaboraciones.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionElaboraciones\TablaProductosTerminados.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -693,7 +721,6 @@
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Vistas\GestionElaboraciones\" />
     <Folder Include="Vistas\Plantillas\" />
   </ItemGroup>
   <ItemGroup>

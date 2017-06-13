@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionElaboraciones.FormOrdenElaboracion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Órden de Elaboración">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo" Margin="0 0 10 0"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
+                          SelectionChanged="cbGruposProductosTerminados_SelectionChanged">
+                </ComboBox>
+
+                <ListBox Grid.Row="1" x:Name="lbTiposProductosTerminados" Margin="0 10 10 0"
+                         ItemsSource="{Binding TiposProductosTerminadosDisponibles, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbTiposProductosTerminados_PreviewMouseLeftButtonDown"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}">
+                                            <Binding Path="Tamano"/>
+                                            <Binding Path="Humedad"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0" x:Name="wpProductosTerminados" Orientation="Horizontal" Background="AliceBlue" Margin="0 0 0 10"
+                       AllowDrop="True" Drop="spProductosTerminados_Drop">
+                    <ItemsControl ItemsSource="{Binding ProductosTerminados, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="false">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                                                               Text="Por favor, arrastre los productos terminados que desee elaborar."/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar Producto Terminado"
+                                                 CommandParameter="{Binding TipoProductoTerminado.TipoProductoTerminadoId}"
+                                                 DeleteClick="cProductoTerminado_DeleteClick">
+                                    <materialDesign:Chip.Content>
+                                        <TextBlock FontSize="14" FontStyle="Italic">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text">
+                                                        <Setter.Value>
+                                                            <MultiBinding StringFormat="{}{0} {1}" >
+                                                                <Binding Path="TipoProductoTerminado.Nombre" />
+                                                                <Binding Path="TipoProductoTerminado.Volumen" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                        <Binding Path="TipoProductoTerminado.Nombre" />
+                                                                        <Binding Path="TipoProductoTerminado.Unidades" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </materialDesign:Chip.Content>
+                                    <materialDesign:Chip.Icon>
+                                        <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre}"></TextBlock>
+                                    </materialDesign:Chip.Icon>
+                                </materialDesign:Chip>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </WrapPanel>
+
+                <Button Grid.Row="1" Width="100" HorizontalAlignment="Right">Añadir</Button>
+            </Grid>
+        </Grid>
+    </GroupBox>
+</UserControl>

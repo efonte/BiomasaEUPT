@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionElaboraciones.TablaElaboraciones"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
+             xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="ordenesElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenElaboracion}, CreateList=True}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Órdenes de Elaboración">
+
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgElaboraciones" DataContext="{StaticResource ordenesElaboracionesViewSource}"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding FechaElaboracion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding EstadoElaboracion.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar recepciones"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button ToolTip="Borrar la Órden de elaboración seleccionada" Command="{Binding BorrarElaboracionComando}" IsEnabled="{Binding CanBorrarElaboracion}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bAnadirElaboracion" ToolTip="Añadir Órden de Elaboración">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         TextChanged="tbBuscar_TextChanged"/>
+
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Albarán" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Proveedor" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Estado" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbProveedor" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

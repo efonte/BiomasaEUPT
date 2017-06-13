@@ -11,6 +11,7 @@
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+        xmlns:GestionElaboraciones="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
         xmlns:GestionTrazabilidad="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
@@ -67,7 +68,7 @@
                     <TabItem x:Name="tiUsuarios" IsSelected="True" Selector.Unselected="tiUsuarios_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="EqualBox" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                 <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -80,7 +81,7 @@
                     <TabItem x:Name="tiClientes" Selector.Unselected="tiClientes_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                 <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -93,7 +94,7 @@
                     <TabItem x:Name="tiProveedores" IsSelected="True" Selector.Unselected="tiProveedores_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <materialDesign:PackIcon Kind="Worker" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                 <TextBlock Text="Proveedores" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -106,7 +107,7 @@
                     <TabItem x:Name="tiRecepciones" IsSelected="True" Selector.Unselected="tiRecepciones_Unselected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <materialDesign:PackIcon Kind="Truck" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                 <TextBlock Text="Recepciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -114,8 +115,20 @@
                         <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
                     </TabItem>
 
+                    <!-- Pestaña Elaboraciones -->
+                    <TabItem x:Name="tiElaboraciones" IsSelected="True">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
+                    </TabItem>
+
                     <!-- Pestaña Trazabilidad -->
-                    <TabItem x:Name="tiTrazabilidad" IsSelected="True" Selector.Unselected="tiRecepciones_Unselected">
+                    <TabItem x:Name="tiTrazabilidad" IsSelected="True">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
