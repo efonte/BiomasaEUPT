@@ -26,7 +26,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public TablaClientes()
         {
             InitializeComponent();
-            //DataContext = this;
         }
 
         private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
@@ -47,12 +46,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
             // a PopupContent. No se añade en TabClientes.xaml para que así no cargue en memoria cada uno
-            // de los PopupBox hasta que se quiera editar.
+            // de los PopupBox (para cada fila) hasta que se quiera editar.
             using (new CursorEspera())
             {
                 PopupBox popupBox = sender as PopupBox;
                 popupBox.PopupContent = new FormDireccion();
             }
-        }      
+        }
     }
 }

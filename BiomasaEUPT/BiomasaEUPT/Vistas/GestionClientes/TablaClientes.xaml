@@ -160,7 +160,7 @@
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>                            
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

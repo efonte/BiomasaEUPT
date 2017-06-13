@@ -90,6 +90,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
 
+        #region FiltroTabla
         public void FiltrarTabla()
         {
             clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
@@ -136,6 +137,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 }
             }
         }
+        #endregion
 
         #region ConfirmarCambios
         private ICommand _confirmarCambiosComando;
@@ -183,18 +185,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             //clientesViewSource.View.Refresh();
         }
         #endregion
-
-        private bool asd(DbEntityEntry x)
-        {
-            foreach (var prop in x.OriginalValues.PropertyNames)
-            {
-                if (x.OriginalValues[prop].ToString() != x.CurrentValues[prop].ToString())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
         #region Borrar
@@ -244,37 +234,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
-
-
-        /*  #region AñadirCliente
-          private ICommand _anadirClienteComando;
-
-          public ICommand AnadirClienteComando
-          {
-              get
-              {
-                  if (_anadirClienteComando == null)
-                  {
-                      _anadirClienteComando = new RelayComando(
-                          param => AnadirCliente(),
-                          param => true
-                      );
-                  }
-                  return _anadirClienteComando;
-              }
-          }
-
-
-          private void AnadirCliente()
-          {
-
-          }
-
-      }
-      #endregion*/
-
-
-
 
     }
 }

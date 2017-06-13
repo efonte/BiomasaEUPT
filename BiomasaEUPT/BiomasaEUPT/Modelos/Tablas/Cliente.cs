@@ -19,24 +19,25 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ClienteId { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(40)]
-        [StringLength(40, MinimumLength = 5)]
+        [MinLength(Constantes.LONG_MIN_RAZON_SOCIAL)]
+        [MaxLength(Constantes.LONG_MAX_RAZON_SOCIAL)]
+        [StringLength(Constantes.LONG_MAX_RAZON_SOCIAL, MinimumLength = Constantes.LONG_MIN_RAZON_SOCIAL)]
         [Index(IsUnique = true)]
         [DisplayName("Razón social"), Display(Name = "Razón social")]
         public string RazonSocial { get; set; }
 
         [Required]
-        [MinLength(10)]
-        [MaxLength(10)]
-        [StringLength(10, MinimumLength = 10)]
+        [MinLength(Constantes.LONG_MIN_NIF)]
+        [MaxLength(Constantes.LONG_MAX_NIF)]
+        [StringLength(Constantes.LONG_MAX_NIF, MinimumLength = Constantes.LONG_MIN_NIF)]
         [Index(IsUnique = true)]
         [DisplayName("NIF"), Display(Name = "NIF")]
         public string Nif { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(254)]
+        [MinLength(Constantes.LONG_MIN_EMAIL)]
+        [MaxLength(Constantes.LONG_MAX_EMAIL)]
+        [StringLength(Constantes.LONG_MAX_EMAIL, MinimumLength = Constantes.LONG_MIN_EMAIL)]
         [Index(IsUnique = true)]
         [EmailAddress]
         [DisplayName("Email"), Display(Name = "Email")]

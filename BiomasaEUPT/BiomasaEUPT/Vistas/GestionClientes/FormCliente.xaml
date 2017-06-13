@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
@@ -74,7 +75,7 @@
                         <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="email" Min="5" Max="254" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="email" Min="{x:Static const:Constantes.LONG_MIN_EMAIL}" Max="{x:Static const:Constantes.LONG_MAX_EMAIL}" ValidatesOnTargetUpdated="True" />
                                 <validadores:RegexValidationRule NombreCampo="email" ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vUnicoEmail" Online="True" Tipo="Cliente" Atributo="Email" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
