@@ -36,6 +36,20 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             InitializeComponent();
             DataContext = this;
+            ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbNif.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbCalle.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -52,21 +66,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 clientesViewSource.Source = context.Clientes.Local;
                 tiposClientesViewSource.Source = context.TiposClientes.Local;
                 gruposClientesViewSource.Source = context.GruposClientes.Local;
-
-                ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbNif.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbCalle.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
             }
         }
 

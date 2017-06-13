@@ -25,13 +25,13 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
         private BiomasaEUPTContext context;
         public TabTrazabilidad()
         {
-            InitializeComponent();
-            context = new BiomasaEUPTContext();
+            InitializeComponent();           
+            trazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            trazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
+            context = new BiomasaEUPTContext();
         }
 
         private void TbCodigo_TextChanged(object sender, TextChangedEventArgs e)

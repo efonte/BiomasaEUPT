@@ -67,7 +67,6 @@ namespace BiomasaEUPT
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
             await Task.Run(() => iniciarPrograma());
-            await Task.Run(() => inicioFinalizado());
 
             Log.Information("SPLASH: Inicialización completa.");
             Login login = new Login();
@@ -77,10 +76,10 @@ namespace BiomasaEUPT
                 {
                     login.Close();
                     MainWindow main = new MainWindow();
-                    //Window1 main = new Window1();
+                    await Task.Run(() => inicioFinalizado());
                     Close();
                     main.Show();
-                   
+
                 }
                 else
                 {
@@ -129,15 +128,14 @@ namespace BiomasaEUPT
                     actualizador.actualizarPrograma();
                     // Thread.Sleep(500);
                 }
-
-                // Estado 2 - Conexión BD
-                Dispatcher.Invoke(() =>
-                {
-                    lInfoProgreso.Text = "Conectándose a la BD";
-                    pbProgreso.Value = 75;
-                });
-                // Thread.Sleep(500);
             }
+            // Estado 2 - Conexión BD
+            Dispatcher.Invoke(() =>
+            {
+                lInfoProgreso.Text = "Conectándose a la BD";
+                pbProgreso.Value = 50;
+            });
+            // Thread.Sleep(500);
         }
 
         private void inicioFinalizado()
@@ -148,7 +146,7 @@ namespace BiomasaEUPT
                 pbProgreso.Value = 100;
             });
 
-            // Thread.Sleep(500);
+           // Thread.Sleep(1000);
         }
     }
 }

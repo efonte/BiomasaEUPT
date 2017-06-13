@@ -40,6 +40,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             InitializeComponent();
             DataContext = this;
+            ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
+            ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -57,8 +59,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 //ucTablaUsuarios.dgUsuarios.ItemsSource = result.ToList();
                 ActualizarContador();
             }
-            ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
-            ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
         }
 
         private void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

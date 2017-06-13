@@ -35,6 +35,20 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             InitializeComponent();
             DataContext = this;
+            ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbNif.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbCalle.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaProveedores.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
+            //ucTablaProveedores.bAnadirProveedor.Click += BAnadirProveedor_Click;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -47,22 +61,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 context.Proveedores.Load();
                 context.TiposProveedores.Load();
                 proveedoresViewSource.Source = context.Proveedores.Local;
-                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
-
-                ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbNif.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbNif.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbCalle.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbCalle.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbCodigoPostal.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
-                ucTablaProveedores.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
-                //ucTablaProveedores.bAnadirProveedor.Click += BAnadirProveedor_Click;
+                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;              
             }
         }
 
