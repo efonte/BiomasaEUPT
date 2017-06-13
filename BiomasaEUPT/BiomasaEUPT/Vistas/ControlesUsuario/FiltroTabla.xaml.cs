@@ -309,7 +309,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     using (var context = new BiomasaEUPTContext())
                     {
-                        if (!context.Clientes.Any(t => t.TipoCliente.GrupoId == grupoSeleccionado.GrupoClienteId))
+                        if (!context.GruposClientes.Any(gc => gc.GrupoClienteId == grupoSeleccionado.GrupoClienteId))
                         {
                             var grupo = context.GruposClientes.Where(gc => gc.GrupoClienteId == grupoSeleccionado.GrupoClienteId).First();
                             context.GruposClientes.Remove(grupo);
@@ -318,7 +318,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         else
                         {
                             await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso"), "RootDialog");
-                        }                        
+                        }
                     }
                     RefrescarListaGrupos();
                 }

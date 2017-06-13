@@ -87,14 +87,12 @@ namespace BiomasaEUPT.Migrations
                new TipoCliente()
                {
                    Nombre = "TipoCliente 1",
-                   Descripcion = "Este es el TipoCliente 1",
-                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId
+                   Descripcion = "Este es el TipoCliente 1"
                },
                new TipoCliente()
                {
                    Nombre = "TipoCliente 2",
-                   Descripcion = "Este es el TipoCliente 2",
-                   GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId
+                   Descripcion = "Este es el TipoCliente 2"
                });
             context.SaveChanges();
 
@@ -268,6 +266,7 @@ namespace BiomasaEUPT.Migrations
                      Nif = "A-11111111",
                      Email = "cliente1@biomasaeupt.es",
                      TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
+                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 1").GrupoClienteId,
                      MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "44003").MunicipioId,
                      Calle = "Calle 1"
                  },
@@ -277,6 +276,7 @@ namespace BiomasaEUPT.Migrations
                      Nif = "11111111-B",
                      Email = "cliente2@biomasaeupt.es",
                      TipoId = context.TiposClientes.Local.Single(tc => tc.Nombre == "TipoCliente 1").TipoClienteId,
+                     GrupoId = context.GruposClientes.Local.Single(gc => gc.Nombre == "GrupoCliente 2").GrupoClienteId,
                      MunicipioId = context.Municipios.Local.Single(gc => gc.CodigoPostal == "50580").MunicipioId,
                      Calle = "Calle 2"
                  });

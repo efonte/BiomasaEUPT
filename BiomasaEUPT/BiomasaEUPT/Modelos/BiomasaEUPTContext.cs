@@ -24,9 +24,8 @@
         //: base(nameOrConnectionString: ConnectionString())       
         {
             //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
-            //Database.SetInitializer(new BiomasaEUPTContextInitializer());   
             // CUIDADO -> Borra la tabla y la vuelve a crear
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BiomasaEUPTContext>());
+            //Database.SetInitializer(new BiomasaEUPTContextInitializer());
         }
 
 
