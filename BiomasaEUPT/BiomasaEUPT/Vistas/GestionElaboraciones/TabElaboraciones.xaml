@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition />
+            <RowDefinition Height="225"/>
         </Grid.RowDefinitions>
 
         <local:TablaElaboraciones Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaElaboraciones" Margin="10 10 0 10" />

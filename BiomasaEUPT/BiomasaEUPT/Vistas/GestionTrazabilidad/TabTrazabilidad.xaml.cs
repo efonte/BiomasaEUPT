@@ -25,7 +25,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
         private BiomasaEUPTContext context;
         public TabTrazabilidad()
         {
-            InitializeComponent();           
+            InitializeComponent();
             trazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
         }
 
@@ -69,10 +69,17 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                                 }
                             }
                         }
+
                         break;
+
+
                     case Constantes.CODIGO_ELABORACIONES:
+
                         break;
+
+
                     case Constantes.CODIGO_VENTAS:
+
                         break;
                 }
             }
@@ -86,7 +93,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             tviHeader.Children.Add(tviIcono);
             tviHeader.Children.Add(tviTexto);
             return new TreeViewItem() { Header = tviHeader, IsExpanded = true };
-        }      
-     
+        }
+
     }
 }

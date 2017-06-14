@@ -50,10 +50,10 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private void cbGruposProductosTerminados_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TiposProductosTerminadosDisponibles.Clear();
-            //context.HuecosRecepciones.Where(d => d.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId).ToList().Except(HuecosRecepciones).ToList().ForEach(HuecosRecepcionesDisponibles.Add);
 
             // Se añaden todos los TiposProductosTerminados del GrupoProductoTerminado seleccionado
             context.TiposProductosTerminados.Where(tpt => tpt.GrupoId == ((GrupoProductoTerminado)cbGruposProductosTerminados.SelectedItem).GrupoProductoTerminadoId).ToList().ForEach(TiposProductosTerminadosDisponibles.Add);
+
             // Se borran los TiposProductosTerminados que ya se han añadido
             ProductosTerminados.ToList().ForEach(pt => TiposProductosTerminadosDisponibles.Remove(pt.TipoProductoTerminado));
         }
@@ -111,19 +111,17 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             var chip = sender as Chip;
             int tipoProductoTerminadoId = int.Parse(chip.CommandParameter.ToString());
-            /*TipoMateriaPrima tipoMateriaPrima = (from hmp in HuecosMateriasPrimas where hmp.HuecoRecepcion.HuecoRecepcionId == huecoRecepcionId select hmp).First();
-             HuecosMateriasPrimas.Remove(tipoMateriaPrima);
-             if (tipoMateriaPrima.HuecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
-             {
-                 TiposProductosTerminadosDisponibles.Add(tipoMateriaPrima.HuecoRecepcion);
-             }
-             CalcularUnidadesVolumen();*/
             ProductoTerminado productoTerminado = ProductosTerminados.Single(pt => pt.TipoProductoTerminado.TipoProductoTerminadoId == tipoProductoTerminadoId);
             ProductosTerminados.Remove(productoTerminado);
             if (productoTerminado.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId == (cbGruposProductosTerminados.SelectedItem as GrupoProductoTerminado).GrupoProductoTerminadoId)
             {
                 TiposProductosTerminadosDisponibles.Add(productoTerminado.TipoProductoTerminado);
             }
+        }
+
+        private void bAnadir_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

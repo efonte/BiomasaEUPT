@@ -24,8 +24,9 @@
         //: base(nameOrConnectionString: ConnectionString())       
         {
             //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
+
             // CUIDADO -> Borra la tabla y la vuelve a crear
-            Database.SetInitializer(new BiomasaEUPTContextInitializer());
+            //Database.SetInitializer(new BiomasaEUPTContextInitializer());
         }
 
 
@@ -58,7 +59,7 @@
 
         public bool HayCambios<TEntity>(bool detectarEstadoInicial = true) where TEntity : class
         {
-            return this.ChangeTracker.Entries().Where(
+            return ChangeTracker.Entries().Where(
                 x => typeof(TEntity).IsAssignableFrom(x.Entity.GetType()) &&
                 x.State != EntityState.Unchanged &&
                 (detectarEstadoInicial && x.State == EntityState.Modified ? (x.OriginalValues.PropertyNames.Where(y => x.OriginalValues[y] != null && x.CurrentValues[y] != null && x.OriginalValues[y].ToString() != x.CurrentValues[y].ToString()).ToList().Count > 0) : true)

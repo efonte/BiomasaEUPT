@@ -71,8 +71,8 @@ END
 '
 /*
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_I]
-    ON [dbo].[HistorialHuecosRecepciones]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosAlmacenajes_I]
+    ON [dbo].[HistorialHuecosAlmacenajes]
     AFTER INSERT
 AS 
 BEGIN
@@ -89,8 +89,8 @@ END
 
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_D]
-    ON [dbo].[HistorialHuecosRecepciones]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosAlmacenajes_D]
+    ON [dbo].[HistorialHuecosAlmacenajes]
     AFTER DELETE
 AS 
 BEGIN
@@ -104,8 +104,8 @@ END
 '
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_U]
-    ON [dbo].[HistorialHuecosRecepciones]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosAlmacenajes_U]
+    ON [dbo].[HistorialHuecosAlmacenajes]
     AFTER UPDATE
 AS 
 BEGIN

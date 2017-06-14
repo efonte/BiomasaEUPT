@@ -24,10 +24,23 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>                
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <TextBox Grid.Column="0" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                         AcceptsReturn="True" Height="125" MaxLength="50">
+                <TextBox.Text>
+                    <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:LongitudValidationRule NombreCampo="descripción" Max="50" ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
@@ -60,7 +73,7 @@
                 </ListBox>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="auto"/>
@@ -122,8 +135,8 @@
                     </ItemsControl>
                 </WrapPanel>
 
-                <Button Grid.Row="1" Width="100" HorizontalAlignment="Right">Añadir</Button>
-            </Grid>
+                <Button Grid.Row="1" x:Name="bAnadir" Width="100" HorizontalAlignment="Right" Click="bAnadir_Click">Añadir</Button>
+            </Grid>           
         </Grid>
     </GroupBox>
 </UserControl>

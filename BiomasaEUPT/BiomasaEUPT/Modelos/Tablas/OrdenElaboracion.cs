@@ -24,7 +24,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Fecha elaboración"), Display(Name = "Fecha elaboración")]
         public DateTime? FechaElaboracion { get; set; }
 
-        [Required]
         [MinLength(5)]
         [MaxLength(50)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
