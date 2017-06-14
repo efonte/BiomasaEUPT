@@ -549,13 +549,13 @@ namespace BiomasaEUPT.Migrations
                 new OrdenElaboracion()
                 {
                     OrdenElaboracionId = 1,
-                    Descripcion = "Descrición 1",
+                    Descripcion = "Descripción 1",
                     EstadoElaboracionId = context.EstadosElaboraciones.Local.Single(ee => ee.Nombre == "Procesando").EstadoElaboracionId
                 },
                 new OrdenElaboracion()
                 {
                     OrdenElaboracionId = 2,
-                    Descripcion = "Descrición 2",
+                    Descripcion = "Descripción 2",
                     EstadoElaboracionId = context.EstadosElaboraciones.Local.Single(ee => ee.Nombre == "Finalizado").EstadoElaboracionId
                 });
             context.SaveChanges();

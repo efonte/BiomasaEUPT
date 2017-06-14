@@ -35,8 +35,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        public virtual List<ProductoTerminado> ProductosTerminados { get; set; }
-
         public virtual List<TipoProductoTerminado> TiposProductosTerminados { get; set; }
     }
 }

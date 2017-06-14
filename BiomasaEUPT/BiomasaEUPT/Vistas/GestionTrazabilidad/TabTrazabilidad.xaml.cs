@@ -52,10 +52,10 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                             tviProveedor.Items.Add(tviRecepcion);
                             var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
                             tviRecepcion.Items.Add(tviMateriaPrima);
-                            var sitiosRecepciones = (from hmp in context.HistorialHuecosRecepciones
-                                                     join hr in context.HuecosRecepciones on hmp.HuecoRecepcionId equals hr.HuecoRecepcionId
+                            var sitiosRecepciones = (from hhr in context.HistorialHuecosRecepciones
+                                                     join hr in context.HuecosRecepciones on hhr.HuecoRecepcionId equals hr.HuecoRecepcionId
                                                      join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
-                                                     where hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId
+                                                     where hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId
                                                      select new { sr });
 
                             foreach (var sitioRecepcion in sitiosRecepciones.Select(sr => sr.sr).Distinct().ToList())
