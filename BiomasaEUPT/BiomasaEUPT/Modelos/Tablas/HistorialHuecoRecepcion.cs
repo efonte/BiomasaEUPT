@@ -12,11 +12,11 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// <summary>
     /// Tabla que relaciona las materias primas que ha habido o hay en cada uno de los huecos recepción
     /// </summary>
-    [Table("HuecosMateriasPrimas")]
-    public class HuecoMateriaPrima
+    [Table("HistorialHuecosRecepciones")]
+    public class HistorialHuecoRecepcion
     {
         [Key]
-        public int HuecoMateriaPrimaId { get; set; }
+        public int HistorialHuecoRecepcionId { get; set; }
 
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }

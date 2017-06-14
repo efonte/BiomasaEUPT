@@ -182,7 +182,7 @@
                 <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" x:Name="wpHuecosRecepciones"
                            Orientation="Horizontal" Background="AliceBlue" MinHeight="40" Width="350"
                            AllowDrop="True" Drop="spHuecosRecepciones_Drop">
-                    <ItemsControl ItemsSource="{Binding HuecosMateriasPrimas, UpdateSourceTrigger=PropertyChanged}" >
+                    <ItemsControl ItemsSource="{Binding HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
                         <ItemsControl.Style>
                             <Style TargetType="ItemsControl">
                                 <Style.Triggers>

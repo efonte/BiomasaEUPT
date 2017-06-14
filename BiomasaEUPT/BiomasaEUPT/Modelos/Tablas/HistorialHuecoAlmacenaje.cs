@@ -12,11 +12,11 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// <summary>
     /// Tabla que relaciona los productos terminados que ha habido o hay en cada uno de los huecos almacenaje
     /// </summary>
-    [Table("HuecosProductos")]
-    public class HuecoProducto
+    [Table("HistorialHuecosAlmacenajes")]
+    public class HistorialHuecoAlmacenaje
     {
         [Key]
-        public int HuecoProductoId { get; set; }
+        public int HistorialHuecoAlmacenajeId { get; set; }
 
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }

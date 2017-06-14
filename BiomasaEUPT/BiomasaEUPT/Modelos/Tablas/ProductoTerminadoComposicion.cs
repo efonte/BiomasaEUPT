@@ -12,11 +12,11 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// <summary>
     /// Tabla que relaciona las materias primas que se necesitan para fabricar un producto terminado
     /// </summary>
-    [Table("ProductosMaterias")]
-    public class ProductoMateria
+    [Table("ProductosTerminadosComposiciones")]
+    public class ProductoTerminadoComposicion
     {
         [Key]
-        public int ProductoMateriaId { get; set; }
+        public int ProductoTerminadoComposicionId { get; set; }
 
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }
@@ -25,12 +25,12 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
-        public int HuecoMateriaId { get; set; }
+        public int HistorialHuecoId { get; set; }
 
         public int ProductoId { get; set; }
 
-        [ForeignKey("HuecoMateriaId")]
-        public virtual HuecoMateriaPrima HuecoMateriaPrima { get; set; }
+        [ForeignKey("HistorialHuecoId")]
+        public virtual HistorialHuecoRecepcion HistorialHuecoRecepcion { get; set; }
 
         [ForeignKey("ProductoId")]
         public virtual ProductoTerminado ProductoTerminado { get; set; }

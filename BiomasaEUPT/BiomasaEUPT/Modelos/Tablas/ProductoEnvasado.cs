@@ -12,11 +12,11 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// <summary>
     /// Producto final listo para venta
     /// </summary>
-    [Table("Envasados")]
-    public class Envasado
+    [Table("ProductosEnvasados")]
+    public class ProductoEnvasado
     {
         [Key]
-        public int EnvasadoId { get; set; }
+        public int ProductoEnvasadoId { get; set; }
 
         [Required]
         [MinLength(3)]
@@ -30,19 +30,33 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        [DisplayName("Peso"), Display(Name = "Peso")]
-        public float? Peso { get; set; }
-
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public float? Volumen { get; set; }
 
-        [Range(0, 1000)]
-        [DisplayName("Unidades"), Display(Name = "Unidades")]
-        public int? Unidades { get; set; }
+        [StringLength(60)]
+        [DisplayName("Observaciones"), Display(Name = "Observaciones")]
+        public string Observaciones { get; set; }
+
+        [DisplayName("Fecha baja"), Display(Name = "Fecha baja")]
+        public DateTime? FechaBaja { get; set; }
 
         [Required]
         [StringLength(10)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
+
+        public int TipoProductoTerminadoId { get; set; }
+
+        public int PickingId { get; set; }
+
+        [ForeignKey("TipoProductoTerminadoId")]
+        public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
+
+        [ForeignKey("PickingId")]
+        public virtual Picking Picking { get; set; }
+
+        public virtual List<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones{ get; set; }
+
+
     }
 }

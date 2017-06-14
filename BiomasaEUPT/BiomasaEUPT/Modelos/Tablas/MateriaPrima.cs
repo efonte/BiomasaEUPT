@@ -52,6 +52,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("ProcedenciaId")]
         public virtual Procedencia Procedencia { get; set; }
 
-        public virtual List<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
+        public virtual List<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
     }
 }

@@ -134,19 +134,22 @@
         public DbSet<EstadoRecepcion> EstadosRecepciones { get; set; }
         public DbSet<SitioRecepcion> SitiosRecepciones { get; set; }
         public DbSet<HuecoRecepcion> HuecosRecepciones { get; set; }
-        public DbSet<HuecoMateriaPrima> HuecosMateriasPrimas { get; set; }
+        public DbSet<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
         public DbSet<OrdenElaboracion> OrdenesElaboraciones { get; set; }
         public DbSet<EstadoElaboracion> EstadosElaboraciones { get; set; }
-        public DbSet<ProductoMateria> ProductosMaterias { get; set; }
+        public DbSet<ProductoTerminadoComposicion> ProductosTerminadosComposiciones { get; set; }
         public DbSet<ProductoTerminado> ProductosTerminados { get; set; }
         public DbSet<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public DbSet<GrupoProductoTerminado> GruposProductosTerminados { get; set; }
         public DbSet<SitioAlmacenaje> SitiosAlmacenajes { get; set; }
         public DbSet<HuecoAlmacenaje> HuecoAlmacenajes { get; set; }
-        public DbSet<HuecoProducto> HuecosProductos { get; set; }
-        public DbSet<Salida> Salidas { get; set; }
-        public DbSet<EstadoSalida> EstadosSalidas { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
+        public DbSet<ProductoEnvasado> ProductosEnvasados { get; set; }
+        public DbSet<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
+        public DbSet<PedidoCabecera> PedidosCabeceras { get; set; }
+        public DbSet<EstadoPedido> EstadosPedidos { get; set; }
+        public DbSet<PedidoDetalle> PedidosDetalles { get; set; }
+        public DbSet<Picking> Picking { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Comunidad> Comunidades { get; set; }
         public DbSet<Provincia> Provincias { get; set; }

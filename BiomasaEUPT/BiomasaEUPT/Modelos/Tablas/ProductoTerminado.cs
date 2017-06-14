@@ -47,8 +47,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("OrdenId")]
         public virtual OrdenElaboracion OrdenElaboracion { get; set; }
 
-        public virtual List<HuecoProducto> HuecosProductos { get; set; }
+        public virtual List<HistorialHuecoAlmacenaje> HuecosProductos { get; set; }
 
-        public virtual List<ProductoMateria> ProductosMaterias { get; set; }
+        public virtual List<ProductoTerminadoComposicion> ProductosTerminadosComposiciones { get; set; }
     }
 }

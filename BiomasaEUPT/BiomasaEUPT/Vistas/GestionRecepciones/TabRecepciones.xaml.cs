@@ -147,8 +147,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     materiaPrima.FechaBaja = new DateTime(formMateriaPrima.FechaBaja.Value.Year, formMateriaPrima.FechaBaja.Value.Month, formMateriaPrima.FechaBaja.Value.Day, formMateriaPrima.HoraBaja.Value.Hour, formMateriaPrima.HoraBaja.Value.Minute, formMateriaPrima.HoraBaja.Value.Second);
 
                 context.MateriasPrimas.Add(materiaPrima);
-                List<HuecoMateriaPrima> huecosMateriasPrimas = new List<HuecoMateriaPrima>();
-                foreach (var hmp in formMateriaPrima.HuecosMateriasPrimas)
+                List<HistorialHuecoRecepcion> huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
+                foreach (var hmp in formMateriaPrima.HistorialHuecosRecepciones)
                 {
                     var a = hmp.HuecoRecepcion.HuecoRecepcionId;
                     if (hmp.Unidades != 0 && hmp.Volumen != 0)
@@ -159,7 +159,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                         huecosMateriasPrimas.Add(hmp);
                     }
                 }
-                context.HuecosMateriasPrimas.AddRange(huecosMateriasPrimas);
+                context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
                 context.SaveChanges();
             }
         }

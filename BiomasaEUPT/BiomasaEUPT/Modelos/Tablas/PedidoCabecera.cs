@@ -10,37 +10,30 @@ using System.Threading.Tasks;
 namespace BiomasaEUPT.Modelos.Tablas
 {
     /// <summary>
-    /// Envío del producto terminado al cliente
+    /// s
     /// </summary>
-    [Table("Salidas")]
-    public class Salida
+    [Table("PedidosCabeceras")]
+    public class PedidoCabecera
     {
         [Key]
-        public int SalidaId { get; set; }
+        public int PedidoCabeceraId { get; set; }
 
-        [Required]
-        public DateTime Fecha { get; set; }
+        [DisplayName("Fecha pedido"), Display(Name = "Fecha pedido")]
+        public DateTime FechaPedido { get; set; }
 
-        [DisplayName("Fecha entrega")]
-        public DateTime FechaEntrega { get; set; }
-
-        [Required]
-        [StringLength(9)]
-        public string Pedido { get; set; }
+        [DisplayName("Fecha finalización"), Display(Name = "Fecha finalización")]
+        public DateTime? FechaFinalizacion { get; set; }
 
         public int EstadoId { get; set; }
 
         public int ClienteId { get; set; }
 
-        [Required]
-        [MinLength(3)]
-        [StringLength(50)]
-        public string Destino { get; set; }
-
         [ForeignKey("EstadoId")]
-        public virtual EstadoSalida EstadoSalida { get; set; }
+        public virtual EstadoPedido EstadoPedido { get; set; }
 
         [ForeignKey("ClienteId")]
         public virtual Cliente Cliente { get; set; }
+
+        public virtual List<PedidoDetalle> PedidoDetalles { get; set; }
     }
 }

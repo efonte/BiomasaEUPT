@@ -466,28 +466,28 @@ namespace BiomasaEUPT.Migrations
                 });
             context.SaveChanges();
 
-            context.HuecosMateriasPrimas.AddOrUpdate(
-                hmp => hmp.HuecoMateriaPrimaId,
-                new HuecoMateriaPrima()
+            context.HistorialHuecosRecepciones.AddOrUpdate(
+                hhr => hhr.HistorialHuecoRecepcionId,
+                new HistorialHuecoRecepcion()
                 {
-                    HuecoMateriaPrimaId = 1,
+                    HistorialHuecoRecepcionId = 1,
                     Unidades = 30,
                     UnidadesRestantes = 30,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "A01").HuecoRecepcionId
                 },
-                new HuecoMateriaPrima()
+                new HistorialHuecoRecepcion()
                 {
-                    HuecoMateriaPrimaId = 2,
+                    HistorialHuecoRecepcionId = 2,
                     Volumen = 5,
                     VolumenRestante = 5,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId
                 },
 
-                new HuecoMateriaPrima()
+                new HistorialHuecoRecepcion()
                 {
-                    HuecoMateriaPrimaId = 3,
+                    HistorialHuecoRecepcionId = 3,
                     Volumen = 50,
                     VolumenRestante = 50,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
@@ -581,27 +581,27 @@ namespace BiomasaEUPT.Migrations
                 }*/);
             context.SaveChanges();
 
-            context.ProductosMaterias.AddOrUpdate(
-                pm => pm.ProductoMateriaId,
-                new ProductoMateria()
+            context.ProductosTerminadosComposiciones.AddOrUpdate(
+                ptc => ptc.ProductoTerminadoComposicionId,
+                new ProductoTerminadoComposicion()
                 {
-                    ProductoMateriaId = 1,
+                    ProductoTerminadoComposicionId = 1,
                     Unidades = 30,
-                    HuecoMateriaId = context.HuecosMateriasPrimas.Local.Single(hm => hm.HuecoMateriaPrimaId == 1).HuecoMateriaPrimaId,
+                    HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 1).HistorialHuecoRecepcionId,
                     ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
                 },
-                new ProductoMateria()
+                new ProductoTerminadoComposicion()
                 {
-                    ProductoMateriaId = 2,
+                    ProductoTerminadoComposicionId = 2,
                     Unidades = 2,
-                    HuecoMateriaId = context.HuecosMateriasPrimas.Local.Single(hm => hm.HuecoMateriaPrimaId == 2).HuecoMateriaPrimaId,
+                    HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 2).HistorialHuecoRecepcionId,
                     ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
                 },
-                new ProductoMateria()
+                new ProductoTerminadoComposicion()
                 {
-                    ProductoMateriaId = 3,
+                    ProductoTerminadoComposicionId = 3,
                     Volumen = 2,
-                    HuecoMateriaId = context.HuecosMateriasPrimas.Local.Single(hm => hm.HuecoMateriaPrimaId == 3).HuecoMateriaPrimaId,
+                    HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 3).HistorialHuecoRecepcionId,
                     ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
                 });
             context.SaveChanges();
@@ -666,19 +666,19 @@ namespace BiomasaEUPT.Migrations
                     });
             context.SaveChanges();
 
-            context.HuecosProductos.AddOrUpdate(
-                hp => hp.HuecoProductoId,
-                new HuecoProducto()
+            context.HistorialHuecosAlmacenajes.AddOrUpdate(
+                hha => hha.HistorialHuecoAlmacenajeId,
+                new HistorialHuecoAlmacenaje()
                 {
-                    HuecoProductoId = 1,
+                    HistorialHuecoAlmacenajeId = 1,
                     Unidades = 30,
                     UnidadesRestantes = 30,
                     ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000000").ProductoTerminadoId,
                     HuecoAlmacenajeId = context.HuecoAlmacenajes.Local.Single(ha => ha.Nombre == "A01").HuecoAlmacenajeId
                 },
-                 new HuecoProducto()
+                 new HistorialHuecoAlmacenaje()
                  {
-                     HuecoProductoId = 2,
+                     HistorialHuecoAlmacenajeId = 2,
                      Unidades = 10,
                      UnidadesRestantes = 10,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000000").ProductoTerminadoId,

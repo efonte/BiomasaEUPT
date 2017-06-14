@@ -19,10 +19,10 @@ ALTER TABLE HuecosAlmacenajes ADD CONSTRAINT DF_HuecosAlmacenajesOcupado DEFAULT
 
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
--- IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[TR_HuecosMateriasPrimas_I]'))
+-- IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[TR_HistorialHuecosRecepciones_I]'))
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosMateriasPrimas_I]
-    ON [dbo].[HuecosMateriasPrimas]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_I]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER INSERT
 AS 
 BEGIN
@@ -36,12 +36,12 @@ BEGIN
     WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId
 END
 '
--- ALTER TABLE [dbo].[HuecosMateriasPrimas] ENABLE TRIGGER [TR_HuecosMateriasPrimas_I];
+-- ALTER TABLE [dbo].[HistorialHuecosRecepciones] ENABLE TRIGGER [TR_HistorialHuecosRecepciones_I];
 
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosMateriasPrimas_D]
-    ON [dbo].[HuecosMateriasPrimas]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_D]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER DELETE
 AS 
 BEGIN
@@ -55,8 +55,8 @@ END
 '
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosMateriasPrimas_U]
-    ON [dbo].[HuecosMateriasPrimas]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_U]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER UPDATE
 AS 
 BEGIN
@@ -71,8 +71,8 @@ END
 '
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosProductos_I]
-    ON [dbo].[HuecosProductos]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_I]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER INSERT
 AS 
 BEGIN
@@ -89,8 +89,8 @@ END
 
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosProductos_D]
-    ON [dbo].[HuecosProductos]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_D]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER DELETE
 AS 
 BEGIN
@@ -104,8 +104,8 @@ END
 '
 
 EXEC dbo.sp_executesql @statement = N'
-CREATE TRIGGER [dbo].[TR_HuecosProductos_U]
-    ON [dbo].[HuecosProductos]
+CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_U]
+    ON [dbo].[HistorialHuecosRecepciones]
     AFTER UPDATE
 AS 
 BEGIN

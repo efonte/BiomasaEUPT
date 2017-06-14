@@ -52,7 +52,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                             tviProveedor.Items.Add(tviRecepcion);
                             var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
                             tviRecepcion.Items.Add(tviMateriaPrima);
-                            var sitiosRecepciones = (from hmp in context.HuecosMateriasPrimas
+                            var sitiosRecepciones = (from hmp in context.HistorialHuecosRecepciones
                                                      join hr in context.HuecosRecepciones on hmp.HuecoRecepcionId equals hr.HuecoRecepcionId
                                                      join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
                                                      where hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId
@@ -62,10 +62,10 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                             {
                                 var tviSitioRecepcion = TreeViewItemIcono(sitioRecepcion.Nombre, PackIconKind.Texture);
                                 tviMateriaPrima.Items.Add(tviSitioRecepcion);
-                                foreach (var huecoMateriaPrima in context.HuecosMateriasPrimas.Where(hmp => hmp.HuecoRecepcion.SitioId == sitioRecepcion.SitioRecepcionId && hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList())
+                                foreach (var historialHuecoRecepcion in context.HistorialHuecosRecepciones.Where(hmp => hmp.HuecoRecepcion.SitioId == sitioRecepcion.SitioRecepcionId && hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList())
                                 {
-                                    var tviHuecoMateriaPrima = TreeViewItemIcono(huecoMateriaPrima.HuecoRecepcion.Nombre, PackIconKind.Tree);
-                                    tviSitioRecepcion.Items.Add(tviHuecoMateriaPrima);
+                                    var tviHistorialHuecoRecepcion = TreeViewItemIcono(historialHuecoRecepcion.HuecoRecepcion.Nombre, PackIconKind.Tree);
+                                    tviSitioRecepcion.Items.Add(tviHistorialHuecoRecepcion);
                                 }
                             }
                         }

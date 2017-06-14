@@ -42,6 +42,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("SitioId")]
         public virtual SitioAlmacenaje SitioAlmacenaje { get; set; }
 
-        public virtual List<HuecoProducto> HuecosProductos { get; set; }
+        public virtual List<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// Topología de los distintos tipos de estados que puede tener una salida (Procesada y Enviada)
     /// </summary>
     [Table("EstadosSalidas")]
-    public class EstadoSalida
+    public class EstadoPedido
     {
         [Key]
         public int EstadoSalidaId { get; set; }
@@ -24,6 +24,5 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        public virtual List<Salida> Salidas { get; set; }
     }
 }
