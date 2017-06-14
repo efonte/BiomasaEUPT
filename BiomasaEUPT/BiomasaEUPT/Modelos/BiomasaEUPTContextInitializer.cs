@@ -69,7 +69,7 @@ BEGIN
     WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId
 END
 '
-
+/*
 EXEC dbo.sp_executesql @statement = N'
 CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_I]
     ON [dbo].[HistorialHuecosRecepciones]
@@ -117,7 +117,7 @@ BEGIN
     FROM   inserted i
     WHERE  HuecosAlmacenajes.HuecoAlmacenajeId = i.HuecoAlmacenajeId
 END
-'
+'*/
 "
                 );
             base.Seed(context);

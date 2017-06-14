@@ -22,7 +22,7 @@
         <TextBox x:Name="tbCodigo" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" FontFamily="Roboto" FontSize="15"
                  materialDesign:HintAssist.Hint=" Buscar Código..." MaxLength="10" Width="120" FontWeight="Bold"
                  HorizontalAlignment="Right"/>
-        
+
         <Border Grid.Column="0" Grid.Row="1" Background="{StaticResource MaterialDesignBackground}" Margin="0 10 5 0">
             <GroupBox x:Name="gbAlmacenamiento" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Almacenamiento" Style="{StaticResource MaterialDesignGroupBox}"
@@ -33,12 +33,14 @@
         <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource MaterialDesignBackground}" Margin="5 10 5 0">
             <GroupBox x:Name="gbElaboracion" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Elaboración" Style="{StaticResource MaterialDesignGroupBox}">
+                <TreeView x:Name="tvElaboracion"/>
             </GroupBox>
         </Border>
         <Border Grid.Column="2" Grid.Row="1" Background="{StaticResource MaterialDesignBackground}" Margin="5 10 0 0">
             <GroupBox x:Name="gbVenta" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Venta" Style="{StaticResource MaterialDesignGroupBox}">
+                <TreeView x:Name="tvVenta"/>
             </GroupBox>
-        </Border>       
+        </Border>
     </Grid>
 </UserControl>

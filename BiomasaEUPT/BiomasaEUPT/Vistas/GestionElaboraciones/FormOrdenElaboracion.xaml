@@ -20,7 +20,7 @@
             <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Órden de Elaboración">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Orden de Elaboración">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -48,7 +48,7 @@
                                 <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
                                 <TextBlock FontSize="14" FontStyle="Italic">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}">
+                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}%">
                                             <Binding Path="Tamano"/>
                                             <Binding Path="Humedad"/>
                                         </MultiBinding>
@@ -65,8 +65,9 @@
                     <RowDefinition/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <WrapPanel Grid.Row="0" x:Name="wpProductosTerminados" Orientation="Horizontal" Background="AliceBlue" Margin="0 0 0 10"
-                       AllowDrop="True" Drop="spProductosTerminados_Drop">
+                <WrapPanel Grid.Row="0" x:Name="wpProductosTerminados" Orientation="Horizontal" Background="AliceBlue"
+                       AllowDrop="True" Drop="spProductosTerminados_Drop" Margin="0 0 0 10"
+                           ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding ProductosTerminados, UpdateSourceTrigger=PropertyChanged}" Margin="10">
                         <ItemsControl.Style>
                             <Style TargetType="ItemsControl">
@@ -88,38 +89,28 @@
                             <DataTemplate>
                                 <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar Producto Terminado"
                                                  CommandParameter="{Binding TipoProductoTerminado.TipoProductoTerminadoId}"
-                                                 DeleteClick="cProductoTerminado_DeleteClick">
+                                                 DeleteClick="cProductoTerminado_DeleteClick" Height="70">
                                     <materialDesign:Chip.Content>
-                                        <TextBlock FontSize="14" FontStyle="Italic">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Text">
-                                                        <Setter.Value>
-                                                            <MultiBinding StringFormat="{}{0} {1}" >
-                                                                <Binding Path="TipoProductoTerminado.Nombre" />
-                                                                <Binding Path="TipoProductoTerminado.Volumen" />
-                                                            </MultiBinding>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
-                                                            <Setter Property="Text">
-                                                                <Setter.Value>
-                                                                    <MultiBinding StringFormat="{}{0} de {1} ud." >
-                                                                        <Binding Path="TipoProductoTerminado.Nombre" />
-                                                                        <Binding Path="TipoProductoTerminado.Unidades" />
-                                                                    </MultiBinding>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
+                                        <StackPanel>
+                                            <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding TipoProductoTerminado.Nombre}" Margin="10 10 10 0"/>
+                                            <TextBox>
+                                                <TextBox.Style>
+                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                        <Setter Property="Margin" Value="10 0 10 10" />
+                                                        <Setter Property="FontSize" Value="15" />
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Volumen"/>
+                                                        <Setter Property="Text" Value="{Binding Volumen}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                                <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
+                                                                <Setter Property="Text" Value="{Binding Unidades}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBox.Style>
+                                            </TextBox>
+                                        </StackPanel>
                                     </materialDesign:Chip.Content>
-                                    <materialDesign:Chip.Icon>
-                                        <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre}"></TextBlock>
-                                    </materialDesign:Chip.Icon>
                                 </materialDesign:Chip>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

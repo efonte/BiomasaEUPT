@@ -25,7 +25,7 @@
         {
             //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
             // CUIDADO -> Borra la tabla y la vuelve a crear
-            //Database.SetInitializer(new BiomasaEUPTContextInitializer());
+            Database.SetInitializer(new BiomasaEUPTContextInitializer());
         }
 
 
@@ -116,6 +116,13 @@
             //var convention = new AttributeToColumnAnnotationConvention<DefaultValueAttribute, string>("SqlDefaultValue", (p, attributes) => attributes.SingleOrDefault().Value.ToString());
             //modelBuilder.Conventions.Add(convention);
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            // HAY QUE SOLUCIONAR EL ERROR--------------
+            modelBuilder.Entity<ProductoEnvasadoComposicion>()
+                        .HasRequired(c => c.HistorialHuecoAlmacenaje)
+                        .WithMany()
+                        .WillCascadeOnDelete(false);
+
 
         }
 

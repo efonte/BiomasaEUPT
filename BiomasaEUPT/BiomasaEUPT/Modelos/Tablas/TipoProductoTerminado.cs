@@ -43,5 +43,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public virtual GrupoProductoTerminado GrupoProductoTerminado { get; set; }
 
         public virtual List<ProductoTerminado> ProductosTerminados { get; set; }
+
+        public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }
 }

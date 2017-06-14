@@ -55,7 +55,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("PickingId")]
         public virtual Picking Picking { get; set; }
 
-        public virtual List<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones{ get; set; }
+        public virtual List<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
 
 
     }
