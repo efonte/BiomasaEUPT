@@ -93,6 +93,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         #region FiltroTabla
         public void FiltrarTabla()
         {
+            //ucTablaClientes.dgClientes.CancelEdit(DataGridEditingUnit.Row);
             clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
         }
 

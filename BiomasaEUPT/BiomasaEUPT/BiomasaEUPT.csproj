@@ -108,7 +108,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Clases\BaseDeDatos.cs" />
     <Compile Include="Clases\Comando.cs" />
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\RelayComando.cs" />

@@ -55,13 +55,13 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             using (new CursorEspera())
             {
-                context = BaseDeDatos.Instancia.biomasaEUPTContext;
+                context = new BiomasaEUPTContext();
                 proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
                 tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
                 context.Proveedores.Load();
                 context.TiposProveedores.Load();
                 proveedoresViewSource.Source = context.Proveedores.Local;
-                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;              
+                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
             }
         }
 

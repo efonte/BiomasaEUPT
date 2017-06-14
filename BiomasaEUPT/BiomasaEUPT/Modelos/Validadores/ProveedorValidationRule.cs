@@ -97,18 +97,21 @@ namespace BiomasaEUPT.Modelos.Validadores
 
 
             // Valores únicos
-            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTContext.Proveedores.Local)
+            using (var context = new BiomasaEUPTContext())
             {
-                if (c.GetHashCode() != proveedor.GetHashCode())
+                foreach (var c in context.Proveedores.ToList())
                 {
-                    if (c.RazonSocial == proveedor.RazonSocial)
-                        return new ValidationResult(false, String.Format(errorUnico, "razón social"));
+                    if (c.GetHashCode() != proveedor.GetHashCode())
+                    {
+                        if (c.RazonSocial == proveedor.RazonSocial)
+                            return new ValidationResult(false, String.Format(errorUnico, "razón social"));
 
-                    if (c.Nif == proveedor.Nif)
-                        return new ValidationResult(false, String.Format(errorUnico, "NIF"));
+                        if (c.Nif == proveedor.Nif)
+                            return new ValidationResult(false, String.Format(errorUnico, "NIF"));
 
-                    if (c.Email == proveedor.Email)
-                        return new ValidationResult(false, String.Format(errorUnico, "email"));
+                        if (c.Email == proveedor.Email)
+                            return new ValidationResult(false, String.Format(errorUnico, "email"));
+                    }
                 }
             }
 

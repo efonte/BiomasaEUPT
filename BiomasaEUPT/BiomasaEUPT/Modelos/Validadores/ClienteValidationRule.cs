@@ -17,8 +17,8 @@ namespace BiomasaEUPT.Modelos.Validadores
         private int minRazonSocial = 5;
         private int maxRazonSocial = 40;
         private string regexRazonSocial = "^(?!\\s)(?!.*\\s$)[\\p{L}0-9\\s'~?!\\.,@]+$";
-        private int minNif = 9;
-        private int maxNif = 9;
+        private int minNif = 10;
+        private int maxNif = 10;
         private string regexNif = "^([A-Z]-\\d{7})|(\\d{7}-[A-Z])$";
         private int minEmail = 5;
         private int maxEmail = 254;
@@ -51,7 +51,7 @@ namespace BiomasaEUPT.Modelos.Validadores
                 return new ValidationResult(false, String.Format(errorMax, "razón social", maxRazonSocial));
 
             if (!Regex.IsMatch(cliente.RazonSocial, regexRazonSocial))
-                return new ValidationResult(false, String.Format(errorRegex, "razón social"));
+                return new ValidationResult(false, String.Format(errorRegex, "razón social", ""));
 
 
             // NIF
@@ -59,10 +59,10 @@ namespace BiomasaEUPT.Modelos.Validadores
                 return new ValidationResult(false, String.Format(errorObligatorio, "NIF"));
 
             if (cliente.Nif.Length < minNif)
-                return new ValidationResult(false, String.Format(errorMin, "NIF", minRazonSocial));
+                return new ValidationResult(false, String.Format(errorMin, "NIF", minNif));
 
             if (cliente.Nif.Length > maxNif)
-                return new ValidationResult(false, String.Format(errorMax, "NIF", maxRazonSocial));
+                return new ValidationResult(false, String.Format(errorMax, "NIF", maxNif));
 
             if (!Regex.IsMatch(cliente.Nif, regexNif))
                 return new ValidationResult(false, String.Format(errorRegex, "NIF", " (L-NNNNNNN o NNNNNNN-L)"));
@@ -79,7 +79,7 @@ namespace BiomasaEUPT.Modelos.Validadores
                 return new ValidationResult(false, String.Format(errorMax, "email", maxEmail));
 
             if (!Regex.IsMatch(cliente.Email, regexEmail))
-                return new ValidationResult(false, String.Format(errorRegex, "email"));
+                return new ValidationResult(false, String.Format(errorRegex, "email", ""));
 
 
             // Calle
@@ -93,25 +93,26 @@ namespace BiomasaEUPT.Modelos.Validadores
                 return new ValidationResult(false, String.Format(errorMax, "calle", maxCalle));
 
             if (!Regex.IsMatch(cliente.Calle, regexCalle))
-                return new ValidationResult(false, String.Format(errorRegex, "calle"));
-
+                return new ValidationResult(false, String.Format(errorRegex, "calle", ""));
 
             // Valores únicos
-            foreach (var c in BaseDeDatos.Instancia.biomasaEUPTContext.Clientes.Local)
+            using (var context = new BiomasaEUPTContext())
             {
-                if (c.GetHashCode() != cliente.GetHashCode())
+                foreach (var c in context.Clientes.Where(c => c.ClienteId != cliente.ClienteId).ToList())
                 {
-                    if (c.RazonSocial == cliente.RazonSocial)
-                        return new ValidationResult(false, String.Format(errorUnico, "razón social"));
+                    if (c.GetHashCode() != cliente.GetHashCode())
+                    {
+                        if (c.RazonSocial == cliente.RazonSocial)
+                            return new ValidationResult(false, String.Format(errorUnico, "razón social"));
 
-                    if (c.Nif == cliente.Nif)
-                        return new ValidationResult(false, String.Format(errorUnico, "NIF"));
+                        if (c.Nif == cliente.Nif)
+                            return new ValidationResult(false, String.Format(errorUnico, "NIF"));
 
-                    if (c.Email == cliente.Email)
-                        return new ValidationResult(false, String.Format(errorUnico, "email"));
+                        if (c.Email == cliente.Email)
+                            return new ValidationResult(false, String.Format(errorUnico, "email"));
+                    }
                 }
             }
-
             return ValidationResult.ValidResult;
         }
     }

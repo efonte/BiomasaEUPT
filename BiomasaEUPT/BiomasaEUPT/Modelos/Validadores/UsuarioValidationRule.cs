@@ -59,15 +59,18 @@ namespace BiomasaEUPT.Modelos.Validadores
                 return new ValidationResult(false, String.Format(errorRegex, "email"));
 
             // Valores únicos
-            foreach (var u in BaseDeDatos.Instancia.biomasaEUPTContext.Usuarios.Local)
+            using (var context = new BiomasaEUPTContext())
             {
-                if (u.GetHashCode() != usuario.GetHashCode())
+                foreach (var u in context.Usuarios.ToList())
                 {
-                    if (u.Nombre == usuario.Nombre)
-                        return new ValidationResult(false, String.Format(errorUnico, "nombre"));
+                    if (u.GetHashCode() != usuario.GetHashCode())
+                    {
+                        if (u.Nombre == usuario.Nombre)
+                            return new ValidationResult(false, String.Format(errorUnico, "nombre"));
 
-                    if (u.Email == usuario.Email)
-                        return new ValidationResult(false, String.Format(errorUnico, "email"));
+                        if (u.Email == usuario.Email)
+                            return new ValidationResult(false, String.Format(errorUnico, "email"));
+                    }
                 }
             }
 
