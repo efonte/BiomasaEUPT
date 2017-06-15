@@ -12,6 +12,7 @@
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
         xmlns:GestionElaboraciones="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
+        xmlns:GestionVentas="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
         xmlns:GestionTrazabilidad="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
         mc:Ignorable="d"
         Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
@@ -125,6 +126,18 @@
                         </TabItem.Header>
 
                         <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
+                    </TabItem>
+
+                    <!-- Pestaña Ventas -->
+                    <TabItem x:Name="tiVentas" IsSelected="True">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Shopping" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Ventas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <GestionVentas:TabVentas x:Name="ucTabVentas" />
                     </TabItem>
 
                     <!-- Pestaña Trazabilidad -->

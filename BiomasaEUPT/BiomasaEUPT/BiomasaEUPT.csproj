@@ -260,6 +260,15 @@
     <Compile Include="Vistas\GestionUsuarios\TiposUsuarios.xaml.cs">
       <DependentUpon>TiposUsuarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\TablaPedidosCabeceras.xaml.cs">
+      <DependentUpon>TablaPedidosCabeceras.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml.cs">
+      <DependentUpon>TablaProductosEnvasados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\TabVentas.xaml.cs">
+      <DependentUpon>TabVentas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -392,6 +401,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionUsuarios\TiposUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\TablaPedidosCabeceras.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\GestionVentas\TabVentas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -102,7 +102,6 @@ namespace BiomasaEUPT
                 ucTabRecepciones.ucTablaRecepciones.dgRecepciones.CancelEdit();
 
         }
-
         private void menuAjustes_Click(object sender, RoutedEventArgs e)
         {
             WinAjustes ajustes = new WinAjustes();
