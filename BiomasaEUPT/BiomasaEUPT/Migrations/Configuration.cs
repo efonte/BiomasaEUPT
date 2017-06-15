@@ -447,24 +447,24 @@ namespace BiomasaEUPT.Migrations
 
 
             context.MateriasPrimas.AddOrUpdate(
-                mp => mp.Codigo,
+                mp => mp.MateriaPrimaId,
                 new MateriaPrima()
                 {
+                    MateriaPrimaId = 1,
                     TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "TipoMateriaPrima 1").TipoMateriaPrimaId,
                     Unidades = 35,
                     Observaciones = "Es muy rico",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-0100B").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 1").ProcedenciaId,
-                    // Codigo = "1000000001"
                 },
                 new MateriaPrima()
                 {
+                    MateriaPrimaId = 2,
                     TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "TipoMateriaPrima 2").TipoMateriaPrimaId,
                     Volumen = 50,
                     Observaciones = "Falta de respeto",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-010VB").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 2").ProcedenciaId,
-                    // Codigo = "1000000002"
                 });
             context.SaveChanges();
 
@@ -568,13 +568,14 @@ namespace BiomasaEUPT.Migrations
                 pt => pt.ProductoTerminadoId,
                 new ProductoTerminado()
                 {
+                    ProductoTerminadoId = 1,
                     Unidades = 40,
                     TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 1").TipoProductoTerminadoId,
                     OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
-                    // Codigo = "2000000001"
                 }/*,
                 new ProductoTerminado()
                 {
+                    ProductoTerminadoId = 2,
                     Volumen = 50,
                     Observaciones = "Observaciones .......",
                     TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,

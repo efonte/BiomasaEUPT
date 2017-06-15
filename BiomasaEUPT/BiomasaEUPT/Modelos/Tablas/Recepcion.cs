@@ -37,5 +37,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("EstadoId")]
         public virtual EstadoRecepcion EstadoRecepcion { get; set; }
+
+        public virtual List<MateriaPrima> MateriasPrimas { get; set; }
     }
 }

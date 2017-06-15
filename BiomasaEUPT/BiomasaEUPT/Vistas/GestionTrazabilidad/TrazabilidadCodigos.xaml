@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
@@ -27,19 +28,62 @@
             <GroupBox x:Name="gbAlmacenamiento" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Almacenamiento" Style="{StaticResource MaterialDesignGroupBox}"
                               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <TreeView x:Name="tvAlmacenamiento"/>
+                <TreeView x:Name="tvAlmacenamiento">
+
+                </TreeView>
             </GroupBox>
         </Border>
         <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource MaterialDesignBackground}" Margin="5 10 5 0">
             <GroupBox x:Name="gbElaboracion" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Elaboración" Style="{StaticResource MaterialDesignGroupBox}">
-                <TreeView x:Name="tvElaboracion"/>
+                <TreeView x:Name="tvElaboracion">
+
+                </TreeView>
             </GroupBox>
         </Border>
         <Border Grid.Column="2" Grid.Row="1" Background="{StaticResource MaterialDesignBackground}" Margin="5 10 0 0">
             <GroupBox x:Name="gbVenta" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               Header="Venta" Style="{StaticResource MaterialDesignGroupBox}">
-                <TreeView x:Name="tvVenta"/>
+                <TreeView x:Name="tvVenta" ItemsSource="{Binding ArbolRecepcion}">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type Tablas:Proveedor}" ItemsSource="{Binding Recepciones}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Worker"/>
+                                <TextBlock Text="{Binding RazonSocial}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type Tablas:Recepcion}" ItemsSource="{Binding MateriasPrimas}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Truck"/>
+                                <TextBlock Text="{Binding NumeroAlbaran}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type Tablas:MateriaPrima}" ItemsSource="{Binding HistorialHuecosRecepciones}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Tree"/>
+                                <TextBlock Text="{Binding TipoMateriaPrima.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type Tablas:HistorialHuecoRecepcion}" ItemsSource="{Binding HuecoRecepcion}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Tree"/>
+                                <TextBlock Text="{Binding HuecoRecepcion.SitioRecepcion.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+
+                        <DataTemplate DataType="{x:Type Tablas:HuecoRecepcion}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Texture"/>
+                                <TextBlock Text="{Binding Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </DataTemplate>
+
+                    </TreeView.Resources>
+                </TreeView>
             </GroupBox>
         </Border>
     </Grid>

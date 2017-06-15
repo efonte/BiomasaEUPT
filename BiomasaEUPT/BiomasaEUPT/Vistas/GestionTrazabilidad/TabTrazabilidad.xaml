@@ -9,6 +9,6 @@
              d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
     <Grid>
        
-        <local:TrazabilidadCodigos Grid.Column="0" x:Name="trazabilidadCodigos" Margin="10"/>
+        <local:TrazabilidadCodigos Grid.Column="0" x:Name="ucTrazabilidadCodigos" Margin="10"/>
     </Grid>
 </UserControl>

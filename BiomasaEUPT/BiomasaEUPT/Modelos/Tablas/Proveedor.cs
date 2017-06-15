@@ -61,5 +61,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("TipoId")]
         public virtual TipoProveedor TipoProveedor { get; set; }
+
+        public virtual List<Recepcion> Recepciones { get; set; }
     }
 }
