@@ -50,18 +50,38 @@
                                  HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                  PlacementMode="RightAndAlignMiddles"
                                  UnfurlOrientation="Horizontal"
-                                 ToolTip="Gestionar recepciones"
+                                 ToolTip="Gestionar elaboraciones"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar la Órden de elaboración seleccionada" Command="{Binding BorrarElaboracionComando}" IsEnabled="{Binding CanBorrarElaboracion}">
+                            <Button ToolTip="Borrar la orden de elaboración seleccionada" Command="{Binding BorrarElaboracionComando}" IsEnabled="{Binding CanBorrarElaboracion}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bAnadirElaboracion" ToolTip="Añadir Órden de Elaboración">
+                            <Button x:Name="bAnadirElaboracion" ToolTip="Añadir orden de Elaboración">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
+
+                <StackPanel DataContext="{StaticResource ordenesElaboracionesViewSource}" Grid.Column="1" 
+                            HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Stretch"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Descripción" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+
+                        <TextBlock x:Name="tbDescripcion" Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="16"
+                                       MaxHeight="350" TextWrapping="Wrap"/>
+
+
+                    </Expander>
+                </StackPanel>
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"

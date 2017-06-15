@@ -27,7 +27,9 @@
         </Grid.RowDefinitions>
 
         <local:TablaElaboraciones Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaElaboraciones" Margin="10 10 0 10" />
+        
+        <local:TablaProductosTerminados Grid.Column="1" Grid.Row="0" x:Name="ucTablaProductosTerminados" Margin="10 10 10 10" />
 
-        <local:FormOrdenElaboracion Grid.Row="1" Grid.Column="1" Margin="10 10 10 10"/>
+        <local:FormOrdenElaboracion Grid.Column="1" Grid.Row="1" Margin="10 0 10 10"/>
     </Grid>
 </UserControl>
