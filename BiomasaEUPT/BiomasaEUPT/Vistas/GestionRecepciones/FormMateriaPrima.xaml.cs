@@ -39,7 +39,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public ObservableCollection<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
         public int Unidades { get; set; }
         public double Volumen { get; set; }
-        public String Codigo { get; set; }
+        //public String Codigo { get; set; }
         public String Observaciones { get; set; }
         public DateTime? FechaBaja { get; set; }
         public DateTime? HoraBaja { get; set; }
@@ -67,7 +67,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
             procedenciasViewSource.Source = context.Procedencias.Local;
             sitiosRecepcionesViewSource.Source = context.SitiosRecepciones.Local;
-            GenerarCodigo();
+            //GenerarCodigo();
         }
 
         private void cbGruposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -168,10 +168,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             CalcularUnidadesVolumen();
         }
 
-        private void bCodigo_Click(object sender, RoutedEventArgs e)
+        /*private void bCodigo_Click(object sender, RoutedEventArgs e)
         {
             GenerarCodigo();
-        }
+        }*/
 
         private void CalcularUnidadesVolumen()
         {
@@ -215,7 +215,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             nuevosHistorialesHuecosRecepciones.ForEach(HistorialHuecosRecepciones.Add);
         }
 
-        private void GenerarCodigo()
+        /*private void GenerarCodigo()
         {
             Random r = new Random();
             int codigo;
@@ -225,6 +225,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             } while (context.MateriasPrimas.Any(mp => mp.Codigo == codigo.ToString()));
             Codigo = codigo.ToString();
             lCodigo.Content = codigo;
-        }
+        }*/
     }
 }

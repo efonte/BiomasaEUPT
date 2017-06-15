@@ -69,7 +69,7 @@ BEGIN
     WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId
 END
 '
-/*
+
 EXEC dbo.sp_executesql @statement = N'
 CREATE TRIGGER [dbo].[TR_HistorialHuecosAlmacenajes_I]
     ON [dbo].[HistorialHuecosAlmacenajes]
@@ -117,7 +117,38 @@ BEGIN
     FROM   inserted i
     WHERE  HuecosAlmacenajes.HuecoAlmacenajeId = i.HuecoAlmacenajeId
 END
-'*/
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_MateriasPrimas_I]
+    ON [dbo].[MateriasPrimas]
+    AFTER INSERT
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE mp
+    SET    Codigo = i.MateriaPrimaId + 1000000000
+    FROM   MateriasPrimas mp
+    JOIN   inserted i ON mp.MateriaPrimaId = i.MateriaPrimaId
+END
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosTerminados_I]
+    ON [dbo].[ProductosTerminados]
+    AFTER INSERT
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE pt
+    SET    Codigo = i.ProductoTerminadoId + 2000000000
+    FROM   ProductosTerminados pt
+    JOIN   inserted i ON pt.ProductoTerminadoId = i.ProductoTerminadoId
+END
+'
+
 "
                 );
             base.Seed(context);

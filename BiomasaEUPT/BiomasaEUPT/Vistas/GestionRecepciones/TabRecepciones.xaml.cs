@@ -137,7 +137,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 {
                     RecepcionId = (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).RecepcionId,
                     Observaciones = formMateriaPrima.Observaciones,
-                    Codigo = formMateriaPrima.Codigo,
+                    //Codigo = formMateriaPrima.Codigo,
                     ProcedenciaId = (formMateriaPrima.cbProcedencias.SelectedItem as Procedencia).ProcedenciaId,
                     TipoId = (formMateriaPrima.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId,
                     Volumen = formMateriaPrima.Volumen,

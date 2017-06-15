@@ -38,7 +38,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int ProcedenciaId { get; set; }
 
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [StringLength(10)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
