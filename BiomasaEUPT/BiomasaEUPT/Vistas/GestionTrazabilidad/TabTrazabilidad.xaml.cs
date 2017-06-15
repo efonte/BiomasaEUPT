@@ -70,6 +70,40 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                             }
                         }
 
+
+                        var consulta = context.MateriasPrimas
+                                       .Join(context.Recepciones,
+                                          mp => mp.RecepcionId,
+                                          r => r.RecepcionId,
+                                          (mp, r) => new { mp, r })
+                                       .Join(context.Proveedores,
+                                          r1 => r1.r.ProveedorId,
+                                          p => p.ProveedorId,
+                                          (r1, p) => new { r1.mp, r1.r, p })
+                                       .Join(context.HistorialHuecosRecepciones,
+                                          p1 => p1.mp.MateriaPrimaId,
+                                          hhr => hhr.MateriaPrimaId,
+                                          (p1, hhr) => new { p1.mp, p1.r, p1.p, hhr })
+                                       .Join(context.HuecosRecepciones,
+                                          hhr1 => hhr1.hhr.HuecoRecepcionId,
+                                          hr => hr.HuecoRecepcionId,
+                                          (hhr1, hr) => new { hhr1.mp, hhr1.r, hhr1.p, hhr1.hhr, hr })
+                                       .Join(context.SitiosRecepciones,
+                                          hr1 => hr1.hr.SitioId,
+                                          sr => sr.SitioRecepcionId,
+                                          (hr1, sr) => new { hr1.mp, hr1.p, hr1.r, hr1.hhr, hr1.hr, sr }).Distinct().ToList();
+
+                        foreach (var c in consulta)
+                        {
+                            Console.WriteLine(c.sr.Nombre);
+                            /* foreach (var item in c.sr.HuecosRecepciones.ToList())
+                             {
+                                 Console.WriteLine(item.Nombre);                                
+                             }*/
+                            Console.WriteLine(c.hr.Nombre);
+                            //    c.sr.HuecosRecepciones.                           
+                        }
+
                         break;
 
 

@@ -150,7 +150,7 @@
         public DbSet<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public DbSet<GrupoProductoTerminado> GruposProductosTerminados { get; set; }
         public DbSet<SitioAlmacenaje> SitiosAlmacenajes { get; set; }
-        public DbSet<HuecoAlmacenaje> HuecoAlmacenajes { get; set; }
+        public DbSet<HuecoAlmacenaje> HuecosAlmacenajes { get; set; }
         public DbSet<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
         public DbSet<ProductoEnvasado> ProductosEnvasados { get; set; }
         public DbSet<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }

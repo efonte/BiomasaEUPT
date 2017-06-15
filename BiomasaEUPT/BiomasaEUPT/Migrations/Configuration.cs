@@ -620,7 +620,7 @@ namespace BiomasaEUPT.Migrations
                   });
             context.SaveChanges();
 
-            context.HuecoAlmacenajes.AddOrUpdate(
+            context.HuecosAlmacenajes.AddOrUpdate(
                  ha => ha.Nombre,
                  new HuecoAlmacenaje()
                  {
@@ -674,7 +674,7 @@ namespace BiomasaEUPT.Migrations
                     Unidades = 30,
                     UnidadesRestantes = 30,
                     ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000000").ProductoTerminadoId,
-                    HuecoAlmacenajeId = context.HuecoAlmacenajes.Local.Single(ha => ha.Nombre == "A01").HuecoAlmacenajeId
+                    HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "A01").HuecoAlmacenajeId
                 },
                  new HistorialHuecoAlmacenaje()
                  {
@@ -682,7 +682,7 @@ namespace BiomasaEUPT.Migrations
                      Unidades = 10,
                      UnidadesRestantes = 10,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000000").ProductoTerminadoId,
-                     HuecoAlmacenajeId = context.HuecoAlmacenajes.Local.Single(ha => ha.Nombre == "A02").HuecoAlmacenajeId
+                     HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "A02").HuecoAlmacenajeId
                  });
             context.SaveChanges();
 
