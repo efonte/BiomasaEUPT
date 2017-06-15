@@ -5,7 +5,9 @@ namespace BiomasaEUPT.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
     using System.Linq;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Modelos.BiomasaEUPTContext>
     {
@@ -453,7 +455,7 @@ namespace BiomasaEUPT.Migrations
                     Observaciones = "Es muy rico",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-0100B").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 1").ProcedenciaId,
-                    Codigo = "1000000000"
+                    // Codigo = "1000000001"
                 },
                 new MateriaPrima()
                 {
@@ -462,7 +464,7 @@ namespace BiomasaEUPT.Migrations
                     Observaciones = "Falta de respeto",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-010VB").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 2").ProcedenciaId,
-                    Codigo = "1000000001"
+                    // Codigo = "1000000002"
                 });
             context.SaveChanges();
 
@@ -473,7 +475,7 @@ namespace BiomasaEUPT.Migrations
                     HistorialHuecoRecepcionId = 1,
                     Unidades = 30,
                     UnidadesRestantes = 30,
-                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "A01").HuecoRecepcionId
                 },
                 new HistorialHuecoRecepcion()
@@ -481,7 +483,7 @@ namespace BiomasaEUPT.Migrations
                     HistorialHuecoRecepcionId = 2,
                     Volumen = 5,
                     VolumenRestante = 5,
-                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000000").MateriaPrimaId,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId
                 },
 
@@ -490,7 +492,7 @@ namespace BiomasaEUPT.Migrations
                     HistorialHuecoRecepcionId = 3,
                     Volumen = 50,
                     VolumenRestante = 50,
-                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
+                    MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000002").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId
                 });
             context.SaveChanges();
@@ -560,7 +562,7 @@ namespace BiomasaEUPT.Migrations
                 });
             context.SaveChanges();
 
-            
+
 
             context.ProductosTerminados.AddOrUpdate(
                 pt => pt.ProductoTerminadoId,
@@ -569,7 +571,7 @@ namespace BiomasaEUPT.Migrations
                     Unidades = 40,
                     TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 1").TipoProductoTerminadoId,
                     OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
-                    Codigo = "2000000000"
+                    // Codigo = "2000000001"
                 }/*,
                 new ProductoTerminado()
                 {
@@ -577,7 +579,7 @@ namespace BiomasaEUPT.Migrations
                     Observaciones = "Observaciones .......",
                     TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,
                     OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 2).OrdenElaboracionId,
-                    Codigo = "2000000001"
+                    Codigo = "2000000002"
                 }*/);
             context.SaveChanges();
 
@@ -588,21 +590,21 @@ namespace BiomasaEUPT.Migrations
                     ProductoTerminadoComposicionId = 1,
                     Unidades = 30,
                     HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 1).HistorialHuecoRecepcionId,
-                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
+                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000001").ProductoTerminadoId
                 },
                 new ProductoTerminadoComposicion()
                 {
                     ProductoTerminadoComposicionId = 2,
                     Unidades = 2,
                     HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 2).HistorialHuecoRecepcionId,
-                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
+                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000001").ProductoTerminadoId
                 },
                 new ProductoTerminadoComposicion()
                 {
                     ProductoTerminadoComposicionId = 3,
                     Volumen = 2,
                     HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 3).HistorialHuecoRecepcionId,
-                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000000").ProductoTerminadoId
+                    ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000001").ProductoTerminadoId
                 });
             context.SaveChanges();
 
@@ -704,10 +706,41 @@ namespace BiomasaEUPT.Migrations
 
                context.Usuarios.AddOrUpdate(c => c.UsuarioId, usuarios.ToArray());*/
 
-                //new SeedCodigosPostales(context); 
+            //new SeedCodigosPostales(context); 
 
-                // new SeedTablas(context);
+            // new SeedTablas(context);
 
+        }
+
+        /// <summary>
+        /// Wrapper for SaveChanges adding the Validation Messages to the generated exception
+        /// </summary>
+        /// <param name="context">The context.</param>
+        private void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                ); // Add the original exception as the innerException
+            }
         }
     }
 }

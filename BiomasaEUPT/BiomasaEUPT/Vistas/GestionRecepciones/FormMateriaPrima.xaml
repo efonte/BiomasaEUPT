@@ -58,13 +58,13 @@
                           DisplayMemberPath="Nombre" SelectedValuePath="ProcedenciaId">
                 </ComboBox>
 
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <!--StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <Label x:Name="lCodigo" VerticalAlignment="Center" FontSize="15"
                            FontWeight="Bold" Content="{Binding Codigo, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button x:Name="bCodigo" Click="bCodigo_Click">
                         <materialDesign:PackIcon Kind="Autorenew" Width="20" Height="20" />
                     </Button>
-                </StackPanel>
+                </StackPanel-->
 
                 <StackPanel Grid.Row="2" Grid.Column="0">
                     <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6" TextChanged="tbVolumen_TextChanged">
