@@ -4,9 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="600" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="productosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="225"/>
+        </Grid.RowDefinitions>
+
+        <local:TablaPedidos Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaPedidos" Margin="10 10 0 10" />
+
+        <local:TablaProductosEnvasados Grid.Column="1" Grid.Row="0" x:Name="ucTablaProductosEnvasados" Margin="10 10 10 10" />
+
+        <!--local:FormOrdenElaboracion Grid.Column="1" Grid.Row="1" Margin="10 0 10 10"/-->
     </Grid>
 </UserControl>

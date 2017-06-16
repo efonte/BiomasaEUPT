@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +23,30 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     /// </summary>
     public partial class TabVentas : UserControl
     {
+
+        private BiomasaEUPTContext context;
+        private CollectionViewSource productosEnvasadosViewSource;
+        private CollectionViewSource pedidosViewSource;
+
         public TabVentas()
         {
             InitializeComponent();
+            DataContext = this;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (new CursorEspera())
+            {
+                context = new BiomasaEUPTContext();
+                productosEnvasadosViewSource = (CollectionViewSource)(FindResource("productosEnvasadosViewSource"));
+                pedidosViewSource = (CollectionViewSource)(FindResource("pedidosViewSource"));
+                context.ProductosEnvasados.Load();
+                context.PedidosCabeceras.Load();
+
+                productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
+                pedidosViewSource.Source = context.PedidosCabeceras.Local;
+            }
         }
     }
 }

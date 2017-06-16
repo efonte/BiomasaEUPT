@@ -260,8 +260,8 @@
     <Compile Include="Vistas\GestionUsuarios\TiposUsuarios.xaml.cs">
       <DependentUpon>TiposUsuarios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionVentas\TablaPedidosCabeceras.xaml.cs">
-      <DependentUpon>TablaPedidosCabeceras.xaml</DependentUpon>
+    <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
+      <DependentUpon>TablaPedidos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml.cs">
       <DependentUpon>TablaProductosEnvasados.xaml</DependentUpon>
@@ -404,7 +404,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionVentas\TablaPedidosCabeceras.xaml">
+    <Page Include="Vistas\GestionVentas\TablaPedidos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

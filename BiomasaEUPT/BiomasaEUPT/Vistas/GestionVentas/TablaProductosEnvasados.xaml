@@ -176,14 +176,12 @@
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Nombre" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Volumen" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Fecha Baja" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Codigo" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Codigo" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbNombre" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="True"/>
                         <CheckBox x:Name="cbVolumen" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
                         <CheckBox x:Name="cbCodigo" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
                     </Grid>
 
                 </materialDesign:PopupBox>

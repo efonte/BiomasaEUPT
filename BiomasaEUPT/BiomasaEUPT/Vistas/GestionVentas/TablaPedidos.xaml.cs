@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.GestionVentas
 {
     /// <summary>
-    /// Lógica de interacción para TablaPedidosCabeceras.xaml
+    /// Lógica de interacción para TablaPedidos.xaml
     /// </summary>
-    public partial class TablaPedidosCabeceras : UserControl
+    public partial class TablaPedidos : UserControl
     {
-        public TablaPedidosCabeceras()
+        public TablaPedidos()
         {
             InitializeComponent();
         }
