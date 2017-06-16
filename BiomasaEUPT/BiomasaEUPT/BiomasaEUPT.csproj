@@ -123,6 +123,7 @@
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\UserControl1ViewModel.cs" />
+    <Compile Include="Domain\ValueToEqualsParameterConverter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SeedTablas.cs" />
     <Compile Include="Modelos\BiomasaEUPTContext.cs" />

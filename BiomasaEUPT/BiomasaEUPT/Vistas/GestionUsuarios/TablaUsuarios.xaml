@@ -51,7 +51,7 @@
 
                     <DataGrid.Columns>
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumn" Width="SizeToHeader" Header="Nombre"
+                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
                                                                    Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
                             <!--materialDesign:MaterialDataGridTextColumn.Binding>
@@ -93,7 +93,7 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
 
-                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Width="100" Header="Email"
+                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
                                                                    Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                    MaxLength="254">
@@ -109,13 +109,13 @@
                             </materialDesign:MaterialDataGridTextColumn.Binding-->
                         </materialDesign:MaterialDataGridTextColumn>
                         <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
-                        <DataGridComboBoxColumn x:Name="tipos_usuariosColumn" Header="Tipo"
+                        <DataGridComboBoxColumn x:Name="tipos_usuariosColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
                                                 SelectedValuePath="TipoUsuarioId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
 
-                        <DataGridCheckBoxColumn x:Name="baneadoColumn" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
+                        <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
                             <!--DataGridCheckBoxColumn.CellStyle>

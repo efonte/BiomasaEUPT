@@ -54,9 +54,9 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             {
                 context.MateriasPrimas.Load();
                 // https://msdn.microsoft.com/en-us/data/jj574232.aspx
-                var proveedores = context.Proveedores.Where(p => p.Recepciones.Where(r => r.MateriasPrimas.Where(mp => mp.Codigo == "1000000001").Any()).Any()).Include("Recepciones.MateriasPrimas.TipoMateriaPrima").Include("Recepciones.MateriasPrimas.HistorialHuecosRecepciones");
+                var proveedores = context.Proveedores.Where(p => p.Recepciones.Any(r => r.MateriasPrimas.Any(mp => mp.Codigo == "1000000001"))).Include("Recepciones.MateriasPrimas.TipoMateriaPrima").Include("Recepciones.MateriasPrimas.HistorialHuecosRecepciones");
                 //Console.WriteLine(proveedores.First().Recepciones.First().NumeroAlbaran);
-                Console.WriteLine("---->>>>>>" + proveedores.First().Recepciones.First().MateriasPrimas.Count);
+               // Console.WriteLine("---->>>>>>" + proveedores.First().Recepciones.First().MateriasPrimas.Count);
                 ArbolRecepcion = new ObservableCollection<Proveedor>(proveedores);
 
                 var consulta = context.MateriasPrimas.Where(mp => mp.Codigo == "1000000001")
@@ -86,6 +86,10 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                 }
 
                 // ArbolRecepcion = new ObservableCollection<Proveedor>(consulta);
+
+                /*   var workflows = context.WorkFlows
+           .Where(w => w.Roles.Any(r => r.Users.Any(u => u.UserId == givenUserId)))
+           .ToList();*/
 
             };
             DataContext = this;

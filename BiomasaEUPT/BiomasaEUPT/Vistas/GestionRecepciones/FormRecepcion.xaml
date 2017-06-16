@@ -48,7 +48,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaRecepcion" Width="100" VerticalAlignment="Center"
                                 SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha">                       
+                                materialDesign:HintAssist.Hint="Fecha">
                         <DatePicker.BlackoutDates>
                             <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
                             <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
@@ -76,16 +76,16 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbEstadosRecepciones" materialDesign:HintAssist.Hint="Estado"
-                          ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="EstadoRecepcionId">
-                </ComboBox>
-
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbProveedores" materialDesign:HintAssist.Hint="Proveedor"
+                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProveedores" materialDesign:HintAssist.Hint="Proveedor"
                           ItemsSource="{Binding Source={StaticResource proveedoresViewSource}}"
                           DisplayMemberPath="RazonSocial"
                           SelectedValuePath="ProveedorId">
+                </ComboBox>
+
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbEstadosRecepciones" materialDesign:HintAssist.Hint="Estado"
+                          ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="EstadoRecepcionId" Visibility="Collapsed">
                 </ComboBox>
 
                 <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">

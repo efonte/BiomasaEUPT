@@ -501,14 +501,19 @@ namespace BiomasaEUPT.Migrations
                  ee => ee.Nombre,
                  new EstadoElaboracion()
                  {
-                     Nombre = "Procesando",
-                     Descripcion = "La orden de elaboración se está procesando"
+                     Nombre = "Nueva",
+                     Descripcion = "Se ha añadido la cantidad de cada producto terminado a elaborar"
                  },
                   new EstadoElaboracion()
                   {
-                      Nombre = "Finalizado",
-                      Descripcion = "La orden de elaboración ha finalizado"
-                  });
+                      Nombre = "Procesando",
+                      Descripcion = "Los productos terminados se están elaborando"
+                  },
+                 new EstadoElaboracion()
+                 {
+                     Nombre = "Finalizada",
+                     Descripcion = "Los productos terminados se ha elaborado"
+                 });
             context.SaveChanges();
 
             context.GruposProductosTerminados.AddOrUpdate(

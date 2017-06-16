@@ -106,7 +106,14 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             var recepcion = (sender as DataGrid).SelectedItem as Recepcion;
             if (recepcion != null)
             {
+                ucTablaMateriasPrimas.IsEnabled = true;
                 materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+                //ucTablaMateriasPrimas.MateriasPrimas = new ObservableCollection<MateriaPrima>(context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList());
+                //context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList().ForEach(ucTablaMateriasPrimas.MateriasPrimas.Add);
+            }
+            else
+            {
+                ucTablaMateriasPrimas.IsEnabled = false;
             }
         }
 
@@ -121,7 +128,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     NumeroAlbaran = formRecepcion.NumeroAlbaran,
                     FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second),
                     ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
-                    EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
+                    //EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
+                    EstadoId = 1
                 });
                 context.SaveChanges();
             }
@@ -161,6 +169,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 }
                 context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
                 context.SaveChanges();
+                //CollectionViewSource.GetDefaultView(ucTablaMateriasPrimas.dgMateriasPrimas.ItemsSource).Refresh();
+                ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
             }
         }
 
@@ -318,6 +328,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
                 context.SaveChanges();
                 ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
+                // CollectionViewSource.GetDefaultView(ucTablaMateriasPrimas.dgMateriasPrimas.ItemsSource).Refresh();
             }
         }
         #endregion
@@ -332,6 +343,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 Fecha = recepcionSeleccionada.FechaRecepcion,
                 Hora = recepcionSeleccionada.FechaRecepcion
             };
+            formRecepcion.cbEstadosRecepciones.Visibility = Visibility.Visible;
             var albaranViejo = formRecepcion.NumeroAlbaran;
             formRecepcion.vAlbaranUnico.NombreActual = recepcionSeleccionada.NumeroAlbaran;
             formRecepcion.cbEstadosRecepciones.SelectedValue = recepcionSeleccionada.EstadoRecepcion.EstadoRecepcionId;
