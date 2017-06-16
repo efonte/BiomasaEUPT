@@ -66,7 +66,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             ucTablaMateriasPrimas.bAnadirMateriaPrima.Click += BAnadirMateriaPrima_Click;
 
-            Style rowStyle = new Style(typeof(DataGridRow));
+            Style rowStyle = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
             ucTablaRecepciones.dgRecepciones.RowStyle = rowStyle;
             ucTablaRecepciones.dgRecepciones.SelectedIndex = -1;

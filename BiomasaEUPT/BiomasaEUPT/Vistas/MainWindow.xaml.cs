@@ -1,5 +1,7 @@
 ﻿using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,8 +27,6 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class MainWindow : Window
     {
-        // BiomasaEUPTDataSet biomasaEUPTDataSet;
-        // BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter biomasaEUPTDataSetusuariosTableAdapter;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,10 +35,7 @@ namespace BiomasaEUPT
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // biomasaEUPTDataSet = ((BiomasaEUPTDataSet)(FindResource("biomasaEUPTDataSet")));
-            // biomasaEUPTDataSet = new BiomasaEUPTDataSet();
-            // biomasaEUPTDataSetusuariosTableAdapter = new BiomasaEUPTDataSetTableAdapters.usuariosTableAdapter();
-            // biomasaEUPTDataSetusuariosTableAdapter.Fill(biomasaEUPTDataSet.usuarios);
+
         }
 
         private void menuSalir_Click(object sender, RoutedEventArgs e)
@@ -126,6 +123,8 @@ namespace BiomasaEUPT
 
             if (Properties.Settings.Default.TabActiva != "")
                 tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva).IsSelected = true;
+
+            new PaletteHelper().SetLightDark(Properties.Settings.Default.ModoNocturno);
         }
 
         private void GuardarAjustes()

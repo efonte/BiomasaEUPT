@@ -66,7 +66,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Common Fields</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignHeadlineTextBlock}">Common Fields</TextBlock>
         <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="Account" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" />
         <TextBox Grid.Row="1" Grid.Column="1" 
                     x:Name="NameTextBox"
@@ -86,7 +86,7 @@
             <ComboBoxItem>Linux</ComboBoxItem>
             <ComboBoxItem>Windows</ComboBoxItem>
         </ComboBox>
-        <TextBlock Grid.Row="0" Grid.Column="4" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="32 0 0 0">Multi-line</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="4" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Margin="32 0 0 0">Multi-line</TextBlock>
         <TextBox Grid.Row="1" Grid.RowSpan="2" Grid.Column="4" TextWrapping="Wrap" VerticalAlignment="Stretch" Margin="32 0 0 0"
                  MinWidth="280"
                  AcceptsReturn="True"                 
@@ -116,8 +116,8 @@
                      x:Name="PasswordBox"
                      materialDesign:HintAssist.Hint="Password" />
         <TextBox Grid.Row="4" Grid.Column="1" materialDesign:HintAssist.Hint="Floating Hint" 
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-        <ComboBox Grid.Row="4" Grid.Column="3" materialDesign:HintAssist.Hint="OS" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}" />
+        <ComboBox Grid.Row="4" Grid.Column="3" materialDesign:HintAssist.Hint="OS" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
             <ComboBoxItem>Android</ComboBoxItem>
             <ComboBoxItem>iOS</ComboBoxItem>
             <ComboBoxItem>Linux</ComboBoxItem>
@@ -125,7 +125,7 @@
         </ComboBox>
 
         <StackPanel Grid.Row="3" Grid.Column="4" Grid.RowSpan="3" Margin="32 16 0 0">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}">Virtualised Comboboxes</TextBlock>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}">Virtualised Comboboxes</TextBlock>
             <StackPanel Orientation="Horizontal" Margin="0 12 0 0">
                 <ComboBox materialDesign:HintAssist.Hint="Virtualisation" 
                           MinWidth="72"
@@ -169,7 +169,7 @@
                           MinWidth="72"
                           Margin="16 0 0 0"
                           ItemsSource="{Binding LongListToTestComboVirtualization}"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                          Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -179,7 +179,7 @@
             </StackPanel>
         </StackPanel>
 
-        <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="Good stuff"
+        <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Text="Good stuff"
                  Margin="0 8 0 8">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -188,7 +188,7 @@
                 </StackPanel>
             </materialDesign:HintAssist.Hint>
         </TextBox>
-        <ComboBox Grid.Row="5" Grid.Column="3" materialDesign:HintAssist.Hint="Search" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+        <ComboBox Grid.Row="5" Grid.Column="3" materialDesign:HintAssist.Hint="Search" IsEditable="True" Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                   Margin="0 8 0 8">
             <ComboBoxItem IsSelected="True">Apple</ComboBoxItem>
             <ComboBoxItem>Banana</ComboBoxItem>
@@ -203,17 +203,17 @@
                      x:Name="FloatingPasswordBox"
                      Margin="0 12 0 0"
                      materialDesign:HintAssist.Hint="Floating Password"
-                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                     Style="{DynamicResource MaterialDesignFloatingHintPasswordBox}" />
 
         <TextBox Grid.Row="6" Grid.Column="3"
                  materialDesign:HintAssist.Hint="Large Font"
                  materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                  materialDesign:HintAssist.FloatingScale="0.50"                 
                  Text="Some Text"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                  FontSize="24"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="1" Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+        <TextBlock Grid.Row="7" Grid.Column="1" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
                    Margin="0 48 0 0">DataTemplate Test</TextBlock>
         <ContentControl Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="4"
                         Content="{Binding DemoItem}"
@@ -223,13 +223,13 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBox materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="0 0 0 0" VerticalAlignment="Bottom" />
                         <TextBox materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
-                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
-                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
+                        <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
+                        <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </DataTemplate>
             </ContentControl.ContentTemplate>
         </ContentControl>
-        <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+        <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
                    Margin="0 16 0 0">DataTemplateSelector Test</TextBlock>
         <ContentControl Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="4" 
                         Content="{Binding DemoItem}"
@@ -239,8 +239,8 @@
                     <domain1:SimpleDataTemplateSelector.FixedTemplate>
                         <DataTemplate DataType="domain:DemoItem">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="0 0 0 0" VerticalAlignment="Bottom" />
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
+                                <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="0 0 0 0" VerticalAlignment="Bottom" />
+                                <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
                                 <TextBox materialDesign:HintAssist.Hint="Name" Text="{Binding Name}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
                                 <TextBox materialDesign:HintAssist.Hint="Content" Text="{Binding Content}" Margin="8 0 0 0" VerticalAlignment="Bottom" />
                             </StackPanel>
@@ -249,7 +249,7 @@
                 </domain1:SimpleDataTemplateSelector>
             </ContentControl.ContentTemplateSelector>
         </ContentControl>
-        <TextBlock Grid.Row="7" Grid.Column="4" Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+        <TextBlock Grid.Row="7" Grid.Column="4" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
                    Margin="0 48 0 0">Tight Space Validation</TextBlock>
         <TextBox Grid.Row="8" Grid.Column="4" Width="20"
                  materialDesign:ValidationAssist.UsePopup="True"

@@ -65,7 +65,7 @@
                     </Button.CommandParameter>
                     _ACEPTAR
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                <Button Style="{DynamicResource MaterialDesignFlatButton}"
                     IsCancel="True" Margin="0 8 8 0"
                     Command="materialDesign:DialogHost.CloseDialogCommand">
                     <Button.CommandParameter>

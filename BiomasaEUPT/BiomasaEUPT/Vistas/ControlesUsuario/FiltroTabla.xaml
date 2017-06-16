@@ -23,7 +23,7 @@
                             <DockPanel>
                                 <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
                                     <StackPanel>
-                                        <Button x:Name="bAnadirTipo" Content="Añadir" Click="bAnadirTipo_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                        <Button x:Name="bAnadirTipo" Content="Añadir" Click="bAnadirTipo_Click" Style="{DynamicResource MaterialDesignFlatButton}"/>
                                         <Button x:Name="bEditarTipo" Content="Editar" Click="bEditarTipo_Click">
                                             <Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
@@ -50,7 +50,7 @@
                                         </Button>
                                     </StackPanel>
                                 </materialDesign:PopupBox>
-                                <TextBlock Text="Filtro Tipo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
+                                <TextBlock Text="Filtro Tipo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
                             </DockPanel>
                         </materialDesign:ColorZone>
                     </GroupBox.Header>
@@ -91,7 +91,7 @@
                 <materialDesign:ColorZone Grid.Row="1" x:Name="czGrupos" Mode="PrimaryMid" Margin="0 5 0 0" Height="20" CornerRadius="2 10 10 2">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">GRUPOS</TextBlock>
-                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                        <Button Style="{DynamicResource MaterialDesignToolForegroundButton}"
                                 Command="{x:Static materialDesign:Flipper.FlipCommand}" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right" />
                         </Button>
@@ -111,7 +111,7 @@
                             <DockPanel>
                                 <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="25" >
                                     <StackPanel>
-                                        <Button x:Name="bAnadirGrupo" Content="Añadir" Click="bAnadirGrupo_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                        <Button x:Name="bAnadirGrupo" Content="Añadir" Click="bAnadirGrupo_Click" Style="{DynamicResource MaterialDesignFlatButton}"/>
                                         <Button x:Name="bEditarGrupo" Content="Editar" Click="bEditarGrupo_Click">
                                             <Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
@@ -138,7 +138,7 @@
                                         </Button>
                                     </StackPanel>
                                 </materialDesign:PopupBox>
-                                <TextBlock Text="Filtro Grupo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
+                                <TextBlock Text="Filtro Grupo" FontFamily="Roboto" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" FontWeight="Black"/>
                             </DockPanel>
                         </materialDesign:ColorZone>
                     </GroupBox.Header>
@@ -163,7 +163,7 @@
 
                 <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid" Margin="0 5 0 0" Height="20" CornerRadius="10 2 2 10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                        <Button Style="{DynamicResource MaterialDesignToolForegroundButton}"
                                 Command="{x:Static materialDesign:Flipper.FlipCommand}" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Left"/>
                         </Button>

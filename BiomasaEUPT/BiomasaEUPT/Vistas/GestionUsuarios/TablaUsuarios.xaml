@@ -53,7 +53,7 @@
                         <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
                         <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
                                                                    Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
+                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
                             <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -95,7 +95,7 @@
 
                         <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
                                                                    Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                    MaxLength="254">
                             <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
@@ -113,11 +113,11 @@
                                                 ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
                                                 SelectedValuePath="TipoUsuarioId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
 
                         <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                                                ElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                EditingElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
                             <!--DataGridCheckBoxColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="ToolTip" Value="{Binding fecha_baja, ConverterCulture=es-ES}" />
@@ -180,7 +180,7 @@
                 </DataGrid>
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" FontFamily="Roboto" FontSize="12"
-                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 

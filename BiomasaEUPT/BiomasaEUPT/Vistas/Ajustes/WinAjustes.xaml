@@ -23,8 +23,9 @@
                             <TextBlock Text="General" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                         </StackPanel>
                     </TabItem.Header>
-
-                    <local:TabApariencia x:Name="ucTabApariencia"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <local:TabApariencia x:Name="ucTabApariencia"/>
+                    </ScrollViewer>
                 </TabItem>
 
 

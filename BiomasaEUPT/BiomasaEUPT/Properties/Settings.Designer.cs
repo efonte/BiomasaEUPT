@@ -130,5 +130,17 @@ namespace BiomasaEUPT.Properties {
                 this["VentanaMaximizada"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ModoNocturno {
+            get {
+                return ((bool)(this["ModoNocturno"]));
+            }
+            set {
+                this["ModoNocturno"] = value;
+            }
+        }
     }
 }

@@ -16,8 +16,15 @@
             <Setter Property="FontSize" Value="15" />
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="0 0 0 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -27,12 +34,15 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Ventana" HorizontalAlignment="Center" FontWeight="Light" FontSize="23" Margin="0,10,0,0"/>
-        <Separator Grid.Row="1"/>
-        <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Content="Recordar tamaño ventana"/>
-        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Content="Recordar ventana maximizada"/>
-        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Content="Recordar posición ventana"/>
-        <CheckBox x:Name="cbTabActiva" Grid.Row="5" Content="Recordar pestaña activa"/>
-        <CheckBox x:Name="cbPosicionTab" Grid.Row="6" Content="Recordar orden de las pestañas"/>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Ventana" HorizontalAlignment="Center" FontWeight="Light" FontSize="23" Margin="0,10,0,0"/>
+        <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+        <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Grid.Column="0"  Content="Recordar tamaño ventana"/>
+        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Grid.Column="0" Content="Recordar ventana maximizada"/>
+        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Grid.Column="0" Content="Recordar posición ventana"/>
+        <CheckBox x:Name="cbTabActiva" Grid.Row="2" Grid.Column="1" Content="Recordar pestaña activa"/>
+        <CheckBox x:Name="cbPosicionTab" Grid.Row="3" Grid.Column="1" Content="Recordar orden de las pestañas"/>
+        <TextBlock Grid.Row="7" Grid.ColumnSpan="2"  Text="Apariencia" HorizontalAlignment="Center" FontWeight="Light" FontSize="23" Margin="0,20,0,0"/>
+        <Separator Grid.Row="8" Grid.ColumnSpan="2" />
+        <CheckBox x:Name="cbModoNocturno" Grid.Row="9" Content="Modo nocturno" />
     </Grid>
 </UserControl>

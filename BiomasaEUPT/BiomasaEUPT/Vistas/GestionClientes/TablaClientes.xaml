@@ -74,7 +74,7 @@
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumna" Header="Razón Social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="RazonSocial" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -88,7 +88,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" >
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -102,7 +102,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Email" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -119,15 +119,15 @@
                                                 ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
                                                 SelectedValuePath="TipoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
                             <DataGridComboBoxColumn x:Name="gruposClientesColumna" Header="Grupo"
                                                 ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
                                                 SelectedValuePath="GrupoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="calle" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -164,7 +164,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
                                  HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                  PlacementMode="RightAndAlignMiddles"
                                  UnfurlOrientation="Horizontal"
@@ -213,7 +213,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                            <ToggleButton x:Name="tbEditarObservaciones" Style="{DynamicResource MaterialDesignSwitchToggleButton}"
                                           HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
                                     <materialDesign:PackIcon.RenderTransform>
@@ -225,12 +225,12 @@
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
                             <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
-                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
-                                       MaxHeight="350" TextWrapping="Wrap"/>
+                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
+                                       FontSize="16" MaxHeight="350" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                                     MaxHeight="350" TextWrapping="Wrap"/>
+                                     MaxHeight="350" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"/>
                             <!--RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top"
                                          Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="16"
                                          DataObject.Pasting="rtbObservaciones_Pasting">
@@ -246,7 +246,7 @@
                 </StackPanel>
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
-                         materialDesign:HintAssist.Hint=" Buscar..." Background="{StaticResource MaterialDesignPaper}"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 
@@ -273,7 +273,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon Social" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>

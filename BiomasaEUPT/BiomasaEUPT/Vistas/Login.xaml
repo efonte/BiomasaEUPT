@@ -65,7 +65,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignHeadlineTextBlock}" FontWeight="Bold" Margin="0 10 0 20" HorizontalAlignment="Center">BiomasaEUPT</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" FontWeight="Bold" Margin="0 10 0 20" HorizontalAlignment="Center">BiomasaEUPT</TextBlock>
 
             <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="Account" Foreground="{Binding BorderBrush, ElementName=tbUsuario}" />
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbUsuario" materialDesign:HintAssist.Hint="Usuario">

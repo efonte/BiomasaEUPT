@@ -63,17 +63,17 @@
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumn" Header="Razón social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" >
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
 
                             </materialDesign:MaterialDataGridTextColumn>
@@ -81,15 +81,15 @@
                                                 ItemsSource="{Binding Source={StaticResource tiposProveedoresViewSource}}"
                                                 SelectedValuePath="ProveedorId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoProveedorId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{StaticResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle" Width="180"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <materialDesign:PopupBox Grid.Row="1" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
                                  HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                  PlacementMode="RightAndAlignMiddles"
                                  UnfurlOrientation="Horizontal"
@@ -122,7 +122,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                            <ToggleButton x:Name="tbEditarObservaciones" Style="{DynamicResource MaterialDesignSwitchToggleButton}"
                                           HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
                                     <materialDesign:PackIcon.RenderTransform>
@@ -172,7 +172,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon social" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
