@@ -64,6 +64,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -110,6 +113,7 @@
     </ApplicationDefinition>
     <Compile Include="Clases\Comando.cs" />
     <Compile Include="Clases\CursorEspera.cs" />
+    <Compile Include="Clases\InformePDF.cs" />
     <Compile Include="Clases\RelayComando.cs" />
     <Compile Include="Domain\BooleanConverter.cs" />
     <Compile Include="Domain\BooleanToVisibilityConverter.cs" />
@@ -242,6 +246,9 @@
     </Compile>
     <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
       <DependentUpon>TabProveedores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\TablaTrazabilidad.xaml.cs">
+      <DependentUpon>TablaTrazabilidad.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml.cs">
       <DependentUpon>TrazabilidadCodigos.xaml</DependentUpon>
@@ -378,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionProveedores\TabProveedores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionTrazabilidad\TablaTrazabilidad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

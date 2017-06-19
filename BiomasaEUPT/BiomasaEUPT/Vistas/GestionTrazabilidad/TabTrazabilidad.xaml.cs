@@ -30,19 +30,19 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
         {
             InitializeComponent();
             DataContext = this;
-            ucTrazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
+            //ucTrazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             context = new BiomasaEUPTContext();
-            Console.WriteLine(context.Proveedores.Where(p => p.Recepciones.Where(r => r.MateriasPrimas.Where(mp => mp.Codigo == "1000000001").Any()).Any()).Count());
+            //Console.WriteLine(context.Proveedores.Where(p => p.Recepciones.Where(r => r.MateriasPrimas.Where(mp => mp.Codigo == "1000000001").Any()).Any()).Count());
         }
 
         private void TbCodigo_TextChanged(object sender, TextChangedEventArgs e)
         {
             string codigo = (sender as TextBox).Text;
-            ucTrazabilidadCodigos.tvAlmacenamiento.Items.Clear();
+           ////////////////////// ucTrazabilidadCodigos.tvAlmacenamiento.Items.Clear();
             if (codigo.Length == 10)
             {
                 switch (codigo[0].ToString())
@@ -52,7 +52,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         {
                             var materiaPrima = context.MateriasPrimas.Single(mp => mp.Codigo == codigo);
                             var tviProveedor = TreeViewItemIcono(materiaPrima.Recepcion.Proveedor.RazonSocial, PackIconKind.Worker);
-                            ucTrazabilidadCodigos.tvAlmacenamiento.Items.Add(tviProveedor);
+                           /////////////////// ucTrazabilidadCodigos.tvAlmacenamiento.Items.Add(tviProveedor);
                             var tviRecepcion = TreeViewItemIcono(materiaPrima.Recepcion.NumeroAlbaran, PackIconKind.Truck);
                             tviProveedor.Items.Add(tviRecepcion);
                             var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
