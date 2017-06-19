@@ -1,6 +1,16 @@
 ﻿using BiomasaEUPT.Modelos;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using iText.IO.Font;
+using iText.IO.Util;
+using iText.Kernel.Colors;
+using iText.Kernel.Events;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +24,9 @@ namespace BiomasaEUPT.Clases
     {
         private string codigo;
         private string ruta;
+
+        internal static PdfFont helvetica = null;
+        internal static PdfFont helveticaBold = null;
         public InformePDF(string codigo, string ruta)
         {
             if (codigo.Length != 10 ||
@@ -25,36 +38,39 @@ namespace BiomasaEUPT.Clases
             }
             this.codigo = codigo;
             this.ruta = ruta;
+            helvetica = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
+            helveticaBold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
         }
 
         public string GenerarPDF()
         {
-            Document doc = new Document(PageSize.A4, 70, 70, 85, 85);
             var nombrePdf = ruta + "Informe #" + codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+            /* Document doc = new Document(PageSize.A4, 70, 70, 85, 85);
+            
 
-            PdfWriter writer = PdfWriter.GetInstance(doc,
-                                        new FileStream(nombrePdf, FileMode.Create));
+             PdfWriter writer = PdfWriter.GetInstance(doc,
+                                         new FileStream(nombrePdf, FileMode.Create));
 
-            // Metadatos
-            doc.AddTitle("Informe #" + codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss"));
-            doc.AddCreator("BiomasaEUPT");
-            doc.AddAuthor("BiomasaEUPT");
-            doc.AddCreationDate();
+             // Metadatos
+             doc.AddTitle("Informe #" + codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss"));
+             doc.AddCreator("BiomasaEUPT");
+             doc.AddAuthor("BiomasaEUPT");
+             doc.AddCreationDate();
 
-            doc.Open();
+             doc.Open();
 
-            // Creamos el tipo de Font que vamos utilizar
-            FontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "\\fonts\\cambria.ttc", "Cambria");
-            FontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "\\fonts\\calibri.ttf", "Calibri");
-            // Font fuenteEstandar = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
-            Font fuenteNormal = FontFactory.GetFont("Calibri", 12, Font.NORMAL, BaseColor.BLACK);
-            Font fuenteNegrita = FontFactory.GetFont("Calibri", 12, Font.BOLD, BaseColor.BLACK);
-            Font fuenteTitulo = FontFactory.GetFont("Cambria", 16, Font.BOLD, new BaseColor(79, 129, 189));
+             // Creamos el tipo de Font que vamos utilizar
+             FontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "\\fonts\\cambria.ttc", "Cambria");
+             FontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "\\fonts\\calibri.ttf", "Calibri");
+             // Font fuenteEstandar = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+             Font fuenteNormal = FontFactory.GetFont("Calibri", 12, Font.NORMAL, BaseColor.BLACK);
+             Font fuenteNegrita = FontFactory.GetFont("Calibri", 12, Font.BOLD, BaseColor.BLACK);
+             Font fuenteTitulo = FontFactory.GetFont("Cambria", 16, Font.BOLD, new BaseColor(79, 129, 189));
 
 
-            doc.Add(new Paragraph("Recepción", fuenteTitulo));
-            doc.Add(Chunk.NEWLINE);
-
+             doc.Add(new Paragraph("Recepción", fuenteTitulo));
+             doc.Add(Chunk.NEWLINE);
+             */
             /* PdfPTable tblRecepcion = new PdfPTable(2)
              {
                  WidthPercentage = 100
@@ -90,44 +106,96 @@ namespace BiomasaEUPT.Clases
 
              doc.Add(tblRecepcion);*/
 
-            PdfPTable tblRecepcion = new PdfPTable(2)
-            {
-                HorizontalAlignment = 0,
-                WidthPercentage = 50
-            };
+            /* PdfPTable tblRecepcion = new PdfPTable(2)
+             {
+                 HorizontalAlignment = 0,
+                 WidthPercentage = 50
+             };
 
-            var clProveedorTitulo = new PdfPCell(new Phrase("Proveedor", fuenteNegrita))
-            {
-                BorderWidth = 0
-            };
+             var clProveedorTitulo = new PdfPCell(new Phrase("Proveedor", fuenteNegrita))
+             {
+                 BorderWidth = 0
+             };
 
-            var clProveedor = new PdfPCell(new Phrase(DateTime.Now.ToString(), fuenteNormal))
-            {
-                BorderWidth = 0
-            };
+             var clProveedor = new PdfPCell(new Phrase(DateTime.Now.ToString(), fuenteNormal))
+             {
+                 BorderWidth = 0
+             };
 
-            var clAlbaranTitulo = new PdfPCell(new Phrase("Nº de Albarán", fuenteNegrita))
-            {
-                BorderWidth = 0
-            };
-            var clAlbaran = new PdfPCell(new Phrase("231313", fuenteNormal))
-            {
-                BorderWidth = 0
-            };
+             var clAlbaranTitulo = new PdfPCell(new Phrase("Nº de Albarán", fuenteNegrita))
+             {
+                 BorderWidth = 0
+             };
+             var clAlbaran = new PdfPCell(new Phrase("231313", fuenteNormal))
+             {
+                 BorderWidth = 0
+             };
 
-            tblRecepcion.AddCell(clProveedorTitulo);
-            tblRecepcion.AddCell(clProveedor);
+             tblRecepcion.AddCell(clProveedorTitulo);
+             tblRecepcion.AddCell(clProveedor);
 
-            tblRecepcion.AddCell(clAlbaranTitulo);
-            tblRecepcion.AddCell(clAlbaran);
-            doc.Add(tblRecepcion);
+             tblRecepcion.AddCell(clAlbaranTitulo);
+             tblRecepcion.AddCell(clAlbaran);
+             doc.Add(tblRecepcion);
+
+             doc.Close();
+             writer.Close();*/
+
+            PdfWriter writer = new PdfWriter(nombrePdf);
+
+            PdfDocument pdf = new PdfDocument(writer);
+            pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new MyEventHandler(this));
+
+            Document doc = new Document(pdf, PageSize.A4);
+            doc.SetMargins(70, 70, 85, 85);
+
+            Paragraph p = new Paragraph("Recepción").SetTextAlignment(TextAlignment.CENTER).SetFont(helveticaBold).SetFontSize(14);
+            doc.Add(p);
+            Table tablaRecepcion = new Table(new float[] { 3, 5, 7, 4 });
+            tablaRecepcion.SetWidthPercent(100);
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("aaa").SetFont(helveticaBold)).SetFontSize(9).SetBorder
+                        (new SolidBorder(Color.BLACK, 0.5f)));
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("bbb").SetFont(helveticaBold)).SetFontSize(9).SetBorder
+                          (new SolidBorder(Color.BLACK, 0.5f)));
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("aaa").SetFont(helvetica)).SetFontSize(9).SetBorder
+                         (new SolidBorder(Color.BLACK, 0.5f)));
+
+            doc.Add(tablaRecepcion);
+            doc.Add(new Paragraph("Hola mundo"));
 
             doc.Close();
-            writer.Close();
 
             return nombrePdf;
         }
 
+        protected internal class MyEventHandler : IEventHandler
+        {
+            public virtual void HandleEvent(Event @event)
+            {
+                PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;
+                PdfDocument pdfDoc = docEvent.GetDocument();
+                PdfPage page = docEvent.GetPage();
+                int pageNumber = pdfDoc.GetPageNumber(page);
+                Rectangle pageSize = page.GetPageSize();
+                PdfCanvas pdfCanvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
+                //Set background
+                Color limeColor = new DeviceCmyk(0.208f, 0, 0.584f, 0);
+                Color blueColor = new DeviceCmyk(0.445f, 0.0546f, 0, 0.0667f);
+                pdfCanvas.SaveState().SetFillColor(pageNumber % 2 == 1 ? limeColor : blueColor).Rectangle(pageSize.GetLeft
+                    (), pageSize.GetBottom(), pageSize.GetWidth(), pageSize.GetHeight()).Fill().RestoreState();
+                //Add header and footer
+                pdfCanvas.BeginText().SetFontAndSize(helvetica, 9).MoveText(pageSize.GetWidth() / 2 - 60, pageSize
+                    .GetTop() - 20).ShowText("CABECERA").MoveText(60, -pageSize.GetTop() + 30).ShowText(pageNumber
+                    .ToString()).EndText();
+            }
+
+            internal MyEventHandler(InformePDF _enclosing)
+            {
+                this._enclosing = _enclosing;
+            }
+
+            private readonly InformePDF _enclosing;
+        }
 
 
         /*
@@ -174,7 +242,7 @@ namespace BiomasaEUPT.Clases
             return tmpFooter;
         }
         */
-       
+
         /*
         public void CreatePDF()
         {
@@ -230,6 +298,10 @@ namespace BiomasaEUPT.Clases
         }
         */
     }
+
+
+
+
     /*
         public class ITextEvents : PdfPageEventHelper
         {

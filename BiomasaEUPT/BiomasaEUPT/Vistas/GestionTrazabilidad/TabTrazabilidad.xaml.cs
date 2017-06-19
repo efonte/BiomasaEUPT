@@ -1,10 +1,12 @@
-﻿using BiomasaEUPT.Modelos;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 {
@@ -30,19 +33,32 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
         {
             InitializeComponent();
             DataContext = this;
-            //ucTrazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
+            ucTrazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
+            ucTrazabilidadCodigos.bPdf.Click += BPdf_Click;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             context = new BiomasaEUPTContext();
+            context.Configuration.LazyLoadingEnabled = false;
+
+            // context.Configuration.ProxyCreationEnabled = false;
             //Console.WriteLine(context.Proveedores.Where(p => p.Recepciones.Where(r => r.MateriasPrimas.Where(mp => mp.Codigo == "1000000001").Any()).Any()).Count());
+            /*var proveedor = context.Proveedores.SingleOrDefault(p => p.ProveedorId == 1);
+              using (XmlWriter writer = XmlWriter.Create(@"C:\Users\usuario\Desktop\qqqwwweee\Agreement.xml"))
+               {
+                   DataContractSerializer serializer = new DataContractSerializer(proveedor.GetType());
+                   serializer.WriteObject(writer, proveedor);
+               }*/
         }
 
         private void TbCodigo_TextChanged(object sender, TextChangedEventArgs e)
         {
             string codigo = (sender as TextBox).Text;
-           ////////////////////// ucTrazabilidadCodigos.tvAlmacenamiento.Items.Clear();
+            ucTrazabilidadCodigos.ArbolAlmacenamiento.Clear();
+            ucTrazabilidadCodigos.ArbolElaboracion.Clear();
+            ucTrazabilidadCodigos.ArbolVenta.Clear();
+            ucTrazabilidadCodigos.bPdf.Visibility = Visibility.Collapsed;
             if (codigo.Length == 10)
             {
                 switch (codigo[0].ToString())
@@ -50,29 +66,42 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                     case Constantes.CODIGO_MATERIAS_PRIMAS:
                         if (context.MateriasPrimas.Any(mp => mp.Codigo == codigo))
                         {
-                            var materiaPrima = context.MateriasPrimas.Single(mp => mp.Codigo == codigo);
-                            var tviProveedor = TreeViewItemIcono(materiaPrima.Recepcion.Proveedor.RazonSocial, PackIconKind.Worker);
-                           /////////////////// ucTrazabilidadCodigos.tvAlmacenamiento.Items.Add(tviProveedor);
-                            var tviRecepcion = TreeViewItemIcono(materiaPrima.Recepcion.NumeroAlbaran, PackIconKind.Truck);
-                            tviProveedor.Items.Add(tviRecepcion);
-                            var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
-                            tviRecepcion.Items.Add(tviMateriaPrima);
-                            var sitiosRecepciones = (from hhr in context.HistorialHuecosRecepciones
-                                                     join hr in context.HuecosRecepciones on hhr.HuecoRecepcionId equals hr.HuecoRecepcionId
-                                                     join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
-                                                     where hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId
-                                                     select new { sr });
+                            ucTrazabilidadCodigos.bPdf.Visibility = Visibility.Visible;
+                            /* var materiaPrima = context.MateriasPrimas.Single(mp => mp.Codigo == codigo);
+                             var tviProveedor = TreeViewItemIcono(materiaPrima.Recepcion.Proveedor.RazonSocial, PackIconKind.Worker);
+                             ucTrazabilidadCodigos.tvAlmacenamiento.Items.Add(tviProveedor);
+                             var tviRecepcion = TreeViewItemIcono(materiaPrima.Recepcion.NumeroAlbaran, PackIconKind.Truck);
+                             tviProveedor.Items.Add(tviRecepcion);
+                             var tviMateriaPrima = TreeViewItemIcono(materiaPrima.TipoMateriaPrima.Nombre, PackIconKind.Tree);
+                             tviRecepcion.Items.Add(tviMateriaPrima);
+                             var sitiosRecepciones = (from hhr in context.HistorialHuecosRecepciones
+                                                      join hr in context.HuecosRecepciones on hhr.HuecoRecepcionId equals hr.HuecoRecepcionId
+                                                      join sr in context.SitiosRecepciones on hr.SitioId equals sr.SitioRecepcionId
+                                                      where hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId
+                                                      select new { sr });
 
-                            foreach (var sitioRecepcion in sitiosRecepciones.Select(sr => sr.sr).Distinct().ToList())
-                            {
-                                var tviSitioRecepcion = TreeViewItemIcono(sitioRecepcion.Nombre, PackIconKind.Texture);
-                                tviMateriaPrima.Items.Add(tviSitioRecepcion);
-                                foreach (var historialHuecoRecepcion in context.HistorialHuecosRecepciones.Where(hmp => hmp.HuecoRecepcion.SitioId == sitioRecepcion.SitioRecepcionId && hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList())
-                                {
-                                    var tviHistorialHuecoRecepcion = TreeViewItemIcono(historialHuecoRecepcion.HuecoRecepcion.Nombre, PackIconKind.Tree);
-                                    tviSitioRecepcion.Items.Add(tviHistorialHuecoRecepcion);
-                                }
-                            }
+                             foreach (var sitioRecepcion in sitiosRecepciones.Select(sr => sr.sr).Distinct().ToList())
+                             {
+                                 var tviSitioRecepcion = TreeViewItemIcono(sitioRecepcion.Nombre, PackIconKind.Texture);
+                                 tviMateriaPrima.Items.Add(tviSitioRecepcion);
+                                 foreach (var historialHuecoRecepcion in context.HistorialHuecosRecepciones.Where(hmp => hmp.HuecoRecepcion.SitioId == sitioRecepcion.SitioRecepcionId && hmp.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList())
+                                 {
+                                     var tviHistorialHuecoRecepcion = TreeViewItemIcono(historialHuecoRecepcion.HuecoRecepcion.Nombre, PackIconKind.Tree);
+                                     tviSitioRecepcion.Items.Add(tviHistorialHuecoRecepcion);
+                                 }
+                             }*/
+
+                            var materiaPrima = context.MateriasPrimas
+                                .Include("Recepcion.Proveedor")
+                                .Include("TipoMateriaPrima")
+                                .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
+                                .Single(mp => mp.Codigo == codigo);
+                            var recepcion = materiaPrima.Recepcion;
+                            recepcion.MateriasPrimas = new List<MateriaPrima>() { materiaPrima };
+                            var proveedor = recepcion.Proveedor;
+                            proveedor.Recepciones = new List<Recepcion>() { recepcion };
+                            ucTrazabilidadCodigos.ArbolAlmacenamiento.Add(proveedor);
+                            Console.WriteLine(ucTrazabilidadCodigos.ArbolAlmacenamiento.Count());
                         }
 
                         /*  var consulta = context.MateriasPrimas
@@ -121,6 +150,12 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         break;
                 }
             }
+        }
+
+        private void BPdf_Click(object sender, RoutedEventArgs e)
+        {
+            InformePDF informe = new InformePDF(ucTrazabilidadCodigos.tbCodigo.Text, @"C:\Users\usuario\Desktop\qqqwwweee\");
+            System.Diagnostics.Process.Start(informe.GenerarPDF());
         }
 
         private TreeViewItem TreeViewItemIcono(string texto, PackIconKind icono)
