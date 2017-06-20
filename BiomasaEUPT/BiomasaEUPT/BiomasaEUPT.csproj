@@ -136,6 +136,7 @@
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\InformePDF.cs" />
     <Compile Include="Clases\RelayComando.cs" />
+    <Compile Include="Clases\Trazabilidad.cs" />
     <Compile Include="Domain\BooleanConverter.cs" />
     <Compile Include="Domain\BooleanToVisibilityConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
@@ -273,9 +274,6 @@
     </Compile>
     <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
       <DependentUpon>TabProveedores.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionTrazabilidad\TablaTrazabilidad.xaml.cs">
-      <DependentUpon>TablaTrazabilidad.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml.cs">
       <DependentUpon>TrazabilidadCodigos.xaml</DependentUpon>
@@ -420,10 +418,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionProveedores\TabProveedores.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionTrazabilidad\TablaTrazabilidad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

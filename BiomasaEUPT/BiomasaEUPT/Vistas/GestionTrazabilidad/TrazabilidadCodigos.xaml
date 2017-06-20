@@ -24,7 +24,7 @@
             <TextBox x:Name="tbCodigo" FontFamily="Roboto" FontSize="15"
                  materialDesign:HintAssist.Hint=" Buscar Código..." MaxLength="10" Width="120" FontWeight="Bold"
                  Foreground="{DynamicResource MaterialDesignBody}" Text="100000000"/>
-            <Button x:Name="bPdf" Margin="15 0 0 0" Padding="0" BorderThickness="0" Height="25"
+            <Button x:Name="bPdf" Margin="15 0 0 0" Padding="0" BorderThickness="0" Height="25" Width="25"
                     Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
                     ToolTip="Generar informe en PDF" Visibility="Collapsed">
                 <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>

@@ -399,14 +399,14 @@ namespace BiomasaEUPT.Migrations
                 new Recepcion()
                 {
                     NumeroAlbaran = "A-0100B",
-                    FechaRecepcion = new DateTime(2017, 02, 10),
+                    FechaRecepcion = new DateTime(2017, 02, 10, 10, 15, 0),
                     ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 1).ProveedorId,
                     EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 1).EstadoRecepcionId
                 },
                 new Recepcion()
                 {
                     NumeroAlbaran = "A-010VB",
-                    FechaRecepcion = new DateTime(2017, 01, 20),
+                    FechaRecepcion = new DateTime(2017, 01, 20, 12, 16, 0),
                     ProveedorId = context.Proveedores.Local.Single(p => p.ProveedorId == 2).ProveedorId,
                     EstadoId = context.EstadosRecepciones.Local.Single(e => e.EstadoRecepcionId == 2).EstadoRecepcionId
                 });
@@ -453,7 +453,7 @@ namespace BiomasaEUPT.Migrations
                     MateriaPrimaId = 1,
                     TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "TipoMateriaPrima 1").TipoMateriaPrimaId,
                     Unidades = 35,
-                    Observaciones = "Es muy rico",
+                    Observaciones = "Observación 1",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-0100B").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 1").ProcedenciaId,
                 },
@@ -462,7 +462,7 @@ namespace BiomasaEUPT.Migrations
                     MateriaPrimaId = 2,
                     TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "TipoMateriaPrima 2").TipoMateriaPrimaId,
                     Volumen = 50,
-                    Observaciones = "Falta de respeto",
+                    Observaciones = "Observación 2",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-010VB").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Procedencia 2").ProcedenciaId,
                 });

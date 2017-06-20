@@ -28,11 +28,12 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
     public partial class TabTrazabilidad : UserControl
     {
         private BiomasaEUPTContext context;
-
+        private Trazabilidad trazabilidad;
         public TabTrazabilidad()
         {
             InitializeComponent();
             DataContext = this;
+            trazabilidad = new Trazabilidad();
             ucTrazabilidadCodigos.tbCodigo.TextChanged += TbCodigo_TextChanged;
             ucTrazabilidadCodigos.bPdf.Click += BPdf_Click;
         }
@@ -91,15 +92,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                                  }
                              }*/
 
-                            var materiaPrima = context.MateriasPrimas
-                                .Include("Recepcion.Proveedor")
-                                .Include("TipoMateriaPrima")
-                                .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
-                                .Single(mp => mp.Codigo == codigo);
-                            var recepcion = materiaPrima.Recepcion;
-                            recepcion.MateriasPrimas = new List<MateriaPrima>() { materiaPrima };
-                            var proveedor = recepcion.Proveedor;
-                            proveedor.Recepciones = new List<Recepcion>() { recepcion };
+                            var proveedor = trazabilidad.CodigoMateriaPrima(codigo);
                             ucTrazabilidadCodigos.ArbolAlmacenamiento.Add(proveedor);
                             Console.WriteLine(ucTrazabilidadCodigos.ArbolAlmacenamiento.Count());
                         }
@@ -154,8 +147,9 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 
         private void BPdf_Click(object sender, RoutedEventArgs e)
         {
-            InformePDF informe = new InformePDF(ucTrazabilidadCodigos.tbCodigo.Text, @"C:\Users\usuario\Desktop\qqqwwweee\");
-            System.Diagnostics.Process.Start(informe.GenerarPDF());
+            var codigo = ucTrazabilidadCodigos.tbCodigo.Text;
+            InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
+            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.CodigoMateriaPrima(codigo)));
         }
 
         private TreeViewItem TreeViewItemIcono(string texto, PackIconKind icono)

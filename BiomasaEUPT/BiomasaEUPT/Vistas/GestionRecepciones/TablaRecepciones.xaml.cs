@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,13 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     /// </summary>
     public partial class TablaRecepciones : UserControl
     {
+        private Trazabilidad trazabilidad;
+
         public TablaRecepciones()
         {
             InitializeComponent();
+            trazabilidad = new Trazabilidad();
+
         }
 
         private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
@@ -37,6 +43,14 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
 
             tabRecepciones.FiltrarTablaRecepciones();
-        }      
+        }
+
+        private void bPdfRecepcion_Click(object sender, RoutedEventArgs e)
+        {
+            Recepcion recepcion = (sender as Button).DataContext as Recepcion;
+
+            InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
+            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.NumeroAlbaranRecepcion(recepcion.NumeroAlbaran)));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using iText.IO.Font;
 using iText.IO.Util;
 using iText.Kernel.Colors;
@@ -22,29 +23,38 @@ namespace BiomasaEUPT.Clases
 {
     public class InformePDF
     {
-        private string codigo;
         private string ruta;
 
         internal static PdfFont helvetica = null;
         internal static PdfFont helveticaBold = null;
-        public InformePDF(string codigo, string ruta)
+        internal static PdfFont calibri = null;
+        internal static PdfFont cambria = null;
+
+        public InformePDF(string ruta)
         {
-            if (codigo.Length != 10 ||
-                codigo[0].ToString() != Constantes.CODIGO_MATERIAS_PRIMAS ||
-                codigo[0].ToString() != Constantes.CODIGO_ELABORACIONES ||
-                codigo[0].ToString() != Constantes.CODIGO_VENTAS)
-            {
-                new ArgumentException("El código es inválido");
-            }
-            this.codigo = codigo;
             this.ruta = ruta;
+
+            if (!Directory.Exists(ruta))
+                Directory.CreateDirectory(ruta);
+
             helvetica = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
             helveticaBold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
+
+            PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/calibri.ttf", "Calibri");
+            PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/cambria.ttc", "Cambria");
+
+            calibri = PdfFontFactory.CreateRegisteredFont("Calibri");
+            cambria = PdfFontFactory.CreateRegisteredFont("Cambria");
+            //calibri = PdfFontFactory.CreateFont(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/calibri.ttf");
         }
 
-        public string GenerarPDF()
+        public string GenerarPDFMateriaPrima(Proveedor proveedor)
         {
-            var nombrePdf = ruta + "Informe #" + codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+            var materiaPrima = proveedor.Recepciones.First().MateriasPrimas.First();
+
+            // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
+            var fechaCreacion = DateTime.Now;
+            var nombrePdf = ruta + "Materia Prima #" + materiaPrima.Codigo + " " + fechaCreacion.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
             /* Document doc = new Document(PageSize.A4, 70, 70, 85, 85);
             
 
@@ -144,29 +154,44 @@ namespace BiomasaEUPT.Clases
             PdfWriter writer = new PdfWriter(nombrePdf);
 
             PdfDocument pdf = new PdfDocument(writer);
+            PdfDocumentInfo info = pdf.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Materia Prima #" + materiaPrima.Codigo + " " + fechaCreacion.ToString("dd-MM-yyyy HH-mm-ss"));
             pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new MyEventHandler(this));
 
             Document doc = new Document(pdf, PageSize.A4);
             doc.SetMargins(70, 70, 85, 85);
 
-            Paragraph p = new Paragraph("Recepción").SetTextAlignment(TextAlignment.CENTER).SetFont(helveticaBold).SetFontSize(14);
+            Paragraph p = new Paragraph("Recepción").SetTextAlignment(TextAlignment.CENTER).SetFont(cambria).SetBold().SetFontSize(16);
             doc.Add(p);
-            Table tablaRecepcion = new Table(new float[] { 3, 5, 7, 4 });
-            tablaRecepcion.SetWidthPercent(100);
-            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("aaa").SetFont(helveticaBold)).SetFontSize(9).SetBorder
-                        (new SolidBorder(Color.BLACK, 0.5f)));
-            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("bbb").SetFont(helveticaBold)).SetFontSize(9).SetBorder
-                          (new SolidBorder(Color.BLACK, 0.5f)));
-            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("aaa").SetFont(helvetica)).SetFontSize(9).SetBorder
-                         (new SolidBorder(Color.BLACK, 0.5f)));
-
+            Table tablaRecepcion = new Table(new float[] { 1, 1 }).SetWidthPercent(50);
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("Fecha Recepción").SetFont(calibri).SetBold()).SetFontSize(13).SetBorder(null));
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph(proveedor.Recepciones.First().FechaRecepcion.ToString("dd/MM/yyyy HH:mm")).SetFont(calibri)).SetFontSize(13).SetBorder(null));
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph("Nº de Albarán").SetFont(calibri).SetBold()).SetFontSize(13).SetBorder(null));
+            tablaRecepcion.AddHeaderCell(new Cell().Add(new Paragraph(proveedor.Recepciones.First().NumeroAlbaran).SetFont(calibri)).SetFontSize(13).SetBorder(null));
             doc.Add(tablaRecepcion);
-            doc.Add(new Paragraph("Hola mundo"));
+
+            doc.Add(new Paragraph("\n"));
+            doc.Add(new Paragraph("Proveedor").SetFont(cambria).SetBold().SetFontSize(16));
+            Table tablaProveedor = new Table(new float[] { 1, 1 }).SetWidthPercent(50);
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph("Razon Social").SetFont(calibri).SetBold()).SetFontSize(13).SetBorder(null));
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph(proveedor.RazonSocial).SetFont(calibri)).SetFontSize(13).SetBorder(null));
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph("NIF").SetFont(calibri).SetBold()).SetFontSize(13).SetBorder(null));
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph(proveedor.Nif).SetFont(calibri)).SetFontSize(13).SetBorder(null));
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph("Tipo").SetFont(calibri).SetBold()).SetFontSize(13).SetBorder(null));
+            tablaProveedor.AddHeaderCell(new Cell().Add(new Paragraph(proveedor.TipoProveedor.Nombre).SetFont(calibri)).SetFontSize(13).SetBorder(null));
+            doc.Add(tablaProveedor);
+
+            doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
 
             doc.Close();
 
             return nombrePdf;
         }
+
 
         protected internal class MyEventHandler : IEventHandler
         {

@@ -53,6 +53,18 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding EstadoRecepcion.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bPdfRecepcion" Padding="0" BorderThickness="0" Height="25" Width="25"
+                                                Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
+                                                ToolTip="Generar informe en PDF" Click="bPdfRecepcion_Click">
+                                            <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
                             <!--DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
                                                 ItemsSource="{Binding Source={StaticResource proveedoresPrimasViewSource}}"
                                                 SelectedValuePath="ProveedorId" 

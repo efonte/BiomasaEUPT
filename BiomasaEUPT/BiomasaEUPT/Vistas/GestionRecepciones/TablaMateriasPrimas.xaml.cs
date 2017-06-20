@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Modelos;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     public partial class TablaMateriasPrimas : UserControl
     {
         //public ObservableCollection<MateriaPrima> MateriasPrimas { get; set; }
+        private Trazabilidad trazabilidad;
 
         public TablaMateriasPrimas()
         {
@@ -34,6 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 context.MateriasPrimas.Where(mp => mp.RecepcionId == 1).ToList().ForEach(MateriasPrimas.Add);
             }*/
             DataContext = this;
+            trazabilidad = new Trazabilidad();
         }
 
         private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
@@ -48,6 +51,23 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
 
             tabRecepciones.FiltrarTablaMateriasPrimas();
+        }
+
+        private void bPdfMateria_Click(object sender, RoutedEventArgs e)
+        {
+            /*for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow)
+                {
+                    var row = (DataGridRow)vis;
+                    row.DetailsVisibility =
+                    row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+                    break;
+                }*/
+            MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
+
+            InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
+            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.CodigoMateriaPrima(materiaPrima.Codigo)));
+
         }
     }
 }

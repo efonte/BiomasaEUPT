@@ -90,6 +90,17 @@
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
                                                                        Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bPdfMateria" Padding="0" BorderThickness="0" Height="25" Width="25"
+                                                Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
+                                                ToolTip="Generar informe en PDF" Click="bPdfMateria_Click">
+                                            <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                     </DataGrid>
