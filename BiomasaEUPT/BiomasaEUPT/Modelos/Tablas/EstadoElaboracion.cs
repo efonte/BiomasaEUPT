@@ -28,7 +28,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [Required]
         [MinLength(5)]
-        [MaxLength(50)]
+        [MaxLength(70)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 

@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionElaboraciones.FormElaboracion"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.FormPedido"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -11,17 +11,18 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="305" Width="330" Loaded="UserControl_Loaded">
+             Height="300" Width="330" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="ordenesElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenElaboracion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="estadosElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoElaboracion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
+            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
+            <CollectionViewSource x:Key="estadosPedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoPedido}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Orden de Elaboración">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -35,9 +36,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                    <DatePicker x:Name="dpFechaElaboracion" Width="100" VerticalAlignment="Center"
+                    <DatePicker x:Name="dpFechaPedido" Width="100" VerticalAlignment="Center"
                                 SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha">
+                                materialDesign:HintAssist.Hint="Fecha ped">
                         <DatePicker.BlackoutDates>
                             <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
                             <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
@@ -51,7 +52,7 @@
                         </DatePicker.Text>
                     </DatePicker>
 
-                    <materialDesign:TimePicker x:Name="tpHoraElaboracion" Grid.Row="1" Grid.Column="3" Width="60"
+                    <materialDesign:TimePicker x:Name="tpHoraPedido" Grid.Row="1" Grid.Column="3" Width="60"
                                    materialDesign:HintAssist.Hint="Hora"
                                    IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
                                    Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -65,37 +66,63 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbEstadoElaboracion" materialDesign:HintAssist.Hint="Estado elaboración"
-                          ItemsSource="{Binding Source={StaticResource estadosElaboracionesViewSource}}"
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                    <DatePicker x:Name="dpFechaFinalizacion" Width="100" VerticalAlignment="Center"
+                                SelectedDate="{x:Static system:DateTime.Now}"            
+                                materialDesign:HintAssist.Hint="Fecha">
+                        <DatePicker.BlackoutDates>
+                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
+                            <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
+                        </DatePicker.BlackoutDates>
+                        <DatePicker.Text>
+                            <Binding Path="Fecha fin" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.Text>
+                    </DatePicker>
+
+                    <materialDesign:TimePicker x:Name="tpHoraFinalizacion" Grid.Row="1" Grid.Column="3" Width="60"
+                                   materialDesign:HintAssist.Hint="Hora"
+                                   IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
+                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <materialDesign:TimePicker.Text>
+                            <Binding Path="Hora" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:TimePicker.Text>
+                    </materialDesign:TimePicker>
+                </StackPanel>
+
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbEstados" materialDesign:HintAssist.Hint="Estado pedido"
+                          ItemsSource="{Binding Source={StaticResource estadosPedidosViewSource}}"
                           DisplayMemberPath="Nombre"
-                          SelectedValuePath="EstadoElaboracionId">
+                          SelectedValuePath="EstadoPedidoId">
                 </ComboBox>
-                
 
-                <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                         AcceptsReturn="True" Height="55" MaxLength="60">
-                    <TextBox.Text>
-                        <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validadores:LongitudValidationRule NombreCampo="Descripcion" Max="60" ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbClientes" materialDesign:HintAssist.Hint="Cliente"
+                          ItemsSource="{Binding Source={StaticResource clientesViewSource}}"
+                          DisplayMemberPath="Razón social"
+                          SelectedValuePath="ClienteId" >
+                </ComboBox>
 
-                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
-                    <Button x:Name="bNuevaOrdenElaboracion" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                 <Setter Property="IsEnabled" Value="False" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                            
-                                            <Condition Binding="{Binding ElementName=dpFechaElaboracion, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tpHoraElaboracion, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=dpFechaPedido, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=tpHoraPedido, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=dpFechaFinalizacion, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=tpHoraFinalizacion, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=cbEstadoPedido, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=cbCliente, Path=(Validation.HasError)}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>

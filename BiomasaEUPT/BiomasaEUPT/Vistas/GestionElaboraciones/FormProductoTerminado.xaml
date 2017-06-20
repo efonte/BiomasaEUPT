@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="305" Width="420" Loaded="UserControl_Loaded">
+             Height="320" Width="460" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

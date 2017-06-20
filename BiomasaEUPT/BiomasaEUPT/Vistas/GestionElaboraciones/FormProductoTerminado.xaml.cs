@@ -46,6 +46,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             this.context = context;
         }
 
+        public FormProductoTerminado(BiomasaEUPTContext context, string _titulo) : this(context)
+        {
+            gbTitulo.Header = _titulo;
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 

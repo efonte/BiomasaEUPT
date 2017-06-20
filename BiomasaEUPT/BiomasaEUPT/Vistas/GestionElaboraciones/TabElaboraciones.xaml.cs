@@ -37,6 +37,18 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             InitializeComponent();
             DataContext = this;
+
+            //ucTablaRecepciones.dgRecepciones.SelectionChanged += DgRecepciones_SelectionChanged;
+            //ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
+            ucTablaElaboraciones.dgElaboraciones.SelectionChanged += DgElaboraciones_SelectionChanged;
+            
+            ucTablaElaboraciones.bAnadirElaboracion.Click += BAnadirElaboracion_Click;
+            ucTablaProductosTerminados.bAnadirProductoTerminado.Click += BAnadirProductoTerminado_Click;
+
+            Style rowStyle = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
+            rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowElaboraciones_DoubleClick)));
+            ucTablaElaboraciones.dgElaboraciones.RowStyle = rowStyle;
+            ucTablaElaboraciones.dgElaboraciones.SelectedIndex = -1;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -263,10 +275,10 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
                 foreach (var productosTerminados in productosTerminadosSeleccionados)
                 {
-                    /*if (!context.MateriasPrimas.Any(mp => mp.RecepcionId == recepcion.RecepcionId))
+                    if (!context.OrdenesElaboraciones.Any(oe => oe.OrdenElaboracionId == productosTerminados.OrdenId))
                     {
 
-                    }*/
+                    }
                 }
                 context.ProductosTerminados.RemoveRange(ucTablaProductosTerminados.dgProductosTerminados.SelectedItems.Cast<ProductoTerminado>().ToList());
                 context.SaveChanges();
@@ -276,28 +288,25 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-        /*private async void RowElaboraciones_DoubleClick(object sender, MouseButtonEventArgs e)
+        private async void RowElaboraciones_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             var fila = sender as DataGridRow;
             var elaboracionSeleccionada = ucTablaElaboraciones.dgElaboraciones.SelectedItem as OrdenElaboracion;
             var formElaboracion = new FormElaboracion(context, "Editar Elaboración")
             {
-                NumeroAlbaran = elaboracionSeleccionada.NumeroAlbaran,
-                Fecha = elaboracionSeleccionada.FechaRecepcion,
-                Hora = elaboracionSeleccionada.FechaElaboracion
+                Fecha = elaboracionSeleccionada.FechaElaboracion.Value,
+                Hora = elaboracionSeleccionada.FechaElaboracion.Value,
+                Descripcion = elaboracionSeleccionada.Descripcion
             };
-            formRecepcion.cbEstadosRecepciones.Visibility = Visibility.Visible;
-            var albaranViejo = formRecepcion.NumeroAlbaran;
-            formRecepcion.vAlbaranUnico.NombreActual = recepcionSeleccionada.NumeroAlbaran;
-            formRecepcion.cbEstadosRecepciones.SelectedValue = recepcionSeleccionada.EstadoRecepcion.EstadoRecepcionId;
-            formRecepcion.cbProveedores.SelectedValue = recepcionSeleccionada.Proveedor.ProveedorId;
-            if ((bool)await DialogHost.Show(formRecepcion, "RootDialog"))
+            formElaboracion.cbEstadoElaboracion.Visibility = Visibility.Visible;
+            formElaboracion.Fecha = elaboracionSeleccionada.FechaElaboracion.Value;
+            formElaboracion.Hora = elaboracionSeleccionada.FechaElaboracion.Value;
+            formElaboracion.cbEstadoElaboracion.SelectedValue = elaboracionSeleccionada.EstadoElaboracion.EstadoElaboracionId;
+            if ((bool)await DialogHost.Show(formElaboracion, "RootDialog"))
             {
-                recepcionSeleccionada.NumeroAlbaran = formRecepcion.NumeroAlbaran;
-                recepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
-                recepcionSeleccionada.ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId;
-                recepcionSeleccionada.EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId;
-                recepcionesViewSource.View.Refresh();
+                elaboracionSeleccionada.FechaElaboracion = new DateTime(formElaboracion.Fecha.Year, formElaboracion.Fecha.Month, formElaboracion.Fecha.Day, formElaboracion.Hora.Hour, formElaboracion.Hora.Minute, formElaboracion.Hora.Second);
+                elaboracionSeleccionada.EstadoElaboracionId = (formElaboracion.cbEstadoElaboracion.SelectedItem as EstadoElaboracion).EstadoElaboracionId;
+                ordenesElaboracionesViewSource.View.Refresh();
                 context.SaveChanges();
                 /* using (var context = new BiomasaEUPTContext())
                  {
@@ -305,9 +314,9 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                      recepcion.NumeroAlbaran = formTipo.Nombre;
                      tipoCliente.Descripcion = formTipo.Descripcion;
                      context.SaveChanges();
-                 }
+                 }*/
             }
-        }*/
+        }
 
 
 

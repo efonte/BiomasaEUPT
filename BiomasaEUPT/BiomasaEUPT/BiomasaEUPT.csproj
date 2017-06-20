@@ -293,6 +293,12 @@
     <Compile Include="Vistas\GestionUsuarios\TiposUsuarios.xaml.cs">
       <DependentUpon>TiposUsuarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedido.xaml.cs">
+      <DependentUpon>FormPedido.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\FormProductoEnvasado.xaml.cs">
+      <DependentUpon>FormProductoEnvasado.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
       <DependentUpon>TablaPedidos.xaml</DependentUpon>
     </Compile>
@@ -442,6 +448,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionUsuarios\TiposUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\FormPedido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\FormProductoEnvasado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

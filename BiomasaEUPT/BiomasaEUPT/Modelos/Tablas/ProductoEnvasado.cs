@@ -24,12 +24,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
-        [DisplayName("Descripción"), Display(Name = "Descripción")]
-        public string Descripcion { get; set; }
-
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public float? Volumen { get; set; }
 
