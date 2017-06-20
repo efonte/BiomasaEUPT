@@ -38,7 +38,7 @@
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha" Width="auto" IsReadOnly="True"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha elaboración" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding FechaElaboracion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
@@ -112,14 +112,10 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Albarán" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Proveedor" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Estado" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbProveedor" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha elaboración" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado elaboración" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbFechaElaboracion" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="False"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

@@ -41,7 +41,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
             TabElaboraciones tabElaboraciones = (TabElaboraciones)ucParent;
 
-            //tabElaboraciones.FiltrarTablaRecepciones();
+            tabElaboraciones.FiltrarTablaElaboraciones();
         }
 
 

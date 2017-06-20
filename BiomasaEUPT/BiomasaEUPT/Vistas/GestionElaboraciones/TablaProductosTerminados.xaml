@@ -86,7 +86,7 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="Fecha Baja" Width="SizeToHeader"
                                                                        Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="codigofechaBajaColumna" Header="Fecha Baja" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código" Width="SizeToHeader"
                                                                        Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                         </DataGrid.Columns>
 
