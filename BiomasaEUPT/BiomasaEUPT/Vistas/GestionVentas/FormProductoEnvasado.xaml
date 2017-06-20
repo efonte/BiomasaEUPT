@@ -50,7 +50,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"
                                 SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha ped">
+                                materialDesign:HintAssist.Hint="Fecha baja">
                         <DatePicker.BlackoutDates>
                             <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
                             <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
@@ -80,7 +80,7 @@
 
                 
 
-                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTiposPedidos" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTipoProductoTerminado" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
                           ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="TipoProductoTerminadoId">

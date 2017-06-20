@@ -51,6 +51,5 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public virtual List<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
 
-
     }
 }

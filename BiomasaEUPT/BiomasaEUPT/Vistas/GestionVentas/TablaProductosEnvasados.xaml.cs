@@ -36,7 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
             TabVentas tabVentas = (TabVentas)ucParent;
 
-            //tabElaboraciones.FiltrarTablaProductosTerminados();
+            tabVentas.FiltrarTablaProductosEnvasados();
         }
     }
 }

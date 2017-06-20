@@ -56,9 +56,6 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Header="Nombre" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="descripcionColumna" Header="Descripción" Width="auto" IsReadOnly="True" 
-                                                                       Binding="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
 
                             <DataGridTemplateColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader">
                                 <DataGridTemplateColumn.CellTemplate>
