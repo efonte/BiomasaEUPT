@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="305" Width="330" Loaded="UserControl_Loaded">
+             Height="280" Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,7 +25,6 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -65,14 +64,14 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbEstadoElaboracion" materialDesign:HintAssist.Hint="Estado elaboración"
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbEstadoElaboracion" materialDesign:HintAssist.Hint="Estado elaboración"
                           ItemsSource="{Binding Source={StaticResource estadosElaboracionesViewSource}}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="EstadoElaboracionId">
                 </ComboBox>
                 
 
-                <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
+                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          AcceptsReturn="True" Height="55" MaxLength="60">
                     <TextBox.Text>
@@ -84,7 +83,7 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevaOrdenElaboracion" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

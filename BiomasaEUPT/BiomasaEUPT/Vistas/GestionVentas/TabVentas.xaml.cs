@@ -73,8 +73,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             var pedido = (sender as DataGrid).SelectedItem as PedidoCabecera;
             if (pedido != null)
             {
-                ucTablaPedidos.IsEnabled = true;
-                pedidosViewSource.Source = context.PedidosCabeceras.Where(pc => pc.PedidoCabeceraId == pedido.PedidoCabeceraId).ToList();
+                ucTablaProductosEnvasados.IsEnabled = true;
+                productosEnvasadosViewSource.Source = context.ProductosEnvasados.Where(pe => pe.ProductoEnvasadoId == pedido.PedidoCabeceraId).ToList();
                 
             }
             else
