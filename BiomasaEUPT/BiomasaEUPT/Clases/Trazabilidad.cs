@@ -24,8 +24,10 @@ namespace BiomasaEUPT.Clases
                               .Include("Recepcion.Proveedor.TipoProveedor")
                               .Include("TipoMateriaPrima")
                               .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
+                              .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
                               .Single(mp => mp.Codigo == codigo);
             var recepcion = materiaPrima.Recepcion;
+            //new ProductoTerminado().ProductosTerminadosComposiciones.First().HistorialHuecoRecepcion
             recepcion.MateriasPrimas = new List<MateriaPrima>() { materiaPrima };
             var proveedor = recepcion.Proveedor;
             proveedor.Recepciones = new List<Recepcion>() { recepcion };

@@ -26,9 +26,9 @@ namespace BiomasaEUPT.Clases
         private string ruta;
 
         internal static PdfFont helvetica = null;
-        internal static PdfFont helveticaBold = null;
+        internal static PdfFont helveticaNegrita = null;
         internal static PdfFont calibri = null;
-        internal static PdfFont cambria = null;
+        internal static PdfFont cambriaNegrita = null;
 
         internal static float GROSOR_BORDE_CELDA = 0.5f;
         internal static float GROSOR_BORDE_TITULO = 0.75f;
@@ -38,6 +38,8 @@ namespace BiomasaEUPT.Clases
         internal static PdfNumber PORTRAIT = new PdfNumber(0);
         internal static PdfNumber SEASCAPE = new PdfNumber(270);
 
+        internal static Style estiloCelda = null;
+
         public InformePDF(string ruta)
         {
             this.ruta = ruta;
@@ -46,15 +48,14 @@ namespace BiomasaEUPT.Clases
                 Directory.CreateDirectory(ruta);
 
             helvetica = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
-            helveticaBold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
-
-
+            helveticaNegrita = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
             PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/calibri.ttf", "Calibri");
-            PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/cambria.ttc", "Cambria");
+            PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/cambriab.ttf", "Cambria Negrita");
+            calibri = PdfFontFactory.CreateRegisteredFont("Calibri", PdfEncodings.IDENTITY_H, true);
+            cambriaNegrita = PdfFontFactory.CreateRegisteredFont("Cambria Negrita", PdfEncodings.IDENTITY_H, true);
 
-            calibri = PdfFontFactory.CreateRegisteredFont("Calibri");
-            cambria = PdfFontFactory.CreateRegisteredFont("Cambria");
-            //calibri = PdfFontFactory.CreateFont(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/calibri.ttf");
+            estiloCelda = new Style().SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER)
+                .SetVerticalAlignment(VerticalAlignment.MIDDLE).SetTextAlignment(TextAlignment.CENTER);
         }
 
         public string GenerarPDFMateriaPrima(Proveedor proveedor)
@@ -78,11 +79,11 @@ namespace BiomasaEUPT.Clases
             OrientacionPaginaEventHandler orientacionPaginaEventHandler = new OrientacionPaginaEventHandler();
             pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, orientacionPaginaEventHandler);
 
-            Document doc = new Document(pdf, PageSize.A4);
-            doc.SetMargins(70, 70, 85, 85);
+            Document doc = new Document(pdf, PageSize.A4.Rotate());
+            //doc.SetMargins(70, 70, 85, 85);
 
             doc.Add(Titulo("Recepción"));
-            Table tablaRecepcion = new Table(new float[] { 1, 1 }).SetWidthPercent(50);
+            Table tablaRecepcion = new Table(new float[] { 1, 1 }).SetWidthPercent(30);
             tablaRecepcion.AddCell(CeldaTituloVertical("Fecha Recepción"));
             tablaRecepcion.AddCell(CeldaVertical(proveedor.Recepciones.First().FechaRecepcion.ToString("dd/MM/yyyy HH:mm")));
             tablaRecepcion.AddCell(CeldaTituloVertical("Nº de Albarán"));
@@ -92,7 +93,7 @@ namespace BiomasaEUPT.Clases
             doc.Add(new Paragraph("\n"));
 
             doc.Add(Titulo("Proveedor"));
-            Table tablaProveedor = new Table(new float[] { 1, 1 }).SetWidthPercent(50);
+            Table tablaProveedor = new Table(new float[] { 1, 1 }).SetWidthPercent(30);
             tablaProveedor.AddCell(CeldaTituloVertical("Razon Social"));
             tablaProveedor.AddCell(CeldaVertical(proveedor.RazonSocial));
             tablaProveedor.AddCell(CeldaTituloVertical("NIF"));
@@ -104,65 +105,102 @@ namespace BiomasaEUPT.Clases
             doc.Add(new Paragraph("\n"));
 
             doc.Add(Titulo("Materia Prima"));
-            Table tablaAlmacenamiento = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo(materiaPrima.TipoMateriaPrima.Nombre, 1, 8));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Recepción", 1, 4));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Almacenamiento", 1, 4));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Sitio"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Hueco"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Capacidad Total"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Unidades Almacenadas"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Unidades Utilizadas"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Producto Terminado"));
-            tablaAlmacenamiento.AddHeaderCell(CeldaTitulo("Sitio"));
-
-            // var sitiosRecepciones = new List<SitioRecepcion>();
-            // materiaPrima.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct().Where(sr => !sitiosRecepciones.Any(sr1 => sr == sr1)).ToList().ForEach(sitiosRecepciones.Add);
+            /*Table tablaMP = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+            var cantidadMateriaPrima = (materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? ($"{materiaPrima.Unidades} ud") : ($"{materiaPrima.Volumen} m³");
+            tablaMP.AddHeaderCell(CeldaTitulo(materiaPrima.TipoMateriaPrima.Nombre + " (" + cantidadMateriaPrima + ")", 1, 8));
+            tablaMP.AddHeaderCell(CeldaTitulo("Recepción", 1, 4));
+            tablaMP.AddHeaderCell(CeldaTitulo("Elaboración", 1, 4));
+            tablaMP.AddHeaderCell(CeldaTitulo("Sitio"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Hueco"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Capacidad Total"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Unidades Almacenadas"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Unidades Utilizadas"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Producto Terminado"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Sitio"));
 
             foreach (var sr in materiaPrima.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct())
             {
                 var historialHuecosRecepciones = materiaPrima.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr).ToList();
-                tablaAlmacenamiento.AddCell(Celda(sr.Nombre, historialHuecosRecepciones.Count()));
+                tablaMP.AddCell(Celda(sr.Nombre, historialHuecosRecepciones.Count()));
                 foreach (var hhr in historialHuecosRecepciones)
                 {
-                    tablaAlmacenamiento.AddCell(Celda(hhr.HuecoRecepcion.Nombre));
-                    tablaAlmacenamiento.AddCell(Celda(hhr.HuecoRecepcion.VolumenTotal.ToString() + " m³ / " + hhr.HuecoRecepcion.UnidadesTotales + " ud"));
-                    if (materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true)
+                    tablaMP.AddCell(Celda(hhr.HuecoRecepcion.Nombre));
+                    tablaMP.AddCell(Celda($"{hhr.HuecoRecepcion.VolumenTotal.ToString()} m³ / {hhr.HuecoRecepcion.UnidadesTotales} ud"));
+                    var cantidadHhr = (materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (hhr.Unidades + " ud") : (hhr.Volumen + " m³");
+                    tablaMP.AddCell(cantidadHhr);
+                    tablaMP.AddCell(Celda("-"));
+                    tablaMP.AddCell(Celda("-"));
+                    tablaMP.AddCell(Celda("-"));
+                    tablaMP.AddCell(Celda("-"));
+                }
+            }*/
+
+            var tablaMP = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+            var cantidadMateriaPrima = (materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? ($"{materiaPrima.Unidades} ud.") : ($"{materiaPrima.Volumen} m³");
+            tablaMP.AddHeaderCell(CeldaTitulo(materiaPrima.TipoMateriaPrima.Nombre + " (" + cantidadMateriaPrima + ")", 1, 7));
+            tablaMP.AddHeaderCell(CeldaTitulo("Recepción", 1, 4));
+            tablaMP.AddHeaderCell(CeldaTitulo("Elaboración", 1, 3));
+            tablaMP.AddHeaderCell(CeldaTitulo("Sitio"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Hueco"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Capacidad Total"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Unidades Almacenadas"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Unidades Utilizadas"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Producto Terminado"));
+            tablaMP.AddHeaderCell(CeldaTitulo("Sitio"));
+
+            foreach (var sr in materiaPrima.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct())
+            {
+                var historialHuecosRecepciones = materiaPrima.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr).ToList();
+
+                // Sitios de recepción
+                tablaMP.AddCell(Celda(sr.Nombre));
+                // Huecos de recepción
+                var tablaHR = new Table(new float[] { 1 }).SetWidthPercent(100);
+                // Capacidad Total de cada uno de los huecos de recepción
+                var tablaHRCapacidadTotal = new Table(new float[] { 1 }).SetWidthPercent(100);
+                // Cantidades de materias primas almacenadas en cada uno de los huecos de recepción
+                var tablaHRCantidad = new Table(new float[] { 1 }).SetWidthPercent(100);
+                foreach (var hhr in historialHuecosRecepciones)
+                {
+                    tablaHR.AddCell(Celda(hhr.HuecoRecepcion.Nombre));
+                    tablaHRCapacidadTotal.AddCell(Celda($"{hhr.HuecoRecepcion.VolumenTotal.ToString()} m³ / {hhr.HuecoRecepcion.UnidadesTotales} ud."));
+                    tablaHRCantidad.AddCell(Celda((materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (hhr.Unidades + " ud.") : (hhr.Volumen + " m³")));
+
+                    var productosTerminadosComposiciones = hhr.ProductosTerminadosComposiciones.ToList();
+                    foreach (var ptc in productosTerminadosComposiciones)
                     {
-                        tablaAlmacenamiento.AddCell(Celda(hhr.Unidades + " ud"));
-                    }
-                    else
-                    {
-                        tablaAlmacenamiento.AddCell(Celda(hhr.Volumen + " m³"));
+                        Console.WriteLine(ptc.Unidades+" "+ptc.Volumen+" "+ptc.ProductoTerminado.TipoProductoTerminado.Nombre);
                     }
                 }
-                tablaAlmacenamiento.AddCell(Celda("-"));
-                tablaAlmacenamiento.AddCell(Celda("-"));
-                tablaAlmacenamiento.AddCell(Celda("-"));
-                tablaAlmacenamiento.AddCell(Celda("-"));
+
+                // Se quitan los bordes inferiores de cada última celda para que no hayan dos bordes juntos
+                tablaHR.GetCell(tablaHR.GetNumberOfRows() - 1, 0).SetBorderBottom(Border.NO_BORDER);
+                tablaHRCapacidadTotal.GetCell(tablaHRCapacidadTotal.GetNumberOfRows() - 1, 0).SetBorderBottom(Border.NO_BORDER);
+                tablaHRCantidad.GetCell(tablaHRCantidad.GetNumberOfRows() - 1, 0).SetBorderBottom(Border.NO_BORDER);
+
+                // Se añaden las subtablas en cada una de las celdas correspondientes
+                tablaMP.AddCell(Celda(tablaHR));
+                tablaMP.AddCell(Celda(tablaHRCapacidadTotal));
+                tablaMP.AddCell(Celda(tablaHRCantidad));
+
+                // Unidades utilizadas
+                tablaMP.AddCell(Celda("-"));
+                // Productos terminados
+                tablaMP.AddCell(Celda("-"));
+                // Sitios de almacenaje
+                tablaMP.AddCell(Celda("-"));
             }
+            doc.Add(tablaMP);
 
-            doc.Add(tablaAlmacenamiento);
-
-
-            Table table = new Table(new float[] { 25, 50 })
-                              .AddCell(new Cell().Add(new Paragraph("cell 1, 1").SetRotationAngle((Math.PI / 2))))
-                              .AddCell(new Cell().Add(new Paragraph("cell 1, 2").SetRotationAngle((Math.PI / 3))))
-                              .AddCell(new Cell().Add(new Paragraph("cell 2, 1").SetRotationAngle(-(Math.PI / 2))))
-                              .AddCell(new Cell().Add(new Paragraph("cell 2, 2").SetRotationAngle((Math.PI))));
-            doc.Add(table);
-
-            orientacionPaginaEventHandler.Orientation = LANDSCAPE;
+            orientacionPaginaEventHandler.Orientacion = LANDSCAPE;
             doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
-            doc.Add(Titulo("Materia Prima"));
-            Table tablaMateriaPrima = new Table(new float[] { 25, 50 });
-            tablaMateriaPrima.AddCell(CeldaTitulo("AAA").SetRotationAngle((Math.PI / 2)));
-            tablaMateriaPrima.AddCell(CeldaTitulo("BBB").SetRotationAngle((Math.PI / 2)));
-            tablaMateriaPrima.AddCell(Celda("CCC").SetRotationAngle((Math.PI / 2)));
-            tablaMateriaPrima.AddCell(Celda("DDD").SetRotationAngle((Math.PI / 2)));
-
-            doc.Add(tablaMateriaPrima);
+            Table table = new Table(new float[] { 25, 50 })
+                             .AddCell(new Cell().Add(new Paragraph("cell 1, 1").SetRotationAngle((Math.PI / 2))))
+                             .AddCell(new Cell().Add(new Paragraph("cell 1, 2").SetRotationAngle((Math.PI / 3))))
+                             .AddCell(new Cell().Add(new Paragraph("cell 2, 1").SetRotationAngle(-(Math.PI / 2))))
+                             .AddCell(new Cell().Add(new Paragraph("cell 2, 2").SetRotationAngle((Math.PI))));
+            doc.Add(table);
 
             doc.Close();
 
@@ -171,36 +209,76 @@ namespace BiomasaEUPT.Clases
 
         private Paragraph Titulo(string texto)
         {
-            return new Paragraph(texto).SetFont(cambria).SetBold().SetFontSize(16).SetMarginBottom(10)
-                .SetBackgroundColor(Color.BLACK, 0.15f).SetPaddingLeft(5);
+            Style estiloTitulo = new Style().SetFont(cambriaNegrita).SetFontSize(16).SetBold();
+            var p = new Paragraph();
+
+            // Versalitas
+            var minusculas = "";
+            var mayusculas = "";
+            void procesarMayusculas()
+            {
+                if (!string.IsNullOrEmpty(mayusculas))
+                {
+                    p.Add(new Text(mayusculas).AddStyle(estiloTitulo));
+                    mayusculas = "";
+                }
+            }
+            void procesarMinusculas()
+            {
+                if (!string.IsNullOrEmpty(minusculas))
+                {
+                    p.Add(new Text(minusculas.ToUpper()).AddStyle(estiloTitulo).SetFontSize(14));
+                    minusculas = "";
+                }
+            }
+
+            foreach (var c in texto)
+            {
+                if (char.IsUpper(c))
+                {
+                    procesarMinusculas();
+                    mayusculas += c;
+                }
+                else
+                {
+                    procesarMayusculas();
+                    minusculas += c;
+                }
+            }
+            procesarMayusculas();
+            procesarMinusculas();
+
+            return p.SetMarginBottom(10).SetBackgroundColor(Color.BLACK, 0.15f).SetPaddingLeft(5);
         }
 
         private Cell Celda(string texto, int rowspan = 1, int colspan = 1)
         {
-            return new Cell(rowspan, colspan).Add(new Paragraph(texto).SetFont(calibri)).SetFontSize(13)
-                .SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                .SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(GROSOR_BORDE_CELDA));
+            return new Cell(rowspan, colspan).Add(new Paragraph(texto)).AddStyle(estiloCelda)
+               .SetBorderBottom(new SolidBorder(GROSOR_BORDE_CELDA));
+        }
+
+        private Cell Celda(Table tabla, int rowspan = 1, int colspan = 1)
+        {
+            return new Cell(rowspan, colspan).Add(tabla).AddStyle(estiloCelda).SetPadding(0)
+               .SetBorderBottom(new SolidBorder(GROSOR_BORDE_CELDA));
         }
 
         private Cell CeldaTitulo(string texto, int rowspan = 1, int colspan = 1)
         {
-            return new Cell(rowspan, colspan).Add(new Paragraph(texto).SetFont(calibri).SetBold()).SetFontSize(13)
-                .SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                .SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(GROSOR_BORDE_CELDA)).SetBorderTop(new DoubleBorder(GROSOR_BORDE_CELDA));
+            return new Cell(rowspan, colspan).Add(new Paragraph(texto)).AddStyle(estiloCelda).SetBold()
+               .SetBorderBottom(new SolidBorder(GROSOR_BORDE_CELDA)).SetBorderTop(new DoubleBorder(GROSOR_BORDE_CELDA));
         }
 
         private Cell CeldaVertical(string texto, int rowspan = 1, int colspan = 1)
         {
-            return new Cell(rowspan, colspan).Add(new Paragraph(texto).SetFont(calibri)).SetFontSize(13)
-                .SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                .SetBorder(Border.NO_BORDER);
+            return new Cell(rowspan, colspan).Add(new Paragraph(texto).SetPaddings(2, 5, 2, 5))
+                .AddStyle(estiloCelda).SetTextAlignment(TextAlignment.LEFT);
         }
 
         private Cell CeldaTituloVertical(string texto, int rowspan = 1, int colspan = 1)
         {
-            return new Cell(rowspan, colspan).Add(new Paragraph(texto).SetFont(calibri).SetBold()).SetFontSize(13)
-                .SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                .SetBorder(Border.NO_BORDER).SetBorderRight(new SolidBorder(GROSOR_BORDE_CELDA));
+            return new Cell(rowspan, colspan).Add(new Paragraph(texto.ToUpper()).SetBackgroundColor(Color.GRAY)
+                .SetPaddings(2, 5, 2, 5)).AddStyle(estiloCelda).SetBold().SetTextAlignment(TextAlignment.LEFT);
         }
 
 
@@ -237,12 +315,12 @@ namespace BiomasaEUPT.Clases
         {
             //protected PdfNumber orientation = PORTRAIT;
 
-            public PdfNumber Orientation { get; set; }
+            public PdfNumber Orientacion { get; set; }
 
             public void HandleEvent(Event @event)
             {
                 PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;
-                docEvent.GetPage().Put(PdfName.Rotate, Orientation);
+                docEvent.GetPage().Put(PdfName.Rotate, Orientacion);
             }
         }
 
