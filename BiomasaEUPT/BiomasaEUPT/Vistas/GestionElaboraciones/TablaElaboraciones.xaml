@@ -56,9 +56,6 @@
                             <Button ToolTip="Borrar la orden de elaboración seleccionada" Command="{Binding BorrarElaboracionComando}" IsEnabled="{Binding CanBorrarElaboracion}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bAnadirElaboracion" ToolTip="Añadir orden de Elaboración">
-                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
-                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>

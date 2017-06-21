@@ -11,15 +11,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <CollectionViewSource x:Key="ordenesElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenElaboracion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="estadosElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoElaboracion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="productosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminado}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoTerminado}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -31,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <local:TablaElaboraciones Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaElaboraciones" Margin="10 10 0 10" />
-        
+
         <local:TablaProductosTerminados Grid.Column="1" Grid.Row="0" x:Name="ucTablaProductosTerminados" Margin="10 10 10 10" />
 
         <local:FormOrdenElaboracion Grid.Column="1" Grid.Row="1" Margin="10 0 10 10"/>

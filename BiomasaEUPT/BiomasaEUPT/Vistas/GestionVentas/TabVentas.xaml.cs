@@ -32,10 +32,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private BiomasaEUPTContext context;
         private CollectionViewSource productosEnvasadosViewSource;
         private CollectionViewSource pedidosViewSource;
-        private CollectionViewSource tiposProductosTerminadosViewSource;
-        private CollectionViewSource pickingViewSource;
-        private CollectionViewSource clientesViewSource;
-        private CollectionViewSource estadosPedidosViewSource;
+
 
         public TabVentas()
         {
@@ -57,26 +54,17 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             using (new CursorEspera())
             {
                 context = new BiomasaEUPTContext();
-                productosEnvasadosViewSource = (CollectionViewSource)(FindResource("productosEnvasadosViewSource"));
-                pedidosViewSource = (CollectionViewSource)(FindResource("pedidosViewSource"));
-                tiposProductosTerminadosViewSource = (CollectionViewSource)(FindResource("tiposProductosTerminadosViewSource"));
-                pickingViewSource = (CollectionViewSource)(FindResource("pickingViewSource"));
-                clientesViewSource = (CollectionViewSource)(FindResource("clientesViewSource"));
-                estadosPedidosViewSource = (CollectionViewSource)(FindResource("estadosPedidosViewSource"));
+                productosEnvasadosViewSource = (CollectionViewSource)(ucTablaProductosEnvasados.FindResource("productosEnvasadosViewSource"));
+                pedidosViewSource = (CollectionViewSource)(ucTablaPedidos.FindResource("pedidosViewSource"));
+
 
                 context.ProductosEnvasados.Load();
                 context.PedidosCabeceras.Load();
-                context.TiposProductosTerminados.Load();
-                context.Picking.Load();
-                context.Clientes.Load();
-                context.EstadosPedidos.Load();
+
                 
                 productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
                 pedidosViewSource.Source = context.PedidosCabeceras.Local;
-                tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
-                pickingViewSource.Source = context.Picking.Local;
-                clientesViewSource.Source = context.Clientes.Local;
-                estadosPedidosViewSource.Source = context.EstadosPedidos.Local;
+
             }
         }
 

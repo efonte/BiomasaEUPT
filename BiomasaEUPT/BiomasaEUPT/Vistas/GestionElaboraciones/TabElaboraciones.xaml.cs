@@ -28,10 +28,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
     {
         private BiomasaEUPTContext context;
         private CollectionViewSource ordenesElaboracionesViewSource;
-        private CollectionViewSource estadosElaboracionesViewSource;
         private CollectionViewSource productosTerminadosViewSource;
-        private CollectionViewSource tiposProductosTerminadosViewSource;
-        private CollectionViewSource gruposProductosTerminadosViewSource;
 
         public TabElaboraciones()
         {
@@ -41,8 +38,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             //ucTablaRecepciones.dgRecepciones.SelectionChanged += DgRecepciones_SelectionChanged;
             //ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
             ucTablaElaboraciones.dgElaboraciones.SelectionChanged += DgElaboraciones_SelectionChanged;
-            
-            ucTablaElaboraciones.bAnadirElaboracion.Click += BAnadirElaboracion_Click;
+
             ucTablaProductosTerminados.bAnadirProductoTerminado.Click += BAnadirProductoTerminado_Click;
 
             Style rowStyle = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
@@ -56,40 +52,30 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             using (new CursorEspera())
             {
                 context = new BiomasaEUPTContext();
-                ordenesElaboracionesViewSource = (CollectionViewSource)(FindResource("ordenesElaboracionesViewSource"));
-                estadosElaboracionesViewSource = (CollectionViewSource)(FindResource("estadosElaboracionesViewSource"));
-                productosTerminadosViewSource = (CollectionViewSource)(FindResource("productosTerminadosViewSource"));
-                tiposProductosTerminadosViewSource = (CollectionViewSource)(FindResource("tiposProductosTerminadosViewSource"));
-                gruposProductosTerminadosViewSource = (CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource"));
+                ordenesElaboracionesViewSource = (CollectionViewSource)(ucTablaElaboraciones.FindResource("ordenesElaboracionesViewSource"));
+                productosTerminadosViewSource = (CollectionViewSource)(ucTablaProductosTerminados.FindResource("productosTerminadosViewSource"));
 
                 context.OrdenesElaboraciones.Load();
-                context.EstadosElaboraciones.Load();
                 context.ProductosTerminados.Load();
-                context.TiposProductosTerminados.Load();
-                context.GruposProductosTerminados.Load();
 
                 ordenesElaboracionesViewSource.Source = context.OrdenesElaboraciones.Local;
-                estadosElaboracionesViewSource.Source = context.EstadosElaboraciones.Local;
                 productosTerminadosViewSource.Source = context.ProductosTerminados.Local;
-                tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
-                gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
-
 
             }
         }
 
         private void DgElaboraciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var productoTerminado = (sender as DataGrid).SelectedItem as ProductoTerminado;
-            if (productoTerminado != null)
+            var ordenElaboracion = (sender as DataGrid).SelectedItem as OrdenElaboracion;
+            if (ordenElaboracion != null)
             {
-                ucTablaElaboraciones.IsEnabled = true;
-                ordenesElaboracionesViewSource.Source = context.OrdenesElaboraciones.Where(oe => oe.OrdenElaboracionId == productoTerminado.OrdenId).ToList();
-                
+                ucTablaProductosTerminados.IsEnabled = true;
+                productosTerminadosViewSource.Source = context.ProductosTerminados.Where(pt => pt.OrdenId == ordenElaboracion.OrdenElaboracionId).ToList();
+
             }
             else
             {
-                ucTablaElaboraciones.IsEnabled = false;
+                ucTablaProductosTerminados.IsEnabled = false;
             }
         }
 
@@ -105,7 +91,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                     EstadoElaboracionId = 1,
                     Descripcion = formElaboracion.Descripcion,
                     //EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
-                    
+
                 });
                 context.SaveChanges();
             }
