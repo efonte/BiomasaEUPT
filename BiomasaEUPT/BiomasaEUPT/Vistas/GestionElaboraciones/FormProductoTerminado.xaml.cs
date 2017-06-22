@@ -1,11 +1,15 @@
 ﻿using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,6 +33,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private CollectionViewSource productosTerminadosViewSource;
         private CollectionViewSource tiposProductosTerminadosViewSource;
         private CollectionViewSource gruposProductosTerminadosViewSource;
+        private CollectionViewSource sitiosAlmacenajesViewSource;
+        private CollectionViewSource huecosAlmacenajesViewSource;
+        public TipoMateriaPrima TipoMateriaPrima { get; set; }
+        public ObservableCollection<HuecoAlmacenaje> HuecosAlmacenajesDisponibles { get; set; }
+        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
 
         public DateTime? FechaBaja { get; set; }
         public DateTime? HoraBaja { get; set; }
@@ -57,21 +67,155 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             productosTerminadosViewSource = ((CollectionViewSource)(FindResource("productosTerminadosViewSource")));
             tiposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosTerminadosViewSource")));
             gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
+            sitiosAlmacenajesViewSource = ((CollectionViewSource)(FindResource("sitiosAlmacenajesViewSource")));
+            huecosAlmacenajesViewSource = ((CollectionViewSource)(FindResource("huecosAlmacenajesViewSource")));
 
             context.ProductosTerminados.Load();
             context.TiposProductosTerminados.Load();
             context.GruposProductosTerminados.Load();
+            context.SitiosAlmacenajes.Load();
+            context.HuecosAlmacenajes.Load();
 
             productosTerminadosViewSource.Source = context.ProductosTerminados.Local;
             tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
             gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
+            sitiosAlmacenajesViewSource.Source = context.SitiosAlmacenajes.Local;
+            huecosAlmacenajesViewSource.Source = context.HuecosAlmacenajes.Local;
 
             dpFechaBaja.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
         private void cbGruposProductosTerminados_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            gruposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Where(d => d.GrupoId == ((GrupoProductoTerminado)cbGruposProductosTerminados.SelectedItem).GrupoProductoTerminadoId).ToList();
+        }
 
+        private void cbSitiosAlmacenajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            HuecosAlmacenajesDisponibles.Clear();
+
+
+            // Se añaden todos los HuecosAlmacenajes del SitioAlmacenaje seleccionado
+            context.HuecosAlmacenajes.Where(ha => ha.SitioId == ((SitioAlmacenaje)cbSitiosAlmacenajes.SelectedItem).SitioAlmacenajeId && !ha.Ocupado.Value).ToList().ForEach(HuecosAlmacenajesDisponibles.Add);
+            // Se borran los HuecosAlmacenajes que ya se han añadido
+            HistorialHuecosAlmacenajes.ToList().ForEach(hha => HuecosAlmacenajesDisponibles.Remove(hha.HuecoAlmacenaje));
+        }
+
+        private void lbHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var parent = sender as ListBox;
+            var huecoAlmacenaje = GetDataFromListBox(lbHuecosAlmacenajes, e.GetPosition(parent)) as HuecoAlmacenaje;
+            if (huecoAlmacenaje != null)
+            {
+                DataObject dragData = new DataObject("HuecoAlmacenaje", huecoAlmacenaje);
+                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private object GetDataFromListBox(ListBox source, Point point)
+        {
+            UIElement element = source.InputHitTest(point) as UIElement;
+            if (element != null)
+            {
+                object data = DependencyProperty.UnsetValue;
+                while (data == DependencyProperty.UnsetValue)
+                {
+                    data = source.ItemContainerGenerator.ItemFromContainer(element);
+
+                    if (data == DependencyProperty.UnsetValue)
+                    {
+                        element = VisualTreeHelper.GetParent(element) as UIElement;
+                    }
+
+                    if (element == source)
+                    {
+                        return null;
+                    }
+                }
+
+                if (data != DependencyProperty.UnsetValue)
+                {
+                    return data;
+                }
+            }
+
+            return null;
+        }
+
+        private void spHuecosAlmacenajes_Drop(object sender, DragEventArgs e)
+        {
+            var huecoAlmacenaje = e.Data.GetData("HuecoAlmacenaje") as HuecoAlmacenaje;
+            var historialHuecoAlmacenaje = new HistorialHuecoAlmacenaje() { HuecoAlmacenaje = huecoAlmacenaje };
+            HistorialHuecosAlmacenajes.Add(historialHuecoAlmacenaje);
+            HuecosAlmacenajesDisponibles.Remove(huecoAlmacenaje);
+            CalcularUnidadesVolumen();
+        }
+
+        private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            var chip = sender as Chip;
+            int huecoAlmacenajeId = int.Parse(chip.CommandParameter.ToString());
+
+            HistorialHuecoAlmacenaje historialHuecoAlmacenaje = (from hha in HistorialHuecosAlmacenajes where hha.HuecoAlmacenaje.HuecoAlmacenajeId == huecoAlmacenajeId select hha).First();
+            HistorialHuecosAlmacenajes.Remove(historialHuecoAlmacenaje);
+            if (historialHuecoAlmacenaje.HuecoAlmacenaje.SitioId == (cbSitiosAlmacenajes.SelectedItem as SitioAlmacenaje).SitioAlmacenajeId)
+            {
+                HuecosAlmacenajesDisponibles.Add(historialHuecoAlmacenaje.HuecoAlmacenaje);
+            }
+            CalcularUnidadesVolumen();
+
+        }
+
+        private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalcularUnidadesVolumen();
+        }
+
+        private void tbUnidades_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalcularUnidadesVolumen();
+        }
+
+        private void CalcularUnidadesVolumen()
+        {
+
+            if (TipoMateriaPrima != null && TipoMateriaPrima.MedidoEnUnidades == true)
+            {
+                var unidadesRestantes = Unidades;
+                foreach (var hha in HistorialHuecosAlmacenajes)
+                {
+                    if (hha.HuecoAlmacenaje.UnidadesTotales <= unidadesRestantes)
+                    {
+                        unidadesRestantes -= hha.HuecoAlmacenaje.UnidadesTotales;
+                        hha.Unidades = hha.HuecoAlmacenaje.UnidadesTotales;
+                    }
+                    else
+                    {
+                        hha.Unidades = unidadesRestantes;
+                        unidadesRestantes = 0;
+                    }
+                }
+            }
+            else
+            {
+                var volumenRestante = Volumen;
+                foreach (var hha in HistorialHuecosAlmacenajes)
+                {
+                    if (hha.HuecoAlmacenaje.VolumenTotal <= volumenRestante)
+                    {
+                        volumenRestante -= hha.HuecoAlmacenaje.VolumenTotal;
+                        hha.Volumen = hha.HuecoAlmacenaje.VolumenTotal;
+                    }
+                    else
+                    {
+                        hha.Volumen = volumenRestante;
+                        volumenRestante = 0;
+                    }
+                }
+            }
+            var nuevosHistorialesHuecosAlmacenajes = HistorialHuecosAlmacenajes.ToList();
+            HistorialHuecosAlmacenajes.Clear();
+            nuevosHistorialesHuecosAlmacenajes.ForEach(HistorialHuecosAlmacenajes.Add);
         }
     }
 }

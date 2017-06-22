@@ -282,7 +282,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             {
                 Fecha = elaboracionSeleccionada.FechaElaboracion.Value,
                 Hora = elaboracionSeleccionada.FechaElaboracion.Value,
-                Descripcion = elaboracionSeleccionada.Descripcion,
+                Descripcion = elaboracionSeleccionada.Descripcion
             };
             formElaboracion.cbEstadoElaboracion.Visibility = Visibility.Visible;
             formElaboracion.Fecha = elaboracionSeleccionada.FechaElaboracion.Value;
