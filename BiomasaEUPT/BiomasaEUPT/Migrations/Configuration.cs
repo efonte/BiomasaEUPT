@@ -774,6 +774,8 @@ namespace BiomasaEUPT.Migrations
                  });
             context.SaveChanges();
 
+
+
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)
                   .All()
                       .With(c => c.Nombre = Faker.Internet.UserName())
