@@ -627,25 +627,22 @@ namespace BiomasaEUPT.Migrations
                 });
             context.SaveChanges();
 
-
-
             context.ProductosTerminados.AddOrUpdate(
                 pt => pt.ProductoTerminadoId,
                 new ProductoTerminado()
                 {
                     ProductoTerminadoId = 1,
                     Unidades = 40,
-                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 1").TipoProductoTerminadoId,
-                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
+                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,
+                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId
                 },
                 new ProductoTerminado()
                 {
                     ProductoTerminadoId = 2,
                     Volumen = 10,
                     Observaciones = "Observaciones .......",
-                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,
-                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
-                    Codigo = "2000000002"
+                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 1").TipoProductoTerminadoId,
+                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId
                 });
             context.SaveChanges();
 
@@ -769,7 +766,7 @@ namespace BiomasaEUPT.Migrations
                  },
                  new HistorialHuecoAlmacenaje()
                  {
-                     HistorialHuecoAlmacenajeId = 3,
+                     HistorialHuecoAlmacenajeId = 4,
                      Volumen = 10,
                      VolumenRestante = 10,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000002").ProductoTerminadoId,
