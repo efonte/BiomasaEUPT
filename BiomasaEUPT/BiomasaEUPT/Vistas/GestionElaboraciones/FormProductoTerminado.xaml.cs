@@ -33,11 +33,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private CollectionViewSource productosTerminadosViewSource;
         private CollectionViewSource tiposProductosTerminadosViewSource;
         private CollectionViewSource gruposProductosTerminadosViewSource;
+        private CollectionViewSource tiposMateriasPrimasViewSource;
+        private CollectionViewSource gruposMateriasPrimasViewSource;
         private CollectionViewSource sitiosAlmacenajesViewSource;
         private CollectionViewSource huecosAlmacenajesViewSource;
-        public TipoMateriaPrima TipoMateriaPrima { get; set; }
+        public TipoProductoTerminado TipoProductoTerminado { get; set; }
         public ObservableCollection<HuecoAlmacenaje> HuecosAlmacenajesDisponibles { get; set; }
         public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
+        public ObservableCollection<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
+        public ObservableCollection<ProductoTerminadoComposicion> ProductosTerminadosComposiciones { get; set; }
 
         public DateTime? FechaBaja { get; set; }
         public DateTime? HoraBaja { get; set; }
@@ -54,6 +58,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             this.context = context;
             Observaciones = this.Observaciones;
             this.context = context;
+            HuecosAlmacenajesDisponibles = new ObservableCollection<HuecoAlmacenaje>();
+            HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>();
+            HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>();
+            ProductosTerminadosComposiciones = new ObservableCollection<ProductoTerminadoComposicion>();
+
         }
 
         public FormProductoTerminado(BiomasaEUPTContext context, string _titulo) : this(context)
@@ -69,25 +78,36 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
             sitiosAlmacenajesViewSource = ((CollectionViewSource)(FindResource("sitiosAlmacenajesViewSource")));
             huecosAlmacenajesViewSource = ((CollectionViewSource)(FindResource("huecosAlmacenajesViewSource")));
+            tiposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("tiposMateriasPrimasViewSource")));
+            gruposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("gruposMateriasPrimasViewSource")));
 
             context.ProductosTerminados.Load();
             context.TiposProductosTerminados.Load();
             context.GruposProductosTerminados.Load();
             context.SitiosAlmacenajes.Load();
             context.HuecosAlmacenajes.Load();
+            context.TiposMateriasPrimas.Load();
+            context.GruposMateriasPrimas.Load();
 
             productosTerminadosViewSource.Source = context.ProductosTerminados.Local;
             tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
             gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
             sitiosAlmacenajesViewSource.Source = context.SitiosAlmacenajes.Local;
             huecosAlmacenajesViewSource.Source = context.HuecosAlmacenajes.Local;
+            tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
+            gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
 
             dpFechaBaja.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
         private void cbGruposProductosTerminados_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            gruposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Where(d => d.GrupoId == ((GrupoProductoTerminado)cbGruposProductosTerminados.SelectedItem).GrupoProductoTerminadoId).ToList();
+            tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Where(d => d.GrupoId == ((GrupoProductoTerminado)cbGruposProductosTerminados.SelectedItem).GrupoProductoTerminadoId).ToList();
+        }
+
+        private void cbGruposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList();
         }
 
         private void cbSitiosAlmacenajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,7 +199,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private void CalcularUnidadesVolumen()
         {
 
-            if (TipoMateriaPrima != null && TipoMateriaPrima.MedidoEnUnidades == true)
+            if (TipoProductoTerminado != null && TipoProductoTerminado.MedidoEnUnidades == true)
             {
                 var unidadesRestantes = Unidades;
                 foreach (var hha in HistorialHuecosAlmacenajes)
@@ -216,6 +236,37 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             var nuevosHistorialesHuecosAlmacenajes = HistorialHuecosAlmacenajes.ToList();
             HistorialHuecosAlmacenajes.Clear();
             nuevosHistorialesHuecosAlmacenajes.ForEach(HistorialHuecosAlmacenajes.Add);
+        }
+
+        private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            /*var parent = sender as ListBox;
+            var tipoProductoTerminado = GetDataFromListBox(lbTiposProductosTerminados, e.GetPosition(parent)) as TipoProductoTerminado;
+            if (tipoProductoTerminado != null)
+            {
+                DataObject dragData = new DataObject("TipoProductoTerminado", tipoProductoTerminado);
+                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
+            }*/
+        }
+
+        private void spProductosTerminadosComposiciones_Drop(object sender, DragEventArgs e)
+        {
+            /*var tipoProductoTerminado = e.Data.GetData("TipoProductoTerminado") as TipoProductoTerminado;
+            var productoTerminadoComposicion = new ProductoTerminadoComposicion() { ProductoTerminado = productoTerminadoComposicion };
+            ProductosTerminadosComposiciones.Add(productoTerminadoComposicion);
+            HistorialHuecosRecepciones.Remove(tipoProductoTerminado);*/
+        }
+
+        private void cProductoTerminadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            /*var chip = sender as Chip;
+            int tipoProductoTerminadoId = int.Parse(chip.CommandParameter.ToString());
+            ProductoTerminado productoTerminado = ProductosTerminados.Single(pt => pt.TipoProductoTerminado.TipoProductoTerminadoId == tipoProductoTerminadoId);
+            ProductosTerminados.Remove(productoTerminado);
+            if (productoTerminado.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId == (cbGruposProductosTerminados.SelectedItem as GrupoProductoTerminado).GrupoProductoTerminadoId)
+            {
+                TiposProductosTerminadosDisponibles.Add(productoTerminado.TipoProductoTerminado);
+            }*/
         }
     }
 }

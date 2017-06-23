@@ -311,7 +311,7 @@ namespace BiomasaEUPT.Migrations
                  new EstadoRecepcion()
                  {
                      Nombre = "Disponible",
-                     Descripcion = "Las materias primas aún no se ha descargado"
+                     Descripcion = "Las materias primas aún no se ha pdescargado"
                  },
                  new EstadoRecepcion()
                  {
@@ -644,8 +644,7 @@ namespace BiomasaEUPT.Migrations
                     Volumen = 10,
                     Observaciones = "Observaciones .......",
                     TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "TipoProductoTerminado 2").TipoProductoTerminadoId,
-                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId,
-                    Codigo = "2000000002"
+                    OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId
                 });
             context.SaveChanges();
 
