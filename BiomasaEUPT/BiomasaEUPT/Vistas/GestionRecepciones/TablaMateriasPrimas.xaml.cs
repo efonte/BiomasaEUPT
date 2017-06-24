@@ -1,6 +1,8 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,6 +70,15 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
             System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.CodigoMateriaPrima(materiaPrima.Codigo)));
 
+        }
+
+        private async void bCodigo_Click(object sender, RoutedEventArgs e)
+        {
+            MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
+
+            System.Diagnostics.Process.Start(new InformePDF().ImprimirCodigoMateriaPrima(materiaPrima));
+            /*  var visorPDF = new VisorPDFCodigos(new InformePDF().ImprimirCodigoMateriaPrima(materiaPrima));
+              var resultado = await DialogHost.Show(visorPDF, "RootDialog");*/
         }
     }
 }

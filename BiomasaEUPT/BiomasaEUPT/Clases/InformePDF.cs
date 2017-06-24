@@ -1,5 +1,6 @@
 ﻿using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using iText.Barcodes;
 using iText.IO.Font;
 using iText.IO.Util;
 using iText.Kernel.Colors;
@@ -8,6 +9,7 @@ using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
+using iText.Kernel.Pdf.Xobject;
 using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
@@ -43,14 +45,8 @@ namespace BiomasaEUPT.Clases
 
         internal static Style estiloCelda = null;
 
-
-        public InformePDF(string ruta)
+        public InformePDF()
         {
-            this.ruta = ruta;
-
-            if (!Directory.Exists(ruta))
-                Directory.CreateDirectory(ruta);
-
             helvetica = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
             helveticaNegrita = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
             PdfFontFactory.Register(Environment.GetEnvironmentVariable("SystemRoot") + "/fonts/calibri.ttf", "Calibri");
@@ -62,9 +58,18 @@ namespace BiomasaEUPT.Clases
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE).SetTextAlignment(TextAlignment.CENTER);
         }
 
+        public InformePDF(string ruta) : this()
+        {
+            this.ruta = ruta;
+
+            if (!Directory.Exists(ruta))
+                Directory.CreateDirectory(ruta);
+        }
+
         public string GenerarPDFMateriaPrima(Proveedor proveedor)
         {
             var materiaPrima = proveedor.Recepciones.First().MateriasPrimas.First();
+            ImprimirCodigoMateriaPrima(materiaPrima);
 
             // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
             var fechaCreacion = DateTime.Now;
@@ -72,19 +77,32 @@ namespace BiomasaEUPT.Clases
 
             PdfWriter writer = new PdfWriter(nombrePdf);
 
-            PdfDocument pdf = new PdfDocument(writer);
-            PdfDocumentInfo info = pdf.GetDocumentInfo();
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
             info.AddCreationDate();
             info.SetAuthor("BiomasaEUPT");
             info.SetCreator("BiomasaEUPT");
             info.SetTitle("Materia Prima #" + materiaPrima.Codigo + " " + fechaCreacion.ToString("dd/MM/yyyy HH:mm:ss"));
-            pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new FinPaginaEventHandler(this));
+            pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new FinPaginaEventHandler(this));
 
             //  OrientacionPaginaEventHandler orientacionPaginaEventHandler = new OrientacionPaginaEventHandler();
             //  pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, orientacionPaginaEventHandler);
 
-            Document doc = new Document(pdf, PageSize.A4.Rotate());
+            Document doc = new Document(pdfDoc, PageSize.A4.Rotate());
             //doc.SetMargins(70, 70, 85, 85);
+
+            var barcode = new Barcode128(pdfDoc);
+            barcode.SetCodeType(Barcode128.CODE128);
+            barcode.SetCode(materiaPrima.Codigo);
+            Rectangle rect = barcode.GetBarcodeSize();
+
+            Image image = new Image(barcode.CreateFormXObject(pdfDoc));
+            // image.SetRotationAngle(Math.PI / 2);
+            //  image.SetAutoScale(true);
+            doc.Add(image);
+
+            doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
 
             doc.Add(Titulo("Proveedor"));
             doc.Add(TablaProveedor(proveedor));
@@ -362,6 +380,59 @@ namespace BiomasaEUPT.Clases
             }
         }
 
+
+        public string ImprimirCodigoMateriaPrima(MateriaPrima materiaPrima)
+        {
+            // MemoryStream memStream = new MemoryStream();
+            //  PdfDocument pdfDoc = new PdfDocument(new PdfWriter(memStream));
+            var rutaPDF = System.IO.Path.GetTempPath() + "/BiomasaEUPT.pdf";
+            PdfDocument pdfDoc = new PdfDocument(new PdfWriter(rutaPDF));
+            Document doc = new Document(pdfDoc, new PageSize(60, 140));
+            doc.SetMargins(5, 5, 5, 5);
+
+            PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
+            PdfFont regular = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
+            var primeraPagina = true;
+            foreach (var hhr in materiaPrima.HistorialHuecosRecepciones.ToList())
+            {
+                if (!primeraPagina)
+                {
+                    doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                }
+                Paragraph p1 = new Paragraph();
+                //p1.Add(new Text(hhr.HuecoRecepcion.SitioRecepcion.Nombre).SetFont(bold).SetFontSize(12));
+                p1.Add(new Text(hhr.HuecoRecepcion.Nombre).SetFont(bold).SetFontSize(6));
+                doc.Add(p1);
+
+                Paragraph p2 = new Paragraph(materiaPrima.Recepcion.FechaRecepcion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);
+                p2.SetTextAlignment(TextAlignment.RIGHT);
+                doc.Add(p2);
+
+                Barcode128 barcode = new Barcode128(pdfDoc);
+                barcode.SetCodeType(Barcode128.CODE128);
+                barcode.SetCode(materiaPrima.Codigo);
+                Rectangle rect = barcode.GetBarcodeSize();
+                PdfFormXObject template = new PdfFormXObject(new Rectangle(rect.GetWidth(), rect.GetHeight() + 10));
+                PdfCanvas templateCanvas = new PdfCanvas(template, pdfDoc);
+                new Canvas(templateCanvas, pdfDoc, new Rectangle(rect.GetWidth(), rect.GetHeight() + 10))
+                        .ShowTextAligned(new Paragraph(materiaPrima.TipoMateriaPrima.Nombre).SetFont(regular).SetFontSize(6), 0, rect.GetHeight() + 2, TextAlignment.LEFT);
+                barcode.PlaceBarcode(templateCanvas, Color.BLACK, Color.BLACK);
+                Image image = new Image(template);
+                image.SetRotationAngle(Math.PI / 2);
+                image.SetAutoScale(true);
+                doc.Add(image);
+
+                Paragraph p3 = new Paragraph("SMALL").SetFont(regular).SetFontSize(6);
+                p3.SetTextAlignment(TextAlignment.CENTER);
+                doc.Add(p3);
+                primeraPagina = false;
+            }
+
+
+            doc.Close();
+            // return memStream;
+            return rutaPDF;
+        }
 
 
         /*

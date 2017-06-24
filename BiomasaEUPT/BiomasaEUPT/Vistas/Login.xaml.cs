@@ -91,10 +91,11 @@ namespace BiomasaEUPT
             {
                 //MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
-                var mensaje = new MensajeInformacion("El usuario y/o la contraseña son incorrectos.");
-                mensaje.MaxHeight = Height;
-                mensaje.MaxWidth = Width;
-
+                var mensaje = new MensajeInformacion("El usuario y/o la contraseña son incorrectos.")
+                {
+                    MaxHeight = Height,
+                    MaxWidth = Width
+                };
                 var resultado = await DialogHost.Show(mensaje, "RootDialog");
                 // Console.WriteLine("*******" + mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
             }

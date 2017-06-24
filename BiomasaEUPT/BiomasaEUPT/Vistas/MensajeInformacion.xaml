@@ -25,7 +25,7 @@
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>
                 _ACEPTAR
-            </Button>         
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

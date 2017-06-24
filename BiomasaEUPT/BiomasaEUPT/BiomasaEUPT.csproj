@@ -221,6 +221,9 @@
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml.cs">
+      <DependentUpon>VisorPDFCodigos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Formulario.xaml.cs">
       <DependentUpon>Formulario.xaml</DependentUpon>
     </Compile>
@@ -344,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
