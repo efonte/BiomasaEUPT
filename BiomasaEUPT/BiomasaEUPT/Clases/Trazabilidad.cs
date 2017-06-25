@@ -15,18 +15,20 @@ namespace BiomasaEUPT.Clases
         public Trazabilidad()
         {
             context = new BiomasaEUPTContext();
+
+            // https://msdn.microsoft.com/en-us/library/jj574232(v=vs.113).aspx
             context.Configuration.LazyLoadingEnabled = false;
         }
 
-        public Proveedor CodigoMateriaPrima(string codigo)
+        public Proveedor MateriaPrima(string codigo)
         {
             var materiaPrima = context.MateriasPrimas
-                              .Include("Recepcion.Proveedor.TipoProveedor")
-                              .Include("TipoMateriaPrima")
-                              .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
-                              .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
-                              .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
-                              .Single(mp => mp.Codigo == codigo);
+                .Include("Recepcion.Proveedor.TipoProveedor")
+                .Include("TipoMateriaPrima")
+                .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
+                .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
+                .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
+                .Single(mp => mp.Codigo == codigo);
             var recepcion = materiaPrima.Recepcion;
             recepcion.MateriasPrimas = new List<MateriaPrima>() { materiaPrima };
             var proveedor = recepcion.Proveedor;
@@ -34,17 +36,56 @@ namespace BiomasaEUPT.Clases
             return proveedor;
         }
 
-        public Proveedor NumeroAlbaranRecepcion(string numeroAlbaran)
+        public Proveedor Recepcion(string numeroAlbaran)
         {
             var recepcion = context.Recepciones
-                            .Include("Proveedor.TipoProveedor")
-                            .Include("MateriasPrimas.TipoMateriaPrima")
-                            .Include("MateriasPrimas.HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
-                            .Single(r => r.NumeroAlbaran == numeroAlbaran);
+                .Include("Proveedor.TipoProveedor")
+                .Include("MateriasPrimas.TipoMateriaPrima")
+                .Include("MateriasPrimas.HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
+                .Include("MateriasPrimas.HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
+                .Include("MateriasPrimas.HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
+                .Single(r => r.NumeroAlbaran == numeroAlbaran);
             var proveedor = recepcion.Proveedor;
             proveedor.Recepciones = new List<Recepcion>() { recepcion };
             return proveedor;
         }
 
+        public List<Proveedor> ProductoTerminado(string codigo)
+        {
+            ////////////////////////////////////////////////////////////////// ESTÁ MAL
+            var productoTerminado = context.ProductosTerminados
+                .Include("TipoProductoTerminado")
+                .Include("HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
+                .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
+                .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
+                .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor")
+                .Single(mp => mp.Codigo == codigo);
+            var productosTerminadosComposiciones = productoTerminado.ProductosTerminadosComposiciones.ToList();
+            var materiasPrimas = new List<MateriaPrima>();
+            foreach (var ptc in productosTerminadosComposiciones)
+            {
+                if (!materiasPrimas.Contains(ptc.HistorialHuecoRecepcion.MateriaPrima))
+                {
+                    materiasPrimas.Add(ptc.HistorialHuecoRecepcion.MateriaPrima);
+                }
+            }
+            var recepciones = new List<Recepcion>();
+            foreach (var mp in materiasPrimas)
+            {
+                if (!recepciones.Contains(mp.Recepcion))
+                {
+                    recepciones.Add(mp.Recepcion);
+                }
+            }
+            var proveedores = new List<Proveedor>();
+            foreach (var r in recepciones)
+            {
+                if (!proveedores.Contains(r.Proveedor))
+                {
+                    proveedores.Add(r.Proveedor);
+                }
+            }
+            return proveedores;
+        }
     }
 }

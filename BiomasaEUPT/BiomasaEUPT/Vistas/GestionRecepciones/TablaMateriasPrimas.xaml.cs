@@ -68,11 +68,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
 
             InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
-            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.CodigoMateriaPrima(materiaPrima.Codigo)));
+            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.MateriaPrima(materiaPrima.Codigo)));
 
         }
 
-        private async void bCodigo_Click(object sender, RoutedEventArgs e)
+        private void bCodigo_Click(object sender, RoutedEventArgs e)
         {
             MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
 
