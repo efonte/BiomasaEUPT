@@ -26,18 +26,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     /// </summary>
     public partial class TablaMateriasPrimas : UserControl
     {
-        //public ObservableCollection<MateriaPrima> MateriasPrimas { get; set; }
         private Trazabilidad trazabilidad;
 
         public TablaMateriasPrimas()
         {
             InitializeComponent();
-            /*MateriasPrimas = new ObservableCollection<MateriaPrima>();
-            using (var context=new BiomasaEUPTContext())
-            {
-                context.MateriasPrimas.Where(mp => mp.RecepcionId == 1).ToList().ForEach(MateriasPrimas.Add);
-            }*/
-            DataContext = this;
             trazabilidad = new Trazabilidad();
         }
 

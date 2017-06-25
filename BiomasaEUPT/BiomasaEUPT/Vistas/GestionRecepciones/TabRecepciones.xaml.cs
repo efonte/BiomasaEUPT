@@ -42,7 +42,9 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             InitializeComponent();
             DataContext = this;
-            ucTablaRecepciones.dgRecepciones.SelectionChanged += DgRecepciones_SelectionChanged;
+
+            // Filtro datagrid recepciones
+            ucTablaRecepciones.dgRecepciones.SelectionChanged += (s, e1) => CargarMateriasPrimas();
             ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
             ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
             ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
@@ -52,6 +54,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             ucTablaRecepciones.cbProveedor.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
             ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
 
+            // Filtro datagrid materias primas
             ucTablaMateriasPrimas.cbTipo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
             ucTablaMateriasPrimas.cbTipo.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
             ucTablaMateriasPrimas.cbGrupo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
@@ -66,10 +69,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             ucTablaMateriasPrimas.bAnadirMateriaPrima.Click += BAnadirMateriaPrima_Click;
 
+            // Hace doble clic en una fila del datagrid de recepcions hará que se ejecuta el evento RowRecepciones_DoubleClick
             Style rowStyle = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
             ucTablaRecepciones.dgRecepciones.RowStyle = rowStyle;
-            ucTablaRecepciones.dgRecepciones.SelectedIndex = -1;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -98,22 +101,9 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 recepcionesViewSource.Source = context.Recepciones.Local;
                 proveedoresViewSource.Source = context.Proveedores.Local;
                 estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
-            }
-        }
 
-        private void DgRecepciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var recepcion = (sender as DataGrid).SelectedItem as Recepcion;
-            if (recepcion != null)
-            {
-                ucTablaMateriasPrimas.IsEnabled = true;
-                materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
-                //ucTablaMateriasPrimas.MateriasPrimas = new ObservableCollection<MateriaPrima>(context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList());
-                //context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList().ForEach(ucTablaMateriasPrimas.MateriasPrimas.Add);
-            }
-            else
-            {
-                ucTablaMateriasPrimas.IsEnabled = false;
+                // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
+                ucTablaRecepciones.dgRecepciones.SelectedIndex = -1;
             }
         }
 
@@ -152,29 +142,37 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     Volumen = formMateriaPrimaDataContext.Volumen,
                     Unidades = formMateriaPrimaDataContext.Unidades
                 };
-                // materiaPrima.TipoMateriaPrima.MedidoEnUnidades = true ? materiaPrima.Unidades = formMateriaPrima.Unidades : materiaPrima.Volumen = formMateriaPrima.Volumen;
-
 
                 if (formMateriaPrimaDataContext.FechaBaja != null)
-                    materiaPrima.FechaBaja = new DateTime(formMateriaPrimaDataContext.FechaBaja.Value.Year, formMateriaPrimaDataContext.FechaBaja.Value.Month, formMateriaPrimaDataContext.FechaBaja.Value.Day, formMateriaPrimaDataContext.HoraBaja.Value.Hour, formMateriaPrimaDataContext.HoraBaja.Value.Minute, formMateriaPrimaDataContext.HoraBaja.Value.Second);
-
+                {
+                    materiaPrima.FechaBaja = new DateTime(
+                        formMateriaPrimaDataContext.FechaBaja.Value.Year,
+                        formMateriaPrimaDataContext.FechaBaja.Value.Month,
+                        formMateriaPrimaDataContext.FechaBaja.Value.Day,
+                        formMateriaPrimaDataContext.HoraBaja.Value.Hour,
+                        formMateriaPrimaDataContext.HoraBaja.Value.Minute,
+                        formMateriaPrimaDataContext.HoraBaja.Value.Second);
+                }
                 context.MateriasPrimas.Add(materiaPrima);
-                List<HistorialHuecoRecepcion> huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
+                var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
                 foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
                 {
-                    var a = hmp.HuecoRecepcion.HuecoRecepcionId;
+                    var hrId = hmp.HuecoRecepcion.HuecoRecepcionId;
+                    // Los huecos que no se ha añadido ninguna cantidad no se añaden
                     if (hmp.Unidades != 0 && hmp.Volumen != 0)
                     {
                         hmp.HuecoRecepcion = null;
-                        hmp.HuecoRecepcionId = a;
+                        hmp.HuecoRecepcionId = hrId;
                         hmp.MateriaPrima = materiaPrima;
                         huecosMateriasPrimas.Add(hmp);
                     }
                 }
                 context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
                 context.SaveChanges();
+
+                CargarMateriasPrimas();
                 //CollectionViewSource.GetDefaultView(ucTablaMateriasPrimas.dgMateriasPrimas.ItemsSource).Refresh();
-                ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
+                //ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
             }
         }
 
@@ -196,7 +194,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                          (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false) ||
                          (ucTablaRecepciones.cbProveedor.IsChecked == true ? proveedor.Contains(textoBuscado) : false) ||
                          (ucTablaRecepciones.cbEstado.IsChecked == true ? estado.Contains(textoBuscado) : false);
-
         }
 
         public void FiltrarTablaMateriasPrimas()
@@ -224,7 +221,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region BorrarRecepcion
         private ICommand _borrarRecepcionComando;
-
         public ICommand BorrarRecepcionComando
         {
             get
@@ -277,14 +273,12 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     mensaje += "\n\nAsegurese de no que no exista ninguna materia prima asociada a dicha recepción.";
                     await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
                 }
-
             }
         }
         #endregion
 
         #region BorrarMateriaPrima
         private ICommand _borrarMateriaPrimaComando;
-
         public ICommand BorrarMateriaPrimaComando
         {
             get
@@ -318,21 +312,28 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
             if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
-
                 List<MateriaPrima> materiasPrimasABorrar = new List<MateriaPrima>();
                 var materiasPrimasSeleccionadas = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList();
 
-                foreach (var materias in materiasPrimasSeleccionadas)
+                foreach (var mp in materiasPrimasSeleccionadas)
                 {
-                    /*if (!context.MateriasPrimas.Any(mp => mp.RecepcionId == recepcion.RecepcionId))
+                    if (!context.ProductosTerminadosComposiciones.Any(ptc => ptc.HistorialHuecoRecepcion.MateriaPrimaId == mp.MateriaPrimaId))
                     {
-
-                    }*/
+                        materiasPrimasABorrar.Add(mp);
+                    }
                 }
-                context.MateriasPrimas.RemoveRange(ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItems.Cast<MateriaPrima>().ToList());
+                context.MateriasPrimas.RemoveRange(materiasPrimasABorrar);
                 context.SaveChanges();
-                ucTablaMateriasPrimas.dgMateriasPrimas.Items.Refresh();
-                // CollectionViewSource.GetDefaultView(ucTablaMateriasPrimas.dgMateriasPrimas.ItemsSource).Refresh();
+                CargarMateriasPrimas();
+                // materiasPrimasViewSource.View.Refresh();
+                if (materiasPrimasSeleccionadas.Count != materiasPrimasABorrar.Count)
+                {
+                    string mensaje = ucTablaRecepciones.dgRecepciones.SelectedItems.Count == 1
+                           ? "No se ha podido borrar la materia prima seleccionada."
+                           : "No se han podido borrar todas las materias primas seleccionadas.";
+                    mensaje += "\n\nAsegurese de no que no exista ningun producto terminado elaborado con dicha materia prima.";
+                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                }
             }
         }
         #endregion
@@ -360,13 +361,22 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 recepcionSeleccionada.EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId;
                 recepcionesViewSource.View.Refresh();
                 context.SaveChanges();
-                /* using (var context = new BiomasaEUPTContext())
-                 {
-                     var recepcion = context.Recepciones.Single(tc => tc.NumeroAlbaran == albaranViejo);
-                     recepcion.NumeroAlbaran = formTipo.Nombre;
-                     tipoCliente.Descripcion = formTipo.Descripcion;
-                     context.SaveChanges();
-                 }*/
+                ucTablaMateriasPrimas.IsEnabled = recepcionSeleccionada.EstadoId == 1; // Disponible
+            }
+        }
+
+        private void CargarMateriasPrimas()
+        {
+            var recepcion = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
+            if (recepcion != null)
+            {
+                ucTablaMateriasPrimas.IsEnabled = recepcion.EstadoId == 1; // Disponible
+                materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+            }
+            else
+            {
+                ucTablaMateriasPrimas.IsEnabled = false;
+                materiasPrimasViewSource.Source = null;
             }
         }
 

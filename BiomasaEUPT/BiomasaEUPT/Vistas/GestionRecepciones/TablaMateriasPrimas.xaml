@@ -11,7 +11,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700" >
+             d:DesignHeight="300" d:DesignWidth="700" Name="UCTablaMateriasPrimas">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:MateriaPrima}, CreateList=True}"/>
@@ -124,7 +124,7 @@
                                              ToolTip="Gestionar materias primas"
                                              Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}" IsEnabled="{Binding CanBorrarMateriaPrima}">
+                            <Button x:Name="bBorrarMateriaPrima" ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}" IsEnabled="{Binding CanBorrarMateriaPrima}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima">
