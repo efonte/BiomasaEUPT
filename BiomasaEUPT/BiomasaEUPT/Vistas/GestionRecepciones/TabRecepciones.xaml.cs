@@ -141,22 +141,26 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
             if ((bool)await DialogHost.Show(formMateriaPrima, "RootDialog"))
             {
+                var formMateriaPrimaDataContext = formMateriaPrima.DataContext as FormMateriaPrimaViewModel;
                 var materiaPrima = new MateriaPrima()
                 {
                     RecepcionId = (ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion).RecepcionId,
-                    Observaciones = formMateriaPrima.Observaciones,
+                    Observaciones = formMateriaPrimaDataContext.Observaciones,
                     //Codigo = formMateriaPrima.Codigo,
                     ProcedenciaId = (formMateriaPrima.cbProcedencias.SelectedItem as Procedencia).ProcedenciaId,
                     TipoId = (formMateriaPrima.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId,
-                    Volumen = formMateriaPrima.Volumen,
-                    Unidades = formMateriaPrima.Unidades
+                    Volumen = formMateriaPrimaDataContext.Volumen,
+                    Unidades = formMateriaPrimaDataContext.Unidades
                 };
-                if (formMateriaPrima.FechaBaja != null)
-                    materiaPrima.FechaBaja = new DateTime(formMateriaPrima.FechaBaja.Value.Year, formMateriaPrima.FechaBaja.Value.Month, formMateriaPrima.FechaBaja.Value.Day, formMateriaPrima.HoraBaja.Value.Hour, formMateriaPrima.HoraBaja.Value.Minute, formMateriaPrima.HoraBaja.Value.Second);
+                // materiaPrima.TipoMateriaPrima.MedidoEnUnidades = true ? materiaPrima.Unidades = formMateriaPrima.Unidades : materiaPrima.Volumen = formMateriaPrima.Volumen;
+
+
+                if (formMateriaPrimaDataContext.FechaBaja != null)
+                    materiaPrima.FechaBaja = new DateTime(formMateriaPrimaDataContext.FechaBaja.Value.Year, formMateriaPrimaDataContext.FechaBaja.Value.Month, formMateriaPrimaDataContext.FechaBaja.Value.Day, formMateriaPrimaDataContext.HoraBaja.Value.Hour, formMateriaPrimaDataContext.HoraBaja.Value.Minute, formMateriaPrimaDataContext.HoraBaja.Value.Second);
 
                 context.MateriasPrimas.Add(materiaPrima);
                 List<HistorialHuecoRecepcion> huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
-                foreach (var hmp in formMateriaPrima.HistorialHuecosRecepciones)
+                foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
                 {
                     var a = hmp.HuecoRecepcion.HuecoRecepcionId;
                     if (hmp.Unidades != 0 && hmp.Volumen != 0)

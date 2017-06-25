@@ -50,7 +50,8 @@
                 <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo"
                           ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
-                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}">
+                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionChanged="cbTiposMateriasPrimas_SelectionChanged">
                 </ComboBox>
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProcedencias" materialDesign:HintAssist.Hint="Procedencia"
@@ -66,7 +67,19 @@
                     </Button>
                 </StackPanel-->
 
-                <StackPanel Grid.Row="2" Grid.Column="0">
+                <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <!--StackPanel Grid.Row="2" Grid.Column="0">
                     <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6" TextChanged="tbVolumen_TextChanged">
                         <TextBox.Text>
                             <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
@@ -113,7 +126,7 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                </StackPanel>
+                </-->
 
 
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
@@ -266,7 +279,8 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <!--Condition Binding="{Binding ElementName=tbVolumen, Path=(Validation.HasError)}" Value="False" /-->
+                                            <Condition Binding="{Binding QuedaCantidadPorAlmacenar}" Value="False"/>
+                                            <Condition Binding="{Binding ElementName=tbCantidad, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=dpFechaBaja, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=tpHoraBaja, Path=(Validation.HasError)}" Value="False" />
                                         </MultiDataTrigger.Conditions>
