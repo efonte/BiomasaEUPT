@@ -8,10 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="200">
     <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20">
-            <GroupBox.Header>
-                <TextBlock Text="Total Usuarios" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
-            </GroupBox.Header>
+        <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Total Usuarios">        
 
             <Grid>
                 <Grid.ColumnDefinitions>

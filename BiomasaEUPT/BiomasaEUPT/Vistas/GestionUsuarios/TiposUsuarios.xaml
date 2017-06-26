@@ -8,10 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="180" Loaded="UserControl_Loaded">
     <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20" Margin="0,0,0,0">
-            <GroupBox.Header>
-                <TextBlock Text="Filtrar" HorizontalAlignment="Center" Foreground="White"/>
-            </GroupBox.Header>
+        <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Filtrar">
 
             <ListBox x:Name="lbTiposUsuarios" HorizontalContentAlignment="Center" Margin="0 0 0 0" SelectedIndex="0" SelectionChanged="lbTiposUsuarios_SelectionChanged">
                 <ListBoxItem x:Name="tbTipoTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem>

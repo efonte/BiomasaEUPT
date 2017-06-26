@@ -29,7 +29,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <local:OpcionesUsuarios Grid.Row="0" x:Name="ucOpcionesUsuarios" Margin="10 10 10 0" Height="225" VerticalAlignment="Top"/>
+            <local:OpcionesUsuarios Grid.Row="0" x:Name="ucOpcionesUsuarios" Margin="10 10 10 0" Height="220" VerticalAlignment="Top"/>
 
         </Grid>
 

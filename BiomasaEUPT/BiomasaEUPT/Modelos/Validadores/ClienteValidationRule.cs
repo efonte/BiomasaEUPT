@@ -14,18 +14,6 @@ namespace BiomasaEUPT.Modelos.Validadores
 {
     public class ClienteValidationRule : ValidationRule
     {
-        private int minRazonSocial = 5;
-        private int maxRazonSocial = 40;
-        private string regexRazonSocial = "^(?!\\s)(?!.*\\s$)[\\p{L}0-9\\s'~?!\\.,@]+$";
-        private int minNif = 10;
-        private int maxNif = 10;
-        private string regexNif = "^([A-Z]-\\d{7})|(\\d{7}-[A-Z])$";
-        private int minEmail = 5;
-        private int maxEmail = 254;
-        private string regexEmail = "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
-        private int minCalle = 5;
-        private int maxCalle = 60;
-        private string regexCalle = "^(?!\\s)(?!.*\\s$)[\\p{L}0-9\\s'~?!\\.,\\/]+$";
         //private int minObservaciones;
         //private int maxObservaciones;
 
@@ -44,13 +32,13 @@ namespace BiomasaEUPT.Modelos.Validadores
             if (string.IsNullOrWhiteSpace(cliente.RazonSocial))
                 return new ValidationResult(false, String.Format(errorObligatorio, "razón social"));
 
-            if (cliente.RazonSocial.Length < minRazonSocial)
-                return new ValidationResult(false, String.Format(errorMin, "razón social", minRazonSocial));
+            if (cliente.RazonSocial.Length < Constantes.LONG_MIN_RAZON_SOCIAL)
+                return new ValidationResult(false, String.Format(errorMin, "razón social", Constantes.LONG_MIN_RAZON_SOCIAL));
 
-            if (cliente.RazonSocial.Length > maxRazonSocial)
-                return new ValidationResult(false, String.Format(errorMax, "razón social", maxRazonSocial));
+            if (cliente.RazonSocial.Length > Constantes.LONG_MAX_RAZON_SOCIAL)
+                return new ValidationResult(false, String.Format(errorMax, "razón social", Constantes.LONG_MAX_RAZON_SOCIAL));
 
-            if (!Regex.IsMatch(cliente.RazonSocial, regexRazonSocial))
+            if (!Regex.IsMatch(cliente.RazonSocial, Constantes.REGEX_RAZON_SOCIAL))
                 return new ValidationResult(false, String.Format(errorRegex, "razón social", ""));
 
 
@@ -58,13 +46,13 @@ namespace BiomasaEUPT.Modelos.Validadores
             if (string.IsNullOrWhiteSpace(cliente.Nif))
                 return new ValidationResult(false, String.Format(errorObligatorio, "NIF"));
 
-            if (cliente.Nif.Length < minNif)
-                return new ValidationResult(false, String.Format(errorMin, "NIF", minNif));
+            if (cliente.Nif.Length < Constantes.LONG_MIN_NIF)
+                return new ValidationResult(false, String.Format(errorMin, "NIF", Constantes.LONG_MIN_NIF));
 
-            if (cliente.Nif.Length > maxNif)
-                return new ValidationResult(false, String.Format(errorMax, "NIF", maxNif));
+            if (cliente.Nif.Length > Constantes.LONG_MAX_NIF)
+                return new ValidationResult(false, String.Format(errorMax, "NIF", Constantes.LONG_MAX_NIF));
 
-            if (!Regex.IsMatch(cliente.Nif, regexNif))
+            if (!Regex.IsMatch(cliente.Nif, Constantes.REGEX_NIF))
                 return new ValidationResult(false, String.Format(errorRegex, "NIF", " (L-NNNNNNN o NNNNNNN-L)"));
 
 
@@ -72,13 +60,13 @@ namespace BiomasaEUPT.Modelos.Validadores
             if (string.IsNullOrWhiteSpace(cliente.Email))
                 return new ValidationResult(false, String.Format(errorObligatorio, "email"));
 
-            if (cliente.Email.Length < minEmail)
-                return new ValidationResult(false, String.Format(errorMin, "email", minEmail));
+            if (cliente.Email.Length < Constantes.LONG_MIN_EMAIL)
+                return new ValidationResult(false, String.Format(errorMin, "email", Constantes.LONG_MIN_EMAIL));
 
-            if (cliente.Email.Length > maxEmail)
-                return new ValidationResult(false, String.Format(errorMax, "email", maxEmail));
+            if (cliente.Email.Length > Constantes.LONG_MAX_EMAIL)
+                return new ValidationResult(false, String.Format(errorMax, "email", Constantes.LONG_MAX_EMAIL));
 
-            if (!Regex.IsMatch(cliente.Email, regexEmail))
+            if (!Regex.IsMatch(cliente.Email, Constantes.REGEX_EMAIL))
                 return new ValidationResult(false, String.Format(errorRegex, "email", ""));
 
 
@@ -86,13 +74,13 @@ namespace BiomasaEUPT.Modelos.Validadores
             if (string.IsNullOrWhiteSpace(cliente.Calle))
                 return new ValidationResult(false, String.Format(errorObligatorio, "calle"));
 
-            if (cliente.Calle.Length < minCalle)
-                return new ValidationResult(false, String.Format(errorMin, "calle", minCalle));
+            if (cliente.Calle.Length < Constantes.LONG_MIN_CALLE)
+                return new ValidationResult(false, String.Format(errorMin, "calle", Constantes.LONG_MIN_CALLE));
 
-            if (cliente.Calle.Length > maxCalle)
-                return new ValidationResult(false, String.Format(errorMax, "calle", maxCalle));
+            if (cliente.Calle.Length > Constantes.LONG_MAX_CALLE)
+                return new ValidationResult(false, String.Format(errorMax, "calle", Constantes.LONG_MAX_CALLE));
 
-            if (!Regex.IsMatch(cliente.Calle, regexCalle))
+            if (!Regex.IsMatch(cliente.Calle, Constantes.REGEX_CALLE))
                 return new ValidationResult(false, String.Format(errorRegex, "calle", ""));
 
             // Valores únicos

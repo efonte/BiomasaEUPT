@@ -49,9 +49,9 @@ namespace BiomasaEUPT.Migrations
                    },
                    new Usuario()
                    {
-                       Nombre = "tecnico1",
-                       Contrasena = ContrasenaHashing.obtenerHashSHA256("tecnico1"),
-                       Email = "tecnico1@biomasaeupt.es",
+                       Nombre = "tecnicoa",
+                       Contrasena = ContrasenaHashing.obtenerHashSHA256("tecnicoa"),
+                       Email = "tecnicoa@biomasaeupt.es",
                        TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Técnico A").TipoUsuarioId
                    });
             context.SaveChanges();

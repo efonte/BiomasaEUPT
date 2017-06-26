@@ -19,20 +19,18 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int UsuarioId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(10)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_USUARIO, MinimumLength = Constantes.LONG_MIN_NOMBRE_USUARIO)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
-        [StringLength(64)]
+        [StringLength(Constantes.LONG_MAX_HASH_CONTRASENA, MinimumLength = Constantes.LONG_MIN_HASH_CONTRASENA)]
         [DisplayName("Contraseña"), Display(Name = "Contraseña")]
         public string Contrasena { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(254)]
+        [StringLength(Constantes.LONG_MAX_EMAIL, MinimumLength = Constantes.LONG_MIN_EMAIL)]
         [Index(IsUnique = true)]
         [EmailAddress]
         [DisplayName("Email"), Display(Name = "Email")]

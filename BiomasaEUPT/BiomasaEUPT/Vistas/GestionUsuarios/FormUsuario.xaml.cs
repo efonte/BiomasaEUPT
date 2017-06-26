@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -24,6 +25,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     {
         private BiomasaEUPTContext context;
         private CollectionViewSource tiposUsuariosViewSource;
+        public string Nombre { get; set; }
+        public string Email { get; set; }
+        public bool Baneado { get; set; }
         public string Contrasena { get; set; }
         public string ContrasenaConfirmacion { get; set; }
 
@@ -31,6 +35,17 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        public FormUsuario(Usuario usuario) : this()
+        {
+            gbTitulo.Header = "Editar Usuario";
+            Nombre = usuario.Nombre;
+            Email = usuario.Email;
+            cbTiposUsuarios.SelectedValue = usuario.TipoId;
+            Baneado = usuario.Baneado.Value;
+            vNombreUnico.NombreActual = usuario.Nombre;
+            vEmailUnico.NombreActual = usuario.Email;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

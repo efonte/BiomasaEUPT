@@ -52,7 +52,15 @@ namespace BiomasaEUPT.Modelos.Validadores
             {
                 using (var context = new BiomasaEUPTContext())
                 {
-                    if (Tipo == "Cliente")
+                    if (Tipo == "Usuario")
+                    {
+                        if (Atributo == "Nombre" && context.Usuarios.Any(u => u.Nombre == valor && u.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                        if (Atributo == "Email" && context.Usuarios.Any(u => u.Email == valor && u.Email != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "email"));
+                    }
+                    else if (Tipo == "Cliente")
                     {
                         if (Atributo == "RazonSocial" && context.Clientes.Any(c => c.RazonSocial == valor && c.RazonSocial != NombreActual))
                             return new ValidationResult(false, String.Format(mensajeError, "razón social"));
@@ -62,7 +70,6 @@ namespace BiomasaEUPT.Modelos.Validadores
 
                         if (Atributo == "Email" && context.Clientes.Any(c => c.Email == valor && c.Email != NombreActual))
                             return new ValidationResult(false, String.Format(mensajeError, "email"));
-
                     }
                     else if (Tipo == "Recepcion")
                     {
@@ -82,7 +89,6 @@ namespace BiomasaEUPT.Modelos.Validadores
 
                         if (Atributo == "Email" && item.Email == valor)
                             return new ValidationResult(false, String.Format(mensajeError, "email"));
-
                     }
                 }
                 else if (Tipo == "Cliente")
@@ -97,7 +103,6 @@ namespace BiomasaEUPT.Modelos.Validadores
 
                         if (Atributo == "Email" && item.Email == valor)
                             return new ValidationResult(false, String.Format(mensajeError, "email"));
-
                     }
                 }
                 else if (Tipo == "tipoCliente")
@@ -106,7 +111,6 @@ namespace BiomasaEUPT.Modelos.Validadores
                     {
                         if (Atributo == "Nombre" && item.Nombre != NombreActual && /*item.nombre.GetHashCode() != valor.GetHashCode() &&*/ item.Nombre == valor)
                             return new ValidationResult(false, String.Format(mensajeError, "nombre"));
-
                     }
                 }
                 else if (Tipo == "GrupoCliente")
@@ -115,7 +119,6 @@ namespace BiomasaEUPT.Modelos.Validadores
                     {
                         if (Atributo == "Nombre" && item.Nombre != NombreActual && item.Nombre == valor)
                             return new ValidationResult(false, String.Format(mensajeError, "nombre"));
-
                     }
                 }
                 else if (Tipo == "TipoProveedor")
@@ -124,7 +127,6 @@ namespace BiomasaEUPT.Modelos.Validadores
                     {
                         if (Atributo == "Nombre" && item.Nombre != NombreActual && item.Nombre == valor)
                             return new ValidationResult(false, String.Format(mensajeError, "nombre"));
-
                     }
                 }
             }

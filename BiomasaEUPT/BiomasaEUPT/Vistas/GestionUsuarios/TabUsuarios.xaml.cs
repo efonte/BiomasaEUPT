@@ -42,37 +42,87 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             DataContext = this;
             ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
             ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
+            ucTablaUsuarios.cbNombre.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbNombre.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbBaneado.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbBaneado.Unchecked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbTipo.Checked += (s, e1) => { FiltrarTabla(); };
+            ucTablaUsuarios.cbTipo.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucOpcionesUsuarios.bAnadir.Click += BAnadirUsuario_Click;
             ucTablaUsuarios.bAnadirUsuario.Click += BAnadirUsuario_Click;
+            ucOpcionesUsuarios.bRefrescar.Click += (s, e1) => { CargarUsuarios(); };
+            ucTablaUsuarios.bRefrescar.Click += (s, e1) => { CargarUsuarios(); };
+
+            /*   Style style = new Style(typeof(CheckBox));
+               style.Setters.Add(new EventSetter(CheckBox.CheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));
+               style.Setters.Add(new EventSetter(CheckBox.UncheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));
+               ucTablaUsuarios.baneadoColumna.CellStyle = style;*/
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            context = new BiomasaEUPTContext();
+            usuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("usuariosViewSource")));
+            tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
+            CargarUsuarios();
+        }
+
+        private void CargarUsuarios()
+        {
             using (new CursorEspera())
             {
-                context = new BiomasaEUPTContext();
-                usuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("usuariosViewSource")));
-                tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
                 context.Usuarios.Load();
                 context.TiposUsuarios.Load();
                 usuariosViewSource.Source = context.Usuarios.Local;
                 tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
+                usuariosViewSource.View.Refresh();
+                tiposUsuariosViewSource.View.Refresh();
                 ActualizarContador();
+                ucTablaUsuarios.dgUsuarios.SelectedIndex = -1;
             }
         }
 
-        private void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private async void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
+                Usuario usuario = e.Row.DataContext as Usuario;
+
                 if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
                 {
-                    Usuario usuario = e.Row.DataContext as Usuario;
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
                     PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
                     string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuario.Contrasena = hashContrasena;
+                }
+                if (e.Column.DisplayIndex == 4) // 4 = Posición columna baneado
+                {
+                    Console.WriteLine(usuario.Baneado);
+                }
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException e1)
+                {
+                    var mensajeError = "No se ha podido modificar el campo.";
+                    foreach (var entry in e1.Entries)
+                    {
+                        if (entry.Entity is Usuario)
+                        {
+                            if (entry.State == EntityState.Modified)
+                            {
+                                mensajeError = "No se ha podido modificar el usuario.\n\nAsegurese que el nombre de usuario y el email son únicos";
+                                break;
+                            }
+                        }
+
+                    }
+                    var mensaje = new MensajeInformacion(mensajeError) { Width = 350 };
+                    var resultado = await DialogHost.Show(mensaje, "RootDialog");
                 }
             }
         }
@@ -83,33 +133,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 Usuario usuario = e.Row.DataContext as Usuario;
                 Console.WriteLine(usuario.Nombre + " - " + usuario.Email + " - " + usuario.Contrasena + " - " + usuario.TipoId + " - " + usuario.Baneado);
-                /*var usuarioExistente = context.usuarios.Where(u => u.id_usuario == usuario.id_usuario).FirstOrDefault();
-                if (usuarioExistente == null)
-                {
-                    Usuario nuevoUsuario = new Usuario()
-                    {
-                        nombre = usuario.nombre,
-                        email = usuario.email,
-                        tipo_id = usuario.tipo_id,
-                        contrasena = usuario.contrasena,
-                        baneado = false
-                    };
-                    Console.WriteLine(nuevoUsuario.nombre + " - " + nuevoUsuario.email + " - " + nuevoUsuario.contrasena + " - " + nuevoUsuario.tipo_id + " - " + nuevoUsuario.baneado);
-                    context.usuarios.Add(nuevoUsuario);
-                }
-                else
-                {
-                    usuarioExistente.nombre = usuario.nombre;
-                    usuarioExistente.email = usuario.email;
-                    usuarioExistente.tipo_id = usuario.tipo_id;
-                    usuarioExistente.contrasena = usuario.contrasena;
-                    usuarioExistente.baneado = usuario.baneado;
-                }
-                context.SaveChanges();*/
             }
-
         }
-
 
         private async void BAnadirUsuario_Click(object sender, RoutedEventArgs e)
         {
@@ -117,21 +142,23 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
             {
+                string hashContrasena = ContrasenaHashing.obtenerHashSHA256(formUsuario.Contrasena);
+
                 context.Usuarios.Add(new Usuario()
                 {
-                    Nombre = formUsuario.tbNombre.Text,
-                    Email = formUsuario.tbEmail.Text,
-                    //Contrasena = formUsuario.
-                    Baneado = formUsuario.cbBaneado.IsChecked
+                    Nombre = formUsuario.Nombre,
+                    Email = formUsuario.Email,
+                    Contrasena = hashContrasena,
+                    Baneado = formUsuario.Baneado
                 });
-                //context.SaveChanges();
+                context.SaveChanges();
             }
         }
+
+        #region Filtro
         public void FiltrarTabla()
         {
             usuariosViewSource.Filter += new FilterEventHandler(FiltroTabla);
-            //ICollectionView ItemList = usuariosViewSource.View;
-            //ucTablaUsuarios.dgUsuarios.ItemsSource = ItemList;
         }
 
         private void FiltroTabla(object sender, FilterEventArgs e)
@@ -146,21 +173,25 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             string email = usuario.Email.ToLower();
             string tipo = usuario.TipoUsuario.Nombre.ToLower();
 
+            var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
+                           (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
+                           (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
+
             if (nombre.Contains(textoBuscado) || email.Contains(textoBuscado))
             {
                 if (!tipoFiltrado.Equals("todos"))
                 {
-                    e.Accepted = tipo.Equals(tipoFiltrado);
+                    e.Accepted = tipo.Equals(tipoFiltrado) && condicion;
                 }
                 else
                 {
-                    e.Accepted = true;
+                    e.Accepted = condicion;
                 }
             }
             else
                 e.Accepted = false;
         }
-
+        #endregion
 
         public void ActualizarContador()
         {
@@ -170,67 +201,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             ucInfoUsuarios.tbNumTecnicosC.Text = context.Usuarios.Local.Where(u => u.TipoId == 4).Count().ToString();
         }
 
-
-        #region ConfirmarCambios
-        private ICommand _confirmarCambiosComando;
-
-        public ICommand ConfirmarCambiosComando
-        {
-            get
-            {
-                if (_confirmarCambiosComando == null)
-                {
-                    _confirmarCambiosComando = new RelayComando(
-                        param => ConfirmarCambios(),
-                        param => CanConfirmarCambios()
-                    );
-                }
-                return _confirmarCambiosComando;
-            }
-        }
-
-        private bool CanConfirmarCambios()
-        {
-            return context != null && context.HayCambios<Usuario>();
-        }
-
-        private void ConfirmarCambios()
-        {
-            /*try
-            {*/
-            context.GuardarCambios<Usuario>();
-            //usuariosViewSource.View.Refresh();
-            ActualizarContador();
-            /*}
-            catch (DbEntityValidationException ex)
-            {
-                var error = ex.EntityValidationErrors.First().ValidationErrors.First();
-                Console.WriteLine(error.ErrorMessage);
-                //this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            }*/
-        }
-        #endregion
-
-
-        #region Borrar
-        private ICommand _borrarComando;
-
-        public ICommand BorrarComando
-        {
-            get
-            {
-                if (_borrarComando == null)
-                {
-                    _borrarComando = new RelayComando(
-                        param => BorrarUsuario(),
-                        param => CanBorrar()
-                    );
-                }
-                return _borrarComando;
-            }
-        }
-
-        private bool CanBorrar()
+        private bool HayUnUsuarioSeleccionado()
         {
             if (ucTablaUsuarios.dgUsuarios.SelectedIndex != -1)
             {
@@ -239,6 +210,24 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 return usuarioSeleccionado != null;
             }
             return false;
+        }
+
+
+        #region Borrar
+        private ICommand _borrarComando;
+        public ICommand BorrarComando
+        {
+            get
+            {
+                if (_borrarComando == null)
+                {
+                    _borrarComando = new RelayComando(
+                        param => BorrarUsuario(),
+                        param => HayUnUsuarioSeleccionado()
+                    );
+                }
+                return _borrarComando;
+            }
         }
 
         private async void BorrarUsuario()
@@ -256,6 +245,42 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             if (resultado)
             {
                 context.Usuarios.RemoveRange(ucTablaUsuarios.dgUsuarios.SelectedItems.Cast<Usuario>().ToList());
+            }
+        }
+        #endregion
+
+        #region Editar
+        private ICommand _modificarComando;
+        public ICommand ModificarComando
+        {
+            get
+            {
+                if (_modificarComando == null)
+                {
+                    _modificarComando = new RelayComando(
+                        param => ModificarUsuario(),
+                        param => HayUnUsuarioSeleccionado()
+                    );
+                }
+                return _modificarComando;
+            }
+        }
+
+        private async void ModificarUsuario()
+        {
+            var usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as Usuario;
+            var formUsuario = new FormUsuario(usuarioSeleccionado);
+            if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
+            {
+                string hashContrasena = ContrasenaHashing.obtenerHashSHA256(formUsuario.Contrasena);
+                usuarioSeleccionado.Nombre = formUsuario.Nombre;
+                usuarioSeleccionado.Email = formUsuario.Email;
+                usuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;
+                usuarioSeleccionado.Contrasena = hashContrasena;
+                usuarioSeleccionado.Baneado = formUsuario.Baneado;
+
+                context.SaveChanges();
+                //usuariosViewSource.View.Refresh();
             }
         }
         #endregion

@@ -31,8 +31,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         public string Nif { get; set; }
 
         [Required]
-        [MinLength(Constantes.LONG_MIN_EMAIL)]
-        [MaxLength(Constantes.LONG_MAX_EMAIL)]
         [StringLength(Constantes.LONG_MAX_EMAIL, MinimumLength = Constantes.LONG_MIN_EMAIL)]
         [Index(IsUnique = true)]
         [EmailAddress]
@@ -44,8 +42,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public string Observaciones { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(60)]
+        [StringLength(Constantes.LONG_MAX_CALLE, MinimumLength = Constantes.LONG_MIN_CALLE)]
         [DisplayName("Calle"), Display(Name = "Calle")]
         public string Calle { get; set; }
 

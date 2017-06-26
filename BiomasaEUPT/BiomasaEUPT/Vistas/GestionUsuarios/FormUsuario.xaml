@@ -18,9 +18,11 @@
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoUsuario}, CreateList=True}"/>
+            <validadores:BindingProxy x:Key="ContrasenaProxy" Data="{Binding Contrasena, Mode=TwoWay}"/>
+            <validadores:BindingProxy x:Key="ContrasenaConfirmacionProxy" Data="{Binding ContrasenaConfirmacion, Mode=TwoWay}"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Usuario">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Usuario">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -38,9 +40,9 @@
                         <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="nombre" Min="5" Max="40" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="nombre" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" ValidatesOnTargetUpdated="True" />
-                                <validadores:UnicoValidationRule x:Name="vUnicoNombre" Online="True" Tipo="Usuario" Atributo="Nombre" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE_USUARIO}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="nombre" ExpReg="{x:Static const:Constantes.REGEX_NOMBRE_USUARIO}" MensajeFormato="sólo letras minúsculas" ValidatesOnTargetUpdated="True" />
+                                <validadores:UnicoValidationRule x:Name="vNombreUnico" Online="True" Tipo="Usuario" Atributo="Nombre" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -52,8 +54,8 @@
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="email" Min="{x:Static const:Constantes.LONG_MIN_EMAIL}" Max="{x:Static const:Constantes.LONG_MAX_EMAIL}" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="email" ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" ValidatesOnTargetUpdated="True" />
-                                <validadores:UnicoValidationRule x:Name="vUnicoEmail" Online="True" Tipo="Usuario" Atributo="Email" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="email" ExpReg="{x:Static const:Constantes.REGEX_EMAIL}" ValidatesOnTargetUpdated="True" />
+                                <validadores:UnicoValidationRule x:Name="vEmailUnico" Online="True" Tipo="Usuario" Atributo="Email" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -70,7 +72,7 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
 
-                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbBaneado" Content="Baneado"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbBaneado" Content="Baneado" IsChecked="{Binding Baneado}"/>
 
                 <PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*"
                              materialDesign:HintAssist.Hint="Contraseña" domain:PasswordHelper.Attach="True">
@@ -78,6 +80,14 @@
                         <Binding Path="Contrasena" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="contraseña" ValidatesOnTargetUpdated="True" />
+                                <!--validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
+                                    <validadores:IgualValidationRule.CadenaAComparar>
+                                        <validadores:CadenaACompararDependencyObject CadenaAComparar="{Binding ContrasenaConfirmacion, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </validadores:IgualValidationRule.CadenaAComparar>
+                                </-->
+                                <!--validadores:GreaterThanValidationRule>
+                                    <validadores:ComparisonValue Value="{Binding Data, Source={StaticResource ContrasenaConfirmacionProxy}}" BindingToTrigger="{Binding Data, Source={StaticResource ContrasenaProxy}}"/>
+                                </-->
                             </Binding.ValidationRules>
                         </Binding>
                     </domain:PasswordHelper.Password>
@@ -102,11 +112,10 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=tbRazonSocial, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tbNif, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=tbEmail, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tbCalle, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tbObservaciones, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=pbContrasena, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=pbContrasenaConfirmacion, Path=(Validation.HasError)}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
