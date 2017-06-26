@@ -19,21 +19,20 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int MunicipioId { get; set; }
 
         [Required]
-        [StringLength(80)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_MUNICIPIO, MinimumLength = Constantes.LONG_MIN_NOMBRE_MUNICIPIO)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(15)]
+        [StringLength(Constantes.LONG_MAX_CODIGO_POSTAL, MinimumLength = Constantes.LONG_MIN_CODIGO_POSTAL)]
         [DisplayName("Código Postal"), Display(Name = "Código Postal")]
         public string CodigoPostal { get; set; }
 
-        [StringLength(10)]
+        [StringLength(Constantes.LONG_MAX_LATITUD)]
         [DisplayName("Latitud"), Display(Name = "Latitud")]
         public string Latitud { get; set; }
 
-        [StringLength(10)]
+        [StringLength(Constantes.LONG_MAX_LONGITUD)]
         [DisplayName("Longitud"), Display(Name = "Longitud")]
         public string Longitud { get; set; }
 

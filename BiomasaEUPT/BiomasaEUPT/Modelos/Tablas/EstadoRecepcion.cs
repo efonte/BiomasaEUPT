@@ -19,16 +19,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int EstadoRecepcionId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_ESTADO_RECEPCION, MinimumLength = Constantes.LONG_MIN_NOMBRE_ESTADO_RECEPCION)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
+        [StringLength(Constantes.LONG_MAX_DESCRIPCION_ESTADO_RECEPCION, MinimumLength = Constantes.LONG_MIN_DESCRIPCION_ESTADO_RECEPCION)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 

@@ -19,15 +19,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ProvinciaId { get; set; }
 
         [Required]
-        [MinLength(4)]
-        [MaxLength(5)]
+        [StringLength(Constantes.LONG_MAX_CODIGO_PROVINCIA, MinimumLength = Constantes.LONG_MIN_CODIGO_PROVINCIA)]
         [Index(IsUnique = true)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_PROVINCIA, MinimumLength = Constantes.LONG_MIN_NOMBRE_PROVINCIA)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 

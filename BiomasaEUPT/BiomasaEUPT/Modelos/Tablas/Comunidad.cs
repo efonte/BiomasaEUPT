@@ -19,15 +19,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ComunidadId { get; set; }
 
         [Required]
-        [MinLength(4)]
-        [MaxLength(5)]
+        [StringLength(Constantes.LONG_MAX_CODIGO_COMUNIDAD, MinimumLength = Constantes.LONG_MIN_CODIGO_COMUNIDAD)]
         [Index(IsUnique = true)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(30)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_COMUNIDAD, MinimumLength = Constantes.LONG_MIN_NOMBRE_COMUNIDAD)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 

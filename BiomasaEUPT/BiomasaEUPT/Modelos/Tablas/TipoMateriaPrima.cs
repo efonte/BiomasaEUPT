@@ -19,15 +19,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int TipoMateriaPrimaId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE, MinimumLength = Constantes.LONG_MIN_NOMBRE)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
+        [StringLength(Constantes.LONG_MAX_DESCRIPCION, MinimumLength = Constantes.LONG_MIN_DESCRIPCION)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 

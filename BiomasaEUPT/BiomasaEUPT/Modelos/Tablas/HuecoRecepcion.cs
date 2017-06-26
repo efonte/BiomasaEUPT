@@ -19,9 +19,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int HuecoRecepcionId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(3)]
-        [StringLength(3, MinimumLength = 3)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_HUECO, MinimumLength = Constantes.LONG_MIN_NOMBRE_HUECO)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }

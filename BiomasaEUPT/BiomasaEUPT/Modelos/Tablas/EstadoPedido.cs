@@ -19,8 +19,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int EstadoSalidaId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [StringLength(10)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_ESTADO_PEDIDO, MinimumLength = Constantes.LONG_MIN_NOMBRE_ESTADO_PEDIDO)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
