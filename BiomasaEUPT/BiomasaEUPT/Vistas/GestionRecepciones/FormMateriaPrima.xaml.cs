@@ -44,6 +44,38 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             this.context = context;
         }
 
+        public FormMateriaPrima(BiomasaEUPTContext context, MateriaPrima materiaPrima) : this(context)
+        {
+            gbTitulo.Header = "Editar Materia Prima";
+
+            cbGruposMateriasPrimas.SelectedValue = materiaPrima.TipoMateriaPrima.GrupoMateriaPrima.GrupoMateriaPrimaId;
+            cbTiposMateriasPrimas.SelectedValue = materiaPrima.TipoMateriaPrima.TipoMateriaPrimaId;
+            cbProcedencias.SelectedValue = materiaPrima.Procedencia.ProcedenciaId;
+            viewModel.FechaBaja = materiaPrima.FechaBaja;
+            viewModel.HoraBaja = materiaPrima.FechaBaja;
+            viewModel.Observaciones = materiaPrima.Observaciones;
+            if (materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true)
+            {
+                viewModel.Cantidad = materiaPrima.Unidades.Value;
+            }
+            else
+            {
+                viewModel.Cantidad = materiaPrima.Volumen.Value;
+            }
+            viewModel.HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList());
+            CalcularCantidades();
+            if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.HistorialHuecoRecepcion.MateriaPrimaId == materiaPrima.MateriaPrimaId))
+            {
+
+                cbGruposMateriasPrimas.IsEnabled = false;
+                cbTiposMateriasPrimas.IsEnabled = false;
+                cbSitiosRecepciones.IsEnabled = false;
+                lbHuecosRecepciones.IsEnabled = false;
+                tbCantidad.IsEnabled = false;
+                wpHuecosRecepciones.IsEnabled = false;
+            }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             tiposMateriasPrimasViewSource = ((CollectionViewSource)(FindResource("tiposMateriasPrimasViewSource")));
@@ -146,12 +178,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             var chip = sender as Chip;
             int huecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
-            /* HuecoRecepcion huecoRecepcion = (from hr in HuecosRecepciones where hr.HuecoRecepcionId == huecoRecepcionId select hr).First();
-              HuecosRecepciones.Remove(huecoRecepcion);            
-              if (huecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)
-              {
-                  HuecosRecepcionesDisponibles.Add(huecoRecepcion);
-              }*/
             HistorialHuecoRecepcion historialHuecoRecepcion = (from hhr in viewModel.HistorialHuecosRecepciones where hhr.HuecoRecepcion.HuecoRecepcionId == huecoRecepcionId select hhr).First();
             viewModel.HistorialHuecosRecepciones.Remove(historialHuecoRecepcion);
             if (historialHuecoRecepcion.HuecoRecepcion.SitioId == (cbSitiosRecepciones.SelectedItem as SitioRecepcion).SitioRecepcionId)

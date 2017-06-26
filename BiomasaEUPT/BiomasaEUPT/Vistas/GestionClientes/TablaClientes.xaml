@@ -68,7 +68,7 @@
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <validadores:ClienteValidationRule ValidationStep="UpdatedValue"/>
+                            <!--validadores:ClienteValidationRule ValidationStep="UpdatedValue"/-->
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>

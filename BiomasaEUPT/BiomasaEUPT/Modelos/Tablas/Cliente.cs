@@ -18,17 +18,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int ClienteId { get; set; }
 
-        [Required]
-        [MinLength(Constantes.LONG_MIN_RAZON_SOCIAL)]
-        [MaxLength(Constantes.LONG_MAX_RAZON_SOCIAL)]
+        [Required]      
         [StringLength(Constantes.LONG_MAX_RAZON_SOCIAL, MinimumLength = Constantes.LONG_MIN_RAZON_SOCIAL)]
         [Index(IsUnique = true)]
         [DisplayName("Razón social"), Display(Name = "Razón social")]
         public string RazonSocial { get; set; }
 
-        [Required]
-        [MinLength(Constantes.LONG_MIN_NIF)]
-        [MaxLength(Constantes.LONG_MAX_NIF)]
+        [Required]        
         [StringLength(Constantes.LONG_MAX_NIF, MinimumLength = Constantes.LONG_MIN_NIF)]
         [Index(IsUnique = true)]
         [DisplayName("NIF"), Display(Name = "NIF")]

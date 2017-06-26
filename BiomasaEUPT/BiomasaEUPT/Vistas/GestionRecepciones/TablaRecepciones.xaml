@@ -56,10 +56,10 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bPdfRecepcion" Padding="0" BorderThickness="0" Height="25" Width="25"
+                                        <Button x:Name="bPdfRecepcion" Padding="0" BorderThickness="0" Height="17" Width="17"
                                                 Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
                                                 ToolTip="Generar informe en PDF" Click="bPdfRecepcion_Click">
-                                            <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>
+                                            <materialDesign:PackIcon Kind="FilePdf" Width="17" Height="17"/>
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
