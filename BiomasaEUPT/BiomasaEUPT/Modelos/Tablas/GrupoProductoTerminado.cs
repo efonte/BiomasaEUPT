@@ -23,15 +23,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int GrupoProductoTerminadoId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(25)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_GRUPO, MinimumLength = Constantes.LONG_MIN_NOMBRE_GRUPO)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
+        [StringLength(Constantes.LONG_MAX_DESCRIPCION_GRUPO, MinimumLength = Constantes.LONG_MIN_DESCRIPCION_GRUPO)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 

@@ -19,9 +19,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int PickingId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE, MinimumLength = Constantes.LONG_MIN_NOMBRE)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }

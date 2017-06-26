@@ -20,8 +20,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int TipoProductoTerminadoId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(30)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE, MinimumLength = Constantes.LONG_MIN_NOMBRE)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 

@@ -19,15 +19,14 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ProductoEnvasadoId { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE, MinimumLength = Constantes.LONG_MIN_NOMBRE)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public float? Volumen { get; set; }
 
-        [StringLength(60)]
+        [StringLength(Constantes.LONG_MAX_OBSERVACIONES, MinimumLength = Constantes.LONG_MIN_OBSERVACIONES)]
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
@@ -35,7 +34,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public DateTime? FechaBaja { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(Constantes.LONG_MAX_CODIGO, MinimumLength = Constantes.LONG_MIN_CODIGO)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
 

@@ -25,7 +25,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
-        [MaxLength(60)]
+        [StringLength(Constantes.LONG_MAX_OBSERVACIONES, MinimumLength = Constantes.LONG_MIN_OBSERVACIONES)]
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
@@ -39,7 +39,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ProcedenciaId { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [StringLength(10)]
+        [StringLength(Constantes.LONG_MAX_CODIGO, MinimumLength = Constantes.LONG_MIN_CODIGO)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
 

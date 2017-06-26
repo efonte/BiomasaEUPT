@@ -38,36 +38,45 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private CollectionViewSource sitiosAlmacenajesViewSource;
         private CollectionViewSource huecosAlmacenajesViewSource;
         public TipoProductoTerminado TipoProductoTerminado { get; set; }
-        public ObservableCollection<HuecoAlmacenaje> HuecosAlmacenajesDisponibles { get; set; }
-        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
-        public ObservableCollection<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
-        public ObservableCollection<ProductoTerminadoComposicion> ProductosTerminadosComposiciones { get; set; }
+        private FormProductoTerminadoViewModel viewModel;
 
-        public DateTime? FechaBaja { get; set; }
-        public DateTime? HoraBaja { get; set; }
-        public String Observaciones { get; set; }
-        public int Unidades { get; set; }
-        public double Volumen { get; set; }
         private BiomasaEUPTContext context;
 
 
         public FormProductoTerminado(BiomasaEUPTContext context)
         {
             InitializeComponent();
-            DataContext = this;
+            viewModel = new FormProductoTerminadoViewModel();
+            DataContext = viewModel;
             this.context = context;
-            Observaciones = this.Observaciones;
-            this.context = context;
-            HuecosAlmacenajesDisponibles = new ObservableCollection<HuecoAlmacenaje>();
-            HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>();
-            HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>();
-            ProductosTerminadosComposiciones = new ObservableCollection<ProductoTerminadoComposicion>();
 
         }
 
-        public FormProductoTerminado(BiomasaEUPTContext context, string _titulo) : this(context)
+        public FormProductoTerminado(BiomasaEUPTContext context, ProductoTerminado productoTerminado) : this(context)
         {
-            gbTitulo.Header = _titulo;
+            gbTitulo.Header = "Editar ProductoTerminado";
+
+            cbGruposProductosTerminados.SelectedValue = productoTerminado.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId;
+            cbTiposProductosTerminados.SelectedValue = productoTerminado.TipoProductoTerminado.TipoProductoTerminadoId;
+            //cbGruposMateriasPrimas.SelectedValue = productoTerminado.TipoMateriaPrima.GrupoMateriaPrima.GrupoMateriaPrimaId;
+            //cbTiposMateriasPrimas.SelectedValue = productoTerminado.TipoMateriaPrima.TipoMateriaPrimaId;
+
+            viewModel.FechaBaja = productoTerminado.FechaBaja;
+            viewModel.HoraBaja = productoTerminado.FechaBaja;
+            viewModel.Observaciones = productoTerminado.Observaciones;
+            
+            viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoTerminadoId == productoTerminado.ProductoTerminadoId).ToList());
+            CalcularCantidades();
+            if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.ProductoTerminado.ProductoTerminadoId == productoTerminado.ProductoTerminadoId))
+            {
+
+                cbGruposMateriasPrimas.IsEnabled = false;
+                cbTiposMateriasPrimas.IsEnabled = false;
+                cbSitiosAlmacenajes.IsEnabled = false;
+                lbHuecosAlmacenajes.IsEnabled = false;
+                //tbCantidad.IsEnabled = false;
+                wpHuecosAlmacenajes.IsEnabled = false;
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -110,15 +119,29 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList();
         }
 
+        private void cbTiposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
+            {
+                viewModel.CantidadHint = "Cantidad (ud.)";
+                viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
+                viewModel.Volumen = null;
+            }
+            else
+            {
+                viewModel.CantidadHint = "Cantidad (m³)";
+                viewModel.Volumen = viewModel.Cantidad;
+                viewModel.Unidades = null;
+            }
+            CalcularCantidades();
+        }
+
         private void cbSitiosAlmacenajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            HuecosAlmacenajesDisponibles.Clear();
+            viewModel.HuecosAlmacenajesDisponibles = new ObservableCollection<HuecoAlmacenaje>(context.HuecosAlmacenajes.Where(ha => ha.SitioId == ((SitioAlmacenaje)cbSitiosAlmacenajes.SelectedItem).SitioAlmacenajeId && !ha.Ocupado.Value).ToList());
 
-
-            // Se añaden todos los HuecosAlmacenajes del SitioAlmacenaje seleccionado
-            context.HuecosAlmacenajes.Where(ha => ha.SitioId == ((SitioAlmacenaje)cbSitiosAlmacenajes.SelectedItem).SitioAlmacenajeId && !ha.Ocupado.Value).ToList().ForEach(HuecosAlmacenajesDisponibles.Add);
-            // Se borran los HuecosAlmacenajes que ya se han añadido
-            HistorialHuecosAlmacenajes.ToList().ForEach(hha => HuecosAlmacenajesDisponibles.Remove(hha.HuecoAlmacenaje));
+            // Se borran los HuecosAlmacenajes que ya se han añadido (convertidos en HuecosAlmacenajes)
+            viewModel.HistorialHuecosAlmacenajes.ToList().ForEach(hha => viewModel.HuecosAlmacenajesDisponibles.Remove(hha.HuecoAlmacenaje));
         }
 
         private void lbHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -166,27 +189,42 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             var huecoAlmacenaje = e.Data.GetData("HuecoAlmacenaje") as HuecoAlmacenaje;
             var historialHuecoAlmacenaje = new HistorialHuecoAlmacenaje() { HuecoAlmacenaje = huecoAlmacenaje };
-            HistorialHuecosAlmacenajes.Add(historialHuecoAlmacenaje);
-            HuecosAlmacenajesDisponibles.Remove(huecoAlmacenaje);
-            CalcularUnidadesVolumen();
+            viewModel.HistorialHuecosAlmacenajes.Add(historialHuecoAlmacenaje);
+            viewModel.HuecosAlmacenajesDisponibles.Remove(huecoAlmacenaje);
+            CalcularCantidades();
         }
 
         private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
         {
             var chip = sender as Chip;
             int huecoAlmacenajeId = int.Parse(chip.CommandParameter.ToString());
-
-            HistorialHuecoAlmacenaje historialHuecoAlmacenaje = (from hha in HistorialHuecosAlmacenajes where hha.HuecoAlmacenaje.HuecoAlmacenajeId == huecoAlmacenajeId select hha).First();
-            HistorialHuecosAlmacenajes.Remove(historialHuecoAlmacenaje);
+            HistorialHuecoAlmacenaje historialHuecoAlmacenaje = (from hha in viewModel.HistorialHuecosAlmacenajes where hha.HuecoAlmacenaje.HuecoAlmacenajeId == huecoAlmacenajeId select hha).First();
+            viewModel.HistorialHuecosAlmacenajes.Remove(historialHuecoAlmacenaje);
             if (historialHuecoAlmacenaje.HuecoAlmacenaje.SitioId == (cbSitiosAlmacenajes.SelectedItem as SitioAlmacenaje).SitioAlmacenajeId)
             {
-                HuecosAlmacenajesDisponibles.Add(historialHuecoAlmacenaje.HuecoAlmacenaje);
+                viewModel.HuecosAlmacenajesDisponibles.Add(historialHuecoAlmacenaje.HuecoAlmacenaje);
             }
-            CalcularUnidadesVolumen();
+            CalcularCantidades();
 
         }
 
-        private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (viewModel.TipoMateriaPrima != null)
+            {
+                if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
+                {
+                    viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
+                }
+                else
+                {
+                    viewModel.Volumen = viewModel.Cantidad;
+                }
+            }
+            CalcularCantidades();
+        }
+
+        /*private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
         {
             CalcularUnidadesVolumen();
         }
@@ -236,6 +274,47 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             var nuevosHistorialesHuecosAlmacenajes = HistorialHuecosAlmacenajes.ToList();
             HistorialHuecosAlmacenajes.Clear();
             nuevosHistorialesHuecosAlmacenajes.ForEach(HistorialHuecosAlmacenajes.Add);
+        }*/
+
+        private void CalcularCantidades()
+        {
+            if (viewModel.TipoMateriaPrima != null && viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
+            {
+                var unidadesRestantes = viewModel.Unidades;
+                foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
+                {
+                    if (hha.HuecoAlmacenaje.UnidadesTotales <= unidadesRestantes)
+                    {
+                        unidadesRestantes -= hha.HuecoAlmacenaje.UnidadesTotales;
+                        hha.Unidades = hha.HuecoAlmacenaje.UnidadesTotales;
+                    }
+                    else
+                    {
+                        hha.Unidades = unidadesRestantes;
+                        unidadesRestantes = 0;
+                    }
+                }
+                viewModel.QuedaCantidadPorAlmacenar = unidadesRestantes > 0 || viewModel.Cantidad == 0;
+            }
+            else
+            {
+                var volumenRestante = viewModel.Volumen;
+                foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
+                {
+                    if (hha.HuecoAlmacenaje.VolumenTotal <= volumenRestante)
+                    {
+                        volumenRestante -= hha.HuecoAlmacenaje.VolumenTotal;
+                        hha.Volumen = hha.HuecoAlmacenaje.VolumenTotal;
+                    }
+                    else
+                    {
+                        hha.Volumen = volumenRestante;
+                        volumenRestante = 0;
+                    }
+                }
+                viewModel.QuedaCantidadPorAlmacenar = volumenRestante > 0 || viewModel.Cantidad == 0;
+            }
+            viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(viewModel.HistorialHuecosAlmacenajes.ToList());
         }
 
         private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -45,6 +45,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowElaboraciones_DoubleClick)));
             ucTablaElaboraciones.dgElaboraciones.RowStyle = rowStyle;
             ucTablaElaboraciones.dgElaboraciones.SelectedIndex = -1;
+
+            // Hacer doble clic en una fila del datagrid de materias primas hará que se ejecuta el evento RowMateriasPrimas_DoubleClick
+            Style rowStyleProductosTerminados = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
+            rowStyleProductosTerminados.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowProductosTerminados_DoubleClick)));
+            ucTablaProductosTerminados.dgProductosTerminados.RowStyle = rowStyleProductosTerminados;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -87,7 +92,6 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             {
                 context.OrdenesElaboraciones.Add(new OrdenElaboracion()
                 {
-                    FechaElaboracion = new DateTime(formElaboracion.Fecha.Year, formElaboracion.Fecha.Month, formElaboracion.Fecha.Day, formElaboracion.Hora.Hour, formElaboracion.Hora.Minute, formElaboracion.Hora.Second),
                     EstadoElaboracionId = 1,
                     Descripcion = formElaboracion.Descripcion,
                     //EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
@@ -103,21 +107,46 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
             if ((bool)await DialogHost.Show(formProductoTerminado, "RootDialog"))
             {
+                var formProductoTerminadoDataContext = formProductoTerminado.DataContext as FormProductoTerminadoViewModel;
                 var productoTerminado = new ProductoTerminado()
                 {
-                    TipoId = (formProductoTerminado.cbTiposProductosTerminados.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId,
-                    Volumen = formProductoTerminado.Volumen,
-                    Unidades = formProductoTerminado.Unidades,
-                    Observaciones = formProductoTerminado.Observaciones,
+                    OrdenId = (ucTablaElaboraciones.dgElaboraciones.SelectedItem as OrdenElaboracion).OrdenElaboracionId,
+                    TipoId = (formProductoTerminado.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId,
+                    Volumen = formProductoTerminadoDataContext.Volumen,
+                    Unidades = formProductoTerminadoDataContext.Unidades,
+                    Observaciones = formProductoTerminadoDataContext.Observaciones
+
 
                 };
-                if (formProductoTerminado.FechaBaja != null)
-                    productoTerminado.FechaBaja = new DateTime(formProductoTerminado.FechaBaja.Value.Year, formProductoTerminado.FechaBaja.Value.Month, formProductoTerminado.FechaBaja.Value.Day, formProductoTerminado.HoraBaja.Value.Hour, formProductoTerminado.HoraBaja.Value.Minute, formProductoTerminado.HoraBaja.Value.Second);
 
+                if (formProductoTerminadoDataContext.FechaBaja != null)
+                {
+                    productoTerminado.FechaBaja = new DateTime(
+                        formProductoTerminadoDataContext.FechaBaja.Value.Year,
+                        formProductoTerminadoDataContext.FechaBaja.Value.Month,
+                        formProductoTerminadoDataContext.FechaBaja.Value.Day,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Hour,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Minute,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Second);
+                }
                 context.ProductosTerminados.Add(productoTerminado);
+                var huecosProductosTerminados = new List<HistorialHuecoAlmacenaje>();
+                foreach (var hpt in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+                {
+                    var haId = hpt.HuecoAlmacenaje.HuecoAlmacenajeId;
+                    // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                    if (hpt.Unidades != 0 && hpt.Volumen != 0)
+                    {
+                        hpt.HuecoAlmacenaje = null;
+                        hpt.HuecoAlmacenajeId = haId;
+                        hpt.ProductoTerminado = productoTerminado;
+                        huecosProductosTerminados.Add(hpt);
+                    }
+                }
+                context.HistorialHuecosAlmacenajes.AddRange(huecosProductosTerminados);
                 context.SaveChanges();
-                //CollectionViewSource.GetDefaultView(ucTablaMateriasPrimas.dgMateriasPrimas.ItemsSource).Refresh();
-                ucTablaProductosTerminados.dgProductosTerminados.Items.Refresh();
+
+                CargarProductosTerminados();
             }
         }
 
@@ -280,27 +309,86 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             var elaboracionSeleccionada = ucTablaElaboraciones.dgElaboraciones.SelectedItem as OrdenElaboracion;
             var formElaboracion = new FormElaboracion(context, "Editar Elaboración")
             {
-                Fecha = elaboracionSeleccionada.FechaElaboracion.Value,
-                Hora = elaboracionSeleccionada.FechaElaboracion.Value,
                 Descripcion = elaboracionSeleccionada.Descripcion
             };
             formElaboracion.cbEstadoElaboracion.Visibility = Visibility.Visible;
-            formElaboracion.Fecha = elaboracionSeleccionada.FechaElaboracion.Value;
-            formElaboracion.Hora = elaboracionSeleccionada.FechaElaboracion.Value;
             formElaboracion.cbEstadoElaboracion.SelectedValue = elaboracionSeleccionada.EstadoElaboracion.EstadoElaboracionId;
             if ((bool)await DialogHost.Show(formElaboracion, "RootDialog"))
             {
-                elaboracionSeleccionada.FechaElaboracion = new DateTime(formElaboracion.Fecha.Year, formElaboracion.Fecha.Month, formElaboracion.Fecha.Day, formElaboracion.Hora.Hour, formElaboracion.Hora.Minute, formElaboracion.Hora.Second);
                 elaboracionSeleccionada.EstadoElaboracionId = (formElaboracion.cbEstadoElaboracion.SelectedItem as EstadoElaboracion).EstadoElaboracionId;
                 ordenesElaboracionesViewSource.View.Refresh();
                 context.SaveChanges();
-                /* using (var context = new BiomasaEUPTContext())
-                 {
-                     var recepcion = context.Recepciones.Single(tc => tc.NumeroAlbaran == albaranViejo);
-                     recepcion.NumeroAlbaran = formTipo.Nombre;
-                     tipoCliente.Descripcion = formTipo.Descripcion;
-                     context.SaveChanges();
-                 }*/
+
+            }
+        }
+
+        private async void RowProductosTerminados_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var fila = sender as DataGridRow;
+            var productoTerminadoSeleccionado = ucTablaProductosTerminados.dgProductosTerminados.SelectedItem as ProductoTerminado;
+            var formProductoTerminado = new FormProductoTerminado(context, productoTerminadoSeleccionado);
+            var formProductoTerminadoDataContext = formProductoTerminado.DataContext as FormProductoTerminadoViewModel;
+            var historialHuecosAlmacenajesIniciales = formProductoTerminadoDataContext.HistorialHuecosAlmacenajes.ToList();
+            if ((bool)await DialogHost.Show(formProductoTerminado, "RootDialog"))
+            {
+                productoTerminadoSeleccionado.OrdenId = productoTerminadoSeleccionado.OrdenElaboracion.OrdenElaboracionId;
+                productoTerminadoSeleccionado.TipoId = productoTerminadoSeleccionado.TipoProductoTerminado.TipoProductoTerminadoId;
+                productoTerminadoSeleccionado.Unidades = formProductoTerminadoDataContext.Unidades;
+                productoTerminadoSeleccionado.Volumen = formProductoTerminadoDataContext.Volumen;
+                productoTerminadoSeleccionado.Observaciones = formProductoTerminadoDataContext.Observaciones;
+                if (formProductoTerminadoDataContext.FechaBaja != null)
+                {
+                    productoTerminadoSeleccionado.FechaBaja = new DateTime(
+                        formProductoTerminadoDataContext.FechaBaja.Value.Year,
+                        formProductoTerminadoDataContext.FechaBaja.Value.Month,
+                        formProductoTerminadoDataContext.FechaBaja.Value.Day,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Hour,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Minute,
+                        formProductoTerminadoDataContext.HoraBaja.Value.Second);
+                }
+                else
+                {
+                    productoTerminadoSeleccionado.FechaBaja = null;
+                }
+                if (!context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoId == productoTerminadoSeleccionado.ProductoTerminadoId))
+                {
+                    // Se borran todos los historiales huecos almacenajes antiguos y se añaden los nuevos
+                    context.HistorialHuecosAlmacenajes.RemoveRange(historialHuecosAlmacenajesIniciales);
+                    var huecosProductosTerminados = new List<HistorialHuecoAlmacenaje>();
+                    foreach (var hha in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+                    {
+                        var haId = hha.HuecoAlmacenaje.HuecoAlmacenajeId;
+                        // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                        if (hha.Unidades != 0 && hha.Volumen != 0)
+                        {
+                            hha.HuecoAlmacenaje = null;
+                            hha.HuecoAlmacenajeId = haId;
+                            hha.ProductoTerminado = productoTerminadoSeleccionado;
+                            huecosProductosTerminados.Add(hha);
+                        }
+                    }
+                    context.HistorialHuecosAlmacenajes.AddRange(huecosProductosTerminados);
+                }
+
+                context.SaveChanges();
+                productosTerminadosViewSource.View.Refresh();
+
+                CargarProductosTerminados();
+            }
+        }
+
+        private void CargarProductosTerminados()
+        {
+            var elaboracion = ucTablaElaboraciones.dgElaboraciones.SelectedItem as OrdenElaboracion;
+            if (elaboracion != null)
+            {
+                ucTablaProductosTerminados.bAnadirProductoTerminado.IsEnabled = elaboracion.EstadoElaboracionId == 1;
+                productosTerminadosViewSource.Source = context.ProductosTerminados.Where(pt => pt.OrdenId == elaboracion.OrdenElaboracionId).ToList();
+            }
+            else
+            {
+                ucTablaProductosTerminados.bAnadirProductoTerminado.IsEnabled = false;
+                productosTerminadosViewSource.Source = null;
             }
         }
 

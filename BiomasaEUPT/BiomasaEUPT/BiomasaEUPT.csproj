@@ -251,6 +251,7 @@
     <Compile Include="Vistas\GestionElaboraciones\FormProductoTerminado.xaml.cs">
       <DependentUpon>FormProductoTerminado.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\FormProductoTerminadoViewModel.cs" />
     <Compile Include="Vistas\GestionElaboraciones\TabElaboraciones.xaml.cs">
       <DependentUpon>TabElaboraciones.xaml</DependentUpon>
     </Compile>

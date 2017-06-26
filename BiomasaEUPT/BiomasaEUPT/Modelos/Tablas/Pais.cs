@@ -19,15 +19,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int PaisId { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(2)]
+        [StringLength(Constantes.LONG_MAX_CODIGO_PAIS, MinimumLength = Constantes.LONG_MIN_CODIGO_PAIS)]
         [Index(IsUnique = true)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(20)]
+        [StringLength(Constantes.LONG_MAX_NOMBRE_PAIS, MinimumLength = Constantes.LONG_MIN_NOMBRE_PAIS)]
         [Index(IsUnique = true)]
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
