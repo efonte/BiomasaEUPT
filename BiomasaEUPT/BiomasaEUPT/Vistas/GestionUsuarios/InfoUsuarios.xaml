@@ -8,9 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="200">
     <Grid>
-        <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Total Usuarios">        
+        <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Total Usuarios">
 
-            <Grid>
+            <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="9*" />
                     <ColumnDefinition Width="1*" />

@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="300" Width="350" Loaded="UserControl_Loaded">
+             Height="300" Width="320" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,23 +32,23 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="40">
+                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}">
                     <TextBox.Text>
                         <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE_USUARIO}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="nombre" ExpReg="{x:Static const:Constantes.REGEX_NOMBRE_USUARIO}" MensajeFormato="sólo letras minúsculas" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="nombre" ExpReg="{x:Static const:Constantes.REGEX_NOMBRE_USUARIO}" MensajeFormato="(sólo letras minúsculas)" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vNombreUnico" Online="True" Tipo="Usuario" Atributo="Nombre" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email" MaxLength="254">
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email" MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
                     <TextBox.Text>
                         <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -74,7 +74,7 @@
 
                 <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbBaneado" Content="Baneado" IsChecked="{Binding Baneado}"/>
 
-                <PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*"
+                <PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Contraseña" domain:PasswordHelper.Attach="True">
                     <domain:PasswordHelper.Password>
                         <Binding Path="Contrasena" UpdateSourceTrigger="PropertyChanged">
@@ -93,7 +93,7 @@
                     </domain:PasswordHelper.Password>
                 </PasswordBox>
 
-                <PasswordBox Grid.Row="2" Grid.Column="1" Name="pbContrasenaConfirmacion" PasswordChar="*"
+                <PasswordBox Grid.Row="2" Grid.Column="1" Name="pbContrasenaConfirmacion" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Confirmar Contraseña" domain:PasswordHelper.Attach="True">
                     <domain:PasswordHelper.Password>
                         <Binding Path="ContrasenaConfirmacion" UpdateSourceTrigger="PropertyChanged">

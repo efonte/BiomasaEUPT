@@ -9,7 +9,14 @@
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         mc:Ignorable="d"
         Title="Ajustes" Height="350" Width="550" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <DockPanel>
         <!-- Pestañas -->
         <dockablz:Layout>

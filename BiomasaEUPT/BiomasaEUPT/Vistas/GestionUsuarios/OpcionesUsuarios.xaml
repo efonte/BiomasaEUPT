@@ -8,13 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="220" d:DesignWidth="190" Loaded="UserControl_Loaded">
     <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0,0,0,0" materialDesign:ColorZoneAssist.Mode="PrimaryMid" FontSize="20" >
-            <GroupBox.Header>
-                <TextBlock Text="Opciones" FontFamily="Roboto" HorizontalAlignment="Center" Foreground="White"/>
-            </GroupBox.Header>
+        <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Opciones" >
 
             <StackPanel VerticalAlignment="Bottom">
-                <!--Button x:Name="bBorrarUsuarios" Margin="0 10 0 10" Content="Borrar usuarios" Command="{Binding Path=BorrarUsuariosComando}" Click="bBorrarUsuarios_Click" /-->
                 <Button x:Name="bAnadir" Margin="0 10 0 0" Content="Añadir" />
                 <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}" >
                     <!--Button.Style>

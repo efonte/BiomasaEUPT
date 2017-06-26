@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.Ajustes"
              mc:Ignorable="d"
              FontFamily="Roboto"
-             FontWeight="Medium">
+             FontWeight="Medium"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}">
     <UserControl.Resources>
         <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource MaterialDesignSeparator}">
         </Style>

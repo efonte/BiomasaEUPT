@@ -139,6 +139,77 @@
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
+                            <TextBlock Text="Huecos recepciones" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <WrapPanel x:Name="wpHuecosRecepciones" Margin="15 25 0 0"
+                                   Orientation="Horizontal" MinHeight="40" Width="150">
+                            <ItemsControl ItemsSource="{Binding HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
+                                <ItemsControl.Style>
+                                    <Style TargetType="ItemsControl">
+                                        <Style.Triggers>
+                                            <Trigger Property="HasItems" Value="false">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBlock FontSize="14" Text="S/D"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Chip Margin="5">
+                                            <materialDesign:Chip.Content>
+                                                <TextBlock FontSize="14" FontStyle="Italic">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                        <Binding Path="Volumen" />
+                                                                        <Binding Path="HuecoRecepcion.VolumenTotal" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding MateriaPrima.TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                                <Binding Path="Unidades" />
+                                                                                <Binding Path="HuecoRecepcion.UnidadesTotales" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </materialDesign:Chip.Content>
+                                            <materialDesign:Chip.Icon>
+                                                <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre}"></TextBlock>
+                                            </materialDesign:Chip.Icon>
+                                        </materialDesign:Chip>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </Expander>
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
                             <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
                                 <TextBlock.LayoutTransform>
                                     <RotateTransform Angle="90" />

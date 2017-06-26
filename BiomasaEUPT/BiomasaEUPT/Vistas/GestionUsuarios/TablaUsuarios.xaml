@@ -57,13 +57,13 @@
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
-                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE_USUARIO}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="{x:Static const:Constantes.REGEX_NOMBRE_USUARIO}" NombreCampo="nombre" MensajeFormato="sólo letras minúsculas" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="{x:Static const:Constantes.REGEX_NOMBRE_USUARIO}" NombreCampo="nombre" MensajeFormato="(sólo letras minúsculas)" ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
@@ -96,15 +96,14 @@
                             </DataGridTemplateColumn>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
-                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                    MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="email" Min="{x:Static const:Constantes.LONG_MIN_EMAIL}" Max="{x:Static const:Constantes.LONG_MAX_EMAIL}" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="{x:Static const:Constantes.REGEX_EMAIL}" ValidatesOnTargetUpdated="True" />
-                                            <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="email"/>
+                                            <validadores:RegexValidationRule NombreCampo="email" ExpReg="{x:Static const:Constantes.REGEX_EMAIL}" ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
