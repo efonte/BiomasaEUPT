@@ -83,7 +83,6 @@
                          materialDesign:HintAssist.Hint="Contraseña"
                          domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          PasswordChanged="pbContrasena_PasswordChanged">
-
             </PasswordBox>
             <CheckBox x:Name="cbRecordarme" Grid.Row="3" Grid.Column="1" Content="Recordar contraseña" HorizontalAlignment="Right" Margin="0 20 0 20" />
 

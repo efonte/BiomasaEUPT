@@ -42,6 +42,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             DataContext = this;
             ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
             ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
+            ucOpcionesUsuarios.bAnadir.Click += BAnadirUsuario_Click;
+            ucTablaUsuarios.bAnadirUsuario.Click += BAnadirUsuario_Click;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -55,8 +57,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 context.TiposUsuarios.Load();
                 usuariosViewSource.Source = context.Usuarios.Local;
                 tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
-                //var result = from u in context.usuarios select u;
-                //ucTablaUsuarios.dgUsuarios.ItemsSource = result.ToList();
                 ActualizarContador();
             }
         }
@@ -110,6 +110,23 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         }
 
+
+        private async void BAnadirUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            var formUsuario = new FormUsuario();
+
+            if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
+            {
+                context.Usuarios.Add(new Usuario()
+                {
+                    Nombre = formUsuario.tbNombre.Text,
+                    Email = formUsuario.tbEmail.Text,
+                    //Contrasena = formUsuario.
+                    Baneado = formUsuario.cbBaneado.IsChecked
+                });
+                //context.SaveChanges();
+            }
+        }
         public void FiltrarTabla()
         {
             usuariosViewSource.Filter += new FilterEventHandler(FiltroTabla);

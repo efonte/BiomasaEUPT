@@ -16,8 +16,7 @@
         <ResourceDictionary>
             <CollectionViewSource x:Key="productosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminado}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoTerminado}, CreateList=True}"/>
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <domain:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -84,7 +83,8 @@
 
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="Fecha Baja" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
+                                                                                Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código" Width="SizeToHeader"
                                                                        Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
@@ -120,28 +120,10 @@
                                 </TextBlock.LayoutTransform>
                             </TextBlock>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                                          HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
-                                <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
-                                    <materialDesign:PackIcon.RenderTransform>
-                                        <RotateTransform Angle="45" />
-                                    </materialDesign:PackIcon.RenderTransform>
-                                </materialDesign:PackIcon>
-                                <materialDesign:ToggleButtonAssist.OnContent>
-                                    <materialDesign:PackIcon Kind="Pin"/>
-                                </materialDesign:ToggleButtonAssist.OnContent>
-                            </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
-                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
-                                       MaxHeight="350" TextWrapping="Wrap"/>
-                            <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
-                                     Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                     FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                                     MaxHeight="350" TextWrapping="Wrap"/>
 
-                        </StackPanel>
+                        <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                                   FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource MaterialDesignBody}"/>
                     </Expander>
                 </StackPanel>
 

@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="ordenesElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenElaboracion}, CreateList=True}"/>
+            <domain:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -38,8 +39,9 @@
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha elaboración" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding FechaElaboracion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha Elaboración" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding FechaElaboracion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
+                                                                                 Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding EstadoElaboracion.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
@@ -73,10 +75,8 @@
                         </Expander.Header>
 
                         <TextBlock x:Name="tbDescripcion" Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
-                                       FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
+                                   FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
                                    Foreground="{DynamicResource MaterialDesignBody}"/>
-
-
                     </Expander>
                 </StackPanel>
 

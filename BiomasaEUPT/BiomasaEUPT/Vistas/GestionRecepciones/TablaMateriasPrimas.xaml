@@ -19,8 +19,7 @@
             <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoMateriaPrima}, CreateList=True}"/>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <domain:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -89,7 +88,8 @@
                                                                        Binding="{Binding Procedencia.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
+                                                                                Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

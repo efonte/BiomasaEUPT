@@ -18,4 +18,14 @@
         <Setter Property="Margin" Value="10 18 10 10" />
         <Setter Property="FontSize" Value="15" />
     </Style>
+
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
 </ResourceDictionary>

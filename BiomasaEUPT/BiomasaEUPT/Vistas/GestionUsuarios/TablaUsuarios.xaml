@@ -9,7 +9,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Usuario}, CreateList=True}"/>
         <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoUsuario}, CreateList=True}"/>
@@ -22,82 +22,84 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid Grid.Row="0" x:Name="dgUsuarios" DataContext="{StaticResource usuariosViewSource}"
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgUsuarios" DataContext="{StaticResource usuariosViewSource}"
                           RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}"
                           EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All">
-                    <DataGrid.RowValidationErrorTemplate>
-                        <ControlTemplate>
-                            <Grid Margin="2,-2"
+                        <DataGrid.RowValidationErrorTemplate>
+                            <ControlTemplate>
+                                <Grid Margin="2,-2"
                                       ToolTip="{Binding RelativeSource={RelativeSource
                                       FindAncestor, AncestorType={x:Type DataGridRow}},
                                       Path=(Validation.Errors)[0].ErrorContent}">
-                                <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
-                                <TextBlock Text="!" FontSize="18" 
+                                    <Ellipse StrokeThickness="0" Fill="Red" Width="20" Height="20"/>
+                                    <TextBlock Text="!" FontSize="18" 
                                                FontWeight="Bold" Foreground="White" 
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                            <!--Label Foreground="Red"
+                                </Grid>
+                                <!--Label Foreground="Red"
                                        ToolTip="{Binding RelativeSource={RelativeSource
                                       FindAncestor, AncestorType={x:Type DataGridRow}},
                                       Path=(Validation.Errors)[0].ErrorContent}">
                                     <materialDesign:PackIcon Kind="Exclamation" Height="21" Width="21" />
                                 </-->
-                        </ControlTemplate>
-                    </DataGrid.RowValidationErrorTemplate>
+                            </ControlTemplate>
+                        </DataGrid.RowValidationErrorTemplate>
 
-                    <DataGrid.RowValidationRules>
-                        <validadores:UsuarioValidationRule ValidationStep="UpdatedValue"/>
-                    </DataGrid.RowValidationRules>
+                        <DataGrid.RowValidationRules>
+                            <!--validadores:UsuarioValidationRule ValidationStep="UpdatedValue"/-->
+                        </DataGrid.RowValidationRules>
 
-                    <DataGrid.Columns>
-                        <!--materialDesign:MaterialDataGridTextColumn x:Name="id_usuarioColumn" Width="SizeToHeader" IsReadOnly="True" Header="id usuario" Binding="{Binding id_usuario}"/-->
-                        <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
-                                                                   Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}" MaxLength="10">
-                            <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                <Binding Path="nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
-                                        <validadores:LongitudValidationRule NombreCampo="nombre" Min="4" Max="10" ValidatesOnTargetUpdated="True" />
-                                        <validadores:RegexValidationRule ExpReg="^[a-z]*$" Mensaje="El campo nombre sólo acepta letras minúsculas." ValidatesOnTargetUpdated="True" />
-                                        <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="nombre"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </materialDesign:MaterialDataGridTextColumn.Binding-->
-                        </materialDesign:MaterialDataGridTextColumn>
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
+                                                                   EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="10">
+                                <materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="nombre" Min="4" Max="10" ValidatesOnTargetUpdated="True" />
+                                            <validadores:RegexValidationRule ExpReg="^[a-z]*$" NombreCampo="nombre" MensajeFormato="sólo letras minúsculas" ValidatesOnTargetUpdated="True" />
+                                            <validadores:UnicoValidationRule Coleccion="{StaticResource usuariosViewSource}" Tipo="usuarios" Atributo="nombre"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </materialDesign:MaterialDataGridTextColumn.Binding>
+                            </materialDesign:MaterialDataGridTextColumn>
 
+                            <DataGridTemplateColumn Header="Contraseña">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Setters>
+                                                        <Setter Property="Text" Value="●●●●●●" />
+                                                    </Style.Setters>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Nombre}" Value="{x:Null}">
+                                                            <Setter Property="Text" Value="" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <PasswordBox Name="pbContrasena" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Contraseña">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Setters>
-                                                    <Setter Property="Text" Value="●●●●●●" />
-                                                </Style.Setters>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Nombre}" Value="{x:Null}">
-                                                        <Setter Property="Text" Value="" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <PasswordBox Name="pbContrasena" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-
-                        <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
                                                                    Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                    EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                    MaxLength="254">
-                            <!--materialDesign:MaterialDataGridTextColumn.Binding>
+                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                 <Binding Path="email" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
@@ -107,25 +109,25 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </materialDesign:MaterialDataGridTextColumn.Binding-->
-                        </materialDesign:MaterialDataGridTextColumn>
-                        <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
-                        <DataGridComboBoxColumn x:Name="tipos_usuariosColumna" Header="Tipo"
+                            </materialDesign:MaterialDataGridTextColumn>
+                            <!--DataGridTextColumn x:Name="tipo_idColumn" Width="SizeToHeader" Header="tipo id" Binding="{Binding tipo_id}"/-->
+                            <DataGridComboBoxColumn x:Name="tipos_usuariosColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
                                                 SelectedValuePath="TipoUsuarioId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
 
-                        <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
+                            <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
                                                 ElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                                 EditingElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                            <!--DataGridCheckBoxColumn.CellStyle>
+                                <!--DataGridCheckBoxColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="ToolTip" Value="{Binding fecha_baja, ConverterCulture=es-ES}" />
                                 </Style>
                             </DataGridCheckBoxColumn.CellStyle-->
-                        </DataGridCheckBoxColumn>
+                            </DataGridCheckBoxColumn>
 
-                        <!--materialDesign:MaterialDataGridComboBoxColumn x:Name="tipoColumn" Header="Tipo"
+                            <!--materialDesign:MaterialDataGridComboBoxColumn x:Name="tipoColumn" Header="Tipo"
                     ItemsSource="{Binding Source={StaticResource tipos_usuariosViewSource}}" SelectedValuePath="id_tipo_usuario" 
                     DisplayMemberPath="nombre" SelectedValueBinding="{Binding tipo_id}"/>
                 <materialDesign:MaterialDataGridComboBoxColumn Header="Tipo" 
@@ -155,7 +157,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn-->
 
-                        <!--DataGridTemplateColumn x:Name="fecha_altaColumn" Width="SizeToHeader" Header="fecha alta">
+                            <!--DataGridTemplateColumn x:Name="fecha_altaColumn" Width="SizeToHeader" Header="fecha alta">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DatePicker SelectedDate="{Binding fecha_alta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -176,14 +178,72 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn-->
-                    </DataGrid.Columns>
-                </DataGrid>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar usuarios"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button ToolTip="Borrar el usuario seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
+                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />                               
+                            </Button>
 
-                <TextBox x:Name="tbBuscar" Grid.Row="1" FontFamily="Roboto" FontSize="12"
+                            <Button x:Name="bAnadirUsuario" ToolTip="Añadir usuario">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razon Social" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Email" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                    </Grid>
 
+                </materialDesign:PopupBox>
             </Grid>
 
         </GroupBox>

@@ -145,12 +145,14 @@
     <Compile Include="Clases\Trazabilidad.cs" />
     <Compile Include="Domain\BooleanConverter.cs" />
     <Compile Include="Domain\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Domain\CadenaVaciaConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\PaisISOA2Converter.cs" />
     <Compile Include="Domain\PaisISOA2NombreCompletoConverter.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
+    <Compile Include="Domain\PasswordHelper.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
@@ -230,9 +232,6 @@
     <Compile Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml.cs">
       <DependentUpon>VisorPDFCodigos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Formulario.xaml.cs">
-      <DependentUpon>Formulario.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\GestionClientes\FormCliente.xaml.cs">
       <DependentUpon>FormCliente.xaml</DependentUpon>
     </Compile>
@@ -287,6 +286,9 @@
     </Compile>
     <Compile Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml.cs">
       <DependentUpon>TrazabilidadCodigos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionUsuarios\FormUsuario.xaml.cs">
+      <DependentUpon>FormUsuario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
       <DependentUpon>InfoUsuarios.xaml</DependentUpon>
@@ -369,10 +371,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\Formulario.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Vistas\GestionClientes\FormCliente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -442,6 +440,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionUsuarios\FormUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
