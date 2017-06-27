@@ -14,7 +14,7 @@ namespace BiomasaEUPT.Modelos
 
 
         public const string REGEX_RAZON_SOCIAL = @"^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$";
-        public const string REGEX_NIF = @"^([A-Z]-\d{7})|(\d{7}-[A-Z])$";
+        public const string REGEX_NIF = @"^([A-Z]-\d{8})|(\d{8}-[A-Z])$";
         public const string REGEX_EMAIL = @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$";
         public const string REGEX_CALLE = @"^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$";
         public const string REGEX_NOMBRE_USUARIO = @"^[a-z]*$";

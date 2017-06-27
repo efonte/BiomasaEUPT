@@ -36,6 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             InitializeComponent();
             DataContext = this;
+            ucTablaClientes.dgClientes.CellEditEnding += DgClientes_CellEditEnding;
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
@@ -50,22 +51,58 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             ucTablaClientes.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
+            ucTablaClientes.bRefrescar.Click += (s, e1) => { CargarClientes(); };
+            context = new BiomasaEUPTContext();
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
+            tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
+            gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
+            CargarClientes();
+        }
+
+        public void CargarClientes()
+        {
             using (new CursorEspera())
             {
-                context = new BiomasaEUPTContext();
-                clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
-                tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
-                gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
-                context.Clientes.Load();
-                context.TiposClientes.Load();
-                context.GruposClientes.Load();
-                clientesViewSource.Source = context.Clientes.Local;
-                tiposClientesViewSource.Source = context.TiposClientes.Local;
-                gruposClientesViewSource.Source = context.GruposClientes.Local;
+                clientesViewSource.Source = context.Clientes.ToList();
+                tiposClientesViewSource.Source = context.TiposClientes.ToList();
+                gruposClientesViewSource.Source = context.GruposClientes.ToList();
+                ucTablaClientes.dgClientes.SelectedIndex = -1;
+            }
+        }
+
+        private async void DgClientes_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var cliente = e.Row.DataContext as Cliente;
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException e1)
+                {
+                    var mensajeError = "No se ha podido modificar el campo.";
+                    foreach (var entry in e1.Entries)
+                    {
+                        if (entry.Entity is Cliente)
+                        {
+                            if (entry.State == EntityState.Modified)
+                            {
+                                mensajeError = "No se ha podido modificar el cliente.\n\nAsegurese que la razón social, el NIF y el email son únicos";
+                                break;
+                            }
+                        }
+
+                    }
+                    var mensaje = new MensajeInformacion(mensajeError) { Width = 350 };
+                    var resultado = await DialogHost.Show(mensaje, "RootDialog");
+                }
             }
         }
 
@@ -77,14 +114,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             {
                 context.Clientes.Add(new Cliente()
                 {
-                    RazonSocial = formCliente.tbRazonSocial.Text,
-                    Nif = formCliente.tbNif.Text,
-                    Email = formCliente.tbEmail.Text,
-                    Calle = formCliente.tbCalle.Text,
-                    TipoCliente = formCliente.cbTiposClientes.SelectedItem as TipoCliente,
-                    GrupoCliente = formCliente.cbGruposClientes.SelectedItem as GrupoCliente,
-                    Municipio = formCliente.cbMunicipios.SelectedItem as Municipio,
-                    Observaciones = formCliente.tbObservaciones.Text
+                    RazonSocial = formCliente.RazonSocial,
+                    Nif = formCliente.Nif,
+                    Email = formCliente.Email,
+                    Calle = formCliente.Calle,
+                    TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId,
+                    GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId,
+                    MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId,
+                    Observaciones = formCliente.Observaciones
                 });
                 context.SaveChanges();
             }
@@ -93,7 +130,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         #region FiltroTabla
         public void FiltrarTabla()
         {
-            //ucTablaClientes.dgClientes.CancelEdit(DataGridEditingUnit.Row);
             clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
         }
 
@@ -140,53 +176,15 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion
 
-        #region ConfirmarCambios
-        private ICommand _confirmarCambiosComando;
-
-        public ICommand ConfirmarCambiosComando
+        private bool HayUnClienteSeleccionado()
         {
-            get
+            if (ucTablaClientes.dgClientes.SelectedIndex != -1)
             {
-                if (_confirmarCambiosComando == null)
-                {
-                    _confirmarCambiosComando = new RelayComando(
-                        param => ConfirmarCambios(),
-                        param => CanConfirmarCambios()
-                    );
-                }
-                return _confirmarCambiosComando;
+                var clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as Cliente;
+                return clienteSeleccionado != null;
             }
+            return false;
         }
-
-        private bool CanConfirmarCambios()
-        {
-            //return context != null && context.HayCambios<Cliente>();
-            return context != null && context.ChangeTracker.HasChanges();
-            // return true;
-        }
-
-        private async void ConfirmarCambios()
-        {
-            try
-            {
-                context.GuardarCambios<Cliente>();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                // Retrieve the error messages as a list of strings.
-                var errorMessages = ex.EntityValidationErrors
-                        .SelectMany(x => x.ValidationErrors)
-                        .Select(x => x.ErrorMessage);
-
-                // Join the list to a single string.
-                var fullErrorMessage = string.Join("\n", errorMessages);
-
-                await DialogHost.Show(new MensajeInformacion("No pueden guardar los cambios:\n\n" + fullErrorMessage), "RootDialog");
-            }
-            //clientesViewSource.View.Refresh();
-        }
-        #endregion
-
 
         #region Borrar
         private ICommand _borrarComando;
@@ -199,22 +197,11 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 {
                     _borrarComando = new RelayComando(
                         param => BorrarCliente(),
-                        param => CanBorrar()
+                        param => HayUnClienteSeleccionado()
                     );
                 }
                 return _borrarComando;
             }
-        }
-
-        private bool CanBorrar()
-        {
-            if (ucTablaClientes.dgClientes.SelectedIndex != -1)
-            {
-                Cliente clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as Cliente;
-                //Console.WriteLine(clienteSeleccionado.razon_social);
-                return clienteSeleccionado != null;
-            }
-            return false;
         }
 
         private async void BorrarCliente()
@@ -236,5 +223,42 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion
 
+        #region Editar
+        private ICommand _modificarComando;
+        public ICommand ModificarComando
+        {
+            get
+            {
+                if (_modificarComando == null)
+                {
+                    _modificarComando = new RelayComando(
+                        param => ModificarCliente(),
+                        param => HayUnClienteSeleccionado()
+                    );
+                }
+                return _modificarComando;
+            }
+        }
+
+        private async void ModificarCliente()
+        {
+            var clienteSeleccionado = ucTablaClientes.dgClientes.SelectedItem as Cliente;
+            var formCliente = new FormCliente(clienteSeleccionado);
+            if ((bool)await DialogHost.Show(formCliente, "RootDialog"))
+            {
+                clienteSeleccionado.RazonSocial = formCliente.RazonSocial;
+                clienteSeleccionado.Nif = formCliente.Nif;
+                clienteSeleccionado.Email = formCliente.Email;
+                clienteSeleccionado.TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId;
+                clienteSeleccionado.GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId;
+                clienteSeleccionado.MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId;
+                clienteSeleccionado.Calle = formCliente.Calle;
+                clienteSeleccionado.Observaciones = formCliente.Observaciones;
+
+                context.SaveChanges();
+                clientesViewSource.View.Refresh();
+            }
+        }
+        #endregion
     }
 }

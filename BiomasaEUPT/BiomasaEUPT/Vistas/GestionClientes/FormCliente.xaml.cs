@@ -35,8 +35,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public String RazonSocial { get; set; }
         public String Nif { get; set; }
         public String Email { get; set; }
-        public String Tipo { get; set; }
-        public String Grupo { get; set; }
         public String Calle { get; set; }
         public String Observaciones { get; set; }
 
@@ -45,10 +43,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             InitializeComponent();
             DataContext = this;
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
             context = new BiomasaEUPTContext();
             tiposClientesViewSource = ((CollectionViewSource)(FindResource("tiposClientesViewSource")));
             gruposClientesViewSource = ((CollectionViewSource)(FindResource("gruposClientesViewSource")));
@@ -56,27 +50,66 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             comunidadesViewSource = ((CollectionViewSource)(FindResource("comunidadesViewSource")));
             provinciasViewSource = ((CollectionViewSource)(FindResource("provinciasViewSource")));
             municipiosViewSource = ((CollectionViewSource)(FindResource("municipiosViewSource")));
-            context.TiposClientes.Load();
-            context.GruposClientes.Load();
-            context.Paises.Load();
-            tiposClientesViewSource.Source = context.TiposClientes.Local;
-            gruposClientesViewSource.Source = context.GruposClientes.Local;
-            paisesViewSource.Source = context.Paises.Local;
+        }
+
+        public FormCliente(Cliente cliente) : this()
+        {
+            gbTitulo.Header = "Editar Cliente";
+
+            RazonSocial = cliente.RazonSocial;
+            vUnicoRazonSocial.NombreActual = RazonSocial;
+            Nif = cliente.Nif;
+            vUnicoNif.NombreActual = Nif;
+            Email = cliente.Email;
+            vUnicoEmail.NombreActual = Email;
+            cbTiposClientes.SelectedValue = cliente.TipoId;
+            cbGruposClientes.SelectedValue = cliente.GrupoId;
+            var provincia = context.Provincias.Single(p => p.ProvinciaId == cliente.Municipio.ProvinciaId);
+            var comunidad = context.Comunidades.Single(c => c.ComunidadId == provincia.ComunidadId);
+            var pais = context.Paises.Single(p => p.PaisId == comunidad.PaisId);
+            cbPaises.SelectedItem = pais;
+            cbComunidades.SelectedItem = comunidad;
+            cbProvincias.SelectedItem = provincia;
+            cbMunicipios.SelectedItem = cliente.Municipio;
+            Calle = cliente.Calle;
+            Observaciones = cliente.Observaciones;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (new CursorEspera())
+            {
+                context.TiposClientes.Load();
+                context.GruposClientes.Load();
+                context.Paises.Load();
+                tiposClientesViewSource.Source = context.TiposClientes.Local;
+                gruposClientesViewSource.Source = context.GruposClientes.Local;
+                paisesViewSource.Source = context.Paises.Local;
+            }
         }
 
         private void cbPaises_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            comunidadesViewSource.Source = context.Comunidades.Where(d => d.PaisId == ((Pais)cbPaises.SelectedItem).PaisId).ToList();
+            using (new CursorEspera())
+            {
+                comunidadesViewSource.Source = context.Comunidades.Where(d => d.PaisId == ((Pais)cbPaises.SelectedItem).PaisId).ToList();
+            }
         }
 
         private void cbComunidades_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            provinciasViewSource.Source = context.Provincias.Where(d => d.ComunidadId == ((Comunidad)cbComunidades.SelectedItem).ComunidadId).ToList();
+            using (new CursorEspera())
+            {
+                provinciasViewSource.Source = context.Provincias.Where(d => d.ComunidadId == ((Comunidad)cbComunidades.SelectedItem).ComunidadId).ToList();
+            }
         }
 
         private void cbProvincias_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            municipiosViewSource.Source = context.Municipios.Where(d => d.ProvinciaId == ((Provincia)cbProvincias.SelectedItem).ProvinciaId).ToList();
+            using (new CursorEspera())
+            {
+                municipiosViewSource.Source = context.Municipios.Where(d => d.ProvinciaId == ((Provincia)cbProvincias.SelectedItem).ProvinciaId).ToList();
+            }
         }
 
     }

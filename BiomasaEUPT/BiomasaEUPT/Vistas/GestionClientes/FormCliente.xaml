@@ -28,7 +28,7 @@
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Cliente">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Cliente">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -44,52 +44,52 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbRazonSocial" materialDesign:HintAssist.Hint="Razón social" MaxLength="40">
+                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbRazonSocial" materialDesign:HintAssist.Hint="Razón social" MaxLength="{x:Static const:Constantes.LONG_MAX_RAZON_SOCIAL}">
                     <TextBox.Text>
                         <Binding Path="RazonSocial" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="40" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="razón social" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="razón social" Min="{x:Static const:Constantes.LONG_MIN_RAZON_SOCIAL}" Max="{x:Static const:Constantes.LONG_MAX_RAZON_SOCIAL}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="razón social" ExpReg="{x:Static const:Constantes.REGEX_RAZON_SOCIAL}" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vUnicoRazonSocial" Online="True" Tipo="Cliente" Atributo="RazonSocial" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNif" materialDesign:HintAssist.Hint="NIF" MaxLength="9">
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNif" materialDesign:HintAssist.Hint="NIF" MaxLength="{x:Static const:Constantes.LONG_MAX_NIF}">
                     <TextBox.Text>
                         <Binding Path="Nif" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="NIF" ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" MensajeFormato="(L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="NIF" Min="{x:Static const:Constantes.LONG_MIN_NIF}" Max="{x:Static const:Constantes.LONG_MAX_NIF}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="NIF" ExpReg="{x:Static const:Constantes.REGEX_NIF}" MensajeFormato="(L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vUnicoNif" Online="True" Tipo="Cliente" Atributo="Nif" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email" MaxLength="254">
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbEmail" materialDesign:HintAssist.Hint="Email" MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
                     <TextBox.Text>
                         <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="email" Min="{x:Static const:Constantes.LONG_MIN_EMAIL}" Max="{x:Static const:Constantes.LONG_MAX_EMAIL}" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="email" ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="email" ExpReg="{x:Static const:Constantes.REGEX_EMAIL}" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vUnicoEmail" Online="True" Tipo="Cliente" Atributo="Email" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCalle" materialDesign:HintAssist.Hint="Calle" MaxLength="60">
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCalle" materialDesign:HintAssist.Hint="Calle" MaxLength="{x:Static const:Constantes.LONG_MAX_CALLE}">
                     <TextBox.Text>
                         <Binding Path="Calle" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="calle" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="calle" Min="5" Max="60" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="calle" ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="calle" Min="{x:Static const:Constantes.LONG_MIN_CALLE}" Max="{x:Static const:Constantes.LONG_MAX_CALLE}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="calle" ExpReg="{x:Static const:Constantes.REGEX_CALLE}" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
@@ -164,11 +164,11 @@
 
                 <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                         AcceptsReturn="True" Height="55" MaxLength="60">
+                         AcceptsReturn="True" Height="55" MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}">
                     <TextBox.Text>
                         <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validadores:LongitudValidationRule NombreCampo="observaciones" Max="60" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="observaciones" Min="{x:Static const:Constantes.LONG_MIN_OBSERVACIONES}" Max="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}" Nulo="True" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

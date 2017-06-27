@@ -172,31 +172,18 @@
                                  ToolTip="Gestionar clientes"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
-                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
-                            </Button>
-                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
-                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
-                                <!--Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
-                                        <Setter Property="IsEnabled" Value="false" />
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding  ElementName=dgClientes, Path=(Validation.HasError)}" 
-                                                               Value="false" />
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="IsEnabled" Value="true" />
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style-->
-                            </Button>
-
                             <Button x:Name="bAnadirCliente" ToolTip="Añadir cliente">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-
+                            <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar el cliente seleccionado" Command="{Binding ModificarComando}" IsEnabled="{Binding CanModificar}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar clientes">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
+                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>

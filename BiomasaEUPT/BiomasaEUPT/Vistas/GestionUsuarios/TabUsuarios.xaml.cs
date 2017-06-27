@@ -73,10 +73,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             using (new CursorEspera())
             {
-                context.Usuarios.Load();
-                context.TiposUsuarios.Load();
-                usuariosViewSource.Source = context.Usuarios.Local;
-                tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
+                usuariosViewSource.Source = context.Usuarios.ToList();
+                tiposUsuariosViewSource.Source = context.TiposUsuarios.ToList();
                 usuariosViewSource.View.Refresh();
                 tiposUsuariosViewSource.View.Refresh();
                 ActualizarContador();
@@ -88,7 +86,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                Usuario usuario = e.Row.DataContext as Usuario;
+                var usuario = e.Row.DataContext as Usuario;
 
                 if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
                 {
@@ -155,7 +153,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             }
         }
 
-        #region Filtro
+        #region FiltroTabla
         public void FiltrarTabla()
         {
             usuariosViewSource.Filter += new FilterEventHandler(FiltroTabla);
@@ -205,8 +203,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             if (ucTablaUsuarios.dgUsuarios.SelectedIndex != -1)
             {
-                Usuario usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as Usuario;
-                //Console.WriteLine(usuarioSeleccionado.nombre);
+                var usuarioSeleccionado = ucTablaUsuarios.dgUsuarios.SelectedItem as Usuario;
                 return usuarioSeleccionado != null;
             }
             return false;
@@ -280,7 +277,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 usuarioSeleccionado.Baneado = formUsuario.Baneado;
 
                 context.SaveChanges();
-                //usuariosViewSource.View.Refresh();
+                usuariosViewSource.View.Refresh();
             }
         }
         #endregion

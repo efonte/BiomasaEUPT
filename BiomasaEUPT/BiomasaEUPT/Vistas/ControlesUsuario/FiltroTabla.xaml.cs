@@ -100,7 +100,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
-                //TabClientes tabClientes = (TabClientes)ucParent;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposClientes";
             }
@@ -108,7 +107,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             // Pestaña Proveedores
             if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
-                //TabProveedores tabProveedores = (TabProveedores)ucParent;
                 formTipo.vNombreUnico.Coleccion = tiposProveedoresViewSource;
                 formTipo.vNombreUnico.Tipo = "tiposProveedores";
             }
@@ -118,11 +116,16 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 using (var context = new BiomasaEUPTContext())
                 {
                     if (ucParent.GetType().Equals(typeof(TabClientes)))
+                    {
                         context.TiposClientes.Add(new TipoCliente() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-
+                        TabClientes tabClientes = (TabClientes)ucParent;
+                        tabClientes.CargarClientes();
+                    }
                     if (ucParent.GetType().Equals(typeof(TabProveedores)))
+                    {
                         context.TiposProveedores.Add(new TipoProveedor() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-
+                        TabProveedores tabProveedores = (TabProveedores)ucParent;
+                    }
                     context.SaveChanges();
                 }
                 RefrescarListaTipos();
@@ -132,7 +135,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bEditarTipo_Click(object sender, RoutedEventArgs e)
         {
             var formTipo = new FormTipo("Editar Tipo");
-            formTipo.vNombreUnico.Atributo = "nombre";
+            formTipo.vNombreUnico.Atributo = "Nombre";
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
@@ -142,7 +145,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.Descripcion = tipoSeleccionado.Descripcion;
                 var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
-                formTipo.vNombreUnico.Tipo = "tiposClientes";
+                formTipo.vNombreUnico.Tipo = "TipoCliente";
                 formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {
@@ -167,7 +170,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formTipo.Descripcion = tipoSeleccionado.Descripcion;
                 var nombreViejo = formTipo.Nombre;
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
-                formTipo.vNombreUnico.Tipo = "tiposProveedores";
+                formTipo.vNombreUnico.Tipo = "TipoProveedor";
                 formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
                 {

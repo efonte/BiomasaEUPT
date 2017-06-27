@@ -10,8 +10,8 @@ namespace BiomasaEUPT.Modelos.Validadores
 {
     public class LongitudValidationRule : ValidationRule
     {
-        private int _min;
-        public int Min
+        private int? _min;
+        public int? Min
         {
             get { return _min; }
             set { _min = value; }
@@ -31,13 +31,21 @@ namespace BiomasaEUPT.Modelos.Validadores
             set { _nombreCampo = value; }
         }
 
+        private bool _nulo;
+        public bool Nulo
+        {
+            get { return _nulo; }
+            set { _nulo = value; }
+        }
+
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             string campo = string.IsNullOrEmpty(NombreCampo) ? "campo" : "campo " + NombreCampo;
             string cadena = (string)value ?? string.Empty;
 
-            if (cadena.Length < Min)
+            // Si el campo Nulo es true entonces si cadena está vacía no salta el error
+            if ((Nulo && cadena.Length != 0 && Min != null & cadena.Length < Min) || (!Nulo && cadena.Length < Min))
             {
                 return new ValidationResult(false, "La longitud del " + campo + " es menor de " + Min + " carácteres.");
             }

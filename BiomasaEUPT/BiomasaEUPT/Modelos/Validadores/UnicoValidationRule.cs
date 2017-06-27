@@ -71,6 +71,34 @@ namespace BiomasaEUPT.Modelos.Validadores
                         if (Atributo == "Email" && context.Clientes.Any(c => c.Email == valor && c.Email != NombreActual))
                             return new ValidationResult(false, String.Format(mensajeError, "email"));
                     }
+                    else if (Tipo == "TipoCliente")
+                    {
+                        if (Atributo == "Nombre" && context.TiposClientes.Any(tc => tc.Nombre == valor && tc.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                    }
+                    else if (Tipo == "GrupoCliente")
+                    {
+                        if (Atributo == "Nombre" && context.GruposClientes.Any(gc => gc.Nombre == valor && gc.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+
+                    }
+                    else if (Tipo == "Proveedor")
+                    {
+                        if (Atributo == "RazonSocial" && context.Proveedores.Any(p => p.RazonSocial == valor && p.RazonSocial != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "razón social"));
+
+                        if (Atributo == "Nif" && context.Proveedores.Any(p => p.Nif == valor && p.Nif != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "NIF"));
+
+                        if (Atributo == "Email" && context.Proveedores.Any(p => p.Email == valor && p.Email != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "email"));
+                    }
+                    else if (Tipo == "TipoProveedor")
+                    {
+                        if (Atributo == "Nombre" && context.TiposProveedores.Any(tp => tp.Nombre == valor && tp.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
                     else if (Tipo == "Recepcion")
                     {
                         if (Atributo == "NumeroAlbaran" && context.Recepciones.Any(r => r.NumeroAlbaran == valor && r.NumeroAlbaran != NombreActual))
@@ -78,6 +106,8 @@ namespace BiomasaEUPT.Modelos.Validadores
                     }
                 }
             }
+
+            // Offline (no usado en la aplicación ya que sino se comprobarían datos que podrían no corresponder con los que hay en la BD)
             else
             {
                 if (Tipo == "Usuario")
@@ -105,7 +135,7 @@ namespace BiomasaEUPT.Modelos.Validadores
                             return new ValidationResult(false, String.Format(mensajeError, "email"));
                     }
                 }
-                else if (Tipo == "tipoCliente")
+                else if (Tipo == "TipoCliente")
                 {
                     foreach (var item in (ObservableCollection<TipoCliente>)Coleccion.Source)
                     {
