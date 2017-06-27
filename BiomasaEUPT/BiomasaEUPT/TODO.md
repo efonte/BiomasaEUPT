@@ -1,8 +1,15 @@
-﻿* Editar Materias Primas
-* Arreglar clientes y proveedores
-* Usuarios arreglar contexto
-* Trazabilidad platilla arbol
-* Ajustes - cambiar tema a oscuro
-* Formulario materias primas - validar volumen/unidades (si es 0 o si no hay huecos suficientes)
+﻿* Arreglar clientes y proveedores
+* Usuarios arreglar banear y formUsuario
+* Trazabilidad árbol
 * Refrescar datagrids
-* Codigo no aleatorio
+* Arreglar TabElaboraciones
+* Arreglar TabVentas 
+* Actualización del programa
+* Temas de colores
+* Introducción de datos correctos
+* Timer para refrescar la vista
+* Refrescar datos de la pestaña
+* PDF de productoTerminado, Recepciones y productoEnvasado
+* Añadir tiposMateriasPrimas (filtro) y tiposProductosTerminados (filtro)
+* Añadir contador de tiposClientes y tiposProveedores
+* ¿Saber quién ha insertado los datos en la BD? --> Auditoría

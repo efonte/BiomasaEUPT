@@ -26,6 +26,7 @@ namespace BiomasaEUPT.Clases
     public class InformePDF
     {
         private string ruta;
+        private DateTime fechaCreacion;
 
         internal static PdfFont helvetica = null;
         internal static PdfFont helveticaNegrita = null;
@@ -41,9 +42,11 @@ namespace BiomasaEUPT.Clases
         internal static PdfNumber PORTRAIT = new PdfNumber(0);
         internal static PdfNumber SEASCAPE = new PdfNumber(270);
 
-        internal static Color COLOR_FONDO_PAGINA = new DeviceCmyk(0.208f, 0, 0.584f, 0);
+        //internal static Color COLOR_FONDO_PAGINA = new DeviceCmyk(0.208f, 0, 0.584f, 0);
+        internal static Color COLOR_FONDO_PAGINA = Color.WHITE;
 
         internal static Style estiloCelda = null;
+
 
         public InformePDF()
         {
@@ -72,7 +75,7 @@ namespace BiomasaEUPT.Clases
             ImprimirCodigoMateriaPrima(materiaPrima);
 
             // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
-            var fechaCreacion = DateTime.Now;
+            fechaCreacion = DateTime.Now;
             var nombrePdf = ruta + "Materia Prima #" + materiaPrima.Codigo + " " + fechaCreacion.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
 
             PdfWriter writer = new PdfWriter(nombrePdf);
@@ -377,9 +380,9 @@ namespace BiomasaEUPT.Clases
                     .Rectangle(dimensionPagina.GetLeft(), dimensionPagina.GetBottom(), dimensionPagina.GetWidth(), dimensionPagina.GetHeight()).Fill().RestoreState();
 
                 // Cabecera y pie de página
-                pdfCanvas.BeginText().SetFontAndSize(helvetica, 9).MoveText(dimensionPagina.GetWidth() / 2 - 60, dimensionPagina
-                    .GetTop() - 20).ShowText("CABECERA").MoveText(60, -dimensionPagina.GetTop() + 30).ShowText(numeroPagina
-                    .ToString()).EndText();
+                pdfCanvas.BeginText().SetFontAndSize(helvetica, 11)
+                    .MoveText(40, dimensionPagina.GetTop() - 20).ShowText("BiomasaEUPT " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))
+                    .MoveText(60, -dimensionPagina.GetTop() + 30).ShowText(numeroPagina.ToString()).EndText();
             }
 
             internal FinPaginaEventHandler(InformePDF _enclosing)
