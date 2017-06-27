@@ -91,41 +91,64 @@ namespace BiomasaEUPT.Clases
             Document doc = new Document(pdfDoc, PageSize.A4.Rotate());
             //doc.SetMargins(70, 70, 85, 85);
 
-            var barcode = new Barcode128(pdfDoc);
-            barcode.SetCodeType(Barcode128.CODE128);
-            barcode.SetCode(materiaPrima.Codigo);
-            Rectangle rect = barcode.GetBarcodeSize();
+            /*  var barcode = new Barcode128(pdfDoc);
+              barcode.SetCodeType(Barcode128.CODE128);
+              barcode.SetCode(materiaPrima.Codigo);
+              Rectangle rect = barcode.GetBarcodeSize();
 
-            Image image = new Image(barcode.CreateFormXObject(pdfDoc));
-            // image.SetRotationAngle(Math.PI / 2);
-            //  image.SetAutoScale(true);
-            doc.Add(image);
+              Image image = new Image(barcode.CreateFormXObject(pdfDoc));
+              // image.SetRotationAngle(Math.PI / 2);
+              //  image.SetAutoScale(true);
+              doc.Add(image);
 
-            doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+              doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));*/
 
-
-            doc.Add(Titulo("Proveedor"));
-            doc.Add(TablaProveedor(proveedor));
-
-            doc.Add(new Paragraph("\n"));
-
-            doc.Add(Titulo("Recepción"));
-            doc.Add(TablaRecepcion(proveedor.Recepciones.First()));
+            var tablaProvRecep = new Table(new float[] { 1, 1 }).SetWidthPercent(100);
+            tablaProvRecep.AddCell(new Cell().Add(Titulo("Proveedor")).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingRight(10));
+            tablaProvRecep.AddCell(new Cell().Add(Titulo("Recepción")).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingLeft(10));
+            tablaProvRecep.AddCell(new Cell().Add(TablaProveedor(proveedor)).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingRight(10));
+            tablaProvRecep.AddCell(new Cell().Add(TablaRecepcion(proveedor.Recepciones.First())).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingLeft(10));
+            doc.Add(tablaProvRecep);
 
             doc.Add(new Paragraph("\n"));
+
+            /*  doc.Add(Titulo("Proveedor"));
+              doc.Add(TablaProveedor(proveedor));
+
+              doc.Add(new Paragraph("\n"));
+
+              doc.Add(Titulo("Recepción"));
+              doc.Add(TablaRecepcion(proveedor.Recepciones.First()));
+
+              doc.Add(new Paragraph("\n"));*/
 
             doc.Add(Titulo("Materia Prima"));
+            var tablaCodigo = new Table(new float[] { 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+            tablaCodigo.AddCell(CeldaTituloVertical("Tipo").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical(materiaPrima.TipoMateriaPrima.Nombre).SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaTituloVertical("Cantidad").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical((materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (materiaPrima.Unidades + " ud.") : (materiaPrima.Volumen + " m³")).SetVerticalAlignment(VerticalAlignment.TOP));
+            var codigoBarras = new Barcode128(pdfDoc);
+            codigoBarras.SetCodeType(Barcode128.CODE128);
+            codigoBarras.SetCode(materiaPrima.Codigo);
+            Rectangle rect = codigoBarras.GetBarcodeSize();
+            Image imagenCodigo = new Image(codigoBarras.CreateFormXObject(pdfDoc)).SetWidth(100);
+            tablaCodigo.AddCell(new Cell().Add(imagenCodigo).AddStyle(estiloCelda).SetPaddingLeft(25));
+            doc.Add(tablaCodigo);
+
+            doc.Add(new Paragraph("\n"));
+
             doc.Add(TablaMateriaPrima(materiaPrima));
 
             // orientacionPaginaEventHandler.Orientacion = LANDSCAPE;
-            doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+            /*doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
             Table table = new Table(new float[] { 25, 50 })
                              .AddCell(new Cell().Add(new Paragraph("cell 1, 1").SetRotationAngle((Math.PI / 2))))
                              .AddCell(new Cell().Add(new Paragraph("cell 1, 2").SetRotationAngle((Math.PI / 3))))
                              .AddCell(new Cell().Add(new Paragraph("cell 2, 1").SetRotationAngle(-(Math.PI / 2))))
                              .AddCell(new Cell().Add(new Paragraph("cell 2, 2").SetRotationAngle((Math.PI))));
-            doc.Add(table);
+            doc.Add(table);*/
 
             doc.Close();
 
@@ -134,7 +157,7 @@ namespace BiomasaEUPT.Clases
 
         private Table TablaRecepcion(Recepcion recepcion)
         {
-            var tablaRecepcion = new Table(new float[] { 1, 1 }).SetWidthPercent(30);
+            var tablaRecepcion = new Table(new float[] { 1, 1 }).SetWidthPercent(100);
             tablaRecepcion.AddCell(CeldaTituloVertical("Fecha Recepción"));
             tablaRecepcion.AddCell(CeldaVertical(recepcion.FechaRecepcion.ToString("dd/MM/yyyy HH:mm")));
             tablaRecepcion.AddCell(CeldaTituloVertical("Nº de Albarán"));
@@ -145,7 +168,7 @@ namespace BiomasaEUPT.Clases
 
         private Table TablaProveedor(Proveedor proveedor)
         {
-            var tablaProveedor = new Table(new float[] { 1, 1 }).SetWidthPercent(30);
+            var tablaProveedor = new Table(new float[] { 1, 1 }).SetWidthPercent(100);
             tablaProveedor.AddCell(CeldaTituloVertical("Razon Social"));
             tablaProveedor.AddCell(CeldaVertical(proveedor.RazonSocial));
             tablaProveedor.AddCell(CeldaTituloVertical("NIF"));

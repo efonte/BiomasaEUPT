@@ -67,4 +67,9 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MaterialDesignDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+        <Setter Property="TextBlock.FontSize" Value="14" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+
 </ResourceDictionary>

@@ -29,8 +29,15 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgUsuarios" DataContext="{StaticResource usuariosViewSource}"
-                          RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False"
-                          EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False"
+                              EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+                        <!--DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="TextBlock.FontSize" Value="15" />
+                                <Setter Property="Padding" Value="5" />
+                            </Style>
+                        </-->
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"

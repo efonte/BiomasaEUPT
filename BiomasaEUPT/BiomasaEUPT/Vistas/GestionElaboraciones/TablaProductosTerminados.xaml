@@ -42,7 +42,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProductosTerminados" DataContext="{StaticResource productosTerminadosViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"
                                                                        Binding="{Binding TipoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>

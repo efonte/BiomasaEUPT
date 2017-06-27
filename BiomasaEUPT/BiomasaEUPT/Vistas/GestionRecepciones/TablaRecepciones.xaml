@@ -11,7 +11,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Name="UCTablaRecepciones">
+             d:DesignHeight="250" d:DesignWidth="500" Name="UCTablaRecepciones">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
@@ -37,7 +37,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgRecepciones" DataContext="{StaticResource recepcionesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumna" Header="Albarán" Width="SizeToHeader" IsReadOnly="True"

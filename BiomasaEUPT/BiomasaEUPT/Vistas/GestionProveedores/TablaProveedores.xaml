@@ -10,7 +10,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" >
+             d:DesignHeight="300" d:DesignWidth="600" >
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
@@ -41,7 +41,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProveedores" DataContext="{StaticResource proveedoresViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"

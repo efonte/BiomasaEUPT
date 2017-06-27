@@ -45,7 +45,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgMateriasPrimas" DataContext="{StaticResource materiasPrimasViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoColuman" Header="Tipo"
                                                                        Binding="{Binding TipoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
@@ -165,7 +166,7 @@
                                 </ItemsControl.Style>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Chip Margin="5">
+                                        <materialDesign:Chip Margin="5" Cursor="Arrow">
                                             <materialDesign:Chip.Content>
                                                 <TextBlock FontSize="14" FontStyle="Italic">
                                                     <TextBlock.Style>

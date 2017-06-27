@@ -36,7 +36,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgElaboraciones" DataContext="{StaticResource ordenesElaboracionesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha Elaboración" Width="auto" IsReadOnly="True"

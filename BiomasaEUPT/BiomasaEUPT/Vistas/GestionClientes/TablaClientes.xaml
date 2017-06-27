@@ -46,7 +46,8 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" DataContext="{StaticResource clientesViewSource}"
                               AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False">
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"
