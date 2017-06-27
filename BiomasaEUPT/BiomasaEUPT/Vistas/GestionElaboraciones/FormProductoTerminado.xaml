@@ -45,29 +45,75 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo PT"
-                          ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
-                          DisplayMemberPath="Nombre" SelectedValuePath="TipoProductoTerminadoId"
-                          SelectedItem="{Binding TipoProductoTerminado, UpdateSourceTrigger=PropertyChanged}">
-                </ComboBox>
-                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo PT"
+                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo Producto Terminado"
                           ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
                           SelectionChanged="cbGruposProductosTerminados_SelectionChanged">
                 </ComboBox>
-
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo MP"
-                          ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
-                          DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
-                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}">
+                
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
+                          ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="TipoProductoTerminadoId"
+                          SelectedItem="{Binding TipoProductoTerminado, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbGruposMateriasPrimas" materialDesign:HintAssist.Hint="Grupo MP"
+
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"         
+                                materialDesign:HintAssist.Hint="Fecha baja.">
+                        <!--DatePicker.BlackoutDates>
+                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
+                            <CalendarDateRange Start="01/01/2025" End="12/31/9999"/>
+                        </DatePicker.BlackoutDates-->
+                        <DatePicker.SelectedDate>
+                            <Binding Path="FechaBaja" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
+
+                    <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="2" Grid.Column="3" Width="60"
+                                   materialDesign:HintAssist.Hint="Hora"
+                                   IsInvalidTextAllowed="True"
+                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <materialDesign:TimePicker.Text>
+                            <Binding Path="HoraBaja" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:TimePicker.Text>
+                    </materialDesign:TimePicker>
+                </StackPanel>
+
+
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbGruposMateriasPrimas" materialDesign:HintAssist.Hint="Grupo Materia Prima"
                           ItemsSource="{Binding Source={StaticResource gruposMateriasPrimasViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="GrupoMateriaPrimaId"
                           SelectionChanged="cbGruposMateriasPrimas_SelectionChanged">
                 </ComboBox>
 
-                <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosRecepciones" Height="100"
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo Materia Prima"
+                          ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
+                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                
+
+                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosRecepciones" Height="100"
                          ItemsSource="{Binding HistorialHuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}"
                          PreviewMouseLeftButtonDown="lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown">
                     <ItemsControl.ItemTemplate>
@@ -93,7 +139,7 @@
                     </ItemsControl.ItemTemplate>
                 </ListBox>
 
-                <WrapPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="wpProductosTerminadosComposiciones" Orientation="Horizontal"
+                <WrapPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="wpProductosTerminadosComposiciones" Orientation="Horizontal"
                            AllowDrop="True" Drop="spProductosTerminadosComposiciones_Drop" Margin="0 0 0 10" Width="400"
                            ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <WrapPanel.Style>
@@ -165,99 +211,7 @@
                     </ItemsControl>
                 </WrapPanel>
 
-                <TextBox Grid.Row="4" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
-                    <TextBox.Text>
-                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-
-
-                <!--StackPanel Grid.Row="4" Grid.Column="0">
-                    <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6">
-                        <TextBox.Text>
-                            <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
-                                    <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                    <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Margin" Value="10" />
-                                <Setter Property="FontSize" Value="15" />
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                    <TextBox x:Name="tbUnidades" materialDesign:HintAssist.Hint="Unidades" MaxLength="3">
-                        <TextBox.Text>
-                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:RequeridoValidationRule NombreCampo="unidades" ValidatesOnTargetUpdated="True" />
-                                    <validadores:LongitudValidationRule NombreCampo="unidades" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
-                                    <validadores:RegexValidationRule NombreCampo="unidades" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Margin" Value="10" />
-                                <Setter Property="FontSize" Value="15" />
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </-->
-
-
-                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-                    <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"         
-                                materialDesign:HintAssist.Hint="Fecha baja.">
-                        <!--DatePicker.BlackoutDates>
-                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
-                            <CalendarDateRange Start="01/01/2025" End="12/31/9999"/>
-                        </DatePicker.BlackoutDates-->
-                        <DatePicker.SelectedDate>
-                            <Binding Path="FechaBaja" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DatePicker.SelectedDate>
-                    </DatePicker>
-
-                    <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="2" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
-                                   IsInvalidTextAllowed="True"
-                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <materialDesign:TimePicker.Text>
-                            <Binding Path="HoraBaja" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </materialDesign:TimePicker.Text>
-                    </materialDesign:TimePicker>
-                </StackPanel>
+                
 
                 <ComboBox Grid.Row="5" Grid.Column="0" x:Name="cbSitiosAlmacenajes" materialDesign:HintAssist.Hint="Sitios"
                           ItemsSource="{Binding Source={StaticResource sitiosAlmacenajesViewSource}}"

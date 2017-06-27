@@ -74,7 +74,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 cbTiposMateriasPrimas.IsEnabled = false;
                 cbSitiosAlmacenajes.IsEnabled = false;
                 lbHuecosAlmacenajes.IsEnabled = false;
-                //tbCantidad.IsEnabled = false;
+                tbCantidad.IsEnabled = false;
                 wpHuecosAlmacenajes.IsEnabled = false;
             }
         }

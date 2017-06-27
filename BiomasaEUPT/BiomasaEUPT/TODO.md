@@ -6,7 +6,6 @@
 * Arreglar TabVentas 
 * Actualización del programa
 * Temas de colores
-* Introducción de datos correctos
 * Timer para refrescar la vista
 * Refrescar datos de la pestaña
 * PDF de productoTerminado, Recepciones y productoEnvasado
