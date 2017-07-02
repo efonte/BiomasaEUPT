@@ -38,10 +38,28 @@
                 <TreeView x:Name="tvArbolRecepcion" ItemsSource="{Binding ArbolRecepcion}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type Tablas:Proveedor}" ItemsSource="{Binding Recepciones}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Worker"/>
-                                <TextBlock Text="{Binding RazonSocial}" Margin="8 0 0 0"/>
-                            </StackPanel>
+                            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
+                                             Opacity="0" RunHint="Loaded">
+                                <materialDesign:TransitioningContent.OpeningEffects>
+                                    <materialDesign:TransitionEffect Kind="SlideInFromLeft" Duration="0:0:0.15" />
+                                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.15" />
+                                </materialDesign:TransitioningContent.OpeningEffects>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Worker"/>
+                                    <TextBlock Text="{Binding RazonSocial}" Margin="8 0 0 0"/>
+                                    <StackPanel.ToolTip>
+                                        <ToolTip Background="Transparent">
+                                            <materialDesign:ColorZone Mode="PrimaryMid">
+                                                <StackPanel Margin="10">
+                                                    <TextBlock Text="{Binding Nif}"/>
+                                                    <TextBlock Text="{Binding Calle}"/>
+                                                    <TextBlock Text="{Binding Observaciones}"/>
+                                                </StackPanel>
+                                            </materialDesign:ColorZone>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
+                                </StackPanel>
+                            </materialDesign:TransitioningContent>
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type Tablas:Recepcion}" ItemsSource="{Binding MateriasPrimas}">

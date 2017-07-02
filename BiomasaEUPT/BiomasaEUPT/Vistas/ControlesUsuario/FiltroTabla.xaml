@@ -68,20 +68,19 @@
                                     </DataTemplate-->
                                 </CompositeCollection>
                             </ListBox.ItemsSource>
-                            <!--ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding nombre}" FontSize="14" FontWeight="Bold"/>
-                                        <TextBlock Text="{Binding descripcion}" FontSize="14"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate-->
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="8 0 0 0">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
-                                        <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
-                                    </StackPanel>
+                                    <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
+                                                                         Opacity="0" RunHint="Loaded">
+                                        <materialDesign:TransitioningContent.OpeningEffects>
+                                            <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                                            <materialDesign:TransitionEffect Kind="FadeIn" />
+                                        </materialDesign:TransitioningContent.OpeningEffects>
+                                        <StackPanel Margin="8 0 0 0">
+                                            <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                            <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                        </StackPanel>
+                                    </materialDesign:TransitioningContent>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
@@ -151,10 +150,17 @@
                             </ListBox.ItemsSource>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="8 0 0 0">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
-                                        <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
-                                    </StackPanel>
+                                    <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
+                                                                 Opacity="0" RunHint="Loaded">
+                                        <materialDesign:TransitioningContent.OpeningEffects>
+                                            <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                                            <materialDesign:TransitionEffect Kind="FadeIn" />
+                                        </materialDesign:TransitioningContent.OpeningEffects>
+                                        <StackPanel Margin="8 0 0 0">
+                                            <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                            <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                        </StackPanel>
+                                    </materialDesign:TransitioningContent>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
