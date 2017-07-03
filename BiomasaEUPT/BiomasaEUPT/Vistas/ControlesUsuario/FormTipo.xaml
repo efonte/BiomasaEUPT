@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -22,23 +23,23 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre">
+            <TextBox Grid.Row="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE}">
                 <TextBox.Text>
                     <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validadores:RequeridoValidationRule x:Name="vNombreRequerido" NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
-                            <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="3" Max="20" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE}" ValidatesOnTargetUpdated="True" />
                             <validadores:UnicoValidationRule x:Name="vNombreUnico" ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Row="1" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción">
+            <TextBox Grid.Row="1" x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción" MaxLength="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}">
                 <TextBox.Text>
                     <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
-                            <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="5" Max="50" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

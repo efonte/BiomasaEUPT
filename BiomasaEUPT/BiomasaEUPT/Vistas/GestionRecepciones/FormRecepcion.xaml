@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -11,7 +12,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="250" Width="330" Loaded="UserControl_Loaded">
+             Height="250" Width="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,16 +31,16 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNumeroAlbaran" materialDesign:HintAssist.Hint="Nº Albarán" MaxLength="10">
+                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNumeroAlbaran" materialDesign:HintAssist.Hint="Nº Albarán" MaxLength="{x:Static const:Constantes.LONG_MAX_NUMERO_ALBARAN}">
                     <TextBox.Text>
                         <Binding Path="NumeroAlbaran" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="nº albarán" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="nº albarán" Min="3" Max="10" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="nº albarán" ExpReg="^([A-Z]-[\dA-Z]{1,8})$" MensajeFormato=" (Ej: A-13, B-15A25870)" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="nº albarán" Min="{x:Static const:Constantes.LONG_MIN_NUMERO_ALBARAN}" Max="{x:Static const:Constantes.LONG_MAX_NUMERO_ALBARAN}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="nº albarán" ExpReg="{x:Static const:Constantes.REGEX_NUMERO_ALBARAN}" MensajeFormato=" (Ej: A-13, B-15A25870)" ValidatesOnTargetUpdated="True" />
                                 <validadores:UnicoValidationRule x:Name="vAlbaranUnico" Online="True" Tipo="Recepcion" Atributo="NumeroAlbaran" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
@@ -63,7 +64,7 @@
                     </DatePicker>
 
                     <materialDesign:TimePicker x:Name="tpHoraRecepcion" Grid.Row="1" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
+                                   materialDesign:HintAssist.Hint="Hora" Margin="10 18 10 10"
                                    IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
                                    Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <materialDesign:TimePicker.Text>

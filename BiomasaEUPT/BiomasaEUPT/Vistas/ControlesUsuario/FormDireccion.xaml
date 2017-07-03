@@ -40,7 +40,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="20" Height="13" Stretch="Fill" Margin="5" 
-                                   Source="{Binding Codigo, Converter={StaticResource PaisISOA2ImagenConverter}}"/>
+                               Source="{Binding Codigo, Converter={StaticResource PaisISOA2ImagenConverter}}"/>
                         <TextBlock Margin="5" Text="{Binding Codigo, Converter={StaticResource PaisISOA2NombreCompletoConverter}}"/>
                     </StackPanel>
                 </DataTemplate>

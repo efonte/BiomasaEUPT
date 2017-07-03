@@ -411,9 +411,15 @@ namespace BiomasaEUPT.Clases
         {
             // MemoryStream memStream = new MemoryStream();
             //  PdfDocument pdfDoc = new PdfDocument(new PdfWriter(memStream));
-            var rutaPDF = System.IO.Path.GetTempPath() + "/BiomasaEUPT.pdf";
+
+            var ruta = System.IO.Path.GetTempPath() + "/BiomasaEUPT/";
+            if (!Directory.Exists(ruta))
+                Directory.CreateDirectory(ruta);
+
+            var rutaPDF = ruta + "Materia Prima #" + materiaPrima.Codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
             PdfDocument pdfDoc = new PdfDocument(new PdfWriter(rutaPDF));
             Document doc = new Document(pdfDoc, new PageSize(60, 140));
+            //Document doc = new Document(pdfDoc, PageSize.A6);
             doc.SetMargins(5, 5, 5, 5);
 
             PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
@@ -448,9 +454,9 @@ namespace BiomasaEUPT.Clases
                 image.SetAutoScale(true);
                 doc.Add(image);
 
-                Paragraph p3 = new Paragraph("SMALL").SetFont(regular).SetFontSize(6);
-                p3.SetTextAlignment(TextAlignment.CENTER);
-                doc.Add(p3);
+                // Paragraph p3 = new Paragraph("SMALL").SetFont(regular).SetFontSize(6);
+                // p3.SetTextAlignment(TextAlignment.CENTER);
+                // doc.Add(p3);
                 primeraPagina = false;
             }
 

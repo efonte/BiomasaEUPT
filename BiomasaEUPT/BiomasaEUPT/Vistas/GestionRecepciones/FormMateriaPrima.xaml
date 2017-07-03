@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -11,7 +12,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="450" Width="400" Loaded="UserControl_Loaded">
+             Height="450" Width="440" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -37,8 +38,8 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbGruposMateriasPrimas" materialDesign:HintAssist.Hint="Grupo"
@@ -67,13 +68,14 @@
                     </Button>
                 </StackPanel-->
 
-                <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}"
+                         MaxLength="{x:Static const:Constantes.LONG_MAX_CANTIDAD}" TextChanged="tbCantidad_TextChanged">
                     <TextBox.Text>
                         <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="{x:Static const:Constantes.LONG_MIN_CANTIDAD}" Max="{x:Static const:Constantes.LONG_MAX_CANTIDAD}" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="{x:Static const:Constantes.REGEX_CANTIDAD}" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -128,7 +130,6 @@
                     </TextBox>
                 </-->
 
-
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"         
                                 materialDesign:HintAssist.Hint="Fecha Cad.">
@@ -146,7 +147,7 @@
                     </DatePicker>
 
                     <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="2" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
+                                   materialDesign:HintAssist.Hint="Hora" Margin="10 18 10 10"
                                    IsInvalidTextAllowed="True"
                                    Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <materialDesign:TimePicker.Text>
@@ -167,8 +168,24 @@
                 </ComboBox>
 
                 <ListBox Grid.Row="3" Grid.Column="4" x:Name="lbHuecosRecepciones" Height="100"
-                         ItemsSource="{Binding HuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}"
-                         PreviewMouseLeftButtonDown="lbHuecosRecepciones_PreviewMouseLeftButtonDown">
+                         PreviewMouseLeftButtonDown="lbHuecosRecepciones_PreviewMouseLeftButtonDown"
+                         ItemsSource="{Binding HuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Style.Triggers>
+                                <Trigger Property="HasItems" Value="false">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14" Margin="10"
+                                                           Text="No hay huecos disponibles en el sitio seleccionado"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -192,80 +209,82 @@
                     </ItemsControl.ItemTemplate>
                 </ListBox>
 
-                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" x:Name="wpHuecosRecepciones"
-                           Orientation="Horizontal" Background="AliceBlue" MinHeight="40" Width="350"
-                           AllowDrop="True" Drop="spHuecosRecepciones_Drop">
-                    <ItemsControl ItemsSource="{Binding HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
-                        <ItemsControl.Style>
-                            <Style TargetType="ItemsControl">
-                                <Style.Triggers>
-                                    <Trigger Property="HasItems" Value="false">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                <materialDesign:ColorZone Grid.Row="4" Grid.ColumnSpan="2" Mode="Standard"
+                                          MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
+                                          AllowDrop="True" Drop="spHuecosRecepciones_Drop">
+                    <WrapPanel x:Name="wpHuecosRecepciones" Margin="10"
+                               Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <ItemsControl ItemsSource="{Binding HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems" Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
                                                                Text="Por favor, arrastre los huecos en los que desee almacenar las materias primas"/>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ItemsControl.Style>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <materialDesign:Chip IsDeletable="True"  Margin="5"
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <materialDesign:Chip IsDeletable="True"  Margin="5"
                                  DeleteToolTip="Eliminar hueco" CommandParameter="{Binding HuecoRecepcion.HuecoRecepcionId}"
                                  DeleteClick="cHueco_DeleteClick">
-                                    <materialDesign:Chip.Content>
-                                        <TextBlock FontSize="14" FontStyle="Italic">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Text">
-                                                        <Setter.Value>
-                                                            <MultiBinding StringFormat="{}{0} de {1} m³" >
-                                                                <Binding Path="Volumen" />
-                                                                <Binding Path="HuecoRecepcion.VolumenTotal" />
-                                                            </MultiBinding>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
-                                                            <Setter Property="Text">
-                                                                <Setter.Value>
-                                                                    <MultiBinding StringFormat="{}{0} de {1} ud." >
-                                                                        <Binding Path="Unidades" />
-                                                                        <Binding Path="HuecoRecepcion.UnidadesTotales" />
-                                                                    </MultiBinding>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </materialDesign:Chip.Content>
-                                    <materialDesign:Chip.Icon>
-                                        <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre}"></TextBlock>
-                                    </materialDesign:Chip.Icon>
-                                </materialDesign:Chip>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </WrapPanel>
-
+                                        <materialDesign:Chip.Content>
+                                            <TextBlock FontSize="14" FontStyle="Italic">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                    <Binding Path="Volumen" />
+                                                                    <Binding Path="HuecoRecepcion.VolumenTotal" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                                                <Setter Property="Text">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                            <Binding Path="Unidades" />
+                                                                            <Binding Path="HuecoRecepcion.UnidadesTotales" />
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </materialDesign:Chip.Content>
+                                        <materialDesign:Chip.Icon>
+                                            <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre}"></TextBlock>
+                                        </materialDesign:Chip.Icon>
+                                    </materialDesign:Chip>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </WrapPanel>
+                </materialDesign:ColorZone>
                 <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                         AcceptsReturn="True" Height="55" MaxLength="60">
+                         AcceptsReturn="True" Height="55" MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}">
                     <TextBox.Text>
                         <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validadores:LongitudValidationRule NombreCampo="observaciones" Max="60" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="observaciones" Nulo="True" Min="{x:Static const:Constantes.LONG_MIN_OBSERVACIONES}" Max="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

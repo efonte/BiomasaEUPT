@@ -299,10 +299,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private bool CanBorrarMateriaPrima()
         {
-            if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
+            if (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedIndex != -1)
             {
-                Recepcion recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
-                return recepcionSeleccionada != null;
+                var materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
+                return materiaPrimaSeleccionada != null;
             }
             return false;
         }

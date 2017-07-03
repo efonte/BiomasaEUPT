@@ -23,7 +23,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         public DateTime FechaRecepcion { get; set; }
 
         [Required]
-        [StringLength(Constantes.LONG_MAX_NUMERO_ALBARAN)]
+        [RegularExpression(Constantes.REGEX_NUMERO_ALBARAN)]
+        [StringLength(Constantes.LONG_MAX_NUMERO_ALBARAN, MinimumLength = Constantes.LONG_MIN_NUMERO_ALBARAN)]
         [Index(IsUnique = true)]
         [DisplayName("Número de albarán"), Display(Name = "Número de albarán")]
         public string NumeroAlbaran { get; set; }
