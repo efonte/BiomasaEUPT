@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -75,33 +76,15 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
 
-        private async void DgClientes_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private void DgClientes_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 var cliente = e.Row.DataContext as Cliente;
-
-                try
+                context.SaveChanges();
+                if (e.Column.DisplayIndex == 3) // 3 = Posición tipo cliente
                 {
-                    context.SaveChanges();
-                }
-                catch (DbUpdateException e1)
-                {
-                    var mensajeError = "No se ha podido modificar el campo.";
-                    foreach (var entry in e1.Entries)
-                    {
-                        if (entry.Entity is Cliente)
-                        {
-                            if (entry.State == EntityState.Modified)
-                            {
-                                mensajeError = "No se ha podido modificar el cliente.\n\nAsegurese que la razón social, el NIF y el email son únicos";
-                                break;
-                            }
-                        }
-
-                    }
-                    var mensaje = new MensajeInformacion(mensajeError) { Width = 350 };
-                    var resultado = await DialogHost.Show(mensaje, "RootDialog");
+                    (ucContador as Contador).Actualizar();
                 }
             }
         }

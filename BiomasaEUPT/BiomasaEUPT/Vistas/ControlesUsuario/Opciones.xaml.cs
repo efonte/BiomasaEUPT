@@ -15,15 +15,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionUsuarios
+namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
     /// <summary>
-    /// Lógica de interacción para OpcionesUsuarios.xaml
+    /// Lógica de interacción para Opciones.xaml
     /// </summary>
-    public partial class OpcionesUsuarios : UserControl
+    public partial class Opciones : UserControl
     {
         // private BiomasaEUPTEntidades context;
-        public OpcionesUsuarios()
+        public Opciones()
         {
             InitializeComponent();
             // DataContext = this;
@@ -31,7 +31,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+            // context = new BiomasaEUPTEntidades();
         }
 
     }

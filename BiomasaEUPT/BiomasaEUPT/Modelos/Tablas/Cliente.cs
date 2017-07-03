@@ -13,6 +13,7 @@ namespace BiomasaEUPT.Modelos.Tablas
     /// Cliente al que se le vendes los productos ventas
     /// </summary>
     [Table("Clientes")]
+    [DisplayName("Cliente")]
     public class Cliente
     {
         [Key]

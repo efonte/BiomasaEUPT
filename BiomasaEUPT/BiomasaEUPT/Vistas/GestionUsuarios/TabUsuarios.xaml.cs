@@ -2,6 +2,7 @@
 using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             ucTablaUsuarios.cbBaneado.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbTipo.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbTipo.Unchecked += (s, e1) => { FiltrarTabla(); };
-            ucOpcionesUsuarios.bAnadir.Click += BAnadirUsuario_Click;
+            ucOpciones.bAnadir.Click += BAnadirUsuario_Click;
             ucTablaUsuarios.bAnadirUsuario.Click += BAnadirUsuario_Click;
-            ucOpcionesUsuarios.bRefrescar.Click += (s, e1) => { CargarUsuarios(); };
+            ucOpciones.bRefrescar.Click += (s, e1) => { CargarUsuarios(); };
             ucTablaUsuarios.bRefrescar.Click += (s, e1) => { CargarUsuarios(); };
 
             /*   Style style = new Style(typeof(CheckBox));
@@ -77,7 +78,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 tiposUsuariosViewSource.Source = context.TiposUsuarios.ToList();
                 usuariosViewSource.View.Refresh();
                 tiposUsuariosViewSource.View.Refresh();
-                ActualizarContador();
+                (ucContador as Contador).Actualizar();
                 ucTablaUsuarios.dgUsuarios.SelectedIndex = -1;
             }
         }
@@ -100,27 +101,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 {
                     Console.WriteLine(usuario.Baneado);
                 }
-                try
+                context.SaveChanges();
+                if (e.Column.DisplayIndex == 3) // 3 = Posición tipo usuario
                 {
-                    context.SaveChanges();
-                }
-                catch (DbUpdateException e1)
-                {
-                    var mensajeError = "No se ha podido modificar el campo.";
-                    foreach (var entry in e1.Entries)
-                    {
-                        if (entry.Entity is Usuario)
-                        {
-                            if (entry.State == EntityState.Modified)
-                            {
-                                mensajeError = "No se ha podido modificar el usuario.\n\nAsegurese que el nombre de usuario y el email son únicos";
-                                break;
-                            }
-                        }
-
-                    }
-                    var mensaje = new MensajeInformacion(mensajeError) { Width = 350 };
-                    var resultado = await DialogHost.Show(mensaje, "RootDialog");
+                    (ucContador as Contador).Actualizar();
                 }
             }
         }
@@ -131,6 +115,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 Usuario usuario = e.Row.DataContext as Usuario;
                 Console.WriteLine(usuario.Nombre + " - " + usuario.Email + " - " + usuario.Contrasena + " - " + usuario.TipoId + " - " + usuario.Baneado);
+                (ucContador as Contador).Actualizar();
             }
         }
 
@@ -190,14 +175,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 e.Accepted = false;
         }
         #endregion
-
-        public void ActualizarContador()
-        {
-            ucInfoUsuarios.tbNumAdministradores.Text = context.Usuarios.Local.Where(u => u.TipoId == 1).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosA.Text = context.Usuarios.Local.Where(u => u.TipoId == 2).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosB.Text = context.Usuarios.Local.Where(u => u.TipoId == 3).Count().ToString();
-            ucInfoUsuarios.tbNumTecnicosC.Text = context.Usuarios.Local.Where(u => u.TipoId == 4).Count().ToString();
-        }
 
         private bool HayUnUsuarioSeleccionado()
         {

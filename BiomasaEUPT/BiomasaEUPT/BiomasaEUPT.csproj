@@ -221,6 +221,9 @@
     <Compile Include="Vistas\Ajustes\WinAjustes.xaml.cs">
       <DependentUpon>WinAjustes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\Contador.xaml.cs">
+      <DependentUpon>Contador.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>
@@ -292,11 +295,8 @@
     <Compile Include="Vistas\GestionUsuarios\FormUsuario.xaml.cs">
       <DependentUpon>FormUsuario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionUsuarios\InfoUsuarios.xaml.cs">
-      <DependentUpon>InfoUsuarios.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionUsuarios\OpcionesUsuarios.xaml.cs">
-      <DependentUpon>OpcionesUsuarios.xaml</DependentUpon>
+    <Compile Include="Vistas\ControlesUsuario\Opciones.xaml.cs">
+      <DependentUpon>Opciones.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionUsuarios\TablaUsuarios.xaml.cs">
       <DependentUpon>TablaUsuarios.xaml</DependentUpon>
@@ -346,6 +346,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Ajustes\WinAjustes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\Contador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -449,11 +453,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionUsuarios\InfoUsuarios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionUsuarios\OpcionesUsuarios.xaml">
+    <Page Include="Vistas\ControlesUsuario\Opciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
