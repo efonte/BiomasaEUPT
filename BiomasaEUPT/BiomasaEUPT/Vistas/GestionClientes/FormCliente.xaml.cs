@@ -38,7 +38,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public String Calle { get; set; }
         public String Observaciones { get; set; }
 
-
         public FormCliente()
         {
             InitializeComponent();

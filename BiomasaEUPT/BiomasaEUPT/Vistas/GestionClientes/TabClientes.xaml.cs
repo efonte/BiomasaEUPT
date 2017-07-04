@@ -57,12 +57,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             ucTablaClientes.bEditarObservaciones.Click += BEditarObservaciones_Click;
         }
 
-        private void BEditarObservaciones_Click(object sender, RoutedEventArgs e)
-        {
-            context.SaveChanges();
-            ucTablaClientes.tbEditarObservaciones.IsChecked = false;
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
@@ -113,6 +107,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     Observaciones = formCliente.Observaciones
                 });
                 context.SaveChanges();
+                CargarClientes();
             }
         }
 
@@ -195,19 +190,25 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private async void BorrarCliente()
         {
-            string pregunta = ucTablaClientes.dgClientes.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar al cliente " + (ucTablaClientes.dgClientes.SelectedItem as Cliente).RazonSocial + "?"
-                : "¿Está seguro de que desea borrar los clientes seleccionados?";
-
-            var mensaje = new MensajeConfirmacion(pregunta);
-            mensaje.MaxHeight = ActualHeight;
-            mensaje.MaxWidth = ActualWidth;
-
-            var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
-
-            if (resultado)
+            var clientesABorrar = new List<Cliente>();
+            var clientesSeleccionados = ucTablaClientes.dgClientes.SelectedItems.Cast<Cliente>().ToList();
+            foreach (var cliente in clientesSeleccionados)
             {
-                context.Clientes.RemoveRange(ucTablaClientes.dgClientes.SelectedItems.Cast<Cliente>().ToList());
+                if (!context.PedidosCabeceras.Any(pc => pc.ClienteId == cliente.ClienteId))
+                {
+                    clientesABorrar.Add(cliente);
+                }
+            }
+            context.Clientes.RemoveRange(clientesABorrar);
+            context.SaveChanges();
+            CargarClientes();
+            if (clientesSeleccionados.Count != clientesABorrar.Count)
+            {
+                string mensaje = ucTablaClientes.dgClientes.SelectedItems.Count == 1
+                       ? "No se ha podido borrar el cliente seleccionado."
+                       : "No se han podido borrar todos los clientes seleccionados.";
+                mensaje += "\n\nAsegurese de no que no exista ningún pedido asociado a dicho cliente.";
+                await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
             }
         }
         #endregion
@@ -255,6 +256,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public BiomasaEUPTContext GetContext()
         {
             return context;
+        }
+
+        private void BEditarObservaciones_Click(object sender, RoutedEventArgs e)
+        {
+            context.SaveChanges();
+            ucTablaClientes.tbEditarObservaciones.IsChecked = false;
         }
     }
 }

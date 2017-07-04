@@ -219,6 +219,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             if (resultado)
             {
                 context.Usuarios.RemoveRange(ucTablaUsuarios.dgUsuarios.SelectedItems.Cast<Usuario>().ToList());
+                context.SaveChanges();
+                CargarUsuarios();
             }
         }
         #endregion

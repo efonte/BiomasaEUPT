@@ -257,7 +257,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
             if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
-                List<Recepcion> recepcionesABorrar = new List<Recepcion>();
+                var recepcionesABorrar = new List<Recepcion>();
                 var recepcionesSeleccionadas = ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList();
                 foreach (var recepcion in recepcionesSeleccionadas)
                 {

@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             InitializeComponent();
             DataContext = this;
+            context = new BiomasaEUPTContext();
+            ucTablaProveedores.dgProveedores.CellEditEnding += DgProveedores_CellEditEnding;
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaProveedores.cbRazonSocial.Unchecked += (s, e1) => { FiltrarTabla(); };
@@ -48,42 +51,63 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             ucTablaProveedores.cbCodigoPostal.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucTablaProveedores.cbMunicipio.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaProveedores.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
-            //ucTablaProveedores.bAnadirProveedor.Click += BAnadirProveedor_Click;
+            ucTablaProveedores.bAnadirProveedor.Click += BAnadirProveedor_Click;
+            ucTablaProveedores.bRefrescar.Click += (s, e1) => { CargarProveedores(); };
+            ucTablaProveedores.bEditarObservaciones.Click += BEditarObservaciones_Click;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
+            tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
+            CargarProveedores();
+        }
+
+        public void CargarProveedores()
+        {
             using (new CursorEspera())
             {
-                context = new BiomasaEUPTContext();
-                proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
-                tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
-                context.Proveedores.Load();
-                context.TiposProveedores.Load();
-                proveedoresViewSource.Source = context.Proveedores.Local;
-                tiposProveedoresViewSource.Source = context.TiposProveedores.Local;
+                proveedoresViewSource.Source = context.Proveedores.ToList();
+                tiposProveedoresViewSource.Source = context.TiposProveedores.ToList();
+                ucTablaProveedores.dgProveedores.SelectedIndex = -1;
             }
         }
 
-        /*private async void BAnadirProveedor_Click(object sender, RoutedEventArgs e)
+        private void DgProveedores_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var proveedor = e.Row.DataContext as Proveedor;
+                context.SaveChanges();
+                if (e.Column.DisplayIndex == 3) // 3 = Posición tipo proveedor
+                {
+                    (ucContador as Contador).Actualizar();
+                }
+            }
+        }
+
+        private async void BAnadirProveedor_Click(object sender, RoutedEventArgs e)
         {
             var formProveedor = new FormProveedor();
 
             if ((bool)await DialogHost.Show(formProveedor, "RootDialog"))
             {
-                context.clientes.Add(new clientes()
+                context.Proveedores.Add(new Proveedor()
                 {
-                    razon_social = formProveedor.tbRazonSocial.Text,
-                    nif = formProveedor.tbNif.Text,
-                    email = formProveedor.tbEmail.Text,
-                    calle = formProveedor.tbCalle.Text,
-                    tipos_clientes = formProveedor.cbTiposClientes.SelectedItem as tipos_clientes,
-                    direcciones = formProveedor.cbCodigosPostalesDirecciones.SelectedItem as direcciones,
-                    observaciones = formProveedor.tbObservaciones.Text
+                    RazonSocial = formProveedor.RazonSocial,
+                    Nif = formProveedor.Nif,
+                    Email = formProveedor.Email,
+                    Calle = formProveedor.Calle,
+                    TipoId = (formProveedor.cbTiposProveedores.SelectedItem as TipoProveedor).TipoProveedorId,
+                    MunicipioId = (formProveedor.cbMunicipios.SelectedItem as Municipio).MunicipioId,
+                    Observaciones = formProveedor.Observaciones
                 });
+                context.SaveChanges();
+                CargarProveedores();
             }
-        }*/
+        }
 
+        #region FiltroTabla
         public void FiltrarTabla()
         {
             proveedoresViewSource.Filter += new FilterEventHandler(FiltroTabla);
@@ -91,8 +115,6 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
-            /* try
-             {*/
             string textoBuscado = ucTablaProveedores.tbBuscar.Text.ToLower();
             var proveedor = e.Item as Proveedor;
             string razonSocial = proveedor.RazonSocial.ToLower();
@@ -102,15 +124,18 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             string codigoPostal = proveedor.Municipio.CodigoPostal.ToLower();
             string municipio = proveedor.Municipio.Nombre.ToLower();
             string tipo = proveedor.TipoProveedor.Nombre.ToLower();
-            // Filtra todos
-            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
-            {
-                e.Accepted = (ucTablaProveedores.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
+
+            var condicion = (ucTablaProveedores.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
                              (ucTablaProveedores.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
+
+            // Filtra todos
+            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
+            {
+                e.Accepted = condicion;
             }
             else
             {
@@ -119,12 +144,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                     if (tipoProveedor.Nombre.ToLower().Equals(tipo))
                     {
                         // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
-                        e.Accepted = (ucTablaProveedores.cbRazonSocial.IsChecked == true ? razonSocial.Contains(textoBuscado) : false) ||
-                                     (ucTablaProveedores.cbNif.IsChecked == true ? nif.Contains(textoBuscado) : false) ||
-                                     (ucTablaProveedores.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
-                                     (ucTablaProveedores.cbCalle.IsChecked == true ? calle.Contains(textoBuscado) : false) ||
-                                     (ucTablaProveedores.cbCodigoPostal.IsChecked == true ? codigoPostal.Contains(textoBuscado) : false) ||
-                                     (ucTablaProveedores.cbMunicipio.IsChecked == true ? municipio.Contains(textoBuscado) : false);
+                        e.Accepted = condicion;
                         break;
                     }
                     else
@@ -133,13 +153,8 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                     }
                 }
             }
-            /* }
-             // Ocurre cuando insertas una columna en la tabla pero no están todos los campos establecidos
-             catch (NullReferenceException ex)
-             {
-                 e.Accepted = false;
-             }*/
         }
+        #endregion
 
         #region ConfirmarCambios
         private ICommand _confirmarCambiosComando;
@@ -187,18 +202,15 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         }
         #endregion
 
-        private bool asd(DbEntityEntry x)
+        private bool HayUnProveedorSeleccionado()
         {
-            foreach (var prop in x.OriginalValues.PropertyNames)
+            if (ucTablaProveedores.dgProveedores.SelectedIndex != -1)
             {
-                if (x.OriginalValues[prop].ToString() != x.CurrentValues[prop].ToString())
-                {
-                    return true;
-                }
+                var proveedorSeleccionado = ucTablaProveedores.dgProveedores.SelectedItem as Proveedor;
+                return proveedorSeleccionado != null;
             }
             return false;
         }
-
 
         #region Borrar
         private ICommand _borrarComando;
@@ -211,70 +223,88 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 {
                     _borrarComando = new RelayComando(
                         param => BorrarProveedor(),
-                        param => CanBorrar()
+                        param => HayUnProveedorSeleccionado()
                     );
                 }
                 return _borrarComando;
             }
         }
 
-        private bool CanBorrar()
-        {
-            if (ucTablaProveedores.dgProveedores.SelectedIndex != -1)
-            {
-                Proveedor proveedorSeleccionado = ucTablaProveedores.dgProveedores.SelectedItem as Proveedor;
-                //Console.WriteLine(clienteSeleccionado.razon_social);
-                return proveedorSeleccionado != null;
-            }
-            return false;
-        }
-
         private async void BorrarProveedor()
         {
-            string pregunta = ucTablaProveedores.dgProveedores.SelectedItems.Count == 1
-                ? "¿Está seguro de que desea borrar al proveedor " + (ucTablaProveedores.dgProveedores.SelectedItem as Proveedor).RazonSocial + "?"
-                : "¿Está seguro de que desea borrar los proveedores seleccionados?";
-
-            var mensaje = new MensajeConfirmacion(pregunta);
-            mensaje.MaxHeight = ActualHeight;
-            mensaje.MaxWidth = ActualWidth;
-
-            var resultado = (bool)await DialogHost.Show(mensaje, "RootDialog");
-
-            if (resultado)
+            var proveedoresABorrar = new List<Proveedor>();
+            var proveedoresSeleccionados = ucTablaProveedores.dgProveedores.SelectedItems.Cast<Proveedor>().ToList();
+            foreach (var proveedor in proveedoresSeleccionados)
             {
-                context.Proveedores.RemoveRange(ucTablaProveedores.dgProveedores.SelectedItems.Cast<Proveedor>().ToList());
+                if (!context.Recepciones.Any(r => r.ProveedorId == proveedor.ProveedorId))
+                {
+                    proveedoresABorrar.Add(proveedor);
+                }
+            }
+            context.Proveedores.RemoveRange(proveedoresABorrar);
+            context.SaveChanges();
+            CargarProveedores();
+            if (proveedoresSeleccionados.Count != proveedoresABorrar.Count)
+            {
+                string mensaje = ucTablaProveedores.dgProveedores.SelectedItems.Count == 1
+                       ? "No se ha podido borrar el proveedor seleccionado."
+                       : "No se han podido borrar todos los proveedores seleccionados.";
+                mensaje += "\n\nAsegurese de no que no exista ninguna recepción asociada a dicho proveedor.";
+                await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
             }
         }
         #endregion
 
 
-        /*  #region AñadirProveedor
-          private ICommand _anadirProveedorComando;
+        #region Editar
+        private ICommand _modificarComando;
+        public ICommand ModificarComando
+        {
+            get
+            {
+                if (_modificarComando == null)
+                {
+                    _modificarComando = new RelayComando(
+                        param => ModificarProveedor(),
+                        param => HayUnProveedorSeleccionado()
+                    );
+                }
+                return _modificarComando;
+            }
+        }
 
-          public ICommand AnadirProveedorComando
-          {
-              get
-              {
-                  if (_anadirProveedorComando == null)
-                  {
-                      _anadirProveedorComando = new RelayComando(
-                          param => AnadirProveedor(),
-                          param => true
-                      );
-                  }
-                  return _anadirProveedorComando;
-              }
-          }
+        private async void ModificarProveedor()
+        {
+            var proveedorSeleccionado = ucTablaProveedores.dgProveedores.SelectedItem as Proveedor;
+            var formProveedor = new FormProveedor(proveedorSeleccionado);
+            if ((bool)await DialogHost.Show(formProveedor, "RootDialog"))
+            {
+                proveedorSeleccionado.RazonSocial = formProveedor.RazonSocial;
+                proveedorSeleccionado.Nif = formProveedor.Nif;
+                proveedorSeleccionado.Email = formProveedor.Email;
+                proveedorSeleccionado.TipoId = (formProveedor.cbTiposProveedores.SelectedItem as TipoProveedor).TipoProveedorId;
+                proveedorSeleccionado.MunicipioId = (formProveedor.cbMunicipios.SelectedItem as Municipio).MunicipioId;
+                proveedorSeleccionado.Calle = formProveedor.Calle;
+                proveedorSeleccionado.Observaciones = formProveedor.Observaciones;
+
+                context.SaveChanges();
+                proveedoresViewSource.View.Refresh();
+            }
+        }
+        #endregion
 
 
-          private void AnadirCliente()
-          {
+        // Usado para el FormDireccion
+        public BiomasaEUPTContext GetContext()
+        {
+            return context;
+        }
 
-          }
-
-      }
-      #endregion*/
+        private void BEditarObservaciones_Click(object sender, RoutedEventArgs e)
+        {
+            context.SaveChanges();
+            ucTablaProveedores.tbEditarObservaciones.IsChecked = false;
+        }
 
 
 

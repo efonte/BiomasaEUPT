@@ -6,17 +6,19 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" >
+             d:DesignHeight="300" d:DesignWidth="850" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProveedor}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -58,35 +60,58 @@
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <validadores:ProveedorValidationRule ValidationStep="UpdatedValue"/>
+                            <!--validadores:ProveedorValidationRule ValidationStep="UpdatedValue"/-->
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumn" Header="Razón social" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumna" Header="Razón social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumn" Header="NIF"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" >
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumn" Header="Email" Width="100"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                        MaxLength="254">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="tiposProveedoresColumn" Header="Tipo"
+                            <DataGridComboBoxColumn x:Name="tiposProveedoresColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposProveedoresViewSource}}"
-                                                SelectedValuePath="ProveedorId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoProveedorId, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="TipoProveedorId" 
+                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
-                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle" Width="180"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
+
+                            <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
+                                                                 StaysOpen="True" Opened="pbDireccion_Opened">
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                            <Binding Path="Municipio.CodigoPostal"/>
+                                                            <Binding Path="Municipio.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -97,22 +122,25 @@
                                  ToolTip="Gestionar proveedores"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar el proveedor seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
-                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
-                            </Button>
-                            <Button ToolTip="Confirmar cambios" Command="{Binding ConfirmarCambiosComando}" IsEnabled="{Binding CanConfirmarCambios}">
-                                <materialDesign:PackIcon Kind="Check" Height="20" Width="20" />
-                            </Button>
-
                             <Button x:Name="bAnadirProveedor" ToolTip="Añadir proveedor">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-
+                            <Button ToolTip="Borrar el proveedor seleccionado" Command="{Binding BorrarComando}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar el proveedor seleccionado" Command="{Binding ModificarComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar proveedores">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
+                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource proveedoresViewSource}" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch">
+                <StackPanel DataContext="{StaticResource proveedoresViewSource}" Grid.Column="1" 
+                            HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
                             <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
@@ -123,8 +151,18 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                                          HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
+                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"
+                                          Margin="8 0 0 0" ToolTip="Editar">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=dgProveedores, Path=SelectedItems.Count}" Value="1">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
                                     <materialDesign:PackIcon.RenderTransform>
                                         <RotateTransform Angle="45" />
@@ -135,19 +173,22 @@
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
                             <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
-                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}" FontSize="16"
-                                       MaxHeight="350" TextWrapping="Wrap"/>
+                                       Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
+                                       FontSize="16" MaxHeight="260" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                                     MaxHeight="350" TextWrapping="Wrap"/>
-
+                                     MaxHeight="260" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"
+                                     MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}"/>
+                            <Button x:Name="bEditarObservaciones" Margin="0 20 0 0" Content="Modificar"
+                                     Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </StackPanel>
                     </Expander>
                 </StackPanel>
-
+                
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
-                         materialDesign:HintAssist.Hint=" Buscar..." Background="#F0F0F0"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">

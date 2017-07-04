@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Vistas.ControlesUsuario;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +23,14 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
     /// </summary>
     public partial class TablaProveedores : UserControl
     {
+        private TabProveedores tabProveedores;
+
         public TablaProveedores()
         {
             InitializeComponent();
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             DependencyObject ucParent = Parent;
 
@@ -34,32 +39,25 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
             }
 
-            TabProveedores tabProveedores = (TabProveedores)ucParent;
+            tabProveedores = (TabProveedores)ucParent;
+        }
 
+        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        {
             tabProveedores.FiltrarTabla();
         }
 
-        /*  private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-          {
-              tbObservaciones.Visibility = Visibility.Collapsed;
-              rtbObservaciones.Visibility = Visibility.Visible;
-              bObservaciones.IsEnabled = true;
-          }
-
-          private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-          {
-              tbObservaciones.Visibility = Visibility.Visible;
-              rtbObservaciones.Visibility = Visibility.Collapsed;
-              bObservaciones.IsEnabled = false;
-          }
-
-          private void rtbObservaciones_Pasting(object sender, DataObjectPastingEventArgs e)
-          {
-              // Elimina el formato del texto
-              string textoPortapapeles = Clipboard.GetText();
-              Clipboard.SetText(textoPortapapeles);
-              //Console.WriteLine(new TextRange(rtbObservaciones.Document.ContentStart, rtbObservaciones.Document.ContentEnd).Text);
-          }*/
+        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+        {
+            // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
+            // a PopupContent. No se añade en TabProveedores.xaml para que así no cargue en memoria cada uno
+            // de los PopupBox (para cada fila) hasta que se quiera editar.
+            using (new CursorEspera())
+            {
+                PopupBox popupBox = sender as PopupBox; ;
+                popupBox.PopupContent = new FormDireccion(tabProveedores.GetContext());
+            }
+        }
 
     }
 }
