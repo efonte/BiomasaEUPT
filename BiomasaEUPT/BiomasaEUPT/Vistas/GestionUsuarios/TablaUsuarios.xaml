@@ -195,7 +195,7 @@
                             <Button x:Name="bAnadirUsuario" ToolTip="Añadir usuario">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar el usuario seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                            <Button ToolTip="Borrar el usuario seleccionado" Command="{Binding BorrarComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar usuarios">

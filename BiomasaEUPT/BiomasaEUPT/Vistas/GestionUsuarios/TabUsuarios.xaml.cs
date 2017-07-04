@@ -83,7 +83,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             }
         }
 
-        private async void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private void DgUsuarios_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {

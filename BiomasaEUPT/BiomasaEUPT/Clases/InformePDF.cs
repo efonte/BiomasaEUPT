@@ -72,7 +72,6 @@ namespace BiomasaEUPT.Clases
         public string GenerarPDFMateriaPrima(Proveedor proveedor)
         {
             var materiaPrima = proveedor.Recepciones.First().MateriasPrimas.First();
-            ImprimirCodigoMateriaPrima(materiaPrima);
 
             // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
             fechaCreacion = DateTime.Now;
@@ -152,6 +151,71 @@ namespace BiomasaEUPT.Clases
                              .AddCell(new Cell().Add(new Paragraph("cell 2, 1").SetRotationAngle(-(Math.PI / 2))))
                              .AddCell(new Cell().Add(new Paragraph("cell 2, 2").SetRotationAngle((Math.PI))));
             doc.Add(table);*/
+
+            doc.Close();
+
+            return nombrePdf;
+        }
+
+
+
+        public string GenerarPDFRecepcion(Proveedor proveedor)
+        {
+            var recepcion = proveedor.Recepciones.First();
+            // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
+            fechaCreacion = DateTime.Now;
+            var nombrePdf = ruta + "Recepción #" + recepcion.NumeroAlbaran + " " + fechaCreacion.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+
+            PdfWriter writer = new PdfWriter(nombrePdf);
+
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Recepción #" + recepcion.NumeroAlbaran + " " + fechaCreacion.ToString("dd/MM/yyyy HH:mm:ss"));
+            pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new FinPaginaEventHandler(this));
+
+            Document doc = new Document(pdfDoc, PageSize.A4.Rotate());
+            //doc.SetMargins(70, 70, 85, 85);
+
+            var tablaProvRecep = new Table(new float[] { 1, 1 }).SetWidthPercent(100);
+            tablaProvRecep.AddCell(new Cell().Add(Titulo("Proveedor")).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingRight(10));
+            tablaProvRecep.AddCell(new Cell().Add(Titulo("Recepción")).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingLeft(10));
+            tablaProvRecep.AddCell(new Cell().Add(TablaProveedor(proveedor)).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingRight(10));
+            tablaProvRecep.AddCell(new Cell().Add(TablaRecepcion(recepcion)).SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER).SetPaddingLeft(10));
+            doc.Add(tablaProvRecep);
+            bool primeraVez = true;
+            foreach (var materiaPrima in recepcion.MateriasPrimas.ToList())
+            {
+                if (primeraVez)
+                {
+                    doc.Add(new Paragraph("\n"));
+                    primeraVez = false;
+                }
+                else
+                {
+                    doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                }
+                doc.Add(Titulo("Materia Prima #" + materiaPrima.Codigo));
+                var tablaCodigo = new Table(new float[] { 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+                tablaCodigo.AddCell(CeldaTituloVertical("Tipo").SetVerticalAlignment(VerticalAlignment.TOP));
+                tablaCodigo.AddCell(CeldaVertical(materiaPrima.TipoMateriaPrima.Nombre).SetVerticalAlignment(VerticalAlignment.TOP));
+                tablaCodigo.AddCell(CeldaTituloVertical("Cantidad").SetVerticalAlignment(VerticalAlignment.TOP));
+                tablaCodigo.AddCell(CeldaVertical((materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (materiaPrima.Unidades + " ud.") : (materiaPrima.Volumen + " m³")).SetVerticalAlignment(VerticalAlignment.TOP));
+                var codigoBarras = new Barcode128(pdfDoc);
+                codigoBarras.SetCodeType(Barcode128.CODE128);
+                codigoBarras.SetCode(materiaPrima.Codigo);
+                Rectangle rect = codigoBarras.GetBarcodeSize();
+                Image imagenCodigo = new Image(codigoBarras.CreateFormXObject(pdfDoc)).SetWidth(100);
+                tablaCodigo.AddCell(new Cell().Add(imagenCodigo).AddStyle(estiloCelda).SetPaddingLeft(25));
+                doc.Add(tablaCodigo);
+
+                doc.Add(new Paragraph("\n"));
+
+                doc.Add(TablaMateriaPrima(materiaPrima));
+
+            }
 
             doc.Close();
 

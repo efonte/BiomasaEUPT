@@ -55,7 +55,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         public FiltroTabla()
         {
             InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

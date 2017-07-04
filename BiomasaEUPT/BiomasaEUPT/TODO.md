@@ -1,4 +1,4 @@
-﻿* Arreglar clientes y proveedores
+﻿* Arreglar menú filtro tabla (editar y borrar)
 * Usuarios arreglar banear y formUsuario
 * Trazabilidad árbol
 * Refrescar datagrids

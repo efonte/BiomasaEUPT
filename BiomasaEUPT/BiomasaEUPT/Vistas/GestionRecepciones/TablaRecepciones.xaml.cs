@@ -50,7 +50,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             Recepcion recepcion = (sender as Button).DataContext as Recepcion;
 
             InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
-            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.Recepcion(recepcion.NumeroAlbaran)));
+            System.Diagnostics.Process.Start(informe.GenerarPDFRecepcion(trazabilidad.Recepcion(recepcion.NumeroAlbaran)));
         }
     }
 }
