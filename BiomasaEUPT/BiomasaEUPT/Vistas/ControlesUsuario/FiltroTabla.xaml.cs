@@ -95,20 +95,20 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bAnadirTipo_Click(object sender, RoutedEventArgs e)
         {
             var formTipo = new FormTipo();
-            formTipo.vNombreUnico.Atributo = "nombre";
+            formTipo.vNombreUnico.Atributo = "Nombre";
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
-                formTipo.vNombreUnico.Tipo = "tiposClientes";
+                formTipo.vNombreUnico.Tipo = "TipoCliente";
             }
 
             // Pestaña Proveedores
             if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 formTipo.vNombreUnico.Coleccion = tiposProveedoresViewSource;
-                formTipo.vNombreUnico.Tipo = "tiposProveedores";
+                formTipo.vNombreUnico.Tipo = "TiposProveedor";
             }
 
             if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
@@ -245,13 +245,13 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bAnadirGrupo_Click(object sender, RoutedEventArgs e)
         {
             var formGrupo = new FormTipo("Nuevo Grupo");
-            formGrupo.vNombreUnico.Atributo = "nombre";
+            formGrupo.vNombreUnico.Atributo = "Nombre";
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 formGrupo.vNombreUnico.Coleccion = gruposClientesViewSource;
-                formGrupo.vNombreUnico.Tipo = "gruposClientes";
+                formGrupo.vNombreUnico.Tipo = "GrupoCliente";
             }
 
             if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
@@ -270,7 +270,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private async void bEditarGrupo_Click(object sender, RoutedEventArgs e)
         {
             var formGrupo = new FormTipo("Editar Grupo");
-            formGrupo.vNombreUnico.Atributo = "nombre";
+            formGrupo.vNombreUnico.Atributo = "Nombre";
 
             // Pestaña Clientes
             if (ucParent.GetType().Equals(typeof(TabClientes)))
@@ -280,7 +280,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 formGrupo.Descripcion = grupoSeleccionado.Descripcion;
                 var nombreViejo = formGrupo.Nombre;
                 formGrupo.vNombreUnico.Coleccion = gruposClientesViewSource;
-                formGrupo.vNombreUnico.Tipo = "gruposClientes";
+                formGrupo.vNombreUnico.Tipo = "GrupoCliente";
                 formGrupo.vNombreUnico.NombreActual = grupoSeleccionado.Nombre;
                 if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
                 {

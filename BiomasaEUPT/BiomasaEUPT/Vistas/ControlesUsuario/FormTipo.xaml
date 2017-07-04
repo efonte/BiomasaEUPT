@@ -29,7 +29,7 @@
                         <Binding.ValidationRules>
                             <validadores:RequeridoValidationRule x:Name="vNombreRequerido" NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
                             <validadores:LongitudValidationRule x:Name="vNombreLongitud" NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE}" ValidatesOnTargetUpdated="True" />
-                            <validadores:UnicoValidationRule x:Name="vNombreUnico" ValidatesOnTargetUpdated="True" />
+                            <validadores:UnicoValidationRule x:Name="vNombreUnico" Online="True" ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

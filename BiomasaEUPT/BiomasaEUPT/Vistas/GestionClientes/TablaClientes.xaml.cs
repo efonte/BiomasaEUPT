@@ -23,12 +23,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
     /// </summary>
     public partial class TablaClientes : UserControl
     {
+        private TabClientes tabClientes;
+
         public TablaClientes()
         {
             InitializeComponent();
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             DependencyObject ucParent = Parent;
 
@@ -37,8 +39,11 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
             }
 
-            TabClientes tabClientes = (TabClientes)ucParent;
+            tabClientes = (TabClientes)ucParent;
+        }
 
+        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        {
             tabClientes.FiltrarTabla();
         }
 
@@ -49,9 +54,10 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             // de los PopupBox (para cada fila) hasta que se quiera editar.
             using (new CursorEspera())
             {
-                PopupBox popupBox = sender as PopupBox;
-                popupBox.PopupContent = new FormDireccion();
+                PopupBox popupBox = sender as PopupBox; ;
+                popupBox.PopupContent = new FormDireccion(tabClientes.GetContext());
             }
         }
+
     }
 }

@@ -33,7 +33,7 @@ namespace BiomasaEUPT
                       .SelectMany(x => x.ValidationErrors)
                       .Select(x => x.ErrorMessage);
 
-                mensaje = "No pueden guardar los cambios:\n\n" + string.Join("\n", mensajesError);
+                mensaje = "No pueden guardar los cambios:\n\n" + string.Join("\n\n", mensajesError);
             }
             else if (excepcion is DbUpdateException ex)
             {

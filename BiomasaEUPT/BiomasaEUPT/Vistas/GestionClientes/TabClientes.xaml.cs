@@ -37,6 +37,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             InitializeComponent();
             DataContext = this;
+            context = new BiomasaEUPTContext();
             ucTablaClientes.dgClientes.CellEditEnding += DgClientes_CellEditEnding;
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -53,8 +54,13 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             ucTablaClientes.cbMunicipio.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.bAnadirCliente.Click += BAnadirCliente_Click;
             ucTablaClientes.bRefrescar.Click += (s, e1) => { CargarClientes(); };
-            context = new BiomasaEUPTContext();
+            ucTablaClientes.bEditarObservaciones.Click += BEditarObservaciones_Click;
+        }
 
+        private void BEditarObservaciones_Click(object sender, RoutedEventArgs e)
+        {
+            context.SaveChanges();
+            ucTablaClientes.tbEditarObservaciones.IsChecked = false;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -243,5 +249,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
+
+        // Usado para el FormDireccion
+        public BiomasaEUPTContext GetContext()
+        {
+            return context;
+        }
     }
 }

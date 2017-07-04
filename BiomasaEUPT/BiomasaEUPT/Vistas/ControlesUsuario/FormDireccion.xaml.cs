@@ -24,38 +24,49 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class FormDireccion : UserControl
     {
-        private BiomasaEUPTContext context;
+        protected BiomasaEUPTContext context;
         private CollectionViewSource paisesViewSource;
         private CollectionViewSource comunidadesViewSource;
         private CollectionViewSource provinciasViewSource;
         private CollectionViewSource municipiosViewSource;
 
-        public FormDireccion()
+        public FormDireccion(BiomasaEUPTContext context)
         {
             InitializeComponent();
             DataContext = this;
-            context = new BiomasaEUPTContext();
+            // Hay que pasarle el contexto de la BD ya que sino al ser otro contexto que el de la tabla
+            // clientes/proveedores salta excepción al guardar
+            this.context = context;
             paisesViewSource = ((CollectionViewSource)(FindResource("paisesViewSource")));
             comunidadesViewSource = ((CollectionViewSource)(FindResource("comunidadesViewSource")));
             provinciasViewSource = ((CollectionViewSource)(FindResource("provinciasViewSource")));
             municipiosViewSource = ((CollectionViewSource)(FindResource("municipiosViewSource")));
-            context.Paises.Load();
-            paisesViewSource.Source = context.Paises.Local;
+            paisesViewSource.Source = context.Paises.ToList();
         }
 
         private void cbPaises_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            comunidadesViewSource.Source = context.Comunidades.Where(d => d.PaisId == ((Pais)cbPaises.SelectedItem).PaisId).ToList();
+            if (cbPaises.SelectedItem != null)
+            {
+                comunidadesViewSource.Source = context.Comunidades.Where(d => d.PaisId == ((Pais)cbPaises.SelectedItem).PaisId).ToList();
+            }
         }
 
         private void cbComunidades_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            provinciasViewSource.Source = context.Provincias.Where(d => d.ComunidadId == ((Comunidad)cbComunidades.SelectedItem).ComunidadId).ToList();
+            if (cbComunidades.SelectedItem != null)
+            {
+                provinciasViewSource.Source = context.Provincias.Where(d => d.ComunidadId == ((Comunidad)cbComunidades.SelectedItem).ComunidadId).ToList();
+            }
         }
 
         private void cbProvincias_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            municipiosViewSource.Source = context.Municipios.Where(d => d.ProvinciaId == ((Provincia)cbProvincias.SelectedItem).ProvinciaId).ToList();
+            if (cbProvincias.SelectedItem != null)
+            {
+                municipiosViewSource.Source = context.Municipios.Where(d => d.ProvinciaId == ((Provincia)cbProvincias.SelectedItem).ProvinciaId).ToList();
+                context.SaveChanges();
+            }
         }
     }
 }

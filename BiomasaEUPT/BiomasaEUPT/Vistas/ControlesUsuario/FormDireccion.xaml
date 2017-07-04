@@ -33,7 +33,7 @@
         </Grid.ColumnDefinitions>
         <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
                   ItemsSource="{Binding Source={StaticResource paisesViewSource}}"
-                  SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Pais.Codigo, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                  SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Pais.Codigo, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
                   SelectedValuePath="Codigo"
                   SelectionChanged="cbPaises_SelectionChanged">
             <ComboBox.ItemTemplate>
@@ -49,7 +49,7 @@
 
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
                       ItemsSource="{Binding Source={StaticResource comunidadesViewSource}}"
-                      SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
                       DisplayMemberPath="Nombre"
                       SelectedValuePath="Nombre"
                       SelectionChanged="cbComunidades_SelectionChanged">
@@ -57,7 +57,7 @@
 
         <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
                       ItemsSource="{Binding Source={StaticResource provinciasViewSource}}"
-                      SelectedValue="{Binding DataContext.Municipio.Provincia.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                      SelectedValue="{Binding DataContext.Municipio.Provincia.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
                       DisplayMemberPath="Nombre"
                       SelectedValuePath="Nombre"
                       SelectionChanged="cbProvincias_SelectionChanged">
@@ -65,7 +65,7 @@
 
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
                   ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
-                  SelectedValue="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+                  SelectedValue="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

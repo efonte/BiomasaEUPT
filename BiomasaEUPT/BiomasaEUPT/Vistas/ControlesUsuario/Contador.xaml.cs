@@ -1,5 +1,6 @@
 ﻿using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Vistas.GestionClientes;
+using BiomasaEUPT.Vistas.GestionProveedores;
 using BiomasaEUPT.Vistas.GestionUsuarios;
 using System;
 using System.Collections.Generic;
@@ -72,14 +73,34 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     var tiposClientes = context.TiposClientes.ToList();
                     int fila = 0;
-                    foreach (var tu in tiposClientes)
+                    foreach (var tc in tiposClientes)
                     {
                         gContador.RowDefinitions.Add(new RowDefinition() { });
-                        var nombre = new TextBlock() { Text = tu.Nombre };
+                        var nombre = new TextBlock() { Text = tc.Nombre };
                         Grid.SetRow(nombre, fila);
                         Grid.SetColumn(nombre, 0);
                         gContador.Children.Add(nombre);
-                        var cantidad = new TextBlock() { Text = tu.Clientes.Count().ToString(), FontWeight = FontWeights.Light };
+                        var cantidad = new TextBlock() { Text = tc.Clientes.Count().ToString(), FontWeight = FontWeights.Light };
+                        Grid.SetRow(cantidad, fila);
+                        Grid.SetColumn(cantidad, 1);
+                        gContador.Children.Add(cantidad);
+                        fila++;
+                    }
+                }
+
+                // Pestaña Proveedores
+                else if (ucParent.GetType().Equals(typeof(TabProveedores)))
+                {
+                    var tiposProveedores = context.TiposProveedores.ToList();
+                    int fila = 0;
+                    foreach (var tp in tiposProveedores)
+                    {
+                        gContador.RowDefinitions.Add(new RowDefinition() { });
+                        var nombre = new TextBlock() { Text = tp.Nombre };
+                        Grid.SetRow(nombre, fila);
+                        Grid.SetColumn(nombre, 0);
+                        gContador.Children.Add(nombre);
+                        var cantidad = new TextBlock() { Text = tp.Proveedores.Count().ToString(), FontWeight = FontWeights.Light };
                         Grid.SetRow(cantidad, fila);
                         Grid.SetColumn(cantidad, 1);
                         gContador.Children.Add(cantidad);

@@ -7,12 +7,13 @@
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:ControlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="850" >
+             d:DesignHeight="300" d:DesignWidth="850" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
@@ -143,7 +144,8 @@
                             <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1" StaysOpen="True" Opened="pbDireccion_Opened">
+                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
+                                                                 StaysOpen="True" Opened="pbDireccion_Opened">
                                             <materialDesign:PopupBox.ToggleContent>
                                                 <TextBlock>
                                                     <TextBlock.Text>
@@ -157,7 +159,6 @@
                                                     </TextBlock.Text>
                                                 </TextBlock>
                                             </materialDesign:PopupBox.ToggleContent>
-                                            <!--ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/-->
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -175,10 +176,10 @@
                             <Button x:Name="bAnadirCliente" ToolTip="Añadir cliente">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}" IsEnabled="{Binding CanBorrar}">
+                            <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Modificar el cliente seleccionado" Command="{Binding ModificarComando}" IsEnabled="{Binding CanModificar}">
+                            <Button ToolTip="Modificar el cliente seleccionado" Command="{Binding ModificarComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar clientes">
@@ -201,8 +202,18 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                                          HorizontalAlignment="Right" Margin="8 0 0 0" ToolTip="Editar">
+                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"
+                                          Margin="8 0 0 0" ToolTip="Editar">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=dgClientes, Path=SelectedItems.Count}" Value="1">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
                                     <materialDesign:PackIcon.RenderTransform>
                                         <RotateTransform Angle="45" />
@@ -214,21 +225,14 @@
                             </ToggleButton>
                             <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
-                                       FontSize="16" MaxHeight="350" TextWrapping="Wrap"/>
+                                       FontSize="16" MaxHeight="260" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                                     MaxHeight="350" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <!--RichTextBox x:Name="rtbObservaciones" MaxWidth="180" MinHeight="300" VerticalAlignment="Top"
-                                         Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="16"
-                                         DataObject.Pasting="rtbObservaciones_Pasting">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}" />
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <Button x:Name="bObservaciones" Margin="0 10 0 0" Content="Cambiar" VerticalAlignment="Bottom" IsEnabled="False"/-->
+                                     MaxHeight="260" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"
+                                     MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}"/>
+                            <Button x:Name="bEditarObservaciones" Margin="0 20 0 0" Content="Modificar"
+                                     Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </StackPanel>
                     </Expander>
                 </StackPanel>
