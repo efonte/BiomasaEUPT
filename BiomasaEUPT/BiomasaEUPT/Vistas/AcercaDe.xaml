@@ -32,7 +32,13 @@
                FontFamily="Roboto" FontSize="22" FontWeight="Black" Margin="10"/>
 
         <StackPanel Grid.Row="1" Margin="20 0 20 0" VerticalAlignment="Center">
-            <TextBlock Margin="0 20 0 20" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">BiomasaEUPT - Aplicación de trazabilidad</TextBlock>
+            <TextBlock Margin="0 20 0 40" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}BiomasaEUPT v{0} - Aplicación de trazabilidad">
+                        <Binding Path="Version"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
             <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© Javier Bielsa Hernández 2017</TextBlock>
             <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© Eduardo Fonte Polo 2017</TextBlock>
         </StackPanel>

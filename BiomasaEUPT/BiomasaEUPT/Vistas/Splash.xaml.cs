@@ -26,12 +26,12 @@ namespace BiomasaEUPT
         public Splash()
         {
             InitializeComponent();
-            iniciarConfig();
-            iniciarLogger();
-            iniciarCarpetas();
+            IniciarConfig();
+            IniciarLogger();
+            IniciarCarpetas();
         }
 
-        private void iniciarConfig()
+        private void IniciarConfig()
         {
             if (!File.Exists("BiomasaEUPT.exe.config"))
             {
@@ -39,7 +39,7 @@ namespace BiomasaEUPT
             }
         }
 
-        private void iniciarLogger()
+        private void IniciarLogger()
         {
             if (Properties.Settings.Default.ModoDebug)
             {
@@ -56,7 +56,7 @@ namespace BiomasaEUPT
             Log.Information("SPLASH: Logger inicializado.");
         }
 
-        private void iniciarCarpetas()
+        private void IniciarCarpetas()
         {
             if (!Directory.Exists("carpeta"))
             {
@@ -66,17 +66,18 @@ namespace BiomasaEUPT
 
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
-            await Task.Run(() => iniciarPrograma());
+            await Task.Run(() => IniciarPrograma());
 
             Log.Information("SPLASH: Inicialización completa.");
             Login login = new Login();
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.usuario) && !string.IsNullOrWhiteSpace(Properties.Settings.Default.contrasena))
             {
-                if (login.IniciarSesion(Properties.Settings.Default.usuario, Properties.Settings.Default.contrasena))
+                var usuario = login.IniciarSesion(Properties.Settings.Default.usuario, Properties.Settings.Default.contrasena);
+                if (usuario != null)
                 {
                     login.Close();
                     MainWindow main = new MainWindow();
-                    await Task.Run(() => inicioFinalizado());
+                    await Task.Run(() => InicioFinalizado());
                     Close();
                     main.Show();
 
@@ -86,7 +87,7 @@ namespace BiomasaEUPT
                     login.Show();
                     login.tbUsuario.Text = Properties.Settings.Default.usuario;
                     Close();
-                    MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    login.MensajeLoginIncorrecto();
                 }
             }
             else
@@ -99,7 +100,7 @@ namespace BiomasaEUPT
 
         }
 
-        private void iniciarPrograma()
+        private void IniciarPrograma()
         {
             if (Properties.Settings.Default.ActualizarPrograma)
             {
@@ -132,13 +133,13 @@ namespace BiomasaEUPT
             // Estado 2 - Conexión BD
             Dispatcher.Invoke(() =>
             {
-                lInfoProgreso.Text = "Conectándose a la BD";
+                lInfoProgreso.Text = "Conectándose a la BD...";
                 pbProgreso.Value = 50;
             });
             // Thread.Sleep(500);
         }
 
-        private void inicioFinalizado()
+        private void InicioFinalizado()
         {
             Dispatcher.Invoke(() =>
             {
@@ -146,7 +147,7 @@ namespace BiomasaEUPT
                 pbProgreso.Value = 100;
             });
 
-           // Thread.Sleep(1000);
+            // Thread.Sleep(1000);
         }
     }
 }

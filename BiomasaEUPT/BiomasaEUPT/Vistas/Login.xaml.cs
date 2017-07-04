@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -27,34 +28,6 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class Login : Window
     {
-        public Login()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
-
-        private void pbContrasena_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            PasswordBox pBox = sender as PasswordBox;
-            PasswordBoxAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
-        }
-
-
-        private void CargarVistaMain()
-        {
-            MainWindow mainWindows = new MainWindow();
-            Close();
-            mainWindows.Show();
-        }
-
-        public bool IniciarSesion(String usuario, String hashContrasena)
-        {
-            using (var context = new BiomasaEUPTContext())
-            {
-                return context.Usuarios.Where(s => s.Nombre == usuario && s.Contrasena == hashContrasena).FirstOrDefault() != null;
-            }
-        }
-
         private string _usuario;
         public string Usuario
         {
@@ -72,7 +45,35 @@ namespace BiomasaEUPT
             }
         }
 
-        private async void bIniciarSesion_Click(object sender, RoutedEventArgs e)
+        public Login()
+        {
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        private void pbContrasena_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            PasswordBox pBox = sender as PasswordBox;
+            PasswordBoxAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
+        }
+
+        private void CargarVistaMain()
+        {
+            MainWindow mainWindows = new MainWindow();
+            Close();
+            mainWindows.Show();
+        }
+
+        public Usuario IniciarSesion(String usuario, String hashContrasena)
+        {
+            using (var context = new BiomasaEUPTContext())
+            {
+                return context.Usuarios.FirstOrDefault(u => u.Nombre == usuario && u.Contrasena == hashContrasena
+                                                            && u.Baneado == false);
+            }
+        }
+
+        private void bIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
             String hashContrasena = "";
             if (Contrasena != null)
@@ -80,7 +81,7 @@ namespace BiomasaEUPT
                 hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(Contrasena));
             }
 
-            if (IniciarSesion(Usuario, hashContrasena))
+            if (IniciarSesion(Usuario, hashContrasena) != null)
             {
                 Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
                 Properties.Settings.Default.usuario = Usuario;
@@ -89,17 +90,18 @@ namespace BiomasaEUPT
             }
             else
             {
-                //MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-                var mensaje = new MensajeInformacion("El usuario y/o la contraseña son incorrectos.")
-                {
-                    MaxHeight = Height,
-                    MaxWidth = Width
-                };
-                var resultado = await DialogHost.Show(mensaje, "RootDialog");
-                // Console.WriteLine("*******" + mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
+                MensajeLoginIncorrecto();
             }
 
+        }
+
+        public async void MensajeLoginIncorrecto()
+        {
+            //MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            var mensaje = new MensajeInformacion("El usuario y/o la contraseña son incorrectos.") { Width = 225 };
+            var resultado = await DialogHost.Show(mensaje, "RootDialog");
+            // Console.WriteLine("*******" + mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
         }
     }
 }

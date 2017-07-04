@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +21,12 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class AcercaDe : Window
     {
+        public string Version { get; } = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
         public AcercaDe()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void bAceptar_Click(object sender, RoutedEventArgs e)
