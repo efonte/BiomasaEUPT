@@ -32,5 +32,11 @@
     <Setting Name="ModoNocturno" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ColorPrimario" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BlueGrey</Value>
+    </Setting>
+    <Setting Name="ColorSecundario" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Yellow</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

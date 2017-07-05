@@ -215,8 +215,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Ajustes\TabApariencia.xaml.cs">
-      <DependentUpon>TabApariencia.xaml</DependentUpon>
+    <Compile Include="Vistas\Ajustes\TabAjustesUsuario.xaml.cs">
+      <DependentUpon>TabAjustesUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Ajustes\TabAjustesApariencia.xaml.cs">
+      <DependentUpon>TabAjustesApariencia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Ajustes\TabAjustesVentana.xaml.cs">
+      <DependentUpon>TabAjustesVentana.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Ajustes\WinAjustes.xaml.cs">
       <DependentUpon>WinAjustes.xaml</DependentUpon>
@@ -341,7 +347,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\Ajustes\TabApariencia.xaml">
+    <Page Include="Vistas\Ajustes\TabAjustesUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Ajustes\TabAjustesApariencia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Ajustes\TabAjustesVentana.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

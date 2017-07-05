@@ -142,5 +142,29 @@ namespace BiomasaEUPT.Properties {
                 this["ModoNocturno"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("BlueGrey")]
+        public string ColorPrimario {
+            get {
+                return ((string)(this["ColorPrimario"]));
+            }
+            set {
+                this["ColorPrimario"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Yellow")]
+        public string ColorSecundario {
+            get {
+                return ((string)(this["ColorSecundario"]));
+            }
+            set {
+                this["ColorSecundario"] = value;
+            }
+        }
     }
 }

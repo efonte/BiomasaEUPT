@@ -30,8 +30,8 @@
                             <TextBlock Text="General" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <local:TabApariencia x:Name="ucTabApariencia"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <local:TabAjustesApariencia x:Name="ucTabApariencia" Margin="0 0 0 20"/>
                     </ScrollViewer>
                 </TabItem>
 

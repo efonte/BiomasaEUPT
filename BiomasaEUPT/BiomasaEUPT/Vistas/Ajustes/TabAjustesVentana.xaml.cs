@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.Ajustes
 {
     /// <summary>
-    /// Lógica de interacción para TabApariencia.xaml
+    /// Lógica de interacción para TabAjustesVentana.xaml
     /// </summary>
-    public partial class TabApariencia : UserControl
+    public partial class TabAjustesVentana : UserControl
     {
-        public TabApariencia()
+        public TabAjustesVentana()
         {
             InitializeComponent();
         }
-
     }
 }

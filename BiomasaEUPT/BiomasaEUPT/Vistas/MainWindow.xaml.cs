@@ -124,7 +124,10 @@ namespace BiomasaEUPT
             if (Properties.Settings.Default.TabActiva != "")
                 tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva).IsSelected = true;
 
-            new PaletteHelper().SetLightDark(Properties.Settings.Default.ModoNocturno);
+            var paletteHelper = new PaletteHelper();
+            paletteHelper.SetLightDark(Properties.Settings.Default.ModoNocturno);
+            paletteHelper.ReplacePrimaryColor(Properties.Settings.Default.ColorPrimario);
+            paletteHelper.ReplaceAccentColor(Properties.Settings.Default.ColorSecundario);
         }
 
         private void GuardarAjustes()
