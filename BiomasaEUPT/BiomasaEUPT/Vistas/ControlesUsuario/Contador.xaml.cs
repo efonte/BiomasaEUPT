@@ -55,7 +55,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     int fila = 0;
                     foreach (var tu in tiposUsuarios)
                     {
-                        gContador.RowDefinitions.Add(new RowDefinition() { });
+                        gContador.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                         var nombre = new TextBlock() { Text = tu.Nombre };
                         Grid.SetRow(nombre, fila);
                         Grid.SetColumn(nombre, 0);
@@ -75,7 +75,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     int fila = 0;
                     foreach (var tc in tiposClientes)
                     {
-                        gContador.RowDefinitions.Add(new RowDefinition() { });
+                        gContador.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                         var nombre = new TextBlock() { Text = tc.Nombre };
                         Grid.SetRow(nombre, fila);
                         Grid.SetColumn(nombre, 0);
@@ -95,7 +95,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     int fila = 0;
                     foreach (var tp in tiposProveedores)
                     {
-                        gContador.RowDefinitions.Add(new RowDefinition() { });
+                        gContador.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                         var nombre = new TextBlock() { Text = tp.Nombre };
                         Grid.SetRow(nombre, fila);
                         Grid.SetColumn(nombre, 0);

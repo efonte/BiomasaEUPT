@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,13 +32,12 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     {
         private BiomasaEUPTContext context;
         private CollectionViewSource materiasPrimasViewSource;
-        private CollectionViewSource tiposMateriasPrimasViewSource;
-        private CollectionViewSource gruposMateriasPrimasViewSource;
-        //private CollectionViewSource sitiosRecepcionesViewSource;
-        private CollectionViewSource procedenciasViewSource;
+        // private CollectionViewSource tiposMateriasPrimasViewSource;
+        // private CollectionViewSource gruposMateriasPrimasViewSource;
+        // private CollectionViewSource procedenciasViewSource;
         private CollectionViewSource recepcionesViewSource;
-        private CollectionViewSource proveedoresViewSource;
-        private CollectionViewSource estadosRecepcionesViewSource;
+        // private CollectionViewSource proveedoresViewSource;
+        // private CollectionViewSource estadosRecepcionesViewSource;
 
         public TabRecepciones()
         {
@@ -68,44 +69,49 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
             ucTablaRecepciones.bAnadirRecepcion.Click += BAnadirRecepcion_Click;
             ucTablaMateriasPrimas.bAnadirMateriaPrima.Click += BAnadirMateriaPrima_Click;
-
+            ucTablaRecepciones.bRefrescar.Click += (s, e1) => { CargarRecepciones(); };
+            ucTablaMateriasPrimas.bRefrescar.Click += (s, e1) => { CargarMateriasPrimas(); };
 
             // Hacer doble clic en una fila del datagrid de recepcions hará que se ejecuta el evento RowRecepciones_DoubleClick
             Style rowStyleRecepciones = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
-            rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowRecepciones_DoubleClick)));
+            rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { ModificarRecepcion(); })));
             ucTablaRecepciones.dgRecepciones.RowStyle = rowStyleRecepciones;
             // Hacer doble clic en una fila del datagrid de materias primas hará que se ejecuta el evento RowMateriasPrimas_DoubleClick
             Style rowStyleMateriasPrimas = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
-            rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowMateriasPrimas_DoubleClick)));
+            rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { ModificarMateriaPrima(); })));
             ucTablaMateriasPrimas.dgMateriasPrimas.RowStyle = rowStyleMateriasPrimas;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            context = new BiomasaEUPTContext();
+
+            materiasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource"));
+            // tiposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource"));
+            // gruposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource"));
+            // procedenciasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource"));
+            recepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource"));
+            // proveedoresViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource"));
+            // estadosRecepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource"));
+            CargarRecepciones();
+        }
+
+        public void CargarRecepciones()
+        {
             using (new CursorEspera())
             {
-                context = new BiomasaEUPTContext();
-                materiasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource"));
-                tiposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource"));
-                gruposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource"));
-                procedenciasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("procedenciasViewSource"));
-                recepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource"));
-                proveedoresViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource"));
-                estadosRecepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource"));
-
-                context.TiposMateriasPrimas.Load();
-                context.GruposMateriasPrimas.Load();
-                context.Procedencias.Load();
-                context.Recepciones.Load();
-                context.Proveedores.Load();
-                context.EstadosRecepciones.Load();
-
-                tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Local;
-                gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
-                procedenciasViewSource.Source = context.Procedencias.Local;
-                recepcionesViewSource.Source = context.Recepciones.Local;
-                proveedoresViewSource.Source = context.Proveedores.Local;
-                estadosRecepcionesViewSource.Source = context.EstadosRecepciones.Local;
+                // https://stackoverflow.com/questions/29049531/data-refreshing-issue-in-ef-code-first-method
+                // https://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/
+                // if (context != null)
+                //     context.Dispose();
+                // context = new BiomasaEUPTContext();
+                // tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.ToList();
+                // gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.ToList();
+                // procedenciasViewSource.Source = context.Procedencias.ToList();
+                recepcionesViewSource.Source = context.Recepciones/*.AsNoTracking()*/.ToList();
+                // recepcionesViewSource.View.Refresh();
+                // proveedoresViewSource.Source = context.Proveedores.ToList();
+                // estadosRecepcionesViewSource.Source = context.EstadosRecepciones.ToList();
 
                 // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
                 ucTablaRecepciones.dgRecepciones.SelectedIndex = -1;
@@ -123,7 +129,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     NumeroAlbaran = formRecepcion.NumeroAlbaran,
                     FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second),
                     ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId,
-                    //EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId
                     EstadoId = 1
                 });
                 context.SaveChanges();
@@ -222,6 +227,26 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                          (ucTablaMateriasPrimas.cbProcedencia.IsChecked == true ? procedencia.Contains(textoBuscado) : false);
         }
 
+        private bool HayUnaRecepcionSeleccionada()
+        {
+            if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
+            {
+                var recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
+                return recepcionSeleccionada != null;
+            }
+            return false;
+        }
+
+        private bool HayUnaMateriaPrimaSeleccionada()
+        {
+            if (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedIndex != -1)
+            {
+                var materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
+                return materiaPrimaSeleccionada != null;
+            }
+            return false;
+        }
+
         #region BorrarRecepcion
         private ICommand _borrarRecepcionComando;
         public ICommand BorrarRecepcionComando
@@ -232,21 +257,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 {
                     _borrarRecepcionComando = new RelayComando(
                         param => BorrarRecepcion(),
-                        param => CanBorrarRecepcion()
+                        param => HayUnaRecepcionSeleccionada()
                     );
                 }
                 return _borrarRecepcionComando;
             }
-        }
-
-        private bool CanBorrarRecepcion()
-        {
-            if (ucTablaRecepciones.dgRecepciones.SelectedIndex != -1)
-            {
-                Recepcion recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
-                return recepcionSeleccionada != null;
-            }
-            return false;
         }
 
         private async void BorrarRecepcion()
@@ -290,21 +305,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 {
                     _borrarMateriaPrimaComando = new RelayComando(
                         param => BorrarMateriaPrima(),
-                        param => CanBorrarMateriaPrima()
+                        param => HayUnaMateriaPrimaSeleccionada()
                     );
                 }
                 return _borrarMateriaPrimaComando;
             }
-        }
-
-        private bool CanBorrarMateriaPrima()
-        {
-            if (ucTablaMateriasPrimas.dgMateriasPrimas.SelectedIndex != -1)
-            {
-                var materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
-                return materiaPrimaSeleccionada != null;
-            }
-            return false;
         }
 
         private async void BorrarMateriaPrima()
@@ -341,9 +346,25 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         }
         #endregion
 
-        private async void RowRecepciones_DoubleClick(object sender, MouseButtonEventArgs e)
+        #region EditarRecepcion
+        private ICommand _modificarRecepcionComando;
+        public ICommand ModificarRecepcionComando
         {
-            var fila = sender as DataGridRow;
+            get
+            {
+                if (_modificarRecepcionComando == null)
+                {
+                    _modificarRecepcionComando = new RelayComando(
+                        param => ModificarRecepcion(),
+                        param => HayUnaRecepcionSeleccionada()
+                    );
+                }
+                return _modificarRecepcionComando;
+            }
+        }
+
+        private async void ModificarRecepcion()
+        {
             var recepcionSeleccionada = ucTablaRecepciones.dgRecepciones.SelectedItem as Recepcion;
             var formRecepcion = new FormRecepcion(context, "Editar Recepción")
             {
@@ -368,10 +389,27 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 ucTablaMateriasPrimas.bAnadirMateriaPrima.IsEnabled = recepcionSeleccionada.EstadoId == 1; // Disponible
             }
         }
+        #endregion
 
-        private async void RowMateriasPrimas_DoubleClick(object sender, MouseButtonEventArgs e)
+        #region EditarMateriaPrima
+        private ICommand _modificarMateriaPrimaComando;
+        public ICommand ModificarMateriaPrimaComando
         {
-            var fila = sender as DataGridRow;
+            get
+            {
+                if (_modificarMateriaPrimaComando == null)
+                {
+                    _modificarMateriaPrimaComando = new RelayComando(
+                        param => ModificarMateriaPrima(),
+                        param => HayUnaMateriaPrimaSeleccionada()
+                    );
+                }
+                return _modificarMateriaPrimaComando;
+            }
+        }
+
+        private async void ModificarMateriaPrima()
+        {
             var materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
             var formMateriaPrima = new FormMateriaPrima(context, materiaPrimaSeleccionada);
             var formMateriaPrimaDataContext = formMateriaPrima.DataContext as FormMateriaPrimaViewModel;
@@ -423,6 +461,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 // CargarMateriasPrimas();
             }
         }
+        #endregion
 
         private void CargarMateriasPrimas()
         {
@@ -430,7 +469,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             if (recepcion != null)
             {
                 ucTablaMateriasPrimas.bAnadirMateriaPrima.IsEnabled = recepcion.EstadoId == 1; // Disponible
-                materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+                using (new CursorEspera())
+                {
+                    materiasPrimasViewSource.Source = context.MateriasPrimas.Where(mp => mp.RecepcionId == recepcion.RecepcionId).ToList();
+                }
             }
             else
             {

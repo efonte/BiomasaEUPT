@@ -27,6 +27,8 @@
 
             // CUIDADO -> Borra la tabla y la vuelve a crear
             //Database.SetInitializer(new BiomasaEUPTContextInitializer());
+
+            //Configuration.AutoDetectChangesEnabled = false;
         }
 
 

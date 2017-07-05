@@ -125,11 +125,17 @@
                                              ToolTip="Gestionar materias primas"
                                              Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bBorrarMateriaPrima" ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}" IsEnabled="{Binding CanBorrarMateriaPrima}">
-                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
-                            </Button>
                             <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bBorrarMateriaPrima" ToolTip="Borrar la materia prima seleccionada" Command="{Binding BorrarMateriaPrimaComando}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar la materia prima seleccionada" Command="{Binding ModificarMateriaPrimaComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar materias primas">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>

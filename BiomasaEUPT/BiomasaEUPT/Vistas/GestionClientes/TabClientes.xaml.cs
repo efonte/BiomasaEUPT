@@ -72,6 +72,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 clientesViewSource.Source = context.Clientes.ToList();
                 tiposClientesViewSource.Source = context.TiposClientes.ToList();
                 gruposClientesViewSource.Source = context.GruposClientes.ToList();
+
+                // Por defecto no está seleccionada ninguna fila del datagrid clientes 
                 ucTablaClientes.dgClientes.SelectedIndex = -1;
             }
         }
