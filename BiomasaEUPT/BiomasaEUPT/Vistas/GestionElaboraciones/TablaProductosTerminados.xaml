@@ -100,7 +100,7 @@
                                      ToolTip="Gestionar productos terminados"
                                      Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar el producto terminado seleccionado" Command="{Binding BorrarProductoSeleccionadoComando}" IsEnabled="{Binding CanBorrarProductoTerminado}">
+                            <Button ToolTip="Borrar el producto terminado seleccionado" Command="{Binding BorrarProductoSeleccionadoComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bAnadirProductoTerminado" ToolTip="Añadir producto terminado">

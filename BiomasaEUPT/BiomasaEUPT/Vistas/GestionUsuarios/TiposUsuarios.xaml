@@ -12,10 +12,7 @@
 
             <ListBox x:Name="lbTiposUsuarios" HorizontalContentAlignment="Center" Margin="0 0 0 0" SelectedIndex="0" SelectionChanged="lbTiposUsuarios_SelectionChanged">
                 <ListBoxItem x:Name="tbTipoTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem>
-                <!--ListBoxItem x:Name="tbTipoAdministrador" Margin="0 0 0 0" FontSize="14">Administrador</ListBoxItem>
-                <ListBoxItem x:Name="tbTipoTecnicoA" Margin="0 0 0 0" FontSize="14">Técnico A</ListBoxItem>
-                <ListBoxItem x:Name="tbTipoTecnicoB" Margin="0 0 0 0" FontSize="14">Técnico B</ListBoxItem>
-                <ListBoxItem x:Name="tbTipoTecnicoC" Margin="0 0 0 0" FontSize="14">Técnico C</ListBoxItem-->
+
             </ListBox>
         </GroupBox>
     </Grid>

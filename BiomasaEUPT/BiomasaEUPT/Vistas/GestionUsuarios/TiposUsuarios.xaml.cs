@@ -23,7 +23,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     public partial class TiposUsuarios : UserControl
     {
         private bool primaraVez = false;
-        // private BiomasaEUPTEntidades context;
+        // private BiomasaEUPTContext context;
+
         public TiposUsuarios()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //  context = BaseDeDatos.Instancia.biomasaEUPTEntidades;
+            //  context = new BiomasaEUPTContext();
 
             DependencyObject ucParent = Parent;
 
@@ -45,14 +46,17 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
                 CollectionViewSource tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
-                foreach (TipoUsuario tipoUsuario in tiposUsuariosViewSource.View)
+                if (tiposUsuariosViewSource.View != null)
                 {
-                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
+                    foreach (TipoUsuario tipoUsuario in tiposUsuariosViewSource.View)
+                    {
+                        lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
+                    }
+                    /*foreach (var tipoUsuario in context.tiposUsuarios.ToList())
+                    {
+                        lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
+                    }*/
                 }
-                /*foreach (var tipoUsuario in context.tipos_usuarios.ToList())
-                {
-                    lbTiposUsuarios.Items.Add(new ListBoxItem() { Content = tipoUsuario.Nombre, FontSize = 14 });
-                }*/
             }
 
         }

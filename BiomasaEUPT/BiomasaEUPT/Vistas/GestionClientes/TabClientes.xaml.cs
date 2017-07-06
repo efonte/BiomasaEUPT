@@ -38,6 +38,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             InitializeComponent();
             DataContext = this;
             context = new BiomasaEUPTContext();
+
             ucTablaClientes.dgClientes.CellEditEnding += DgClientes_CellEditEnding;
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaClientes.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -62,7 +63,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
             tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
             gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
-            CargarClientes();
+           // CargarClientes();
         }
 
         public void CargarClientes()

@@ -1,5 +1,9 @@
 ﻿using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
+using BiomasaEUPT.Vistas.GestionElaboraciones;
+using BiomasaEUPT.Vistas.GestionProveedores;
+using BiomasaEUPT.Vistas.GestionRecepciones;
+using BiomasaEUPT.Vistas.GestionUsuarios;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -70,35 +74,63 @@ namespace BiomasaEUPT
             Close();
         }
 
-
-        private void tiUsuarios_Unselected(object sender, RoutedEventArgs e)
+        private void ti_Selected(object sender, RoutedEventArgs e)
         {
-            // Cancela la inserción de una nueva fila (si no se ha completado)
-            if (ucTabUsuarios != null)
-                ucTabUsuarios.ucTablaUsuarios.dgUsuarios.CancelEdit();
-
+            var tabItem = (e.Source as TabItem);
+            if (tabItem != null)
+            {
+                InicializarTab(tabItem);
+            }
         }
 
-        private void tiClientes_Unselected(object sender, RoutedEventArgs e)
+        private void InicializarTab(TabItem tabItem)
         {
-            if (ucTabClientes != null)
-                ucTabClientes.ucTablaClientes.dgClientes.CancelEdit();
+            if (tabItem.Content is TabUsuarios)
+            {
+                var ti = (tabItem.Content as TabUsuarios);
+                if (ti.IsLoaded)
+                {
+                    ti.CargarUsuarios();
+                }
+            }
 
+            else if (tabItem.Content is TabClientes)
+            {
+                var ti = (tabItem.Content as TabClientes);
+                if (ti.IsLoaded)
+                {
+                    ti.CargarClientes();
+                }
+            }
+
+            else if (tabItem.Content is TabProveedores)
+            {
+                var ti = (tabItem.Content as TabProveedores);
+                if (ti.IsLoaded)
+                {
+                    ti.CargarProveedores();
+                }
+            }
+
+            else if (tabItem.Content is TabRecepciones)
+            {
+                var ti = (tabItem.Content as TabRecepciones);
+                if (ti.IsLoaded)
+                {
+                    ti.CargarRecepciones();
+                }
+            }
+
+            else if (tabItem.Content is TabElaboraciones)
+            {
+                var ti = (tabItem.Content as TabElaboraciones);
+                if (ti.IsLoaded)
+                {
+                    //ti.CargarElaboraciones();
+                }
+            }
         }
 
-        private void tiProveedores_Unselected(object sender, RoutedEventArgs e)
-        {
-            if (ucTabProveedores != null)
-                ucTabProveedores.ucTablaProveedores.dgProveedores.CancelEdit();
-
-        }
-
-        private void tiRecepciones_Unselected(object sender, RoutedEventArgs e)
-        {
-            if (ucTabRecepciones != null)
-                ucTabRecepciones.ucTablaRecepciones.dgRecepciones.CancelEdit();
-
-        }
         private void menuAjustes_Click(object sender, RoutedEventArgs e)
         {
             WinAjustes ajustes = new WinAjustes();
@@ -122,7 +154,12 @@ namespace BiomasaEUPT
             }
 
             if (Properties.Settings.Default.TabActiva != "")
-                tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva).IsSelected = true;
+            {
+                var tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);
+                tabItem.IsSelected = true;
+                // InicializarTab hay que ejecutarlo después de que se cargue la vista
+                tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };
+            }
 
             var paletteHelper = new PaletteHelper();
             paletteHelper.SetLightDark(Properties.Settings.Default.ModoNocturno);
@@ -146,5 +183,6 @@ namespace BiomasaEUPT
 
             Properties.Settings.Default.Save();
         }
+
     }
 }

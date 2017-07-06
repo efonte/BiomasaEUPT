@@ -37,6 +37,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             InitializeComponent();
             DataContext = this;
             context = new BiomasaEUPTContext();
+
             ucTablaProveedores.dgProveedores.CellEditEnding += DgProveedores_CellEditEnding;
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaProveedores.cbRazonSocial.Checked += (s, e1) => { FiltrarTabla(); };
@@ -60,7 +61,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             proveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("proveedoresViewSource")));
             tiposProveedoresViewSource = ((CollectionViewSource)(ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
-            CargarProveedores();
+            // CargarProveedores();
         }
 
         public void CargarProveedores()

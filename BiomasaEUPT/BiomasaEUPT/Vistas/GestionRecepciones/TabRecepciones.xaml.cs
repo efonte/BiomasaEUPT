@@ -43,6 +43,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             InitializeComponent();
             DataContext = this;
+            context = new BiomasaEUPTContext();
 
             // Filtro datagrid recepciones
             ucTablaRecepciones.dgRecepciones.SelectionChanged += (s, e1) => CargarMateriasPrimas();
@@ -84,8 +85,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            context = new BiomasaEUPTContext();
-
             materiasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("materiasPrimasViewSource"));
             // tiposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("tiposMateriasPrimasViewSource"));
             // gruposMateriasPrimasViewSource = (CollectionViewSource)(ucTablaMateriasPrimas.FindResource("gruposMateriasPrimasViewSource"));
@@ -93,7 +92,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             recepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("recepcionesViewSource"));
             // proveedoresViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("proveedoresPrimasViewSource"));
             // estadosRecepcionesViewSource = (CollectionViewSource)(ucTablaRecepciones.FindResource("estadosRecepcionesViewSource"));
-            CargarRecepciones();
+            // CargarRecepciones();
         }
 
         public void CargarRecepciones()

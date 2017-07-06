@@ -68,7 +68,7 @@
                 <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0">
 
                     <!-- Pestaña Usuarios -->
-                    <TabItem x:Name="tiUsuarios" IsSelected="True" Selector.Unselected="tiUsuarios_Unselected">
+                    <TabItem x:Name="tiUsuarios" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -81,7 +81,7 @@
                     </TabItem>
 
                     <!-- Pestaña Clientes -->
-                    <TabItem x:Name="tiClientes" Selector.Unselected="tiClientes_Unselected">
+                    <TabItem x:Name="tiClientes" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -94,7 +94,7 @@
                     </TabItem>
 
                     <!-- Pestaña Proveedores -->
-                    <TabItem x:Name="tiProveedores" IsSelected="True" Selector.Unselected="tiProveedores_Unselected">
+                    <TabItem x:Name="tiProveedores" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Worker" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -107,7 +107,7 @@
                     </TabItem>
 
                     <!-- Pestaña Recepciones -->
-                    <TabItem x:Name="tiRecepciones" IsSelected="True" Selector.Unselected="tiRecepciones_Unselected">
+                    <TabItem x:Name="tiRecepciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Truck" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -119,7 +119,7 @@
                     </TabItem>
 
                     <!-- Pestaña Elaboraciones -->
-                    <TabItem x:Name="tiElaboraciones" IsSelected="True">
+                    <TabItem x:Name="tiElaboraciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -131,7 +131,7 @@
                     </TabItem>
 
                     <!-- Pestaña Ventas -->
-                    <TabItem x:Name="tiVentas" IsSelected="True">
+                    <TabItem x:Name="tiVentas" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Shopping" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -143,7 +143,7 @@
                     </TabItem>
 
                     <!-- Pestaña Trazabilidad -->
-                    <TabItem x:Name="tiTrazabilidad" IsSelected="True">
+                    <TabItem x:Name="tiTrazabilidad" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>

@@ -41,6 +41,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             InitializeComponent();
             DataContext = this;
+            context = new BiomasaEUPTContext();
+
             ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
             ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
             ucTablaUsuarios.cbNombre.Checked += (s, e1) => { FiltrarTabla(); };
@@ -64,13 +66,12 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            context = new BiomasaEUPTContext();
             usuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("usuariosViewSource")));
             tiposUsuariosViewSource = ((CollectionViewSource)(ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
-            CargarUsuarios();
+            // CargarUsuarios();
         }
 
-        private void CargarUsuarios()
+        public void CargarUsuarios()
         {
             using (new CursorEspera())
             {
@@ -146,33 +147,33 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
-            ListBoxItem tbTiposUsuarios = (ListBoxItem)ucTiposUsuarios.lbTiposUsuarios.SelectedItem;
+            /*     ListBoxItem tbTiposUsuarios = (ListBoxItem)ucTiposUsuarios.lbTiposUsuarios.SelectedItem;
 
-            string tipoFiltrado = tbTiposUsuarios.Content.ToString().ToLower();
-            string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
+                 string tipoFiltrado = tbTiposUsuarios.Content.ToString().ToLower();
+                 string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
 
-            var usuario = e.Item as Usuario;
-            string nombre = usuario.Nombre.ToLower();
-            string email = usuario.Email.ToLower();
-            string tipo = usuario.TipoUsuario.Nombre.ToLower();
+                 var usuario = e.Item as Usuario;
+                 string nombre = usuario.Nombre.ToLower();
+                 string email = usuario.Email.ToLower();
+                 string tipo = usuario.TipoUsuario.Nombre.ToLower();
 
-            var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
-                           (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
-                           (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
+                 var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
+                                (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
+                                (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
 
-            if (nombre.Contains(textoBuscado) || email.Contains(textoBuscado))
-            {
-                if (!tipoFiltrado.Equals("todos"))
-                {
-                    e.Accepted = tipo.Equals(tipoFiltrado) && condicion;
-                }
-                else
-                {
-                    e.Accepted = condicion;
-                }
-            }
-            else
-                e.Accepted = false;
+                 if (nombre.Contains(textoBuscado) || email.Contains(textoBuscado))
+                 {
+                     if (!tipoFiltrado.Equals("todos"))
+                     {
+                         e.Accepted = tipo.Equals(tipoFiltrado) && condicion;
+                     }
+                     else
+                     {
+                         e.Accepted = condicion;
+                     }
+                 }
+                 else
+                     e.Accepted = false;*/
         }
         #endregion
 

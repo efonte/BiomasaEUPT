@@ -32,6 +32,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     public partial class FiltroTabla : UserControl
     {
         private DependencyObject ucParent;
+        private CollectionViewSource tiposUsuariosViewSource;
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource tiposProveedoresViewSource;
         private CollectionViewSource gruposClientesViewSource;
@@ -70,9 +71,17 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 ucParent = LogicalTreeHelper.GetParent(ucParent);
             }
+            // Pestaña Usuarios
+            if (ucParent.GetType().Equals(typeof(TabUsuarios)))
+            {
+                TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
+                tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
+                ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
+                // tabUsuarios.FiltrarTabla();
+            }
 
             // Pestaña Clientes
-            if (ucParent.GetType().Equals(typeof(TabClientes)))
+            else if (ucParent.GetType().Equals(typeof(TabClientes)))
             {
                 TabClientes tabClientes = (TabClientes)ucParent;
                 tiposClientesViewSource = ((CollectionViewSource)(tabClientes.ucTablaClientes.FindResource("tiposClientesViewSource")));
@@ -81,8 +90,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 ccFiltroGrupo.Collection = gruposClientesViewSource.View;
                 // tabClientes.FiltrarTabla();
             }
+
             // Pestaña Proveedores
-            if (ucParent.GetType().Equals(typeof(TabProveedores)))
+            else if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 TabProveedores tabProveedores = (TabProveedores)ucParent;
                 tiposProveedoresViewSource = ((CollectionViewSource)(tabProveedores.ucTablaProveedores.FindResource("tiposProveedoresViewSource")));
@@ -105,7 +115,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
 
             // Pestaña Proveedores
-            if (ucParent.GetType().Equals(typeof(TabProveedores)))
+            else if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 formTipo.vNombreUnico.Coleccion = tiposProveedoresViewSource;
                 formTipo.vNombreUnico.Tipo = "TiposProveedor";
@@ -163,7 +173,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
 
             // Pestaña Proveedores
-            if (ucParent.GetType().Equals(typeof(TabProveedores)))
+            else if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 var tipoSeleccionado = lbFiltroTipo.SelectedItem as TipoProveedor;
                 formTipo.Nombre = tipoSeleccionado.Nombre;
@@ -218,7 +228,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
 
             // Pestaña Proveedores
-            if (ucParent.GetType().Equals(typeof(TabProveedores)))
+            else if (ucParent.GetType().Equals(typeof(TabProveedores)))
             {
                 var tipoSeleccionado = lbFiltroTipo.SelectedItem as TipoProveedor;
                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
@@ -332,14 +342,23 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             using (var context = new BiomasaEUPTContext())
             {
-                if (ucParent.GetType().Equals(typeof(TabClientes)))
+                if (ucParent.GetType().Equals(typeof(TabUsuarios)))
+                {
+                    context.TiposUsuarios.Load();
+                    tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
+                    tiposUsuariosViewSource.View.Refresh();
+                    ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
+                }
+
+                else if (ucParent.GetType().Equals(typeof(TabClientes)))
                 {
                     context.TiposClientes.Load();
                     tiposClientesViewSource.Source = context.TiposClientes.Local;
                     tiposClientesViewSource.View.Refresh();
                     ccFiltroTipo.Collection = tiposClientesViewSource.View;
                 }
-                if (ucParent.GetType().Equals(typeof(TabProveedores)))
+
+                else if (ucParent.GetType().Equals(typeof(TabProveedores)))
                 {
                     context.TiposProveedores.Load();
                     tiposProveedoresViewSource.Source = context.TiposProveedores.Local;

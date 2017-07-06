@@ -179,9 +179,14 @@
                         .WithMany()
                         .WillCascadeOnDelete(false);
 
+            // Cambio del nombre por defecto de las tablas de auditoría
+            modelBuilder.Entity<AuditEntry>().ToTable("AuditoriaTablas");
+            modelBuilder.Entity<AuditEntryProperty>().ToTable("AuditoriaDatosTablas");
+
 
         }
 
+        // Tablas
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
@@ -219,6 +224,7 @@
         public DbSet<Municipio> Municipios { get; set; }
 
 
+        // Auditoría
         public DbSet<AuditEntry> AuditoriaTablas { get; set; }
         public DbSet<AuditEntryProperty> AuditoriaDatosTablas { get; set; }
     }
