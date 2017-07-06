@@ -8,6 +8,9 @@
     using System.Data.Entity.Validation;
     using System.Data.SqlClient;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Z.EntityFramework.Plus;
 
     public class BiomasaEUPTContext : DbContext
     {
@@ -29,8 +32,58 @@
             //Database.SetInitializer(new BiomasaEUPTContextInitializer());
 
             //Configuration.AutoDetectChangesEnabled = false;
+
+            // https://github.com/zzzprojects/EntityFramework-Plus/wiki/EF-Audit-%7C-Entity-Framework-Audit-Trail-Context-and-Track-Changes
+            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
+             // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
+             (context as BiomasaEUPTContext).AuditoriaTablas.AddRange(audit.Entries);
         }
 
+
+        // SaveChanges con auditoría
+        public override int SaveChanges()
+        {
+            var auditoria = new Audit()
+            {
+                CreatedBy = Properties.Settings.Default.usuario
+            };
+            auditoria.PreSaveChanges(this);
+            var filasAfectadas = base.SaveChanges();
+            auditoria.PostSaveChanges();
+
+            if (auditoria.Configuration.AutoSavePreAction != null)
+            {
+                auditoria.Configuration.AutoSavePreAction(this, auditoria);
+                base.SaveChanges();
+            }
+
+            return filasAfectadas;
+        }
+
+        // SaveChangesAsync con auditoría
+        public override Task<int> SaveChangesAsync()
+        {
+            return SaveChangesAsync(CancellationToken.None);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            var auditoria = new Audit()
+            {
+                CreatedBy = Properties.Settings.Default.usuario
+            };
+            auditoria.PreSaveChanges(this);
+            var filasAfectadas = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            auditoria.PostSaveChanges();
+
+            if (auditoria.Configuration.AutoSavePreAction != null)
+            {
+                auditoria.Configuration.AutoSavePreAction(this, auditoria);
+                await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            return filasAfectadas;
+        }
 
 
         public int GuardarCambios<TEntity>() where TEntity : class
@@ -164,6 +217,10 @@
         public DbSet<Comunidad> Comunidades { get; set; }
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<Municipio> Municipios { get; set; }
+
+
+        public DbSet<AuditEntry> AuditoriaTablas { get; set; }
+        public DbSet<AuditEntryProperty> AuditoriaDatosTablas { get; set; }
     }
 
 }
