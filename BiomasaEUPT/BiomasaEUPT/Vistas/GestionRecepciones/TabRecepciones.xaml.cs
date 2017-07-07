@@ -39,8 +39,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         // private CollectionViewSource proveedoresViewSource;
         // private CollectionViewSource estadosRecepcionesViewSource;
 
-        int pageIndex = 1;
-        private int numberOfRecPerPage;
+        int numeroPagina = 1;
+        private int numRecepcionesPorPagina;
         private enum ModoPaginacion { Primera = 1, Siguiente = 2, Anterior = 3, Ultima = 4, PageCountChange = 5 };
 
         public TabRecepciones()
@@ -85,7 +85,121 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             Style rowStyleMateriasPrimas = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { ModificarMateriaPrima(); })));
             ucTablaMateriasPrimas.dgMateriasPrimas.RowStyle = rowStyleMateriasPrimas;
+
+            ucTablaRecepciones.ucPaginacion.bPrimera.Command = PaginacionComando;
+            ucTablaRecepciones.ucPaginacion.bAnterior.Command = PaginacionComando;
+            ucTablaRecepciones.ucPaginacion.bSiguiente.Command = PaginacionComando;
+            ucTablaRecepciones.ucPaginacion.bUltima.Command = PaginacionComando;
+
+
+            /* ucTablaRecepciones.cbPaginacionCantidad.Items.Add("10");
+             ucTablaRecepciones.cbPaginacionCantidad.Items.Add("20");
+             ucTablaRecepciones.cbPaginacionCantidad.Items.Add("30");
+             ucTablaRecepciones.cbPaginacionCantidad.Items.Add("50");
+             ucTablaRecepciones.cbPaginacionCantidad.Items.Add("100");
+             ucTablaRecepciones.cbPaginacionCantidad.SelectedIndex = 1;
+             ucTablaRecepciones.bPaginacionPrimera.Click += BPaginacionPrimera_Click;*/
         }
+
+        /* private void BPaginacionPrimera_Click(object sender, RoutedEventArgs e)
+         {
+             Navigate((int)ModoPaginacion.Primera);
+         }
+
+
+         private void Navigate(int mode)
+         {
+             int count;
+             switch (mode)
+             {
+                 case (int)ModoPaginacion.Siguiente:
+                     ucTablaRecepciones.bPaginacionAnterior.IsEnabled = true;
+                     ucTablaRecepciones.bPaginacionPrimera.IsEnabled = true;
+                     if (context.Recepciones.Count() >= (numeroPagina * numRecepcionesPorPagina))
+                     {
+                         if (context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip(numeroPagina *
+                         numRecepcionesPorPagina).Take(numRecepcionesPorPagina).Count() == 0)
+                         {
+                             ucTablaRecepciones.dgRecepciones.ItemsSource = null;
+                             ucTablaRecepciones.dgRecepciones.ItemsSource = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip((numeroPagina *
+                             numRecepcionesPorPagina) - numRecepcionesPorPagina).Take(numRecepcionesPorPagina);
+                             count = (numeroPagina * numRecepcionesPorPagina) +
+                             (context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip(numeroPagina *
+                             numRecepcionesPorPagina).Take(numRecepcionesPorPagina)).Count();
+                         }
+                         else
+                         {
+                             ucTablaRecepciones.dgRecepciones.ItemsSource = null;
+                             ucTablaRecepciones.dgRecepciones.ItemsSource = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip(numeroPagina *
+                             numRecepcionesPorPagina).Take(numRecepcionesPorPagina);
+                             count = (numeroPagina * numRecepcionesPorPagina) +
+                             (context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip(numeroPagina * numRecepcionesPorPagina).Take(numRecepcionesPorPagina)).Count();
+                             numeroPagina++;
+                         }
+
+                         //lblpageInformation.Content = count + " of " + myList.Count;
+                     }
+
+                     else
+                     {
+                         ucTablaRecepciones.bPaginacionSiguiente.IsEnabled = false;
+                         ucTablaRecepciones.bPaginacionUltima.IsEnabled = false;
+                     }
+
+                     break;
+                 case (int)ModoPaginacion.Anterior:
+                     ucTablaRecepciones.bPaginacionSiguiente.IsEnabled = true;
+                     ucTablaRecepciones.bPaginacionUltima.IsEnabled = true;
+                     if (numeroPagina > 1)
+                     {
+                         numeroPagina -= 1;
+                         ucTablaRecepciones.dgRecepciones.ItemsSource = null;
+                         if (numeroPagina == 1)
+                         {
+                             // ucTablaRecepciones.dgRecepciones.ItemsSource = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Take(numRecepcionesPorPagina).ToList();
+                             CargarRecepciones(numRecepcionesPorPagina);
+                             count = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Take(numRecepcionesPorPagina).Count();
+                             //lblpageInformation.Content = count + " of " + myList.Count;
+                         }
+                         else
+                         {
+                             ucTablaRecepciones.dgRecepciones.ItemsSource = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip
+                             (numeroPagina * numRecepcionesPorPagina).Take(numRecepcionesPorPagina);
+                             count = Math.Min(numeroPagina * numRecepcionesPorPagina, context.Recepciones.Count());
+                             //lblpageInformation.Content = count + " of " + myList.Count;
+                         }
+                     }
+                     else
+                     {
+                         ucTablaRecepciones.bPaginacionAnterior.IsEnabled = false;
+                         ucTablaRecepciones.bPaginacionPrimera.IsEnabled = false;
+                     }
+                     break;
+
+                 case (int)ModoPaginacion.Primera:
+                     numeroPagina = 2;
+                     Navigate((int)ModoPaginacion.Anterior);
+                     break;
+
+                 case (int)ModoPaginacion.Ultima:
+                     numeroPagina = (context.Recepciones.Count() / numRecepcionesPorPagina);
+                     Navigate((int)ModoPaginacion.Siguiente);
+                     break;
+
+                 case (int)ModoPaginacion.PageCountChange:
+                     numeroPagina = 1;
+                     numRecepcionesPorPagina = Convert.ToInt32(ucTablaRecepciones.cbPaginacionCantidad.SelectedItem);
+                     ucTablaRecepciones.dgRecepciones.ItemsSource = null;
+                     ucTablaRecepciones.dgRecepciones.ItemsSource = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Take(numRecepcionesPorPagina);
+                     count = (context.Recepciones.OrderBy(r => r.NumeroAlbaran).Take(numRecepcionesPorPagina)).Count();
+                     //lblpageInformation.Content = count + " of " + myList.Count;
+                     ucTablaRecepciones.bPaginacionSiguiente.IsEnabled = true;
+                     ucTablaRecepciones.bPaginacionUltima.IsEnabled = true;
+                     ucTablaRecepciones.bPaginacionAnterior.IsEnabled = true;
+                     ucTablaRecepciones.bPaginacionPrimera.IsEnabled = true;
+                     break;
+             }
+         }*/
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -99,7 +213,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             // CargarRecepciones();
         }
 
-        public void CargarRecepciones()
+        public void CargarRecepciones(int cantidad = 10, int saltar = 0)
         {
             using (new CursorEspera())
             {
@@ -111,7 +225,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 // tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.ToList();
                 // gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.ToList();
                 // procedenciasViewSource.Source = context.Procedencias.ToList();
-                recepcionesViewSource.Source = context.Recepciones/*.AsNoTracking()*/.ToList();
+                //  recepcionesViewSource.Source = context.Recepciones/*.AsNoTracking()*/.ToList();
+                recepcionesViewSource.Source = context.Recepciones.OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList();
                 // recepcionesViewSource.View.Refresh();
                 // proveedoresViewSource.Source = context.Proveedores.ToList();
                 // estadosRecepcionesViewSource.Source = context.EstadosRecepciones.ToList();
@@ -483,6 +598,29 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 materiasPrimasViewSource.Source = null;
             }
         }
+
+        #region Paginacion
+        private ICommand _paginacionComando;
+        public ICommand PaginacionComando
+        {
+            get
+            {
+                if (_paginacionComando == null)
+                {
+                    _paginacionComando = new RelayComando(
+                        param => PaginacionPrimera()
+                    );
+                }
+                return _paginacionComando;
+            }
+        }
+
+        private void PaginacionPrimera()
+        {
+            // HAY QUE DARLE VALOR A ucTablaRecepciones.ucPaginacion.CantidadItems PARA QUE FUNCIONE
+            CargarRecepciones((int)ucTablaRecepciones.ucPaginacion.cbCantidad.SelectedItem, ucTablaRecepciones.ucPaginacion.CantidadItems);
+        }
+        #endregion
 
     }
 }
