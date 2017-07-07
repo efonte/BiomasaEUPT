@@ -50,7 +50,7 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MAX_NOMBRE_ESTADO_ELABORACION = 20;
 
         public const int LONG_MIN_DESCRIPCION_ESTADO_ELABORACION = 5;
-        public const int LONG_MAX_DESCRIPCION_ESTADO_ELABORACION = 70;
+        public const int LONG_MAX_DESCRIPCION_ESTADO_ELABORACION = 80;
 
         public const int LONG_MIN_NOMBRE_ESTADO_PEDIDO = 3;
         public const int LONG_MAX_NOMBRE_ESTADO_PEDIDO = 10;
@@ -59,13 +59,13 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MAX_NOMBRE_ESTADO_RECEPCION = 20;
 
         public const int LONG_MIN_DESCRIPCION_ESTADO_RECEPCION = 5;
-        public const int LONG_MAX_DESCRIPCION_ESTADO_RECEPCION = 50;
+        public const int LONG_MAX_DESCRIPCION_ESTADO_RECEPCION = 80;
 
         public const int LONG_MIN_NOMBRE_GRUPO = 3;
         public const int LONG_MAX_NOMBRE_GRUPO = 25;
 
         public const int LONG_MIN_DESCRIPCION_GRUPO = 5;
-        public const int LONG_MAX_DESCRIPCION_GRUPO = 50;
+        public const int LONG_MAX_DESCRIPCION_GRUPO = 80;
 
         public const int LONG_MIN_NOMBRE_HUECO = 3;
         public const int LONG_MAX_NOMBRE_HUECO = 3;
@@ -92,7 +92,7 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MAX_LONGITUD = 10;
 
         public const int LONG_MIN_DESCRIPCION = 5;
-        public const int LONG_MAX_DESCRIPCION = 50;
+        public const int LONG_MAX_DESCRIPCION = 80;
 
         public const int LONG_MIN_CODIGO_PAIS = 2;
         public const int LONG_MAX_CODIGO_PAIS = 2;

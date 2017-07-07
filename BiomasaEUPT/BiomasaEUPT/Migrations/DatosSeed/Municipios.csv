@@ -1,12 +1,13 @@
-﻿MunicipioId;CodigoPostal;Nombre;Latitud;Longitud;ProvinciaId
-1;44500;Andorra;40.9766;-0.4472;3
-2;44600;Alcañiz;41.05;-0.1333;3
-3;12449;Benafer;39.9333;-0.5667;1
-4;46100;Burjassot;39.5167;-0.4167;4
-5;46176;Chelva;39.7493;-0.9968;4
-6;50376;Cubel;41.096;-1.6373;5
-7;12122;Figueroles;40.1167;-0.2333;1
-8;75000;Paris;48.8534;2.3488;2
-9;75020;Paris;48.8534;2.3488;2
-10;44003;Teruel;40.3456;-1.1065;3
-11;50580;Vera De Moncayo;41.824;-1.688;5
+﻿CodigoPostal;Nombre;Latitud;Longitud;CodigoProvincia
+44500;Andorra;40.9766;-0.4472;ES-TE
+44600;Alcañiz;41.05;-0.1333;ES-TE
+12449;Benafer;39.9333;-0.5667;ES-CS
+46100;Burjassot;39.5167;-0.4167;ES-V
+46176;Chelva;39.7493;-0.9968;ES-V
+50376;Cubel;41.096;-1.6373;ES-Z
+12122;Figueroles;40.1167;-0.2333;ES-CS
+75000;Paris;48.8534;2.3488;FR-75
+75020;Paris;48.8534;2.3488;FR-75
+44003;Teruel;40.3456;-1.1065;ES-TE
+50580;Vera De Moncayo;41.824;-1.688;ES-Z
+37700;Béjar;40.1167;-0.2333;ES-SA

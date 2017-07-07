@@ -156,7 +156,6 @@
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\SelectableViewModel.cs" />
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
-    <Compile Include="Domain\UserControl1ViewModel.cs" />
     <Compile Include="Domain\ValueToEqualsParameterConverter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SeedTablas.cs" />
@@ -570,6 +569,11 @@
     <EmbeddedResource Include="Migrations\DatosSeed\EstadosElaboraciones.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\Paises.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\Comunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposProveedores.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SitiosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\HuecosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SitiosAlmacenajes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Procedencias.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

@@ -1,4 +1,4 @@
 ﻿TipoUsuarioId;Nombre;Descripcion
-1;Administrador;Este es el usuario Administrador
-2;Técnico A;Este es el Técnico A
-3;Técnico B;Este es el Técnico B
+1;Administrador;Usuario con máximos privilegios
+2;Administrativo;Encargado de los clientes y proveedores
+3;Técnico;Encargado de las recepciones, elaboraciones y ventas

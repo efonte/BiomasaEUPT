@@ -39,6 +39,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         // private CollectionViewSource proveedoresViewSource;
         // private CollectionViewSource estadosRecepcionesViewSource;
 
+        int pageIndex = 1;
+        private int numberOfRecPerPage;
+        private enum ModoPaginacion { Primera = 1, Siguiente = 2, Anterior = 3, Ultima = 4, PageCountChange = 5 };
+
         public TabRecepciones()
         {
             InitializeComponent();

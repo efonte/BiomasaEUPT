@@ -11,7 +11,7 @@
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="500" Name="UCTablaRecepciones">
+             d:DesignHeight="350" d:DesignWidth="500" Name="UCTablaRecepciones">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
@@ -26,6 +26,7 @@
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
@@ -104,12 +105,31 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10">
+                    <Button x:Name="bPaginacionPrimera" HorizontalAlignment="Left" Margin="0 0 5 0"
+                            VerticalAlignment="Bottom"
+                            Content="&lt;&lt;" Opacity="0.75"/>
+                    <Button x:Name="bPaginacionAnterior" VerticalAlignment="Bottom" Margin="0 0 5 0"
+                            Opacity="0.75" Content="&lt;"/>
+                    <Label x:Name="lPaginacionInfo" HorizontalContentAlignment="Center" Margin="0 0 5 0"
+                            HorizontalAlignment="Left" Width="100"
+                            VerticalContentAlignment="Center"/>
+                    <Button x:Name="bPaginacionSiguiente" HorizontalAlignment="Right" Margin="0 0 5 0"
+                            VerticalAlignment="Bottom"
+                            Content="&gt;" Opacity="0.75"/>
+                    <Button x:Name="bPaginacionUltima" HorizontalAlignment="Right" Margin="0 0 8 0"
+                            VerticalAlignment="Bottom"
+                            Opacity="0.75" Content="&gt;&gt;"/>
+                    <ComboBox x:Name="cbPaginacionCantidad" HorizontalAlignment="Left"
+                              VerticalAlignment="Bottom" Width="120" SelectedIndex="0" Opacity="0.75"/>
+                </StackPanel>
+
+                <TextBox x:Name="tbBuscar" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 
-                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                <materialDesign:PopupBox Grid.Row="2" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
                         <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
                     </materialDesign:PopupBox.ToggleContent>
