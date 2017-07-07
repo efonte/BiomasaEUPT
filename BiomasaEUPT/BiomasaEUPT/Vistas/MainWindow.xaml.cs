@@ -91,6 +91,7 @@ namespace BiomasaEUPT
                 if (ti.IsLoaded)
                 {
                     ti.CargarUsuarios();
+                    ti.ucFiltroTabla.CargarFiltro();
                 }
             }
 
@@ -100,6 +101,7 @@ namespace BiomasaEUPT
                 if (ti.IsLoaded)
                 {
                     ti.CargarClientes();
+                    ti.ucFiltroTabla.CargarFiltro();
                 }
             }
 
@@ -109,6 +111,7 @@ namespace BiomasaEUPT
                 if (ti.IsLoaded)
                 {
                     ti.CargarProveedores();
+                    ti.ucFiltroTabla.CargarFiltro();
                 }
             }
 

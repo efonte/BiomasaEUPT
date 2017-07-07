@@ -21,13 +21,13 @@
                     <GroupBox.Header>
                         <materialDesign:ColorZone Mode="PrimaryMid">
                             <DockPanel>
-                                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
+                                <materialDesign:PopupBox x:Name="pbTipo" DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                          StaysOpen="False" Width="25">
                                     <StackPanel>
                                         <Button x:Name="bAnadirTipo" Content="Añadir" Click="bAnadirTipo_Click"
                                                 Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                        <Button x:Name="bEditarTipo" Content="Editar" Click="bEditarTipo_Click">
-                                            <Button.Style>
+                                        <Button x:Name="bEditarTipo" Content="Editar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                            <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                     <Style.Triggers>
@@ -36,10 +36,10 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
+                                            </Button.Style-->
                                         </Button>
-                                        <Button x:Name="bBorrarTipo" Content="Borrar" Click="bBorrarTipo_Click">
-                                            <Button.Style>
+                                        <Button x:Name="bBorrarTipo" Content="Borrar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                            <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                     <Style.Triggers>
@@ -48,7 +48,7 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
+                                            </Button.Style-->
                                         </Button>
                                     </StackPanel>
                                 </materialDesign:PopupBox>
@@ -113,13 +113,13 @@
                     <GroupBox.Header>
                         <materialDesign:ColorZone Mode="PrimaryMid">
                             <DockPanel>
-                                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
+                                <materialDesign:PopupBox x:Name="pbGrupo" DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                          StaysOpen="False" Width="25" >
                                     <StackPanel>
                                         <Button x:Name="bAnadirGrupo" Content="Añadir" Click="bAnadirGrupo_Click"
                                                 Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                        <Button x:Name="bEditarGrupo" Content="Editar" Click="bEditarGrupo_Click">
-                                            <Button.Style>
+                                        <Button x:Name="bEditarGrupo" Content="Editar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                            <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                     <Style.Triggers>
@@ -128,10 +128,10 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
+                                            </Button.Style-->
                                         </Button>
-                                        <Button x:Name="bBorrarGrupo" Content="Borrar" Click="bBorrarGrupo_Click">
-                                            <Button.Style>
+                                        <Button x:Name="bBorrarGrupo" Content="Borrar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                            <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                     <Style.Triggers>
@@ -140,7 +140,7 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
+                                            </Button.Style-->
                                         </Button>
                                     </StackPanel>
                                 </materialDesign:PopupBox>

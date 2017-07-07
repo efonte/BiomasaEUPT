@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
             <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0" Height="200" VerticalAlignment="Top"/>
             <!--local:TiposUsuarios Grid.Row="1" x:Name="ucTiposUsuarios" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/-->
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5" Height="250" VerticalAlignment="Bottom" MostrarGrupo="False"/>
+            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5" Height="250" VerticalAlignment="Bottom" MostrarMenuTipo="False" MostrarGrupo="False"/>
         </Grid>
 
         <local:TablaUsuarios Grid.Column="1" x:Name="ucTablaUsuarios" Margin="10 10 0 10" />

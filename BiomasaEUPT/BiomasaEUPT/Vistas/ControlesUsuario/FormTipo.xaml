@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Tipo">
-        <Grid>
+        <Grid Width="250">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
