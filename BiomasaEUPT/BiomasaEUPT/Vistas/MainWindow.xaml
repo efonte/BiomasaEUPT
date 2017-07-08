@@ -31,34 +31,47 @@
 
     <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="280" MinHeight="300">
         <DockPanel>
-            <materialDesign:ColorZone Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
+            <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
                 <DockPanel>
                     <!-- Barra Menu -->
-                    <Menu DockPanel.Dock="Left" Background="#303030">
+                    <Menu IsMainMenu="True" DockPanel.Dock="Left" Background="#303030">
                         <!-- Archivo -->
-                        <MenuItem Header="_Archivo" Height="20" Foreground="White" FontFamily="Roboto">
-                            <!-- Ticket Manager -->
-                            <MenuItem Header="_MenuItem 1" Height="30" Foreground="White" FontFamily="Roboto">
-                                <MenuItem x:Name="menu1" Header="_Menu 1" Height="30"/>
-                                <Separator />
-                                <MenuItem x:Name="menu2" Header="_Menu 2" Height="30"/>
+                        <MenuItem Header="_Archivo" Foreground="White" Height="35">
+                            <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Click="menuCerrarSesion_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Logout" />
+                                </MenuItem.Icon>
                             </MenuItem>
                             <Separator/>
-                            <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Height="30" Click="menuCerrarSesion_Click"/>
-                            <Separator/>
-                            <MenuItem x:Name="menuSalir" Header="_Salir" Height="30" Click="menuSalir_Click"/>
+                            <MenuItem x:Name="menuSalir" Header="_Salir" Click="menuSalir_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="ExitToApp" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </MenuItem>
                         <!-- Opciones -->
-                        <MenuItem Header="_Opciones" Height="20" Foreground="White" FontFamily="Roboto">
-                            <MenuItem  x:Name="menuAjustes" Header="_Ajustes" Height="30" Click="menuAjustes_Click"  />
+                        <MenuItem Header="_Opciones" Foreground="White" Height="35">
+                            <MenuItem x:Name="menuAjustes" Header="_Ajustes" Click="menuAjustes_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Settings" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </MenuItem>
                         <!-- Ayuda -->
-                        <MenuItem Header="A_yuda" Height="20" Foreground="White" FontFamily="Roboto">
-                            <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Height="30" Click="menuGitHub_Click"/>
-                            <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Height="30" Click="menuAcercaDe_Click"/>
+                        <MenuItem Header="A_yuda" Foreground="White" Height="35">
+                            <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Click="menuGitHub_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="GithubCircle" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Click="menuAcercaDe_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Information" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </MenuItem>
                     </Menu>
-                    <TextBlock x:Name="tbInfoProgreso" Height="20" Foreground="White" FontFamily="Roboto" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
+                    <TextBlock x:Name="tbInfoProgreso" Foreground="White" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
                     <ProgressBar x:Name="pbProgreso" Style="{DynamicResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
                 </DockPanel>
             </materialDesign:ColorZone>
@@ -72,7 +85,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -85,7 +98,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -98,7 +111,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Worker" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Proveedores" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Proveedores" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -111,7 +124,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Truck" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Recepciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Recepciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -123,7 +136,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -135,7 +148,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Shopping" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Ventas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Ventas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -147,7 +160,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                         </TabItem.Header>
 
