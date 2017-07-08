@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Vistas.GestionRecepciones;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,15 +24,16 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class Paginacion : UserControl
     {
-        public ObservableCollection<int> ItemsPorPagina { get; }
-        public int CantidadItems { get; set; } = 0;
-        public int CantidadItemsTotales { get; set; } = 0;
-
         public Paginacion()
         {
             InitializeComponent();
-            DataContext = this;
-            ItemsPorPagina = new ObservableCollection<int>() { 10, 20, 30, 50, 100 };
+            DataContext = new PaginacionViewSource();
+        }
+
+        private void cbCantidad_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (DataContext as PaginacionViewSource).CalcularItemsTotales();
+            (DataContext as PaginacionViewSource).CargarItems();
         }
     }
 }
