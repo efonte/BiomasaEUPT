@@ -18,7 +18,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     {
         public ObservableCollection<int> ItemsPorPaginaDisponibles { get; set; }
         public int ItemsPorPagina { get; set; }
-        //public int ItemsSaltados { get; set; } = 0;
         public int ItemsTotales { get; set; } = 0;
 
         public int PaginaSeleccionada { get; set; }
@@ -58,24 +57,17 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             switch (parametro)
             {
                 case "<<":
-                    //ItemsSaltados = 0;
                     PaginaSeleccionada = 1;
                     break;
                 case "<":
-                    //ItemsSaltados -= ItemsPorPagina;
-                    //ItemsSaltados = ItemsSaltados < 0 ? 0 : ItemsSaltados;
                     PaginaSeleccionada -= 1;
                     PaginaSeleccionada = PaginaSeleccionada <= 0 ? 1 : PaginaSeleccionada;
                     break;
                 case ">":
-                    //ItemsSaltados += ItemsPorPagina;
-                    //ItemsSaltados = ItemsSaltados > ItemsTotales ? ItemsTotales : ItemsSaltados;
                     PaginaSeleccionada += 1;
                     PaginaSeleccionada = PaginaSeleccionada > PaginasTotales ? PaginasTotales : PaginaSeleccionada;
                     break;
                 case ">>":
-                    //ItemsSaltados = ItemsTotales - ItemsPorPagina;
-                    //ItemsSaltados = ItemsSaltados < 0 ? ItemsTotales : ItemsSaltados;
                     PaginaSeleccionada = PaginasTotales;
                     break;
             }
@@ -88,11 +80,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 case "<<":
                 case "<":
-                    //return ItemsSaltados != 0;
                     return PaginaSeleccionada != 1;
                 case ">":
                 case ">>":
-                    //return ItemsSaltados != ItemsTotales;
                     return PaginaSeleccionada != PaginasTotales;
             }
             return true;
@@ -113,6 +103,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             }
             PaginasTotales = (int)Math.Ceiling((double)ItemsTotales / ItemsPorPagina);
+            PaginaSeleccionada = PaginasTotales < PaginaSeleccionada ? PaginasTotales : PaginaSeleccionada;
         }
 
         public void CargarItems()

@@ -5,24 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="450"
+             d:DesignHeight="50" d:DesignWidth="350"
              Background="{DynamicResource MaterialDesignPaper}">
 
     <Grid VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="2*" MinWidth="60"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Margin" Value="0 0 5 0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Height" Value="25" />
+                <Setter Property="Width" Value="40" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
 
-        <Button Grid.Column="0" x:Name="bPrimera" Margin="0 0 5 0"
-                Content="&lt;&lt;" Command="{Binding PaginacionComando}" CommandParameter="&lt;&lt;"/>
-        <Button Grid.Column="1" x:Name="bAnterior" Margin="0 0 5 0"
-                Content="&lt;" Command="{Binding PaginacionComando}" CommandParameter="&lt;"/>
-        <TextBlock Grid.Column="2" x:Name="tbInfo" Margin="0 0 5 0"
+        <Button Grid.Column="0" x:Name="bPrimera" Content="&lt;&lt;"
+                Command="{Binding PaginacionComando}" CommandParameter="&lt;&lt;"/>
+        <Button Grid.Column="1" x:Name="bAnterior" Content="&lt;"
+                Command="{Binding PaginacionComando}" CommandParameter="&lt;"/>
+        <TextBlock Grid.Column="2" x:Name="tbInfo" Margin="0 0 5 0" TextWrapping="Wrap"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
             <TextBlock.Text>
@@ -32,10 +42,10 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <Button Grid.Column="3" x:Name="bSiguiente" Margin="0 0 5 0"
-                Content="&gt;" Command="{Binding PaginacionComando}" CommandParameter="&gt;"/>
-        <Button Grid.Column="4" x:Name="bUltima" Margin="0 0 8 0"
-                Content="&gt;&gt;" Command="{Binding PaginacionComando}" CommandParameter="&gt;&gt;"/>
+        <Button Grid.Column="3" x:Name="bSiguiente" Content="&gt;"
+                Command="{Binding PaginacionComando}" CommandParameter="&gt;"/>
+        <Button Grid.Column="4" x:Name="bUltima" Content="&gt;&gt;"
+                Command="{Binding PaginacionComando}" CommandParameter="&gt;&gt;"/>
         <ComboBox Grid.Column="5" x:Name="cbCantidad"
                   ItemsSource="{Binding ItemsPorPaginaDisponibles}"
                   SelectedItem="{Binding ItemsPorPagina}"

@@ -45,6 +45,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             ucTablaUsuarios.dgUsuarios.RowEditEnding += DgUsuarios_RowEditEnding;
             ucTablaUsuarios.dgUsuarios.CellEditEnding += DgUsuarios_CellEditEnding;
+             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbNombre.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbNombre.Unchecked += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
@@ -75,6 +76,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             using (new CursorEspera())
             {
+                // Hay que instanciar otro context para que se puedan refescar los datos
+                // ya que sino no funciona el refresco al guardarse en la cache
+                context.Dispose();
+                context = new BiomasaEUPTContext();
                 usuariosViewSource.Source = context.Usuarios.ToList();
                 tiposUsuariosViewSource.Source = context.TiposUsuarios.ToList();
                 usuariosViewSource.View.Refresh();
@@ -98,15 +103,15 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuario.Contrasena = hashContrasena;
                 }
-                if (e.Column.DisplayIndex == 4) // 4 = Posición columna baneado
+                else if (e.Column.DisplayIndex == 4) // 4 = Posición columna baneado
                 {
                     Console.WriteLine(usuario.Baneado);
                 }
-                context.SaveChanges();
-                if (e.Column.DisplayIndex == 3) // 3 = Posición tipo usuario
+                if (e.Column.DisplayIndex == 3) // 3 = Posición columna tipo usuario
                 {
                     (ucContador as Contador).Actualizar();
                 }
+                context.SaveChanges();
             }
         }
 
@@ -114,8 +119,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
+                //context.SaveChanges();
                 Usuario usuario = e.Row.DataContext as Usuario;
-                Console.WriteLine(usuario.Nombre + " - " + usuario.Email + " - " + usuario.Contrasena + " - " + usuario.TipoId + " - " + usuario.Baneado);
+                //Console.WriteLine(usuario.Nombre + " - " + usuario.Email + " - " + usuario.Contrasena + " - " + usuario.TipoId + " - " + usuario.Baneado);
                 (ucContador as Contador).Actualizar();
             }
         }
@@ -147,33 +153,38 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private void FiltroTabla(object sender, FilterEventArgs e)
         {
-            /*     ListBoxItem tbTiposUsuarios = (ListBoxItem)ucTiposUsuarios.lbTiposUsuarios.SelectedItem;
+            string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
+            var usuario = e.Item as Usuario;
+            string nombre = usuario.Nombre.ToLower();
+            string email = usuario.Email.ToLower();
+            string tipo = usuario.TipoUsuario.Nombre.ToLower();
 
-                 string tipoFiltrado = tbTiposUsuarios.Content.ToString().ToLower();
-                 string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
+            var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
+                           (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
+                           (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
 
-                 var usuario = e.Item as Usuario;
-                 string nombre = usuario.Nombre.ToLower();
-                 string email = usuario.Email.ToLower();
-                 string tipo = usuario.TipoUsuario.Nombre.ToLower();
 
-                 var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
-                                (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
-                                (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
-
-                 if (nombre.Contains(textoBuscado) || email.Contains(textoBuscado))
-                 {
-                     if (!tipoFiltrado.Equals("todos"))
-                     {
-                         e.Accepted = tipo.Equals(tipoFiltrado) && condicion;
-                     }
-                     else
-                     {
-                         e.Accepted = condicion;
-                     }
-                 }
-                 else
-                     e.Accepted = false;*/
+            // Filtra todos
+            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
+            {
+                e.Accepted = condicion;
+            }
+            else
+            {
+                foreach (TipoUsuario tipoUsuario in ucFiltroTabla.lbFiltroTipo.SelectedItems)
+                {
+                    if (tipoUsuario.Nombre.ToLower().Equals(tipo))
+                    {
+                        // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
+                        e.Accepted = condicion;
+                        break;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
+                }
+            }
         }
         #endregion
 
