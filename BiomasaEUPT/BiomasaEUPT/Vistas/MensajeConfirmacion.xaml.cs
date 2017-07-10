@@ -20,6 +20,7 @@ namespace BiomasaEUPT.Vistas
     /// </summary>
     public partial class MensajeConfirmacion : UserControl
     {
+        public string Titulo { get; set; } = "Confirmación";
         public string Mensaje { get; set; }
 
         public MensajeConfirmacion()
@@ -30,6 +31,7 @@ namespace BiomasaEUPT.Vistas
 
         public MensajeConfirmacion(string _mensaje) : this()
         {
+
             Mensaje = _mensaje;
         }
     }

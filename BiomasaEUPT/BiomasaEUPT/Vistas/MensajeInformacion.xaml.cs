@@ -21,6 +21,7 @@ namespace BiomasaEUPT.Vistas
     public partial class MensajeInformacion : UserControl
     {
         public string Mensaje { get; set; }
+        public string Titulo { get; set; } = "Error";
 
         public MensajeInformacion()
         {
