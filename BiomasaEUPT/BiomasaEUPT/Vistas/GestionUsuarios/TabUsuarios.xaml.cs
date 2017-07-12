@@ -40,6 +40,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             viewModel = new TabUsuariosViewModel();
             DataContext = viewModel;
 
+            ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
+
             ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbNombre.Checked += (s, e1) => { FiltrarTabla(); };
             ucTablaUsuarios.cbNombre.Unchecked += (s, e1) => { FiltrarTabla(); };

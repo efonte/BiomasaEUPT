@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Vistas.Ajustes;
+﻿using BiomasaEUPT.Vistas;
+using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
 using BiomasaEUPT.Vistas.GestionProveedores;
@@ -90,7 +91,7 @@ namespace BiomasaEUPT
                 var ti = (tabItem.Content as TabUsuarios);
                 if (ti.IsLoaded)
                 {
-                    (ti.DataContext as TabUsuariosViewModel).Inicializar();
+                    (ti.DataContext as ViewModelBase).Inicializar();
                 }
             }
 
@@ -99,8 +100,9 @@ namespace BiomasaEUPT
                 var ti = (tabItem.Content as TabClientes);
                 if (ti.IsLoaded)
                 {
-                    ti.CargarClientes();
-                    ti.ucFiltroTabla.CargarFiltro();
+                    (ti.DataContext as ViewModelBase).Inicializar();
+                    //ti.CargarClientes();
+                    //ti.ucFiltroTabla.CargarFiltro();
                 }
             }
 
@@ -110,7 +112,7 @@ namespace BiomasaEUPT
                 if (ti.IsLoaded)
                 {
                     ti.CargarProveedores();
-                    ti.ucFiltroTabla.CargarFiltro();
+                    //ti.ucFiltroTabla.CargarFiltro();
                 }
             }
 

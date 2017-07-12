@@ -54,7 +54,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             // de los PopupBox (para cada fila) hasta que se quiera editar.
             using (new CursorEspera())
             {
-                PopupBox popupBox = sender as PopupBox; ;
+                PopupBox popupBox = sender as PopupBox;
                 popupBox.PopupContent = new FormDireccion(tabClientes.GetContext());
             }
         }

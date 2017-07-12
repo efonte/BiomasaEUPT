@@ -2,6 +2,7 @@
 using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections;
@@ -24,8 +25,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public CollectionView UsuariosView { get; private set; }
         public ObservableCollection<TipoUsuario> TiposUsuarios { get; set; }
         public IList<Usuario> UsuariosSeleccionados { get; set; }
-
         public Usuario UsuarioSeleccionado { get; set; }
+        public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
 
         private ICommand _anadirComando;
         private ICommand _modificarComando;
@@ -34,13 +35,16 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         public TabUsuariosViewModel()
         {
-
+            FiltroTablaViewModel = new FiltroTablaViewModel()
+            {
+                ViewModel = this
+            };
         }
 
         public override void Inicializar()
         {
             CargarUsuarios();
-            //ti.ucFiltroTabla.CargarFiltro();
+            FiltroTablaViewModel.CargarFiltro();
         }
 
         public void CargarUsuarios()
@@ -54,11 +58,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 //(ucContador as Contador).Actualizar();
                 UsuarioSeleccionado = null;
             }
-        }
-
-        private bool HayUnUsuarioSeleccionado()
-        {
-            return UsuarioSeleccionado != null;
         }
 
         // Asigna el valor de UsuariosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -142,7 +141,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public ICommand BorrarComando => _borrarComando ??
             (_borrarComando = new RelayCommand2<IList<object>>(
                 param => BorrarUsuario(),
-                param => HayUnUsuarioSeleccionado()
+                param => UsuarioSeleccionado != null
             ));
 
         private async void BorrarUsuario()
@@ -169,7 +168,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public ICommand ModificarComando => _modificarComando ??
             (_modificarComando = new RelayComando(
                 param => ModificarUsuario(),
-                param => HayUnUsuarioSeleccionado()
+                param => UsuarioSeleccionado != null
              ));
 
         private async void ModificarUsuario()

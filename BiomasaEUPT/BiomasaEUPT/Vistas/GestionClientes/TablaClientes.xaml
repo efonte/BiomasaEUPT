@@ -12,13 +12,12 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="850" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoCliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoCliente}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
@@ -45,10 +44,27 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes" DataContext="{StaticResource clientesViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgClientes"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding ClientesView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False"
+                              CanUserDeleteRows="False" SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGClientes_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgClientes}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="CellEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGClientes_CellEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                                <!--domain:EventCommandExecuter Command="{Binding DGClientes_CellEditEndingComando}"/-->
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgClientes, Mode=OneWay}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"
@@ -117,7 +133,40 @@
                                     </Binding>
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="tiposClientesColumna" Header="Tipo"
+
+                            <DataGridTemplateColumn Header="Tipo" x:Name="tipoClienteColumna" >
+                                <DataGridTemplateColumn.CellEditingTemplate >
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding TipoCliente, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  DisplayMemberPath="Nombre"
+                                                  ItemsSource="{Binding DataContext.TiposClientes, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabClientes}}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TipoCliente.Nombre, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Grupo" x:Name="grupoClienteColumna" >
+                                <DataGridTemplateColumn.CellEditingTemplate >
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding GrupoCliente, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  DisplayMemberPath="Nombre"
+                                                  ItemsSource="{Binding DataContext.GruposClientes, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabClientes}}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding GrupoCliente.Nombre, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--DataGridComboBoxColumn x:Name="tiposClientesColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
                                                 SelectedValuePath="TipoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
@@ -126,7 +175,8 @@
                                                 ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
                                                 SelectedValuePath="GrupoClienteId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
+
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
@@ -173,7 +223,7 @@
                                  ToolTip="Gestionar clientes"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirCliente" ToolTip="Añadir cliente">
+                            <Button x:Name="bAnadirCliente" ToolTip="Añadir cliente" Command="{Binding AnadirComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Borrar el cliente seleccionado" Command="{Binding BorrarComando}">
@@ -189,7 +239,7 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource clientesViewSource}" Grid.Column="1" 
+                <StackPanel Grid.Column="1" 
                             HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
@@ -202,7 +252,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"
+                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right" IsChecked="{Binding ObservacionesEnEdicion, Mode=TwoWay}"
                                           Margin="8 0 0 0" ToolTip="Editar">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">
@@ -223,15 +273,15 @@
                                     <materialDesign:PackIcon Kind="Pin"/>
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding ClienteSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
                                        FontSize="16" MaxHeight="260" TextWrapping="Wrap"/>
-                            <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="tboxObservaciones" Text="{Binding ClienteSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                      MaxHeight="260" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"
                                      MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}"/>
-                            <Button x:Name="bEditarObservaciones" Margin="0 20 0 0" Content="Modificar"
+                            <Button x:Name="bEditarObservaciones" Margin="0 20 0 0" Content="Modificar" Command="{Binding ModificarObservacionesComando}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </StackPanel>
                     </Expander>

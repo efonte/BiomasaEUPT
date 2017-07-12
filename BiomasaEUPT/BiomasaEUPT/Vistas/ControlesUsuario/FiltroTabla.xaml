@@ -24,9 +24,10 @@
                                 <materialDesign:PopupBox x:Name="pbTipo" DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                          StaysOpen="False" Width="25">
                                     <StackPanel>
-                                        <Button x:Name="bAnadirTipo" Content="Añadir" Click="bAnadirTipo_Click"
+                                        <Button x:Name="bAnadirTipo" Content="Añadir" Command="{Binding AnadirTipoComando}"
                                                 Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                        <Button x:Name="bEditarTipo" Content="Editar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                        <Button x:Name="bEditarTipo" Content="Editar" Command="{Binding ModificarTipoComando}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
                                             <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -38,7 +39,8 @@
                                                 </Style>
                                             </Button.Style-->
                                         </Button>
-                                        <Button x:Name="bBorrarTipo" Content="Borrar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                        <Button x:Name="bBorrarTipo" Content="Borrar" Command="{Binding BorrarTipoComando}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
                                             <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -59,19 +61,9 @@
                         </materialDesign:ColorZone>
                     </GroupBox.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <ListBox x:Name="lbFiltroTipo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
-                            <ListBox.ItemsSource>
-                                <CompositeCollection x:Name="cmpcTipo">
-                                    <!--ListBoxItem x:Name="lbiTodos" Margin="0 0 0 0" FontSize="14">Todos</ListBoxItem-->
-                                    <CollectionContainer x:Name="ccFiltroTipo"/>
-                                    <!--DataTemplate x:Name="dtFiltro">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Path=nombre}"/>
-                                            <TextBlock Text="{Binding Path=descripcion}"/>
-                                        </StackPanel>
-                                    </DataTemplate-->
-                                </CompositeCollection>
-                            </ListBox.ItemsSource>
+                        <ListBox x:Name="lbFiltroTipo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple"
+                                 ItemsSource="{Binding TiposView, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedItem="{Binding TipoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -116,9 +108,10 @@
                                 <materialDesign:PopupBox x:Name="pbGrupo" DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                          StaysOpen="False" Width="25" >
                                     <StackPanel>
-                                        <Button x:Name="bAnadirGrupo" Content="Añadir" Click="bAnadirGrupo_Click"
+                                        <Button x:Name="bAnadirGrupo" Content="Añadir" Command="{Binding AnadirGrupoComando}"
                                                 Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                        <Button x:Name="bEditarGrupo" Content="Editar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                        <Button x:Name="bEditarGrupo" Content="Editar" Command="{Binding ModificarGrupoComando}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
                                             <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -130,7 +123,8 @@
                                                 </Style>
                                             </Button.Style-->
                                         </Button>
-                                        <Button x:Name="bBorrarGrupo" Content="Borrar" Style="{DynamicResource MaterialDesignFlatButton}">
+                                        <Button x:Name="bBorrarGrupo" Content="Borrar" Command="{Binding BorrarGrupoComando}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
                                             <!--Button.Style>
                                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -149,12 +143,9 @@
                         </materialDesign:ColorZone>
                     </GroupBox.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <ListBox x:Name="lbFiltroGrupo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple">
-                            <ListBox.ItemsSource>
-                                <CompositeCollection x:Name="cmpcGrupo">
-                                    <CollectionContainer x:Name="ccFiltroGrupo"/>
-                                </CompositeCollection>
-                            </ListBox.ItemsSource>
+                        <ListBox x:Name="lbFiltroGrupo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple"
+                                 ItemsSource="{Binding GruposView, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedItem="{Binding GrupoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"

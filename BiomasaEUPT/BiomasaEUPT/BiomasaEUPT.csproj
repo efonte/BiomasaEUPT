@@ -246,6 +246,7 @@
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FiltroTablaViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\FormDireccion.xaml.cs">
       <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
@@ -265,6 +266,7 @@
     <Compile Include="Vistas\GestionClientes\TabClientes.xaml.cs">
       <DependentUpon>TabClientes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionClientes\TabClientesViewModel.cs" />
     <Compile Include="Vistas\GestionClientes\TablaClientes.xaml.cs">
       <DependentUpon>TablaClientes.xaml</DependentUpon>
     </Compile>
