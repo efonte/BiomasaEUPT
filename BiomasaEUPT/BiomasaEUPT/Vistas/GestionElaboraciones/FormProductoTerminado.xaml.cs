@@ -119,6 +119,23 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             tiposMateriasPrimasViewSource.Source = context.TiposMateriasPrimas.Where(d => d.GrupoId == ((GrupoMateriaPrima)cbGruposMateriasPrimas.SelectedItem).GrupoMateriaPrimaId).ToList();
         }
 
+        private void cbTiposProductosTerminados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (viewModel.TipoProductoTerminado.MedidoEnUnidades == true)
+            {
+                viewModel.CantidadHint = "Cantidad (ud.)";
+                viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
+                viewModel.Volumen = null;
+            }
+            else
+            {
+                viewModel.CantidadHint = "Cantidad (m³)";
+                viewModel.Volumen = viewModel.Cantidad;
+                viewModel.Unidades = null;
+            }
+            CalcularCantidades();
+        }
+
         private void cbTiposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)

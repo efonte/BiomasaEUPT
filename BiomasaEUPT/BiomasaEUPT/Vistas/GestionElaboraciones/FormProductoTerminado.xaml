@@ -54,6 +54,7 @@
                 <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
                           ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="TipoProductoTerminadoId"
+                          SelectionChanged="cbTiposProductosTerminados_SelectionChanged"
                           SelectedItem="{Binding TipoProductoTerminado, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
 
