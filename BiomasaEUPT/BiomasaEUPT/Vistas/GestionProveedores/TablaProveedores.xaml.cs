@@ -55,7 +55,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             using (new CursorEspera())
             {
                 PopupBox popupBox = sender as PopupBox; ;
-                popupBox.PopupContent = new FormDireccion(tabProveedores.GetContext());
+                popupBox.PopupContent = new FormDireccion();
             }
         }
 

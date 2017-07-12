@@ -59,6 +59,11 @@
                                                     PassEventArgsToCommand="True"/>
                                 <!--domain:EventCommandExecuter Command="{Binding DGClientes_CellEditEndingComando}"/-->
                             </i:EventTrigger>
+                            <i:EventTrigger EventName="RowEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGClientes_RowEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                                <!--domain:EventCommandExecuter Command="{Binding DGClientes_RowEditEndingComando}"/-->
+                            </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>
                             <KeyBinding Gesture="Delete" Key="Delete"

@@ -250,6 +250,7 @@
     <Compile Include="Vistas\ControlesUsuario\FormDireccion.xaml.cs">
       <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FormDireccionViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>

@@ -28,16 +28,11 @@ namespace BiomasaEUPT.Vistas.GestionClientes
     /// </summary>
     public partial class TabClientes : UserControl
     {
-        private BiomasaEUPTContext context;
-        // private CollectionViewSource clientesViewSource;
-        // private CollectionViewSource tiposClientesViewSource;
-        // private CollectionViewSource gruposClientesViewSource;
         private TabClientesViewModel viewModel;
 
         public TabClientes()
         {
             InitializeComponent();
-            context = new BiomasaEUPTContext();
 
             viewModel = new TabClientesViewModel();
             DataContext = viewModel;
@@ -62,16 +57,13 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           // clientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("clientesViewSource")));
-           // tiposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("tiposClientesViewSource")));
-           // gruposClientesViewSource = ((CollectionViewSource)(ucTablaClientes.FindResource("gruposClientesViewSource")));
             // CargarClientes();
         }
 
         #region FiltroTabla
         public void FiltrarTabla()
         {
-           // clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
+            // clientesViewSource.Filter += new FilterEventHandler(FiltroTabla);
         }
 
         private void FiltroTabla(object sender, FilterEventArgs e)
@@ -115,13 +107,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 }
             }
         }
-        #endregion
-
-        // Usado para el FormDireccion
-        public BiomasaEUPTContext GetContext()
-        {
-            return context;
-        }
+        #endregion    
 
     }
 }

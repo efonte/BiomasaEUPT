@@ -8,16 +8,18 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="paisesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Pais}, CreateList=True}"/>
+            <!--CollectionViewSource x:Key="paisesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Pais}, CreateList=True}"/>
             <CollectionViewSource x:Key="comunidadesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Comunidad}, CreateList=True}"/>
             <CollectionViewSource x:Key="provinciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Provincia}, CreateList=True}"/>
-            <CollectionViewSource x:Key="municipiosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Municipio}, CreateList=True}"/>
+            <CollectionViewSource x:Key="municipiosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Municipio}, CreateList=True}"/-->
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
@@ -32,10 +34,13 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
-                  ItemsSource="{Binding Source={StaticResource paisesViewSource}}"
-                  SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Pais.Codigo, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
-                  SelectedValuePath="Codigo"
-                  SelectionChanged="cbPaises_SelectionChanged">
+                  ItemsSource="{Binding Paises}"
+                  SelectedItem="{Binding PaisSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding CBPaises_SelectionChangedComando}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -48,24 +53,30 @@
         </ComboBox>
 
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
-                      ItemsSource="{Binding Source={StaticResource comunidadesViewSource}}"
-                      SelectedValue="{Binding DataContext.Municipio.Provincia.Comunidad.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
-                      DisplayMemberPath="Nombre"
-                      SelectedValuePath="Nombre"
-                      SelectionChanged="cbComunidades_SelectionChanged">
+                  ItemsSource="{Binding Comunidades}"
+                  SelectedItem="{Binding ComunidadSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  DisplayMemberPath="Nombre">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding CBComunidades_SelectionChangedComando}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
-                      ItemsSource="{Binding Source={StaticResource provinciasViewSource}}"
-                      SelectedValue="{Binding DataContext.Municipio.Provincia.Nombre, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=OneWay}"
-                      DisplayMemberPath="Nombre"
-                      SelectedValuePath="Nombre"
-                      SelectionChanged="cbProvincias_SelectionChanged">
+                  ItemsSource="{Binding Provincias}"
+                  SelectedItem="{Binding ProvinciaSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  DisplayMemberPath="Nombre">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding CBProvincias_SelectionChangedComando}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
-                  ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
-                  SelectedValue="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=TwoWay}">
+                  ItemsSource="{Binding Municipios}"
+                  SelectedItem="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

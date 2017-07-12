@@ -32,6 +32,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private ICommand _modificarComando;
         private ICommand _borrarComando;
         private ICommand _dgClientes_CellEditEndingComando;
+        private ICommand _dgClientes_RowEditEndingComando;
         private ICommand _modificarObservacionesComando;
 
 
@@ -96,6 +97,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                     cliente.Calle = clienteSeleccionado.Calle;
                     cliente.MunicipioId = clienteSeleccionado.Municipio.MunicipioId;
                     // cliente.Observaciones = clienteSeleccionado.Observaciones;
+                    Console.WriteLine(cliente.MunicipioId);
                     context.SaveChanges();
                 }
 
@@ -106,6 +108,41 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
+        #region Editar Fila
+        public ICommand DGClientes_RowEditEndingComando => _dgClientes_RowEditEndingComando ??
+            (_dgClientes_RowEditEndingComando = new RelayCommand2<DataGridRowEditEndingEventArgs>(
+                 param => EditarFilaCliente(param)
+            ));
+
+        private void EditarFilaCliente(DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var clienteSeleccionado = e.Row.DataContext as Cliente;
+                using (var context = new BiomasaEUPTContext())
+                {
+                    var cliente = context.Clientes.Single(u => u.ClienteId == clienteSeleccionado.ClienteId);
+
+                    cliente.RazonSocial = clienteSeleccionado.RazonSocial;
+                    cliente.Nif = clienteSeleccionado.Nif;
+                    cliente.Email = clienteSeleccionado.Email;
+                    cliente.TipoId = clienteSeleccionado.TipoCliente.TipoClienteId;
+                    cliente.GrupoId = clienteSeleccionado.GrupoCliente.GrupoClienteId;
+                    cliente.Calle = clienteSeleccionado.Calle;
+                    cliente.MunicipioId = clienteSeleccionado.Municipio.MunicipioId;
+                    // cliente.Observaciones = clienteSeleccionado.Observaciones;
+                    Console.WriteLine(cliente.MunicipioId);
+                    context.SaveChanges();
+                }
+
+                /* if (e.Column.DisplayIndex == 3) // 3 = Posición tipo cliente
+                 {
+                     //(ucContador as Contador).Actualizar();
+                 }*/
+            }
+        }
+        #endregion      
 
         #region Añadir
         public ICommand AnadirComando => _anadirComando ??

@@ -55,7 +55,15 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             using (new CursorEspera())
             {
                 PopupBox popupBox = sender as PopupBox;
-                popupBox.PopupContent = new FormDireccion(tabClientes.GetContext());
+                popupBox.PopupContent = new FormDireccion()
+                {
+                    DataContext = new FormDireccionViewModel()
+                    {
+                        MunicipioSeleccionado = (tabClientes.DataContext as TabClientesViewModel).ClienteSeleccionado.Municipio
+                    }
+                };
+
+
             }
         }
 
