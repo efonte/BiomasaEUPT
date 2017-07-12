@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BiomasaEUPT.Domain;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,12 @@ namespace BiomasaEUPT.Vistas.Ajustes
     /// </summary>
     public partial class TabAjustesVentana : UserControl
     {
+
         public TabAjustesVentana()
         {
             InitializeComponent();
+            DataContext = this;
         }
+
     }
 }

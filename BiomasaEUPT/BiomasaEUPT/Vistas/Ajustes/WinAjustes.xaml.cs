@@ -23,22 +23,22 @@ namespace BiomasaEUPT.Vistas.Ajustes
         public WinAjustes()
         {
             InitializeComponent();
-            ucTabApariencia.cbVentanaMaximizada.IsChecked = Properties.Settings.Default.VentanaMaximizada;
-            ucTabApariencia.cbTamanoVentana.IsChecked = Properties.Settings.Default.TamanoVentana != "";
-            ucTabApariencia.cbPosicionVentana.IsChecked = Properties.Settings.Default.PosicionVentana != "";
-            ucTabApariencia.cbTabActiva.IsChecked = Properties.Settings.Default.TabActiva != "";
+            ucTabVentana.cbVentanaMaximizada.IsChecked = Properties.Settings.Default.VentanaMaximizada;
+            ucTabVentana.cbTamanoVentana.IsChecked = Properties.Settings.Default.TamanoVentana != "";
+            ucTabVentana.cbPosicionVentana.IsChecked = Properties.Settings.Default.PosicionVentana != "";
+            ucTabVentana.cbTabActiva.IsChecked = Properties.Settings.Default.TabActiva != "";
             ucTabApariencia.cbModoNocturno.IsChecked = Properties.Settings.Default.ModoNocturno;
 
-            ucTabApariencia.cbVentanaMaximizada.Checked += CheckBox_Checked;
-            ucTabApariencia.cbTamanoVentana.Checked += CheckBox_Checked;
-            ucTabApariencia.cbPosicionVentana.Checked += CheckBox_Checked;
-            ucTabApariencia.cbTabActiva.Checked += CheckBox_Checked;
+            ucTabVentana.cbVentanaMaximizada.Checked += CheckBox_Checked;
+            ucTabVentana.cbTamanoVentana.Checked += CheckBox_Checked;
+            ucTabVentana.cbPosicionVentana.Checked += CheckBox_Checked;
+            ucTabVentana.cbTabActiva.Checked += CheckBox_Checked;
             ucTabApariencia.cbModoNocturno.Checked += CheckBox_Checked;
 
-            ucTabApariencia.cbVentanaMaximizada.Unchecked += CheckBox_Unchecked;
-            ucTabApariencia.cbTamanoVentana.Unchecked += CheckBox_Unchecked;
-            ucTabApariencia.cbPosicionVentana.Unchecked += CheckBox_Unchecked;
-            ucTabApariencia.cbTabActiva.Unchecked += CheckBox_Unchecked;
+            ucTabVentana.cbVentanaMaximizada.Unchecked += CheckBox_Unchecked;
+            ucTabVentana.cbTamanoVentana.Unchecked += CheckBox_Unchecked;
+            ucTabVentana.cbPosicionVentana.Unchecked += CheckBox_Unchecked;
+            ucTabVentana.cbTabActiva.Unchecked += CheckBox_Unchecked;
             ucTabApariencia.cbModoNocturno.Unchecked += CheckBox_Unchecked;
         }
 
@@ -51,16 +51,16 @@ namespace BiomasaEUPT.Vistas.Ajustes
         {
             var checkBox = e.OriginalSource as CheckBox;
 
-            if (checkBox == ucTabApariencia.cbVentanaMaximizada)
+            if (checkBox == ucTabVentana.cbVentanaMaximizada)
                 Properties.Settings.Default.VentanaMaximizada = true;
 
-            if (checkBox == ucTabApariencia.cbTamanoVentana)
+            if (checkBox == ucTabVentana.cbTamanoVentana)
                 Properties.Settings.Default.TamanoVentana = (Owner as MainWindow).Width + "x" + (Owner as MainWindow).Height;
 
-            if (checkBox == ucTabApariencia.cbPosicionVentana)
+            if (checkBox == ucTabVentana.cbPosicionVentana)
                 Properties.Settings.Default.PosicionVentana = (Owner as MainWindow).Left + "," + (Owner as MainWindow).Top;
 
-            if (checkBox == ucTabApariencia.cbTabActiva)
+            if (checkBox == ucTabVentana.cbTabActiva)
                 Properties.Settings.Default.TabActiva = ((Owner as MainWindow).tcTabs.SelectedItem as TabItem).Name;
 
             if (checkBox == ucTabApariencia.cbModoNocturno)
@@ -76,16 +76,16 @@ namespace BiomasaEUPT.Vistas.Ajustes
         {
             var checkBox = e.OriginalSource as CheckBox;
 
-            if (checkBox == ucTabApariencia.cbVentanaMaximizada)
+            if (checkBox == ucTabVentana.cbVentanaMaximizada)
                 Properties.Settings.Default.VentanaMaximizada = false;
 
-            if (checkBox == ucTabApariencia.cbTamanoVentana)
+            if (checkBox == ucTabVentana.cbTamanoVentana)
                 Properties.Settings.Default.TamanoVentana = "";
 
-            if (checkBox == ucTabApariencia.cbPosicionVentana)
+            if (checkBox == ucTabVentana.cbPosicionVentana)
                 Properties.Settings.Default.PosicionVentana = "";
 
-            if (checkBox == ucTabApariencia.cbTabActiva)
+            if (checkBox == ucTabVentana.cbTabActiva)
                 Properties.Settings.Default.TabActiva = "";
 
             if (checkBox == ucTabApariencia.cbModoNocturno)

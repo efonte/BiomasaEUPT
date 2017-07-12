@@ -22,12 +22,25 @@
         <dockablz:Layout>
             <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0">
 
+                <!-- Pestaña Ventana -->
+                <TabItem x:Name="tiVentana">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="WindowMaximize" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                            <TextBlock Text="Ventana" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <local:TabAjustesVentana x:Name="ucTabVentana" Margin="0 0 0 20"/>
+                    </ScrollViewer>
+                </TabItem>
+
                 <!-- Pestaña Apariencia -->
                 <TabItem x:Name="tiApariencia">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Palette" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="General" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <TextBlock Text="Apariencia" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
                         </StackPanel>
                     </TabItem.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
