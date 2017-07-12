@@ -9,12 +9,11 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="usuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Usuario}, CreateList=True}"/>
-        <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoUsuario}, CreateList=True}"/>
-    </UserControl.Resources>
+             d:DesignHeight="250" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">
             <Grid Margin="0 0 0 0">
@@ -28,16 +27,27 @@
                         <RowDefinition />
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgUsuarios" DataContext="{StaticResource usuariosViewSource}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgUsuarios"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding UsuariosView}" CanUserAddRows="False"
                               EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All"
+                              CanUserDeleteRows="False" SelectedItem="{Binding UsuarioSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
-                        <!--DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                <Setter Property="TextBlock.FontSize" Value="15" />
-                                <Setter Property="Padding" Value="5" />
-                            </Style>
-                        </-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGUsuarios_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgUsuarios}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="CellEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGUsuarios_CellEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                                <!--domain:EventCommandExecuter Command="{Binding DGUsuarios_CellEditEndingComando}"/-->
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgUsuarios, Mode=OneWay}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"
@@ -102,7 +112,7 @@
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Width="100" Header="Email"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                    EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                                    MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
@@ -116,11 +126,37 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding>
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <DataGridComboBoxColumn x:Name="tipos_usuariosColumna" Header="Tipo"
-                                                    ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
-                                                    SelectedValuePath="TipoUsuarioId" 
-                                                    DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                    EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
+                            <!--DataGridComboBoxColumn Header="Life Area" SelectedItemBinding="{Binding TipoUsuario, UpdateSourceTrigger=PropertyChanged}"
+                                                    DisplayMemberPath="Nombre"
+                                                    SelectedValuePath="TipoUsuarioId">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.TiposUsuarios, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabUsuarios}}"/>
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.TiposUsuarios, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabUsuarios}}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </-->
+
+                            <DataGridTemplateColumn Header="Tipo" x:Name="tipoUsuarioColumna" >
+                                <DataGridTemplateColumn.CellEditingTemplate >
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding TipoUsuario, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  DisplayMemberPath="Nombre"
+                                                  ItemsSource="{Binding DataContext.TiposUsuarios, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabUsuarios}}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TipoUsuario.Nombre, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
                             <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnStyle}"
@@ -192,10 +228,12 @@
                                  ToolTip="Gestionar usuarios"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirUsuario" ToolTip="Añadir usuario">
+                            <Button x:Name="bAnadirUsuario" ToolTip="Añadir usuario"
+                                    Command="{Binding AnadirComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar el usuario seleccionado" Command="{Binding BorrarComando}">
+                            <Button ToolTip="Borrar el usuario seleccionado"
+                                    Command="{Binding BorrarComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar usuarios">

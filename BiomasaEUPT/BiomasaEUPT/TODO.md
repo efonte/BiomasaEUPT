@@ -1,5 +1,4 @@
-﻿* Arreglar menú filtro tabla (editar y borrar)
-* Usuarios arreglar banear y formUsuario
+﻿* Usuarios arreglar banear y formUsuario
 * Trazabilidad árbol
 * Refrescar datagrids
 * Arreglar TabElaboraciones
@@ -11,4 +10,4 @@
 * PDF de productoTerminado, Recepciones y productoEnvasado
 * Añadir tiposMateriasPrimas (filtro) y tiposProductosTerminados (filtro)
 * Añadir contador de tiposClientes y tiposProveedores
-* ¿Saber quién ha insertado los datos en la BD? --> Auditoría
+* TabUsuarios - No borrar a todos los admins y a ti mismo

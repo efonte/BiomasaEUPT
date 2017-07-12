@@ -32,7 +32,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     public partial class FiltroTabla : UserControl
     {
         private DependencyObject ucParent;
-        private CollectionViewSource tiposUsuariosViewSource;
+       // private CollectionViewSource tiposUsuariosViewSource;
         private CollectionViewSource tiposClientesViewSource;
         private CollectionViewSource tiposProveedoresViewSource;
         private CollectionViewSource gruposClientesViewSource;
@@ -103,8 +103,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             if (ucParent.GetType().Equals(typeof(TabUsuarios)))
             {
                 TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
-                tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
-                ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
+                //tiposUsuariosViewSource = ((CollectionViewSource)(tabUsuarios.ucTablaUsuarios.FindResource("tiposUsuariosViewSource")));
+                //ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
                 // tabUsuarios.FiltrarTabla();
             }
 
@@ -203,9 +203,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 if (ucParent.GetType().Equals(typeof(TabUsuarios)))
                 {
                     context.TiposUsuarios.Load();
-                    tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
-                    tiposUsuariosViewSource.View.Refresh();
-                    ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
+                    //tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
+                    //tiposUsuariosViewSource.View.Refresh();
+                    //ccFiltroTipo.Collection = tiposUsuariosViewSource.View;
                 }
 
                 else if (ucParent.GetType().Equals(typeof(TabClientes)))
