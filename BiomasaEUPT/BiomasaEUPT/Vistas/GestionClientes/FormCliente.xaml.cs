@@ -25,90 +25,57 @@ namespace BiomasaEUPT.Vistas.GestionClientes
     /// </summary>
     public partial class FormCliente : UserControl
     {
-        private BiomasaEUPTContext context;
-        private CollectionViewSource tiposClientesViewSource;
-        private CollectionViewSource gruposClientesViewSource;
-        private CollectionViewSource paisesViewSource;
-        private CollectionViewSource comunidadesViewSource;
-        private CollectionViewSource provinciasViewSource;
-        private CollectionViewSource municipiosViewSource;
-        public String RazonSocial { get; set; }
-        public String Nif { get; set; }
-        public String Email { get; set; }
-        public String Calle { get; set; }
-        public String Observaciones { get; set; }
+        private FormClienteViewModel viewModel;
 
         public FormCliente()
         {
             InitializeComponent();
-            DataContext = this;
-            context = new BiomasaEUPTContext();
-            tiposClientesViewSource = ((CollectionViewSource)(FindResource("tiposClientesViewSource")));
-            gruposClientesViewSource = ((CollectionViewSource)(FindResource("gruposClientesViewSource")));
-            paisesViewSource = ((CollectionViewSource)(FindResource("paisesViewSource")));
-            comunidadesViewSource = ((CollectionViewSource)(FindResource("comunidadesViewSource")));
-            provinciasViewSource = ((CollectionViewSource)(FindResource("provinciasViewSource")));
-            municipiosViewSource = ((CollectionViewSource)(FindResource("municipiosViewSource")));
+            viewModel = new FormClienteViewModel();
+            DataContext = viewModel;
         }
 
         public FormCliente(Cliente cliente) : this()
         {
-            gbTitulo.Header = "Editar Cliente";
-
-            RazonSocial = cliente.RazonSocial;
-            vUnicoRazonSocial.NombreActual = RazonSocial;
-            Nif = cliente.Nif;
-            vUnicoNif.NombreActual = Nif;
-            Email = cliente.Email;
-            vUnicoEmail.NombreActual = Email;
+            viewModel.FormTitulo = "Editar Cliente";
+            viewModel.RazonSocial = cliente.RazonSocial;
+            vUnicoRazonSocial.NombreActual = viewModel.RazonSocial;
+            viewModel.Nif = cliente.Nif;
+            vUnicoNif.NombreActual = viewModel.Nif;
+            viewModel.Email = cliente.Email;
+            vUnicoEmail.NombreActual = viewModel.Email;
             cbTiposClientes.SelectedValue = cliente.TipoId;
             cbGruposClientes.SelectedValue = cliente.GrupoId;
-            var provincia = context.Provincias.Single(p => p.ProvinciaId == cliente.Municipio.ProvinciaId);
-            var comunidad = context.Comunidades.Single(c => c.ComunidadId == provincia.ComunidadId);
-            var pais = context.Paises.Single(p => p.PaisId == comunidad.PaisId);
-            cbPaises.SelectedItem = pais;
-            cbComunidades.SelectedItem = comunidad;
-            cbProvincias.SelectedItem = provincia;
-            cbMunicipios.SelectedItem = cliente.Municipio;
-            Calle = cliente.Calle;
-            Observaciones = cliente.Observaciones;
+
+            var municipio = viewModel.Context.Municipios.Single(m => m.MunicipioId == cliente.Municipio.MunicipioId);
+            var provincia = viewModel.Context.Provincias.Single(p => p.ProvinciaId == cliente.Municipio.ProvinciaId);
+            var comunidad = viewModel.Context.Comunidades.Single(c => c.ComunidadId == provincia.ComunidadId);
+            var pais = viewModel.Context.Paises.Single(p => p.PaisId == comunidad.PaisId);
+            viewModel.PaisSeleccionado = pais;
+            viewModel.ComunidadSeleccionada = comunidad;
+            viewModel.ProvinciaSeleccionada = provincia;
+            viewModel.MunicipioSeleccionado = municipio;
+            viewModel.Calle = cliente.Calle;
+            viewModel.Observaciones = cliente.Observaciones;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            using (new CursorEspera())
-            {
-                context.TiposClientes.Load();
-                context.GruposClientes.Load();
-                context.Paises.Load();
-                tiposClientesViewSource.Source = context.TiposClientes.Local;
-                gruposClientesViewSource.Source = context.GruposClientes.Local;
-                paisesViewSource.Source = context.Paises.Local;
-            }
+
         }
 
         private void cbPaises_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (new CursorEspera())
-            {
-                comunidadesViewSource.Source = context.Comunidades.Where(d => d.PaisId == ((Pais)cbPaises.SelectedItem).PaisId).ToList();
-            }
+            viewModel.CargarComunidades();
         }
 
         private void cbComunidades_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (new CursorEspera())
-            {
-                provinciasViewSource.Source = context.Provincias.Where(d => d.ComunidadId == ((Comunidad)cbComunidades.SelectedItem).ComunidadId).ToList();
-            }
+            viewModel.CargarProvincias();
         }
 
         private void cbProvincias_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (new CursorEspera())
-            {
-                municipiosViewSource.Source = context.Municipios.Where(d => d.ProvinciaId == ((Provincia)cbProvincias.SelectedItem).ProvinciaId).ToList();
-            }
+            viewModel.CargarMunicipios();
         }
 
     }

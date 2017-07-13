@@ -264,6 +264,7 @@
     <Compile Include="Vistas\GestionClientes\FormCliente.xaml.cs">
       <DependentUpon>FormCliente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionClientes\FormClienteViewModel.cs" />
     <Compile Include="Vistas\GestionClientes\TabClientes.xaml.cs">
       <DependentUpon>TabClientes.xaml</DependentUpon>
     </Compile>

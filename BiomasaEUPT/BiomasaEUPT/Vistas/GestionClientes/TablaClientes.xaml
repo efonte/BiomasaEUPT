@@ -199,6 +199,29 @@
                             <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                    <Binding Path="Municipio.CodigoPostal"/>
+                                                    <Binding Path="Municipio.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ControlesUsuario:FormDireccion />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
                                         <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
                                                                  StaysOpen="True" Opened="pbDireccion_Opened">
                                             <materialDesign:PopupBox.ToggleContent>
@@ -217,7 +240,7 @@
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn-->
                         </DataGrid.Columns>
                     </DataGrid>
 

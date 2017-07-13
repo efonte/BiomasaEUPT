@@ -18,17 +18,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="tiposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoCliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposClientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoCliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="paisesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Pais}, CreateList=True}"/>
-            <CollectionViewSource x:Key="comunidadesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Comunidad}, CreateList=True}"/>
-            <CollectionViewSource x:Key="provinciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Provincia}, CreateList=True}"/>
-            <CollectionViewSource x:Key="municipiosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Municipio}, CreateList=True}"/>
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
             <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Cliente">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="{Binding FormTitulo}">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -97,9 +91,10 @@
                 </TextBox>
 
                 <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTiposClientes" materialDesign:HintAssist.Hint="Tipo"
-                      ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
-                      DisplayMemberPath="Nombre"
-                      SelectedValuePath="TipoClienteId">
+                          ItemsSource="{Binding TiposClientes}"
+                          SelectedIndex="0"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="TipoClienteId">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -108,16 +103,17 @@
                 </ComboBox>
 
                 <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbGruposClientes" materialDesign:HintAssist.Hint="Grupo"
-                      ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
-                      DisplayMemberPath="Nombre"
-                      SelectedValuePath="GrupoClienteId">
+                          SelectedIndex="0"
+                          ItemsSource="{Binding GruposClientes}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="GrupoClienteId">
                 </ComboBox>
 
                 <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
-                      ItemsSource="{Binding Source={StaticResource paisesViewSource}}"
-                      SelectedValue="ES"
-                      SelectedValuePath="Codigo"
-                      SelectionChanged="cbPaises_SelectionChanged">
+                          ItemsSource="{Binding Paises}"
+                          SelectedItem="{Binding PaisSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          SelectedValuePath="Codigo"
+                          SelectionChanged="cbPaises_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -130,24 +126,25 @@
                 </ComboBox>
 
                 <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
-                          ItemsSource="{Binding Source={StaticResource comunidadesViewSource}}"
-                          SelectedValue="Aragon"
+                          ItemsSource="{Binding Comunidades}"
+                          SelectedItem="{Binding ComunidadSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="Nombre"
                           SelectionChanged="cbComunidades_SelectionChanged">
                 </ComboBox>
 
                 <ComboBox Grid.Row="4" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
-                          ItemsSource="{Binding Source={StaticResource provinciasViewSource}}"
-                          SelectedValue="Teruel"
+                          ItemsSource="{Binding Provincias}"
+                          SelectedItem="{Binding ProvinciaSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="Nombre"
                           SelectionChanged="cbProvincias_SelectionChanged">
                 </ComboBox>
 
                 <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
-                      ItemsSource="{Binding Source={StaticResource municipiosViewSource}}"
-                      SelectedValuePath="MunicipioId">
+                          ItemsSource="{Binding Municipios}"
+                          SelectedItem="{Binding MunicipioSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          SelectedValuePath="MunicipioId">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>

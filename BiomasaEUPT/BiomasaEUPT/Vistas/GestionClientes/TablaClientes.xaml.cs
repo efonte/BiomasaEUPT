@@ -47,7 +47,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tabClientes.FiltrarTabla();
         }
 
-        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+       /* private void pbDireccion_Opened(object sender, RoutedEventArgs e)
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
             // a PopupContent. No se añade en TabClientes.xaml para que así no cargue en memoria cada uno
@@ -65,7 +65,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
 
             }
-        }
+        }*/
 
     }
 }

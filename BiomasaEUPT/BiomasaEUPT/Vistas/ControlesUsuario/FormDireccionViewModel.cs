@@ -39,12 +39,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         public FormDireccionViewModel()
         {
             CargarPaises();
-            /* Binding b = new Binding("DataContext.Municipio.Provincia.Comunidad.Pais.Codig");
-             b.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(DataGridRow), 1);
-             textBlock.SetBinding(TextBlock.TextProperty, b);*/
         }
 
-        private async void CargarPaises()
+        public void CargarPaises()
         {
             using (var context = new BiomasaEUPTContext())
             {
@@ -56,7 +53,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (PaisSeleccionado != null)
             {
-                Console.WriteLine(PaisSeleccionado.Nombre);
                 using (var context = new BiomasaEUPTContext())
                 {
                     Comunidades = new ObservableCollection<Comunidad>(context.Comunidades.Where(c => c.PaisId == PaisSeleccionado.PaisId).ToList());
@@ -68,7 +64,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (ComunidadSeleccionada != null)
             {
-                Console.WriteLine(ComunidadSeleccionada.Nombre);
                 using (var context = new BiomasaEUPTContext())
                 {
                     Provincias = new ObservableCollection<Provincia>(context.Provincias.Where(p => p.ComunidadId == ComunidadSeleccionada.ComunidadId).ToList());
@@ -80,7 +75,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (ProvinciaSeleccionada != null)
             {
-                Console.WriteLine(ProvinciaSeleccionada.Nombre);
                 using (var context = new BiomasaEUPTContext())
                 {
                     Municipios = new ObservableCollection<Municipio>(context.Municipios.Where(m => m.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).Include(m => m.Provincia.Comunidad.Pais).ToList());
