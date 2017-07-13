@@ -10,4 +10,3 @@
 * Añadir tiposMateriasPrimas (filtro) y tiposProductosTerminados (filtro)
 * Añadir contador de tiposClientes y tiposProveedores
 * TabUsuarios - No borrar a todos los admins y a ti mismo
-* Añadir contador de tiposClientes y tiposProveedores

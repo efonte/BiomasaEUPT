@@ -121,7 +121,13 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         private void bAnadir_Click(object sender, RoutedEventArgs e)
         {
+                using (var context = new BiomasaEUPTContext())
+                {
+                    context.OrdenesElaboraciones.Add(new OrdenElaboracion()
+                    {
 
+                    });
+                }
         }
     }
 }
