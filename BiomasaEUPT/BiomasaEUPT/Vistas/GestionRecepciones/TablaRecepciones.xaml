@@ -11,15 +11,10 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="500" Name="UCTablaRecepciones">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="estadosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoRecepcion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="proveedoresPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
 
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Recepciones">
@@ -37,11 +32,17 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgRecepciones" DataContext="{StaticResource recepcionesViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgRecepciones"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding RecepcionesView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding RecepcionSeleccionada, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGRecepciones_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgRecepciones}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumna" Header="Albarán" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
@@ -79,16 +80,20 @@
                                  ToolTip="Gestionar recepciones"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirRecepcion" ToolTip="Añadir recepción">
+                            <Button x:Name="bAnadirRecepcion" ToolTip="Añadir recepción"
+                                    Command="{Binding AnadirRecepcionComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar la recepción seleccionada" Command="{Binding BorrarRecepcionComando}">
+                            <Button ToolTip="Borrar la recepción seleccionada"
+                                    Command="{Binding BorrarRecepcionComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Modificar la recepción seleccionada" Command="{Binding ModificarRecepcionComando}">
+                            <Button ToolTip="Modificar la recepción seleccionada"
+                                    Command="{Binding ModificarRecepcionComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bRefrescar" ToolTip="Refrescar recepciones">
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar recepciones"
+                                     Command="{Binding RefrescarRecepcionesComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>

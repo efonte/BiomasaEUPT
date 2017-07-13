@@ -318,6 +318,7 @@
     <Compile Include="Vistas\GestionProveedores\TabProveedores.xaml.cs">
       <DependentUpon>TabProveedores.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionRecepciones\TabRecepcionesViewModel.cs" />
     <Compile Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml.cs">
       <DependentUpon>TrazabilidadCodigos.xaml</DependentUpon>
     </Compile>

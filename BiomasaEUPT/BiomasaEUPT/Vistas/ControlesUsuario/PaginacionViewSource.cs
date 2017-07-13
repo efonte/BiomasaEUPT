@@ -114,7 +114,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 if (ParentUC is TabRecepciones)
                 {
                     //(ParentUC as TabRecepciones).CargarRecepciones(ItemsPorPagina, ItemsSaltados);
-                    (ParentUC as TabRecepciones).CargarRecepciones(ItemsPorPagina, (PaginaSeleccionada - 1) * ItemsPorPagina);
+                    var tabRecepcionesViewModel = (ParentUC as TabRecepciones).DataContext as TabRecepcionesViewModel;
+                    tabRecepcionesViewModel.CargarRecepciones(ItemsPorPagina, (PaginaSeleccionada - 1) * ItemsPorPagina);
                 }
                 else if (ParentUC is TabElaboraciones)
                 {
