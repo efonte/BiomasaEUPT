@@ -291,6 +291,7 @@
     <Compile Include="Vistas\GestionElaboraciones\TablaProductosTerminados.xaml.cs">
       <DependentUpon>TablaProductosTerminados.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionProveedores\FormProveedorViewModel.cs" />
     <Compile Include="Vistas\GestionProveedores\TabProveedoresViewModel.cs" />
     <Compile Include="Vistas\GestionRecepciones\FormMateriaPrima.xaml.cs">
       <DependentUpon>FormMateriaPrima.xaml</DependentUpon>

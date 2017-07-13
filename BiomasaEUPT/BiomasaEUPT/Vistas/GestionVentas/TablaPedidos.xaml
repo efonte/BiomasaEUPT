@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
+             xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
@@ -25,6 +26,7 @@
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
@@ -70,7 +72,7 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="2" Grid.ColumnSpan="2" Padding="10 20 10 10"/>
 
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"

@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private CollectionViewSource ordenesElaboracionesViewSource;
         private CollectionViewSource productosTerminadosViewSource;
 
+        private enum ModoPaginacion { Primera = 1, Siguiente = 2, Anterior = 3, Ultima = 4, PageCountChange = 5 };
+
         public TabElaboraciones()
         {
             InitializeComponent();
@@ -50,6 +53,9 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             Style rowStyleProductosTerminados = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyleProductosTerminados.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowProductosTerminados_DoubleClick)));
             ucTablaProductosTerminados.dgProductosTerminados.RowStyle = rowStyleProductosTerminados;
+
+            (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
+            (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

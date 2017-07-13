@@ -68,17 +68,6 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <!--DataGridComboBoxColumn x:Name="proveedoresColumn" Header="Proveedor" Width="SizeToHeader"
-                                                ItemsSource="{Binding Source={StaticResource proveedoresPrimasViewSource}}"
-                                                SelectedValuePath="ProveedorId" 
-                                                DisplayMemberPath="RazonSocial" SelectedValueBinding="{Binding ProveedorId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
-
-                            <!--DataGridComboBoxColumn x:Name="estadosRecepcionesColumn" Header="Estado" Width="SizeToHeader"
-                                                ItemsSource="{Binding Source={StaticResource estadosRecepcionesViewSource}}"
-                                                SelectedValuePath="EstadoRecepcionId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding EstadoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
                         </DataGrid.Columns>
 
                     </DataGrid>

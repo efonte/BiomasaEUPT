@@ -1,6 +1,7 @@
 ﻿using BiomasaEUPT.Clases;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private CollectionViewSource productosEnvasadosViewSource;
         private CollectionViewSource pedidosViewSource;
 
+        private enum ModoPaginacion { Primera = 1, Siguiente = 2, Anterior = 3, Ultima = 4, PageCountChange = 5 };
 
         public TabVentas()
         {
@@ -47,6 +49,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowPedidos_DoubleClick)));
             ucTablaPedidos.dgPedidos.RowStyle = rowStyle;
             ucTablaPedidos.dgPedidos.SelectedIndex = -1;
+
+            (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
+            (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
