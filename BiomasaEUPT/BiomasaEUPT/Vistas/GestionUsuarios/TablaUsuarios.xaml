@@ -229,14 +229,15 @@
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="bAnadirUsuario" ToolTip="Añadir usuario"
-                                    Command="{Binding AnadirComando}">
+                                    Command="{Binding AnadirUsuarioComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Borrar el usuario seleccionado"
-                                    Command="{Binding BorrarComando}">
+                                    Command="{Binding BorrarUsuarioComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bRefrescar" ToolTip="Refrescar usuarios">
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar usuarios"
+                                    Command="{Binding RefrescarUsuariosComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
@@ -245,7 +246,8 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroUsuarios, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
                         <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
@@ -272,12 +274,13 @@
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Nombre" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Email" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Tipo" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Baneado" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbNombre" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbBaneado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Baneado" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbNombre" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding NombreSeleccionado}" Command="{Binding FiltrarUsuariosComando}"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EmailSeleccionado}" Command="{Binding FiltrarUsuariosComando}"/>
+                        <CheckBox x:Name="cbBaneado" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding BaneadoSeleccionado}" Command="{Binding FiltrarUsuariosComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

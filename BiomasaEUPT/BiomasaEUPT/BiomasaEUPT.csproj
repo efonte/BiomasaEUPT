@@ -335,9 +335,6 @@
       <DependentUpon>TabUsuarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionUsuarios\TabUsuariosViewModel.cs" />
-    <Compile Include="Vistas\GestionUsuarios\TiposUsuarios.xaml.cs">
-      <DependentUpon>TiposUsuarios.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedido.xaml.cs">
       <DependentUpon>FormPedido.xaml</DependentUpon>
     </Compile>
@@ -506,10 +503,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionUsuarios\TabUsuarios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionUsuarios\TiposUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

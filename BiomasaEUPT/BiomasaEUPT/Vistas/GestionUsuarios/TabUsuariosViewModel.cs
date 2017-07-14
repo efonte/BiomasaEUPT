@@ -28,9 +28,27 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public Usuario UsuarioSeleccionado { get; set; }
         public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
 
-        private ICommand _anadirComando;
-        private ICommand _modificarComando;
-        private ICommand _borrarComando;
+        // Checkbox Filtro Usuarios
+        public bool NombreSeleccionado { get; set; } = true;
+        public bool EmailSeleccionado { get; set; } = true;
+        public bool BaneadoSeleccionado { get; set; } = false;
+
+        private string _textoFiltroUsuarios;
+        public string TextoFiltroUsuarios
+        {
+            get { return _textoFiltroUsuarios; }
+            set
+            {
+                _textoFiltroUsuarios = value.ToLower();
+                FiltrarUsuarios();
+            }
+        }
+
+        private ICommand _anadirUsuarioComando;
+        private ICommand _modificarUsuarioComando;
+        private ICommand _borrarUsuarioComando;
+        private ICommand _refrescarUsuariosComando;
+        private ICommand _filtrarUsuariosComando;
         private ICommand _dgUsuarios_CellEditEndingComando;
 
         public TabUsuariosViewModel()
@@ -109,9 +127,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         }
         #endregion
 
-        #region Añadir
-        public ICommand AnadirComando => _anadirComando ??
-            (_anadirComando = new RelayComando(
+        #region Añadir Usuario
+        public ICommand AnadirUsuarioComando => _anadirUsuarioComando ??
+            (_anadirUsuarioComando = new RelayComando(
                 param => AnadirUsuario()
             ));
 
@@ -137,9 +155,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         }
         #endregion
 
-        #region Borrar     
-        public ICommand BorrarComando => _borrarComando ??
-            (_borrarComando = new RelayCommand2<IList<object>>(
+        #region Borrar Usuario    
+        public ICommand BorrarUsuarioComando => _borrarUsuarioComando ??
+            (_borrarUsuarioComando = new RelayCommand2<IList<object>>(
                 param => BorrarUsuario(),
                 param => UsuarioSeleccionado != null
             ));
@@ -164,9 +182,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         }
         #endregion
 
-        #region Editar
-        public ICommand ModificarComando => _modificarComando ??
-            (_modificarComando = new RelayComando(
+        #region Modificar Usuario
+        public ICommand ModificarUsuarioComando => _modificarUsuarioComando ??
+            (_modificarUsuarioComando = new RelayComando(
                 param => ModificarUsuario(),
                 param => UsuarioSeleccionado != null
              ));
@@ -189,6 +207,64 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 }
 
             }
+        }
+        #endregion
+
+
+        #region Refrescar Usuarios
+        public ICommand RefrescarUsuariosComando => _refrescarUsuariosComando ??
+            (_refrescarUsuariosComando = new RelayComando(
+                param => CargarUsuarios()
+             ));
+        #endregion
+
+
+        #region Filtro Usuarios
+        public ICommand FiltrarUsuariosComando => _filtrarUsuariosComando ??
+           (_filtrarUsuariosComando = new RelayComando(
+                param => FiltrarUsuarios()
+           ));
+
+        public void FiltrarUsuarios()
+        {
+            UsuariosView.Filter = FiltroUsuarios;
+            UsuariosView.Refresh();
+        }
+
+        private bool FiltroUsuarios(object item)
+        {
+            var usuario = item as Usuario;
+            string nombre = usuario.Nombre.ToLower();
+            string email = usuario.Email.ToLower();
+            string tipo = usuario.TipoUsuario.Nombre.ToLower();
+            var itemAceptado = true;
+
+            var condicion = (NombreSeleccionado == true ? nombre.Contains(TextoFiltroUsuarios) : false)
+                || (EmailSeleccionado == true ? email.Contains(TextoFiltroUsuarios) : false)
+                || (BaneadoSeleccionado == true ? usuario.Baneado == true : false);
+
+            // Filtra todos
+            if (FiltroTablaViewModel.TiposSeleccionados == null || FiltroTablaViewModel.TiposSeleccionados.Count == 0)
+            {
+                itemAceptado = condicion;
+            }
+            else
+            {
+                foreach (TipoUsuario tipoUsuario in FiltroTablaViewModel.TiposSeleccionados)
+                {
+                    if (tipoUsuario.Nombre.ToLower().Equals(tipo))
+                    {
+                        // Si lo encuentra no hace falta que siga haciendo el foreach
+                        itemAceptado = condicion;
+                        break;
+                    }
+                    else
+                    {
+                        itemAceptado = false;
+                    }
+                }
+            }
+            return itemAceptado;
         }
         #endregion
     }

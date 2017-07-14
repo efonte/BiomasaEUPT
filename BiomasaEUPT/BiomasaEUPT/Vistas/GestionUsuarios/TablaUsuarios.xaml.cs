@@ -35,20 +35,5 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
 
         }
-
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            DependencyObject ucParent = Parent;
-
-            while (!(ucParent is UserControl))
-            {
-                ucParent = LogicalTreeHelper.GetParent(ucParent);
-            }
-
-            TabUsuarios tabUsuarios = (TabUsuarios)ucParent;
-
-            tabUsuarios.FiltrarTabla();
-        }
-       
     }
 }

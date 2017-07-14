@@ -42,18 +42,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
 
-            ucFiltroTabla.lbFiltroTipo.SelectionChanged += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbNombre.Checked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbNombre.Unchecked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbEmail.Checked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbEmail.Unchecked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbBaneado.Checked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbBaneado.Unchecked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbTipo.Checked += (s, e1) => { FiltrarTabla(); };
-            ucTablaUsuarios.cbTipo.Unchecked += (s, e1) => { FiltrarTabla(); };
-            ucOpciones.bAnadir.Command = viewModel.AnadirComando;
+            ucOpciones.bAnadir.Command = viewModel.AnadirUsuarioComando;
             ucOpciones.bRefrescar.Click += (s, e1) => { viewModel.CargarUsuarios(); };
-            ucTablaUsuarios.bRefrescar.Click += (s, e1) => { viewModel.CargarUsuarios(); };
 
             /*   Style style = new Style(typeof(CheckBox));
                style.Setters.Add(new EventSetter(CheckBox.CheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));
@@ -65,49 +55,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
 
         }
-
-        #region FiltroTabla
-        public void FiltrarTabla()
-        {
-            //usuariosViewSource.Filter += new FilterEventHandler(FiltroTabla);
-        }
-
-        private void FiltroTabla(object sender, FilterEventArgs e)
-        {
-            string textoBuscado = ucTablaUsuarios.tbBuscar.Text.ToLower();
-            var usuario = e.Item as Usuario;
-            string nombre = usuario.Nombre.ToLower();
-            string email = usuario.Email.ToLower();
-            string tipo = usuario.TipoUsuario.Nombre.ToLower();
-
-            var condicion = (ucTablaUsuarios.cbNombre.IsChecked == true ? nombre.Contains(textoBuscado) : false) ||
-                           (ucTablaUsuarios.cbEmail.IsChecked == true ? email.Contains(textoBuscado) : false) ||
-                           (ucTablaUsuarios.cbBaneado.IsChecked == true ? usuario.Baneado == true : false);
-
-
-            // Filtra todos
-            if (ucFiltroTabla.lbFiltroTipo.SelectedItems.Count == 0)
-            {
-                e.Accepted = condicion;
-            }
-            else
-            {
-                foreach (TipoUsuario tipoUsuario in ucFiltroTabla.lbFiltroTipo.SelectedItems)
-                {
-                    if (tipoUsuario.Nombre.ToLower().Equals(tipo))
-                    {
-                        // Si lo encuentra en el ListBox del filtro no hace falta que siga haciendo el foreach
-                        e.Accepted = condicion;
-                        break;
-                    }
-                    else
-                    {
-                        e.Accepted = false;
-                    }
-                }
-            }
-        }
-        #endregion
 
     }
 }

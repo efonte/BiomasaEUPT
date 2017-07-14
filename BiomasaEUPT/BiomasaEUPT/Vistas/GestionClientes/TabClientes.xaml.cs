@@ -38,7 +38,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             DataContext = viewModel;
 
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
-            ucTablaClientes.bRefrescar.Click += (s, e1) => { viewModel.CargarClientes(); };
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -43,18 +43,18 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             set
             {
                 _textoFiltroClientes = value.ToLower();
-                ClientesView.Filter = FiltroClientes;
-                Console.WriteLine("ññ");
+                FiltrarClientes();
             }
         }
 
-        private ICommand _anadirComando;
-        private ICommand _modificarComando;
-        private ICommand _borrarComando;
+        private ICommand _anadirClienteComando;
+        private ICommand _modificarClienteComando;
+        private ICommand _borrarClienteComando;
+        private ICommand _refrescarClientesComando;
         private ICommand _filtrarClientesComando;
         private ICommand _dgClientes_CellEditEndingComando;
         private ICommand _dgClientes_RowEditEndingComando;
-        private ICommand _modificarObservacionesComando;
+        private ICommand _modificarObservacionesClienteComando;
 
 
         public TabClientesViewModel()
@@ -164,9 +164,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion      
 
-        #region Añadir
-        public ICommand AnadirComando => _anadirComando ??
-            (_anadirComando = new RelayComando(
+        #region Añadir Cliente
+        public ICommand AnadirClienteComando => _anadirClienteComando ??
+            (_anadirClienteComando = new RelayComando(
                 param => AnadirCliente()
             ));
 
@@ -197,9 +197,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion
 
-        #region Borrar     
-        public ICommand BorrarComando => _borrarComando ??
-            (_borrarComando = new RelayCommand2<IList<object>>(
+        #region Borrar Cliente    
+        public ICommand BorrarClienteComando => _borrarClienteComando ??
+            (_borrarClienteComando = new RelayCommand2<IList<object>>(
                 param => BorrarCliente(),
                 param => ClienteSeleccionado != null
             ));
@@ -242,9 +242,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion
 
-        #region Editar
-        public ICommand ModificarComando => _modificarComando ??
-            (_modificarComando = new RelayComando(
+        #region Modificar Cliente
+        public ICommand ModificarClienteComando => _modificarClienteComando ??
+            (_modificarClienteComando = new RelayComando(
                 param => ModificarCliente(),
                 param => ClienteSeleccionado != null
              ));
@@ -272,9 +272,18 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion
 
-        #region Modificar Observaciones Cliente
-        public ICommand ModificarObservacionesComando => _modificarObservacionesComando ??
-            (_modificarObservacionesComando = new RelayComando(
+
+        #region Refrescar Clientes
+        public ICommand RefrescarClientesComando => _refrescarClientesComando ??
+            (_refrescarClientesComando = new RelayComando(
+                param => CargarClientes()
+             ));
+        #endregion
+
+
+        #region Modificar Observación Cliente
+        public ICommand ModificarObservacionesClienteComando => _modificarObservacionesClienteComando ??
+            (_modificarObservacionesClienteComando = new RelayComando(
                 param => ModificarObservacionesCliente(),
                 param => ClienteSeleccionado != null
              ));
@@ -317,6 +326,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             string tipo = cliente.TipoCliente.Nombre.ToLower();
             string grupo = cliente.GrupoCliente.Nombre.ToLower();
             var itemAceptado = true;
+
             var condicion = (RazonSocialSeleccionada == true ? razonSocial.Contains(TextoFiltroClientes) : false)
                 || (NifSeleccionado == true ? nif.Contains(TextoFiltroClientes) : false)
                 || (EmailSeleccionado == true ? email.Contains(TextoFiltroClientes) : false)
@@ -367,6 +377,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
             return itemAceptado;
         }
-        #endregion 
+        #endregion
     }
 }

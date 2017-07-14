@@ -41,9 +41,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private ICommand _borrarMateriaPrimaComando;
         private ICommand _refrescarMateriasPrimasComando;
         private ICommand _modificarObservacionesMateriaPrimaComando;
-        private BiomasaEUPTContext context;
 
+        private BiomasaEUPTContext context;
         public PaginacionViewModel PaginacionViewModel { get; set; }
+
+
         public TabRecepcionesViewModel()
         {
             PaginacionViewModel = new PaginacionViewModel();
@@ -410,6 +412,24 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 param => CargarMateriasPrimas(),
                 param => RecepcionSeleccionada != null
              ));
+        #endregion
+
+
+        #region Modificar Observaciones Materia Prima
+        public ICommand ModificarObservacionesMateriaPrimaComando => _modificarObservacionesMateriaPrimaComando ??
+            (_modificarObservacionesMateriaPrimaComando = new RelayComando(
+                param => ModificarObservacionesMateriaPrima(),
+                param => MateriaPrimaSeleccionada != null
+             ));
+
+        private void ModificarObservacionesMateriaPrima()
+        {
+            /*var materiaPrima = context.MateriasPrimas.Single(mp => mp.MateriaPrimaId == MateriaPrimaSeleccionada.MateriaPrimaId);
+            materiaPrima.Observaciones = MateriaPrimaSeleccionada.Observaciones;*/
+            context.SaveChanges();
+
+            ObservacionesMateriasPrimasEnEdicion = false;
+        }
         #endregion
     }
 }

@@ -83,7 +83,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
                 if (ViewModel is TabUsuariosViewModel)
                 {
-                    //(ViewModel as TabUsuariosViewModel).FiltrarUsuarios();
+                    (ViewModel as TabUsuariosViewModel).FiltrarUsuarios();
                 }
                 else if (ViewModel is TabClientesViewModel)
                 {
