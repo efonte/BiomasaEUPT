@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              Height="250" Width="190" Loaded="UserControl_Loaded">
 
@@ -64,6 +65,12 @@
                         <ListBox x:Name="lbFiltroTipo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple"
                                  ItemsSource="{Binding TiposView, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding TipoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding LBFiltroTipo_SelectionChangedComando}"
+                                                           CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -146,6 +153,12 @@
                         <ListBox x:Name="lbFiltroGrupo" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple"
                                  ItemsSource="{Binding GruposView, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding GrupoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding LBFiltroGrupo_SelectionChangedComando}"
+                                                           CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"

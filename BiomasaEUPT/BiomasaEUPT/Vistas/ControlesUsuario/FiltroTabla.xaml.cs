@@ -33,7 +33,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     {
         public bool MostrarGrupo { get; set; } = true;
         public bool MostrarMenuGrupo { get; set; } = true;
-        public bool MostrarMenuTipo { get; set; } = true;
+        public bool MostrarMenuTipo { get; set; } = true;        
 
         /* public static readonly DependencyProperty MostrarGrupoProperty = DependencyProperty.Register
             (

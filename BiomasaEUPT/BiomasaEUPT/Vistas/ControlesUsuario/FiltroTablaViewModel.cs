@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas.GestionClientes;
@@ -21,8 +22,10 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     {
         public CollectionView TiposView { get; private set; }
         public object TipoSeleccionado { get; set; }
+        public ObservableCollection<object> TiposSeleccionados { get; set; }
         public CollectionView GruposView { get; private set; }
         public object GrupoSeleccionado { get; set; }
+        public ObservableCollection<object> GruposSeleccionados { get; set; }
         public DependencyObject UCParent { get; set; }
         public ViewModelBase ViewModel { get; set; }
 
@@ -63,16 +66,46 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
 
             // Pestaña Proveedores
-            /*  else if (ViewModel is TabProveedoresViewModel)
-                {
-                    var tabProveedoresViewModel = ViewModel as TabProveedoresViewModel;
-                    tabProveedoresViewModel.CargarProveedores();
-                    TiposView = (CollectionView)CollectionViewSource.GetDefaultView(tabProveedoresViewModel.TiposProveedores);
-                    GgruposView = (CollectionView)CollectionViewSource.GetDefaultView(tabProveedoresViewModel.GruposClientes);
-                }*/
+            else if (ViewModel is TabProveedoresViewModel)
+            {
+                var tabProveedoresViewModel = ViewModel as TabProveedoresViewModel;
+                tabProveedoresViewModel.CargarProveedores();
+                TiposView = (CollectionView)CollectionViewSource.GetDefaultView(tabProveedoresViewModel.TiposProveedores);
+            }
         }
 
+        //public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommand2<IList<object>>(param => TiposSeleccionados = new ObservableCollection<Object>(param.ToList())/*.Cast<object>().ToList()*/);
+        public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommand2<IList<object>>(
+            param =>
+            {
+                // Asigna el valor de TiposSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
+                TiposSeleccionados = new ObservableCollection<Object>(param.ToList());/*.Cast<object>().ToList()*/
 
+                if (ViewModel is TabUsuariosViewModel)
+                {
+                    //(ViewModel as TabUsuariosViewModel).FiltrarUsuarios();
+                }
+                else if (ViewModel is TabClientesViewModel)
+                {
+                    (ViewModel as TabClientesViewModel).FiltrarClientes();
+                }
+                else if (ViewModel is TabProveedoresViewModel)
+                {
+                    //(ViewModel as TabProveedoresViewModel).FiltrarProveedores();
+                }
+            });
+
+        public ICommand LBFiltroGrupo_SelectionChangedComando => new RelayCommand2<IList<object>>(
+            param =>
+            {
+                // Asigna el valor de GruposSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
+                GruposSeleccionados = new ObservableCollection<Object>(param.ToList());/*param.Cast<object>().ToList()*/
+
+                if (ViewModel is TabClientesViewModel)
+                {
+                    (ViewModel as TabClientesViewModel).FiltrarClientes();
+                }
+            });
 
         #region AñadirTipo
         public ICommand AnadirTipoComando => _anadirTipoComando ??
@@ -88,16 +121,14 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             // Pestaña Clientes
             if (ViewModel is TabClientesViewModel)
             {
-                // formTipo.vNombreUnico.Coleccion = tiposClientesViewSource;
-                // formTipo.vNombreUnico.Tipo = "TipoCliente";
+                formTipo.vNombreUnico.Tipo = "TipoCliente";
             }
 
             // Pestaña Proveedores
-            /*  else if (ViewModel is TabProveedoresViewModel)
-              {
-                  formTipo.vNombreUnico.Coleccion = tiposProveedoresViewSource;
-                  formTipo.vNombreUnico.Tipo = "TiposProveedor";
-              }*/
+            else if (ViewModel is TabProveedoresViewModel)
+            {
+                formTipo.vNombreUnico.Tipo = "TiposProveedor";
+            }
 
             if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
             {
@@ -113,11 +144,16 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         var tabClientesViewModel = ViewModel as TabClientesViewModel;
                         tabClientesViewModel.CargarClientes();
                     }
-                    /*  if (ViewModel is TabProveedoresViewModel)
-                      {
-                          context.TiposProveedores.Add(new TipoProveedor() { Nombre = formTipo.Nombre, Descripcion = formTipo.Descripcion });
-                          var tabProveedoresViewModel = ViewModel as TabProveedoresViewModel;
-                      }*/
+                    if (ViewModel is TabProveedoresViewModel)
+                    {
+                        context.TiposProveedores.Add(new TipoProveedor()
+                        {
+                            Nombre = formTipo.Nombre,
+                            Descripcion = formTipo.Descripcion
+                        });
+                        var tabProveedoresViewModel = ViewModel as TabProveedoresViewModel;
+                        tabProveedoresViewModel.CargarProveedores();
+                    }
                     context.SaveChanges();
                 }
                 CargarFiltro();
@@ -139,7 +175,6 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             // Pestaña Clientes
             if (ViewModel is TabClientesViewModel)
             {
-                // formGrupo.vNombreUnico.Coleccion = gruposClientesViewSource;
                 formGrupo.vNombreUnico.Tipo = "GrupoCliente";
             }
 
@@ -188,33 +223,33 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         {
                             await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
                         }
-                    }                   
+                    }
                 }
             }
 
             // Pestaña Proveedores
-            /* else if (ViewModel is TabProveedoresViewModel)
-             {
-                 var tipoSeleccionado = TipoSeleccionado as TipoProveedor;
-                 mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
-                 if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
-                 {
-                     using (var context = new BiomasaEUPTContext())
-                     {
-                         if (!context.Proveedores.Any(t => t.TipoId == tipoSeleccionado.TipoProveedorId))
-                         {
-                             var tipoABorrar = context.TiposProveedores.Single(tc => tc.TipoProveedorId == tipoSeleccionado.TipoProveedorId);
-                             context.TiposProveedores.Remove(tipoABorrar);
-                             context.SaveChanges();
-                              CargarFiltro();
-                         }
-                         else
-                         {
-                             await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
-                         }
-                     }
-                 }
-             }*/
+            else if (ViewModel is TabProveedoresViewModel)
+            {
+                var tipoSeleccionado = TipoSeleccionado as TipoProveedor;
+                mensajeConf.Mensaje = "¿Está seguro de que desea borrar el tipo " + tipoSeleccionado.Nombre + "?";
+                if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+                {
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        if (!context.Proveedores.Any(t => t.TipoId == tipoSeleccionado.TipoProveedorId))
+                        {
+                            var tipoABorrar = context.TiposProveedores.Single(tc => tc.TipoProveedorId == tipoSeleccionado.TipoProveedorId);
+                            context.TiposProveedores.Remove(tipoABorrar);
+                            context.SaveChanges();
+                            CargarFiltro();
+                        }
+                        else
+                        {
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                        }
+                    }
+                }
+            }
         }
         #endregion
 
@@ -265,29 +300,28 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
 
             // Pestaña Proveedores
-            /* else if (ViewModel is TabProveedoresViewModel)
-             {
-                 var tipoSeleccionado = lbFiltroTipo.SelectedItem as TipoProveedor;
-                 formTipo.Nombre = tipoSeleccionado.Nombre;
-                 formTipo.Descripcion = tipoSeleccionado.Descripcion;
-                 var nombreViejo = formTipo.Nombre;
-                 formTipo.vNombreUnico.Tipo = "TipoProveedor";
-                 formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
-                 if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
-                 {
-                     tipoSeleccionado.Nombre = formTipo.Nombre;
-                     tipoSeleccionado.Descripcion = formTipo.Descripcion;
-                     tiposClientesViewSource.View.Refresh();
-                     using (var context = new BiomasaEUPTContext())
-                     {
-                         var tipoProveedor = context.TiposProveedores.Single(tc => tc.Nombre == nombreViejo);
-                         tipoProveedor.Nombre = formTipo.Nombre;
-                         tipoProveedor.Descripcion = formTipo.Descripcion;
-                         context.SaveChanges();
-                     }
-                     CargarFiltro();
-                 }
-             }*/
+            else if (ViewModel is TabProveedoresViewModel)
+            {
+                var tipoSeleccionado = TipoSeleccionado as TipoProveedor;
+                formTipo.Nombre = tipoSeleccionado.Nombre;
+                formTipo.Descripcion = tipoSeleccionado.Descripcion;
+                var nombreViejo = formTipo.Nombre;
+                formTipo.vNombreUnico.Tipo = "TipoProveedor";
+                formTipo.vNombreUnico.NombreActual = tipoSeleccionado.Nombre;
+                if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+                {
+                    tipoSeleccionado.Nombre = formTipo.Nombre;
+                    tipoSeleccionado.Descripcion = formTipo.Descripcion;
+                    using (var context = new BiomasaEUPTContext())
+                    {
+                        var tipoProveedor = context.TiposProveedores.Single(tc => tc.Nombre == nombreViejo);
+                        tipoProveedor.Nombre = formTipo.Nombre;
+                        tipoProveedor.Descripcion = formTipo.Descripcion;
+                        context.SaveChanges();
+                    }
+                    CargarFiltro();
+                }
+            }
         }
         #endregion
 

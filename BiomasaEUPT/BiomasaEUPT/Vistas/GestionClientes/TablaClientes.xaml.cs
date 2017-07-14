@@ -42,11 +42,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tabClientes = (TabClientes)ucParent;
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            tabClientes.FiltrarTabla();
-        }
-
        /* private void pbDireccion_Opened(object sender, RoutedEventArgs e)
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado

@@ -318,7 +318,7 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroClientes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
@@ -350,12 +350,18 @@
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
-                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding RazonSocialSeleccionada}" Command="{Binding FiltrarClientesComando}"/>
+                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding NifSeleccionado}" Command="{Binding FiltrarClientesComando}"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EmailSeleccionado}" Command="{Binding FiltrarClientesComando}"/>
+                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding CalleSeleccionada}" Command="{Binding FiltrarClientesComando}"/>
+                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding CodigoPostalSeleccionado}" Command="{Binding FiltrarClientesComando}"/>
+                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding MunicipioSeleccionado}" Command="{Binding FiltrarClientesComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

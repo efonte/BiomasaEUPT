@@ -28,9 +28,30 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
         public bool ObservacionesEnEdicion { get; set; }
 
+        // Checkbox Filtro Clientes
+        public bool RazonSocialSeleccionada { get; set; } = true;
+        public bool NifSeleccionado { get; set; } = true;
+        public bool EmailSeleccionado { get; set; } = false;
+        public bool CalleSeleccionada { get; set; } = false;
+        public bool CodigoPostalSeleccionado { get; set; } = false;
+        public bool MunicipioSeleccionado { get; set; } = false;
+
+        private string _textoFiltroClientes;
+        public string TextoFiltroClientes
+        {
+            get { return _textoFiltroClientes; }
+            set
+            {
+                _textoFiltroClientes = value.ToLower();
+                ClientesView.Filter = FiltroClientes;
+                Console.WriteLine("ññ");
+            }
+        }
+
         private ICommand _anadirComando;
         private ICommand _modificarComando;
         private ICommand _borrarComando;
+        private ICommand _filtrarClientesComando;
         private ICommand _dgClientes_CellEditEndingComando;
         private ICommand _dgClientes_RowEditEndingComando;
         private ICommand _modificarObservacionesComando;
@@ -260,7 +281,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private void ModificarObservacionesCliente()
         {
-            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaa");
             using (var context = new BiomasaEUPTContext())
             {
                 var cliente = context.Clientes.Single(u => u.ClienteId == ClienteSeleccionado.ClienteId);
@@ -271,5 +291,82 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             ObservacionesEnEdicion = false;
         }
         #endregion
+
+
+        #region Filtro Clientes
+        public ICommand FiltrarClientesComando => _filtrarClientesComando ??
+           (_filtrarClientesComando = new RelayComando(
+                param => FiltrarClientes()
+           ));
+
+        public void FiltrarClientes()
+        {
+            ClientesView.Filter = FiltroClientes;
+            ClientesView.Refresh();
+        }
+
+        private bool FiltroClientes(object item)
+        {
+            var cliente = item as Cliente;
+            string razonSocial = cliente.RazonSocial.ToLower();
+            string nif = cliente.Nif.ToLower();
+            string email = cliente.Email.ToLower();
+            string calle = cliente.Calle.ToLower();
+            string codigoPostal = cliente.Municipio.CodigoPostal.ToLower();
+            string municipio = cliente.Municipio.Nombre.ToLower();
+            string tipo = cliente.TipoCliente.Nombre.ToLower();
+            string grupo = cliente.GrupoCliente.Nombre.ToLower();
+            var itemAceptado = true;
+            var condicion = (RazonSocialSeleccionada == true ? razonSocial.Contains(TextoFiltroClientes) : false)
+                || (NifSeleccionado == true ? nif.Contains(TextoFiltroClientes) : false)
+                || (EmailSeleccionado == true ? email.Contains(TextoFiltroClientes) : false)
+                || (CalleSeleccionada == true ? calle.Contains(TextoFiltroClientes) : false)
+                || (CodigoPostalSeleccionado == true ? codigoPostal.Contains(TextoFiltroClientes) : false)
+                || (MunicipioSeleccionado == true ? municipio.Contains(TextoFiltroClientes) : false);
+
+            // Filtra Tipos Clientes
+            if (FiltroTablaViewModel.TiposSeleccionados == null || FiltroTablaViewModel.TiposSeleccionados.Count == 0)
+            {
+                itemAceptado = condicion;
+            }
+            else
+            {
+                foreach (TipoCliente tipoCliente in FiltroTablaViewModel.TiposSeleccionados)
+                {
+                    if (tipoCliente.Nombre.ToLower().Equals(tipo))
+                    {
+                        // Si lo encuentra no hace falta que siga haciendo el foreach
+                        itemAceptado = condicion;
+                        break;
+                    }
+                    else { itemAceptado = false; }
+                }
+            }
+
+            // Si el cliente ha sido aceptado por el tipo falta comprobar el grupo
+            if (itemAceptado)
+            {
+                // Filtra Grupos Clientes
+                if (FiltroTablaViewModel.GruposSeleccionados == null || FiltroTablaViewModel.GruposSeleccionados.Count == 0)
+                {
+                    itemAceptado = condicion;
+                }
+                else
+                {
+                    foreach (GrupoCliente grupoCliente in FiltroTablaViewModel.GruposSeleccionados)
+                    {
+                        if (grupoCliente.Nombre.ToLower().Equals(grupo))
+                        {
+                            // Si lo encuentra no hace falta que siga haciendo el foreach
+                            itemAceptado = condicion;
+                            break;
+                        }
+                        else { itemAceptado = false; }
+                    }
+                }
+            }
+            return itemAceptado;
+        }
+        #endregion 
     }
 }
