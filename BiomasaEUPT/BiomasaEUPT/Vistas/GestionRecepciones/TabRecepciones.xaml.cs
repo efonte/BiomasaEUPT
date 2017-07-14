@@ -65,18 +65,16 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             Style rowStyleRecepciones = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { viewModel.ModificarRecepcion(); })));
             ucTablaRecepciones.dgRecepciones.RowStyle = rowStyleRecepciones;
+
             // Hacer doble clic en una fila del datagrid de materias primas hará que se ejecuta el evento RowMateriasPrimas_DoubleClick
             Style rowStyleMateriasPrimas = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { viewModel.ModificarMateriaPrima(); })));
             ucTablaMateriasPrimas.dgMateriasPrimas.RowStyle = rowStyleMateriasPrimas;
-
-            (ucTablaRecepciones.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
-            (ucTablaRecepciones.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            ucTablaRecepciones.ucPaginacion.DataContext = (DataContext as TabRecepcionesViewModel).PaginacionViewModel;
         }
 
         public void FiltrarTablaRecepciones()

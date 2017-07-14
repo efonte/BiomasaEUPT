@@ -257,7 +257,7 @@
     <Compile Include="Vistas\ControlesUsuario\Paginacion.xaml.cs">
       <DependentUpon>Paginacion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\ControlesUsuario\PaginacionViewSource.cs" />
+    <Compile Include="Vistas\ControlesUsuario\PaginacionViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml.cs">
       <DependentUpon>VisorPDFCodigos.xaml</DependentUpon>
     </Compile>

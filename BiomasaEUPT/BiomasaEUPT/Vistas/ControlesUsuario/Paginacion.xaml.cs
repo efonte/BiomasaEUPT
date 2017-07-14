@@ -27,13 +27,16 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         public Paginacion()
         {
             InitializeComponent();
-            DataContext = new PaginacionViewSource();
+            // El DataContext es asignado en en ViewModel de la pestaña
         }
 
         private void cbCantidad_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as PaginacionViewSource).CalcularItemsTotales();
-            (DataContext as PaginacionViewSource).CargarItems();
+            var paginacionViewModel = (DataContext as PaginacionViewModel);
+            if (paginacionViewModel.GetItemsTotales != null)
+            {
+                paginacionViewModel.Refrescar();
+            }
         }
     }
 }

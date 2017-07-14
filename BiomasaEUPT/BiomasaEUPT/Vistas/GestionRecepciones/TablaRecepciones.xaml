@@ -43,6 +43,11 @@
                                     CommandParameter="{Binding Path=SelectedItems, ElementName=dgRecepciones}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarRecepcionComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgRecepciones, Mode=OneWay}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumna" Header="Albarán" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding NumeroAlbaran, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>

@@ -50,8 +50,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             ucTablaPedidos.dgPedidos.RowStyle = rowStyle;
             ucTablaPedidos.dgPedidos.SelectedIndex = -1;
 
-            (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
-            (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
+           // (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
+           // (ucTablaPedidos.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

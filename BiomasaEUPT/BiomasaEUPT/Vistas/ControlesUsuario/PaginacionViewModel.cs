@@ -14,24 +14,47 @@ using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
-    public class PaginacionViewSource : INotifyPropertyChanged
+    public class PaginacionViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<int> ItemsPorPaginaDisponibles { get; set; }
         public int ItemsPorPagina { get; set; }
-        public int ItemsTotales { get; set; } = 0;
+
+        private int _itemsTotales;
+        public int ItemsTotales
+        {
+            get { return _itemsTotales; }
+            set
+            {
+                _itemsTotales = value;
+                // PaginasTotales = (int)Math.Ceiling((double)_itemsTotales / ItemsPorPagina);
+            }
+        }
+
+        private int _paginasTotales;
+        public int PaginasTotales
+        {
+            get { return _paginasTotales; }
+            set
+            {
+                _paginasTotales = value;
+                // PaginaSeleccionada = _paginasTotales < PaginaSeleccionada ? _paginasTotales : PaginaSeleccionada;
+            }
+        }
 
         public int PaginaSeleccionada { get; set; }
-        public int PaginasTotales { get; set; }
 
-        public UserControl ParentUC { get; set; }
+        public Func<int> GetItemsTotales { get; set; }
+        public Action<int, int> CargarItems { get; set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PaginacionViewSource()
+        public PaginacionViewModel()
         {
+            ItemsTotales = 0;
             ItemsPorPaginaDisponibles = new ObservableCollection<int>() { 10, 20, 30, 50, 100 };
             ItemsPorPagina = 10;
-            CalcularItemsTotales();
+            // ActualizarContadores();
             PaginaSeleccionada = 1;
         }
 
@@ -53,7 +76,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         private void PaginacionUC(string parametro)
         {
-            CalcularItemsTotales();
+            ActualizarContadores();
             switch (parametro)
             {
                 case "<<":
@@ -71,7 +94,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                     PaginaSeleccionada = PaginasTotales;
                     break;
             }
-            CargarItems();
+            CargarItems(ItemsPorPagina, (PaginaSeleccionada - 1) * ItemsPorPagina);
         }
 
         private bool CanPaginacionUC(string parametro)
@@ -88,40 +111,17 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             return true;
         }
 
-
-        public void CalcularItemsTotales()
+        public void ActualizarContadores()
         {
-            using (var context = new BiomasaEUPTContext())
-            {
-                if (ParentUC is TabRecepciones)
-                {
-                    ItemsTotales = context.Recepciones.Count();
-                }
-                else if (ParentUC is TabElaboraciones)
-                {
-                    ItemsTotales = context.OrdenesElaboraciones.Count();
-                }
-            }
+            ItemsTotales = GetItemsTotales();
             PaginasTotales = (int)Math.Ceiling((double)ItemsTotales / ItemsPorPagina);
             PaginaSeleccionada = PaginasTotales < PaginaSeleccionada ? PaginasTotales : PaginaSeleccionada;
         }
 
-        public void CargarItems()
+        public void Refrescar()
         {
-            // Hay que esperar a que se haya cargado la vista para que no salte excepción valor nulo
-            if (ParentUC.IsLoaded)
-            {
-                if (ParentUC is TabRecepciones)
-                {
-                    //(ParentUC as TabRecepciones).CargarRecepciones(ItemsPorPagina, ItemsSaltados);
-                    var tabRecepcionesViewModel = (ParentUC as TabRecepciones).DataContext as TabRecepcionesViewModel;
-                    tabRecepcionesViewModel.CargarRecepciones(ItemsPorPagina, (PaginaSeleccionada - 1) * ItemsPorPagina);
-                }
-                else if (ParentUC is TabElaboraciones)
-                {
-                    //(ParentUC as TabElaboraciones).CargarElaboraciones(ItemsPorPagina, ItemsSaltados);
-                }
-            }
+            ActualizarContadores();
+            CargarItems(ItemsPorPagina, (PaginaSeleccionada - 1) * ItemsPorPagina);
         }
     }
 }

@@ -54,8 +54,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             rowStyleProductosTerminados.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(RowProductosTerminados_DoubleClick)));
             ucTablaProductosTerminados.dgProductosTerminados.RowStyle = rowStyleProductosTerminados;
 
-            (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
-            (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
+           // (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).ParentUC = this;
+           // (ucTablaElaboraciones.ucPaginacion.DataContext as PaginacionViewSource).CalcularItemsTotales();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
