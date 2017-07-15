@@ -15,6 +15,12 @@ namespace BiomasaEUPT.Modelos.Tablas
     [Table("Usuarios")]
     public class Usuario
     {
+
+        public Usuario()
+        {
+            Baneado = false;
+        }
+
         [Key]
         public int UsuarioId { get; set; }
 
@@ -40,13 +46,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Fecha alta"), Display(Name = "Fecha alta")]
         public DateTime? FechaAlta { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Fecha baja"), Display(Name = "Fecha baja")]
         public DateTime? FechaBaja { get; set; }
 
         [DisplayName("Fecha contraseña"), Display(Name = "Fecha contraseña")]
         public DateTime? FechaContrasena { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Baneado"), Display(Name = "Baneado")]
         public bool? Baneado { get; set; }
 

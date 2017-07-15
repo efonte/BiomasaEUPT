@@ -87,7 +87,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                  param => EditarCeldaUsuario(param)
             ));
 
-        private void EditarCeldaUsuario(DataGridCellEditEndingEventArgs e)
+        private async void EditarCeldaUsuario(DataGridCellEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
@@ -101,27 +101,35 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuarioSeleccionado.Contrasena = hashContrasena;
                 }
-                else if (e.Column.DisplayIndex == 4) // 4 = Posición columna baneado
-                {
-                    Console.WriteLine(usuarioSeleccionado.Baneado);
-                }
                 if (e.Column.DisplayIndex == 3) // 3 = Posición columna tipo usuario
                 {
                     //   (ucContador as Contador).Actualizar();
                 }
                 using (var context = new BiomasaEUPTContext())
                 {
-                    Console.WriteLine(usuarioSeleccionado.Nombre);
-                    var usuario = context.Usuarios.Single(u => u.UsuarioId == usuarioSeleccionado.UsuarioId);
+                    // Comprueba si se va a baneado al admin que haya a menos otro admin activo
+                    if (usuarioSeleccionado.TipoUsuario.TipoUsuarioId == 1 && usuarioSeleccionado.Baneado == true
+                        && !context.Usuarios.Any(u => u.TipoId == 1 && u.Baneado != false && u.UsuarioId != usuarioSeleccionado.UsuarioId))
+                    {
+                        usuarioSeleccionado.Baneado = false;
+                        await DialogHost.Show(new MensajeInformacion()
+                        {
+                            Mensaje = "No se puede banear el usuario ya que al menos tiene que haber un admin activo."
+                        }, "RootDialog");
+                    }
+                    else
+                    {
+                        var usuario = context.Usuarios.Single(u => u.UsuarioId == usuarioSeleccionado.UsuarioId);
 
-                    usuario.Nombre = usuarioSeleccionado.Nombre;
-                    usuario.Contrasena = usuarioSeleccionado.Contrasena;
-                    usuario.TipoId = usuarioSeleccionado.TipoUsuario.TipoUsuarioId;
-                    usuario.Email = usuarioSeleccionado.Email;
-                    usuario.Baneado = usuarioSeleccionado.Baneado;
-                    //usuario = usuarioSeleccionado;
-                    // context.Usuarios.Attach(usuarioSeleccionado);
-                    context.SaveChanges();
+                        usuario.Nombre = usuarioSeleccionado.Nombre;
+                        usuario.Contrasena = usuarioSeleccionado.Contrasena;
+                        usuario.TipoId = usuarioSeleccionado.TipoUsuario.TipoUsuarioId;
+                        usuario.Email = usuarioSeleccionado.Email;
+                        usuario.Baneado = usuarioSeleccionado.Baneado;
+                        //usuario = usuarioSeleccionado;
+                        // context.Usuarios.Attach(usuarioSeleccionado);
+                        context.SaveChanges();
+                    }
                 }
             }
         }
@@ -174,6 +182,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 using (var context = new BiomasaEUPTContext())
                 {
+                    // TODO: Comprobar que se deja al menos un admin activo en el sistema
                     context.Usuarios.RemoveRange(UsuariosSeleccionados);
                     context.SaveChanges();
                 }
