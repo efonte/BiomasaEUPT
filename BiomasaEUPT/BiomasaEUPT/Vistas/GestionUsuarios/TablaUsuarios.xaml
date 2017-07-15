@@ -45,7 +45,7 @@
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>
                             <KeyBinding Gesture="Delete" Key="Delete"
-                                        Command="{Binding BorrarComando}"
+                                        Command="{Binding BorrarUsuarioComando}"
                                         CommandParameter="{Binding Path=SelectedItems, ElementName=dgUsuarios, Mode=OneWay}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.RowValidationErrorTemplate>

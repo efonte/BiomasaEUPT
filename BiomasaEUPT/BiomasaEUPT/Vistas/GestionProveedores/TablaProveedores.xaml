@@ -8,14 +8,15 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:ControlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="850" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="proveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Proveedor}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposProveedoresViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProveedor}, CreateList=True}"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
             <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
@@ -41,10 +42,32 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProveedores" DataContext="{StaticResource proveedoresViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProveedores"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding ProveedoresView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" CanUserAddRows="False"
+                              CanUserDeleteRows="False" SelectedItem="{Binding ProveedorSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGProveedores_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgProveedores}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="CellEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGProveedores_CellEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                                <!--domain:EventCommandExecuter Command="{Binding DGProveedores_CellEditEndingComando}"/-->
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="RowEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGProveedores_RowEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                                <!--domain:EventCommandExecuter Command="{Binding DGProveedores_RowEditEndingComando}"/-->
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarProveedorComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgProveedores, Mode=OneWay}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.RowValidationErrorTemplate>
                             <ControlTemplate>
                                 <Grid Margin="2,-2"
@@ -66,31 +89,48 @@
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="razonSocialColumna" Header="Razón social" Width="SizeToHeader"
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                       MaxLength="{x:Static const:Constantes.LONG_MAX_RAZON_SOCIAL}">
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" >
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       MaxLength="{x:Static const:Constantes.LONG_MAX_NIF}">
 
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                                       MaxLength="254">
+                                                                       MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <DataGridComboBoxColumn x:Name="tiposProveedoresColumna" Header="Tipo"
+                            <!--DataGridComboBoxColumn x:Name="tiposProveedoresColumna" Header="Tipo"
                                                 ItemsSource="{Binding Source={StaticResource tiposProveedoresViewSource}}"
                                                 SelectedValuePath="TipoProveedorId" 
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
+                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
+                            <DataGridTemplateColumn Header="Tipo" x:Name="tipoProveedorColumna" >
+                                <DataGridTemplateColumn.CellEditingTemplate >
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding TipoProveedor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  DisplayMemberPath="Nombre"
+                                                  ItemsSource="{Binding DataContext.TiposProveedores, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabProveedores}}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TipoProveedor.Nombre, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
+                            <!--DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
@@ -111,6 +151,28 @@
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                            </-->
+                            <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                    <Binding Path="Municipio.CodigoPostal"/>
+                                                    <Binding Path="Municipio.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                    <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ControlesUsuario:FormDireccion />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -122,23 +184,27 @@
                                  ToolTip="Gestionar proveedores"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirProveedor" ToolTip="Añadir proveedor">
+                            <Button x:Name="bAnadirProveedor" ToolTip="Añadir proveedor"
+                                    Command="{Binding AnadirProveedorComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar el proveedor seleccionado" Command="{Binding BorrarComando}">
+                            <Button ToolTip="Borrar el proveedor seleccionado"
+                                    Command="{Binding BorrarProveedorComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Modificar el proveedor seleccionado" Command="{Binding ModificarComando}">
+                            <Button ToolTip="Modificar el proveedor seleccionado"
+                                    Command="{Binding ModificarProveedorComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bRefrescar" ToolTip="Refrescar proveedores">
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar proveedores"
+                                    Command="{Binding RefrescarProveedoresComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource proveedoresViewSource}" Grid.Column="1" 
+                <StackPanel Grid.Column="1" 
                             HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
@@ -151,7 +217,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical" Width="150" Margin="8,24,8,24"
                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right"
+                            <ToggleButton x:Name="tbEditarObservaciones" HorizontalAlignment="Right" IsChecked="{Binding ObservacionesEnEdicion, Mode=TwoWay}"
                                           Margin="8 0 0 0" ToolTip="Editar">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">
@@ -172,10 +238,10 @@
                                     <materialDesign:PackIcon Kind="Pin"/>
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding ProveedorSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
                                        FontSize="16" MaxHeight="260" TextWrapping="Wrap"/>
-                            <TextBox x:Name="tboxObservaciones" Text="{Binding Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="tboxObservaciones" Text="{Binding ProveedorSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"
                                      Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverter}}"
                                      FontSize="16" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                      MaxHeight="260" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBody}"
@@ -185,11 +251,11 @@
                         </StackPanel>
                     </Expander>
                 </StackPanel>
-                
+
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroProveedores, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
@@ -221,12 +287,18 @@
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Calle" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Código Postal" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="6" Text="Municipio" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
-                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbRazonSocial" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding RazonSocialSeleccionada}" Command="{Binding FiltrarProveedoresComando}"/>
+                        <CheckBox x:Name="cbNif" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding NifSeleccionado}" Command="{Binding FiltrarProveedoresComando}"/>
+                        <CheckBox x:Name="cbEmail" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EmailSeleccionado}" Command="{Binding FiltrarProveedoresComando}"/>
+                        <CheckBox x:Name="cbCalle" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding CalleSeleccionada}" Command="{Binding FiltrarProveedoresComando}"/>
+                        <CheckBox x:Name="cbCodigoPostal" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding CodigoPostalSeleccionado}" Command="{Binding FiltrarProveedoresComando}"/>
+                        <CheckBox x:Name="cbMunicipio" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding MunicipioSeleccionado}" Command="{Binding FiltrarProveedoresComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

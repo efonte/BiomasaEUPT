@@ -91,7 +91,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
                 else if (ViewModel is TabProveedoresViewModel)
                 {
-                    //(ViewModel as TabProveedoresViewModel).FiltrarProveedores();
+                    (ViewModel as TabProveedoresViewModel).FiltrarProveedores();
                 }
             });
 

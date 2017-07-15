@@ -111,7 +111,8 @@ namespace BiomasaEUPT
                 var ti = (tabItem.Content as TabProveedores);
                 if (ti.IsLoaded)
                 {
-                    ti.CargarProveedores();
+                    (ti.DataContext as ViewModelBase).Inicializar();
+                    //ti.CargarProveedores();
                     //ti.ucFiltroTabla.CargarFiltro();
                 }
             }

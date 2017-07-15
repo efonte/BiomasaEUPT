@@ -12,8 +12,8 @@
 
             <StackPanel VerticalAlignment="Bottom">
                 <Button x:Name="bAnadir" Margin="0 10 0 0" Content="Añadir" />
-                <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar" Command="{Binding BorrarComando}"/>
-                <Button x:Name="bEditar" Margin="0 10 0 0" Content="Modificar" Command="{Binding ModificarComando}"/>
+                <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar"/>
+                <Button x:Name="bEditar" Margin="0 10 0 0" Content="Modificar"/>
                 <Button x:Name="bRefrescar" Margin="0 10 0 0" Content="Refrescar" />
             </StackPanel>
         </GroupBox>

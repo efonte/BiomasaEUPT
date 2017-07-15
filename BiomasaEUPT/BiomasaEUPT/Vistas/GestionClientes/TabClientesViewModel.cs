@@ -80,7 +80,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 {
                     Clientes = new ObservableCollection<Cliente>(context.Clientes.Include(c => c.Municipio.Provincia.Comunidad.Pais).ToList());
                     ClientesView = (CollectionView)CollectionViewSource.GetDefaultView(Clientes);
-                    // ClientesView.Filter = OnFilterMovie;
                     TiposClientes = new ObservableCollection<TipoCliente>(context.TiposClientes.ToList());
                     GruposClientes = new ObservableCollection<GrupoCliente>(context.GruposClientes.ToList());
                     //(ucContador as Contador).Actualizar();
@@ -94,6 +93,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         // Asigna el valor de ClientesSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGClientes_SelectionChangedComando => new RelayCommand2<IList<object>>(param => ClientesSeleccionados = param.Cast<Cliente>().ToList());
+
 
         #region Editar Celda
         public ICommand DGClientes_CellEditEndingComando => _dgClientes_CellEditEndingComando ??
@@ -128,6 +128,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
 
         #region Editar Fila
         public ICommand DGClientes_RowEditEndingComando => _dgClientes_RowEditEndingComando ??
@@ -164,6 +165,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         }
         #endregion      
 
+
         #region Añadir Cliente
         public ICommand AnadirClienteComando => _anadirClienteComando ??
             (_anadirClienteComando = new RelayComando(
@@ -196,6 +198,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
 
         #region Borrar Cliente    
         public ICommand BorrarClienteComando => _borrarClienteComando ??
@@ -241,6 +244,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             }
         }
         #endregion
+
 
         #region Modificar Cliente
         public ICommand ModificarClienteComando => _modificarClienteComando ??

@@ -43,7 +43,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
 
             ucOpciones.bAnadir.Command = viewModel.AnadirUsuarioComando;
-            ucOpciones.bRefrescar.Click += (s, e1) => { viewModel.CargarUsuarios(); };
+            ucOpciones.bEditar.Command = viewModel.ModificarUsuarioComando;
+            ucOpciones.bBorrar.Command = viewModel.BorrarUsuarioComando;
+            ucOpciones.bRefrescar.Command = viewModel.RefrescarUsuariosComando;
 
             /*   Style style = new Style(typeof(CheckBox));
                style.Setters.Add(new EventSetter(CheckBox.CheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));

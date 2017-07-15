@@ -42,12 +42,9 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             tabProveedores = (TabProveedores)ucParent;
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            tabProveedores.FiltrarTabla();
-        }
+     
 
-        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+       /* private void pbDireccion_Opened(object sender, RoutedEventArgs e)
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
             // a PopupContent. No se añade en TabProveedores.xaml para que así no cargue en memoria cada uno
@@ -57,7 +54,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 PopupBox popupBox = sender as PopupBox; ;
                 popupBox.PopupContent = new FormDireccion();
             }
-        }
+        }*/
 
     }
 }
