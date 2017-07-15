@@ -1,6 +1,5 @@
-﻿* Usuarios arreglar banear y formUsuario
+﻿* Usuarios arreglar formUsuario
 * Trazabilidad árbol
-* Refrescar datagrids
 * Arreglar TabElaboraciones
 * Arreglar TabVentas 
 * Actualización del programa
@@ -9,4 +8,4 @@
 * PDF de productoTerminado, Recepciones y productoEnvasado
 * Añadir tiposMateriasPrimas (filtro) y tiposProductosTerminados (filtro)
 * Añadir contador de tiposClientes y tiposProveedores
-* TabUsuarios - No borrar a todos los admins y a ti mismo
+* TabClientes y TabProveedores - Poner el context global

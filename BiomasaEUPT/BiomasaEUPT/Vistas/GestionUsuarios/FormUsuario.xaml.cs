@@ -28,8 +28,29 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public string Nombre { get; set; }
         public string Email { get; set; }
         public bool Baneado { get; set; }
-        public string Contrasena { get; set; }
-        public string ContrasenaConfirmacion { get; set; }
+        public bool ContrasenaIguales { get; set; }
+
+        private string _contrasena;
+        public string Contrasena
+        {
+            get { return _contrasena; }
+            set
+            {
+                _contrasena = value;
+                ContrasenaIguales = _contrasena == ContrasenaConfirmacion;
+            }
+        }
+
+        private string _contrasenaConfirmacion;
+        public string ContrasenaConfirmacion
+        {
+            get { return _contrasenaConfirmacion; }
+            set
+            {
+                _contrasenaConfirmacion = value;
+                ContrasenaIguales = Contrasena == _contrasenaConfirmacion;
+            }
+        }
 
         public FormUsuario()
         {

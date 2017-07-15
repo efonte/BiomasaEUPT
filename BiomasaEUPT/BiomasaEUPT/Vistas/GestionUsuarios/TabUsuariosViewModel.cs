@@ -51,6 +51,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         private ICommand _filtrarUsuariosComando;
         private ICommand _dgUsuarios_CellEditEndingComando;
 
+        private BiomasaEUPTContext context;
+
         public TabUsuariosViewModel()
         {
             FiltroTablaViewModel = new FiltroTablaViewModel()
@@ -61,21 +63,20 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         public override void Inicializar()
         {
+            context = new BiomasaEUPTContext();
             CargarUsuarios();
             FiltroTablaViewModel.CargarFiltro();
         }
 
         public void CargarUsuarios()
         {
-            using (var context = new BiomasaEUPTContext())
-            {
-                Usuarios = new ObservableCollection<Usuario>(context.Usuarios.ToList());
-                UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
-                // UsuariosView.Filter = OnFilterMovie;
-                TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
-                //(ucContador as Contador).Actualizar();
-                UsuarioSeleccionado = null;
-            }
+            Usuarios = new ObservableCollection<Usuario>(context.Usuarios.ToList());
+            UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
+            // UsuariosView.Filter = OnFilterMovie;
+            TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
+            //(ucContador as Contador).Actualizar();
+            UsuarioSeleccionado = null;
+
         }
 
         // Asigna el valor de UsuariosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -105,31 +106,29 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 {
                     //   (ucContador as Contador).Actualizar();
                 }
-                using (var context = new BiomasaEUPTContext())
-                {
-                    // Comprueba si se va a baneado al admin que haya a menos otro admin activo
-                    if (usuarioSeleccionado.TipoUsuario.TipoUsuarioId == 1 && usuarioSeleccionado.Baneado == true
-                        && !context.Usuarios.Any(u => u.TipoId == 1 && u.Baneado != false && u.UsuarioId != usuarioSeleccionado.UsuarioId))
-                    {
-                        usuarioSeleccionado.Baneado = false;
-                        await DialogHost.Show(new MensajeInformacion()
-                        {
-                            Mensaje = "No se puede banear el usuario ya que al menos tiene que haber un admin activo."
-                        }, "RootDialog");
-                    }
-                    else
-                    {
-                        var usuario = context.Usuarios.Single(u => u.UsuarioId == usuarioSeleccionado.UsuarioId);
 
-                        usuario.Nombre = usuarioSeleccionado.Nombre;
-                        usuario.Contrasena = usuarioSeleccionado.Contrasena;
-                        usuario.TipoId = usuarioSeleccionado.TipoUsuario.TipoUsuarioId;
-                        usuario.Email = usuarioSeleccionado.Email;
-                        usuario.Baneado = usuarioSeleccionado.Baneado;
-                        //usuario = usuarioSeleccionado;
-                        // context.Usuarios.Attach(usuarioSeleccionado);
-                        context.SaveChanges();
-                    }
+                // Comprueba si se va a baneado al admin que haya a menos otro admin activo
+                if (usuarioSeleccionado.TipoUsuario.TipoUsuarioId == 1 && usuarioSeleccionado.Baneado == true
+                    && !context.Usuarios.Any(u => u.TipoId == 1 && u.Baneado != false && u.UsuarioId != usuarioSeleccionado.UsuarioId))
+                {
+                    usuarioSeleccionado.Baneado = false;
+                    await DialogHost.Show(new MensajeInformacion()
+                    {
+                        Mensaje = "No se puede banear el usuario ya que al menos tiene que haber un admin activo."
+                    }, "RootDialog");
+                }
+                else
+                {
+                    /* var usuario = context.Usuarios.Single(u => u.UsuarioId == usuarioSeleccionado.UsuarioId);
+
+                     usuario.Nombre = usuarioSeleccionado.Nombre;
+                     usuario.Contrasena = usuarioSeleccionado.Contrasena;
+                     usuario.TipoId = usuarioSeleccionado.TipoUsuario.TipoUsuarioId;
+                     usuario.Email = usuarioSeleccionado.Email;
+                     usuario.Baneado = usuarioSeleccionado.Baneado;
+                     //usuario = usuarioSeleccionado;
+                     // context.Usuarios.Attach(usuarioSeleccionado);*/
+                    context.SaveChanges();
                 }
             }
         }
@@ -148,17 +147,17 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
             {
                 string hashContrasena = ContrasenaHashing.obtenerHashSHA256(formUsuario.Contrasena);
-                using (var context = new BiomasaEUPTContext())
+
+                context.Usuarios.Add(new Usuario()
                 {
-                    context.Usuarios.Add(new Usuario()
-                    {
-                        Nombre = formUsuario.Nombre,
-                        Email = formUsuario.Email,
-                        Contrasena = hashContrasena,
-                        Baneado = formUsuario.Baneado
-                    });
-                    context.SaveChanges();
-                }
+                    Nombre = formUsuario.Nombre,
+                    Email = formUsuario.Email,
+                    TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId,
+                    Contrasena = hashContrasena,
+                    Baneado = formUsuario.Baneado
+                });
+                context.SaveChanges();
+                CargarUsuarios();
             }
         }
         #endregion
@@ -180,10 +179,32 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             if (resultado)
             {
-                using (var context = new BiomasaEUPTContext())
+                var usuariosABorrar = new List<Usuario>();
+                var adminsABorrar = new List<Usuario>();
+                var noAdminsABorrar = new List<Usuario>();
+                foreach (var usuario in UsuariosSeleccionados)
                 {
-                    // TODO: Comprobar que se deja al menos un admin activo en el sistema
-                    context.Usuarios.RemoveRange(UsuariosSeleccionados);
+                    if (usuario.TipoId == 1) { adminsABorrar.Add(usuario); }
+                    else { noAdminsABorrar.Add(usuario); }
+                }
+
+                // Si aún quedan admins activos en el sistema se procede a borrar los usuarios
+                if (context.Usuarios.Where(u => u.TipoId == 1 && u.Baneado != false).ToList().Except(adminsABorrar).Any())
+                {
+                    context.Usuarios.RemoveRange(usuariosABorrar);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    context.Usuarios.RemoveRange(noAdminsABorrar);
+                    if (adminsABorrar.Any())
+                    {
+                        string mensaje = adminsABorrar.Count == 1
+                         ? "No se ha podido borrar el administrador seleccionado."
+                         : "No se han podido borrar los administradores seleccionados.";
+                        mensaje += "\n\nDebe haber en el sistema al menos un admin activo.";
+                        await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                    }
                     context.SaveChanges();
                 }
                 CargarUsuarios();
@@ -209,12 +230,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 UsuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;
                 UsuarioSeleccionado.Contrasena = hashContrasena;
                 UsuarioSeleccionado.Baneado = formUsuario.Baneado;
-
-                using (var context = new BiomasaEUPTContext())
-                {
-                    context.SaveChanges();
-                }
-
+                context.SaveChanges();
             }
         }
         #endregion

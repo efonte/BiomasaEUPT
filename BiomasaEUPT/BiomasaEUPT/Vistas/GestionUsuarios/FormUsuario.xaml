@@ -77,7 +77,7 @@
                 <PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Contraseña" domain:PasswordHelper.Attach="True">
                     <domain:PasswordHelper.Password>
-                        <Binding Path="Contrasena" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Contrasena" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="contraseña" ValidatesOnTargetUpdated="True" />
                                 <!--validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
@@ -85,6 +85,11 @@
                                         <validadores:CadenaACompararDependencyObject CadenaAComparar="{Binding ContrasenaConfirmacion, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                                     </validadores:IgualValidationRule.CadenaAComparar>
                                 </-->
+                                <validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
+                                    <validadores:IgualValidationRule.CadenaAComparar>
+                                        <validadores:CadenaACompararDependencyObject CadenaAComparar="{Binding ContrasenaConfirmacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </validadores:IgualValidationRule.CadenaAComparar>
+                                </validadores:IgualValidationRule>
                                 <!--validadores:GreaterThanValidationRule>
                                     <validadores:ComparisonValue Value="{Binding Data, Source={StaticResource ContrasenaConfirmacionProxy}}" BindingToTrigger="{Binding Data, Source={StaticResource ContrasenaProxy}}"/>
                                 </-->
@@ -96,7 +101,7 @@
                 <PasswordBox Grid.Row="2" Grid.Column="1" Name="pbContrasenaConfirmacion" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Confirmar Contraseña" domain:PasswordHelper.Attach="True">
                     <domain:PasswordHelper.Password>
-                        <Binding Path="ContrasenaConfirmacion" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="ContrasenaConfirmacion" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="contraseña confirmación" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
@@ -116,6 +121,7 @@
                                             <Condition Binding="{Binding ElementName=tbEmail, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=pbContrasena, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=pbContrasenaConfirmacion, Path=(Validation.HasError)}" Value="False" />
+                                            <!--Condition Binding="{Binding ContrasenaIguales}" Value="True" /-->
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
