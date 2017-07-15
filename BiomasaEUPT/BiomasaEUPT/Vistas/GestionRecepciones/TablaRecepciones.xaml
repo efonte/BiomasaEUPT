@@ -110,7 +110,7 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroRecepciones, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="2" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
@@ -140,10 +140,14 @@
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Proveedor" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Estado" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbProveedor" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbNumeroAlbaran" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding NumeroAlbaranRecepcionSeleccionado}" Command="{Binding FiltrarRecepcionesComando}"/>
+                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaRecepcionSeleccionada}" Command="{Binding FiltrarRecepcionesComando}"/>
+                        <CheckBox x:Name="cbProveedor" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding ProveedorRecepcionSeleccionado}" Command="{Binding FiltrarRecepcionesComando}"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EstadoRecepcionSeleccionado}" Command="{Binding FiltrarRecepcionesComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

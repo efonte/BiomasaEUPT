@@ -33,21 +33,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             InitializeComponent();
             trazabilidad = new Trazabilidad();
         }
-
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            DependencyObject ucParent = Parent;
-
-            while (!(ucParent is UserControl))
-            {
-                ucParent = LogicalTreeHelper.GetParent(ucParent);
-            }
-
-            TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
-
-            tabRecepciones.FiltrarTablaMateriasPrimas();
-        }
-
+        
         private void bPdfMateria_Click(object sender, RoutedEventArgs e)
         {
             /*for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)

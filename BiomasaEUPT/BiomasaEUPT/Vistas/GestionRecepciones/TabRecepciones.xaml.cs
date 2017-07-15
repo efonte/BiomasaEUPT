@@ -39,28 +39,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             viewModel = new TabRecepcionesViewModel();
             DataContext = viewModel;
 
-            // Filtro datagrid recepciones
-            ucTablaRecepciones.cbNumeroAlbaran.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbNumeroAlbaran.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbFechaRecepcion.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbFechaRecepcion.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbEstado.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbEstado.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbProveedor.Checked += (s, e1) => { FiltrarTablaRecepciones(); };
-            ucTablaRecepciones.cbProveedor.Unchecked += (s, e1) => { FiltrarTablaRecepciones(); };
-
-            // Filtro datagrid materias primas
-            ucTablaMateriasPrimas.cbTipo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbTipo.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbGrupo.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbGrupo.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbVolUni.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbVolUni.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbProcedencia.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbProcedencia.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbFechaBaja.Checked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-            ucTablaMateriasPrimas.cbFechaBaja.Unchecked += (s, e1) => { FiltrarTablaMateriasPrimas(); };
-
             // Hacer doble clic en una fila del datagrid de recepcions hará que se ejecuta el evento RowRecepciones_DoubleClick
             Style rowStyleRecepciones = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
             rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { viewModel.ModificarRecepcion(); })));
@@ -77,47 +55,5 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             ucTablaRecepciones.ucPaginacion.DataContext = (DataContext as TabRecepcionesViewModel).PaginacionViewModel;
         }
 
-        public void FiltrarTablaRecepciones()
-        {
-            //  recepcionesViewSource.Filter += new FilterEventHandler(FiltroTablaRecepciones);
-        }
-
-        private void FiltroTablaRecepciones(object sender, FilterEventArgs e)
-        {
-            string textoBuscado = ucTablaRecepciones.tbBuscar.Text.ToLower();
-            var recepcion = e.Item as Recepcion;
-            string fechaRecepcion = recepcion.FechaRecepcion.ToString();
-            string numeroAlbaran = recepcion.NumeroAlbaran.ToLower();
-            string proveedor = recepcion.Proveedor.RazonSocial.ToLower();
-            string estado = recepcion.EstadoRecepcion.Nombre.ToLower();
-
-            e.Accepted = (ucTablaRecepciones.cbFechaRecepcion.IsChecked == true ? fechaRecepcion.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbNumeroAlbaran.IsChecked == true ? numeroAlbaran.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbProveedor.IsChecked == true ? proveedor.Contains(textoBuscado) : false) ||
-                         (ucTablaRecepciones.cbEstado.IsChecked == true ? estado.Contains(textoBuscado) : false);
-        }
-
-        public void FiltrarTablaMateriasPrimas()
-        {
-            // materiasPrimasViewSource.Filter += new FilterEventHandler(FiltroTablaMateriasPrimas);
-        }
-
-        private void FiltroTablaMateriasPrimas(object sender, FilterEventArgs e)
-        {
-            string textoBuscado = ucTablaMateriasPrimas.tbBuscar.Text.ToLower();
-            var materiaPrima = e.Item as MateriaPrima;
-            string tipo = materiaPrima.TipoMateriaPrima.Nombre.ToLower();
-            string grupo = materiaPrima.TipoMateriaPrima.GrupoMateriaPrima.Nombre.ToLower();
-            string volumen = materiaPrima.Volumen.ToString();
-            string unidades = materiaPrima.Unidades.ToString();
-            string procedencia = materiaPrima.Procedencia.Nombre.ToLower();
-            string fechaBaja = materiaPrima.FechaBaja.ToString();
-
-            e.Accepted = (ucTablaMateriasPrimas.cbFechaBaja.IsChecked == true ? fechaBaja.Contains(textoBuscado) : false) ||
-                         (ucTablaMateriasPrimas.cbTipo.IsChecked == true ? tipo.Contains(textoBuscado) : false) ||
-                         (ucTablaMateriasPrimas.cbGrupo.IsChecked == true ? grupo.Contains(textoBuscado) : false) ||
-                         (ucTablaMateriasPrimas.cbVolUni.IsChecked == true ? (volumen.Contains(textoBuscado) || unidades.Contains(textoBuscado)) : false) ||
-                         (ucTablaMateriasPrimas.cbProcedencia.IsChecked == true ? procedencia.Contains(textoBuscado) : false);
-        }
     }
 }

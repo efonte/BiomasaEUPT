@@ -31,20 +31,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            DependencyObject ucParent = Parent;
-
-            while (!(ucParent is UserControl))
-            {
-                ucParent = LogicalTreeHelper.GetParent(ucParent);
-            }
-
-            TabRecepciones tabRecepciones = (TabRecepciones)ucParent;
-
-            tabRecepciones.FiltrarTablaRecepciones();
-        }
-
         private void bPdfRecepcion_Click(object sender, RoutedEventArgs e)
         {
             Recepcion recepcion = (sender as Button).DataContext as Recepcion;

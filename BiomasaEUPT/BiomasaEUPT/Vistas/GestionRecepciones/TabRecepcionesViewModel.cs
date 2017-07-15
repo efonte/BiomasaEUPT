@@ -30,16 +30,53 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public MateriaPrima MateriaPrimaSeleccionada { get; set; }
         public bool ObservacionesMateriasPrimasEnEdicion { get; set; }
 
+        // Checkbox Filtro Recepciones
+        public bool FechaRecepcionSeleccionada { get; set; } = true;
+        public bool NumeroAlbaranRecepcionSeleccionado { get; set; } = true;
+        public bool ProveedorRecepcionSeleccionado { get; set; } = false;
+        public bool EstadoRecepcionSeleccionado { get; set; } = false;
+
+        private string _textoFiltroRecepciones;
+        public string TextoFiltroRecepciones
+        {
+            get { return _textoFiltroRecepciones; }
+            set
+            {
+                _textoFiltroRecepciones = value.ToLower();
+                FiltrarRecepciones();
+            }
+        }
+
+        // Checkbox Filtro Materias Primas
+        public bool FechaBajaMateriaPrimaSeleccionada { get; set; } = false;
+        public bool TipoMateriaPrimaSeleccionado { get; set; } = true;
+        public bool GrupoMateriaPrimaSeleccionado { get; set; } = true;
+        public bool VolUniMateriaPrimaSeleccionado { get; set; } = false;
+        public bool ProcedenciaMateriaPrimaSeleccionada { get; set; } = false;
+
+        private string _textoFiltroMateriasPrimas;
+        public string TextoFiltroMateriasPrimas
+        {
+            get { return _textoFiltroMateriasPrimas; }
+            set
+            {
+                _textoFiltroMateriasPrimas = value.ToLower();
+                FiltrarMateriasPrimas();
+            }
+        }
+
         private ICommand _anadirRecepcionComando;
         private ICommand _modificarRecepcionComando;
         private ICommand _borrarRecepcionComando;
         private ICommand _refrescarRecepcionesComando;
+        private ICommand _filtrarRecepcionesComando;
         private ICommand _dgRecepciones_SelectionChangedComando;
 
         private ICommand _anadirMateriaPrimaComando;
         private ICommand _modificarMateriaPrimaComando;
         private ICommand _borrarMateriaPrimaComando;
         private ICommand _refrescarMateriasPrimasComando;
+        private ICommand _filtrarMateriasPrimasComando;
         private ICommand _modificarObservacionesMateriaPrimaComando;
 
         private BiomasaEUPTContext context;
@@ -117,6 +154,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         // Asigna el valor de MateriasPrimasSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGMateriasPrimas_SelectionChangedComando => new RelayCommand2<IList<object>>(param => MateriasPrimasSeleccionadas = param.Cast<MateriaPrima>().ToList());
+
 
         #region Añadir Recepción
         public ICommand AnadirRecepcionComando => _anadirRecepcionComando ??
@@ -229,6 +267,34 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             PaginacionViewModel.Refrescar();
             RecepcionSeleccionada = null;
+        }
+        #endregion
+
+
+        #region Filtro Recepciones
+        public ICommand FiltrarRecepcionesComando => _filtrarRecepcionesComando ??
+           (_filtrarRecepcionesComando = new RelayComando(
+                param => FiltrarRecepciones()
+           ));
+
+        public void FiltrarRecepciones()
+        {
+            RecepcionesView.Filter = FiltroRecepciones;
+            RecepcionesView.Refresh();
+        }
+
+        private bool FiltroRecepciones(object item)
+        {
+            var recepcion = item as Recepcion;
+            string fechaRecepcion = recepcion.FechaRecepcion.ToString();
+            string numeroAlbaran = recepcion.NumeroAlbaran.ToLower();
+            string proveedor = recepcion.Proveedor.RazonSocial.ToLower();
+            string estado = recepcion.EstadoRecepcion.Nombre.ToLower();
+
+            return (FechaRecepcionSeleccionada == true ? fechaRecepcion.Contains(TextoFiltroRecepciones) : false)
+                || (NumeroAlbaranRecepcionSeleccionado == true ? numeroAlbaran.Contains(TextoFiltroRecepciones) : false)
+                || (ProveedorRecepcionSeleccionado == true ? proveedor.Contains(TextoFiltroRecepciones) : false)
+                || (EstadoRecepcionSeleccionado == true ? estado.Contains(TextoFiltroRecepciones) : false);
         }
         #endregion
 
@@ -352,7 +418,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         public async void ModificarMateriaPrima()
         {
-
             // var materiaPrimaSeleccionada = ucTablaMateriasPrimas.dgMateriasPrimas.SelectedItem as MateriaPrima;
             var formMateriaPrima = new FormMateriaPrima(context, MateriaPrimaSeleccionada);
             var formMateriaPrimaDataContext = formMateriaPrima.DataContext as FormMateriaPrimaViewModel;
@@ -429,6 +494,38 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             context.SaveChanges();
 
             ObservacionesMateriasPrimasEnEdicion = false;
+        }
+        #endregion
+
+
+        #region Filtro Materias Primas
+        public ICommand FiltrarMateriasPrimasComando => _filtrarMateriasPrimasComando ??
+           (_filtrarMateriasPrimasComando = new RelayComando(
+                param => FiltrarMateriasPrimas()
+           ));
+
+        public void FiltrarMateriasPrimas()
+        {
+            MateriasPrimasView.Filter = FiltroMateriasPrimas;
+            MateriasPrimasView.Refresh();
+        }
+
+        private bool FiltroMateriasPrimas(object item)
+        {
+            var materiaPrima = item as MateriaPrima;
+            string tipo = materiaPrima.TipoMateriaPrima.Nombre.ToLower();
+            string grupo = materiaPrima.TipoMateriaPrima.GrupoMateriaPrima.Nombre.ToLower();
+            string volumen = materiaPrima.Volumen.ToString();
+            string unidades = materiaPrima.Unidades.ToString();
+            string procedencia = materiaPrima.Procedencia.Nombre.ToLower();
+            string fechaBaja = materiaPrima.FechaBaja.ToString();
+
+            return (FechaBajaMateriaPrimaSeleccionada == true ? fechaBaja.Contains(TextoFiltroMateriasPrimas) : false)
+                || (TipoMateriaPrimaSeleccionado == true ? tipo.Contains(TextoFiltroMateriasPrimas) : false)
+                || (GrupoMateriaPrimaSeleccionado == true ? grupo.Contains(TextoFiltroMateriasPrimas) : false)
+                || (VolUniMateriaPrimaSeleccionado == true ? (volumen.Contains(TextoFiltroMateriasPrimas) || unidades.Contains(TextoFiltroMateriasPrimas)) : false)
+                || (ProcedenciaMateriaPrimaSeleccionada == true ? procedencia.Contains(TextoFiltroMateriasPrimas) : false);
+
         }
         #endregion
     }

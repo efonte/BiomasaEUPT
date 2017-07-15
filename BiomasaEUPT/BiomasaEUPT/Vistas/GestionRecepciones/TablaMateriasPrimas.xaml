@@ -250,7 +250,7 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroMateriasPrimas, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
@@ -280,11 +280,16 @@
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Procedencia" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="F. Baja/Caducidad" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbProcedencia" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding TipoMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding GrupoMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding VolUniMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                        <CheckBox x:Name="cbProcedencia" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding ProcedenciaMateriaPrimaSeleccionada}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaBajaMateriaPrimaSeleccionada}" Command="{Binding FiltrarMateriasPrimasComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>
