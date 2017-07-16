@@ -57,9 +57,9 @@ namespace BiomasaEUPT
             PasswordBoxAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
         }
 
-        private void CargarVistaMain()
+        private void CargarVistaMain(Usuario usuario)
         {
-            MainWindow mainWindows = new MainWindow();
+            MainWindow mainWindows = new MainWindow(usuario);
             Close();
             mainWindows.Show();
         }
@@ -81,12 +81,13 @@ namespace BiomasaEUPT
                 hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(Contrasena));
             }
 
-            if (IniciarSesion(Usuario, hashContrasena) != null)
+            var usuario = IniciarSesion(Usuario, hashContrasena);
+            if (usuario != null)
             {
                 Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
                 Properties.Settings.Default.usuario = Usuario;
                 Properties.Settings.Default.Save();
-                CargarVistaMain();
+                CargarVistaMain(usuario);
             }
             else
             {

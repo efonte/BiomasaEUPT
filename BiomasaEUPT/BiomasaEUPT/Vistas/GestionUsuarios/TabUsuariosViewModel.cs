@@ -99,6 +99,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
                     PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
+                    Console.WriteLine(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuarioSeleccionado.Contrasena = hashContrasena;
                 }
@@ -127,9 +128,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                      usuario.Email = usuarioSeleccionado.Email;
                      usuario.Baneado = usuarioSeleccionado.Baneado;
                      //usuario = usuarioSeleccionado;
-                     // context.Usuarios.Attach(usuarioSeleccionado);*/
-                    context.SaveChanges();
+                     // context.Usuarios.Attach(usuarioSeleccionado);
+                    context.SaveChanges();*/
                 }
+                context.SaveChanges();
             }
         }
         #endregion

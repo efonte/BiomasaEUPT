@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Vistas;
+﻿using BiomasaEUPT.Modelos.Tablas;
+using BiomasaEUPT.Vistas;
 using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
@@ -32,10 +33,43 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private Usuario _usuario;
+        public Usuario Usuario
         {
+            get { return _usuario; }
+            set
+            {
+                _usuario = value;
+                CargarVista();
+            }
+        }
+
+        public MainWindow(Usuario Usuario)
+        {
+            this.Usuario = Usuario;
             InitializeComponent();
             CargarAjustes();
+        }
+
+        private void CargarVista()
+        {
+            switch (Usuario.TipoId)
+            {
+                case 1:
+                    // No hay que borrar ninguna pestaña
+                    break;
+                case 2:
+                    tcTabs.Items.Remove(tiUsuarios);
+                    tcTabs.Items.Remove(tiRecepciones);
+                    tcTabs.Items.Remove(tiElaboraciones);
+                    tcTabs.Items.Remove(tiVentas);
+                    break;
+                case 3:
+                    tcTabs.Items.Remove(tiUsuarios);
+                    tcTabs.Items.Remove(tiClientes);
+                    tcTabs.Items.Remove(tiProveedores);
+                    break;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -162,6 +196,11 @@ namespace BiomasaEUPT
             if (Properties.Settings.Default.TabActiva != "")
             {
                 var tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);
+                if (tabItem == null)
+                {
+                    // Si la pestaña que se quería seleccionar no existe se obtiene la primera disponible
+                    tabItem = tcTabs.Items.OfType<TabItem>().First();
+                }
                 tabItem.IsSelected = true;
                 // InicializarTab hay que ejecutarlo después de que se cargue la vista
                 tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };
