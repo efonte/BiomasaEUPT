@@ -134,6 +134,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         }
         #endregion
 
+
         #region Añadir Usuario
         public ICommand AnadirUsuarioComando => _anadirUsuarioComando ??
             (_anadirUsuarioComando = new RelayComando(
@@ -161,6 +162,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             }
         }
         #endregion
+
 
         #region Borrar Usuario    
         public ICommand BorrarUsuarioComando => _borrarUsuarioComando ??
@@ -211,6 +213,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             }
         }
         #endregion
+
 
         #region Modificar Usuario
         public ICommand ModificarUsuarioComando => _modificarUsuarioComando ??

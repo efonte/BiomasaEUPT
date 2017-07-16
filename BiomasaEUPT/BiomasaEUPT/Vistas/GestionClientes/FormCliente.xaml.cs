@@ -43,8 +43,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             vUnicoNif.NombreActual = viewModel.Nif;
             viewModel.Email = cliente.Email;
             vUnicoEmail.NombreActual = viewModel.Email;
-            cbTiposClientes.SelectedValue = cliente.TipoId;
-            cbGruposClientes.SelectedValue = cliente.GrupoId;
+            viewModel.TipoClienteSeleccionado = viewModel.Context.TiposClientes.Single(tc => tc.TipoClienteId == cliente.TipoId);
+            viewModel.GrupoClienteSeleccionado = viewModel.Context.GruposClientes.Single(gc => gc.GrupoClienteId == cliente.GrupoId);
 
             var municipio = viewModel.Context.Municipios.Single(m => m.MunicipioId == cliente.Municipio.MunicipioId);
             var provincia = viewModel.Context.Provincias.Single(p => p.ProvinciaId == cliente.Municipio.ProvinciaId);
@@ -62,21 +62,5 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
 
         }
-
-        private void cbPaises_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.CargarComunidades();
-        }
-
-        private void cbComunidades_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.CargarProvincias();
-        }
-
-        private void cbProvincias_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.CargarMunicipios();
-        }
-
     }
 }

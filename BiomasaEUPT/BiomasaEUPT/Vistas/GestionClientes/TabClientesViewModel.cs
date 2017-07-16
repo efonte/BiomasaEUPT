@@ -56,6 +56,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private ICommand _dgClientes_RowEditEndingComando;
         private ICommand _modificarObservacionesClienteComando;
 
+        private BiomasaEUPTContext context;
+
 
         public TabClientesViewModel()
         {
@@ -68,6 +70,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         public override void Inicializar()
         {
+            context = new BiomasaEUPTContext();
             CargarClientes();
             FiltroTablaViewModel.CargarFiltro();
         }
@@ -76,17 +79,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             using (new CursorEspera())
             {
-                using (var context = new BiomasaEUPTContext())
-                {
-                    Clientes = new ObservableCollection<Cliente>(context.Clientes.Include(c => c.Municipio.Provincia.Comunidad.Pais).ToList());
-                    ClientesView = (CollectionView)CollectionViewSource.GetDefaultView(Clientes);
-                    TiposClientes = new ObservableCollection<TipoCliente>(context.TiposClientes.ToList());
-                    GruposClientes = new ObservableCollection<GrupoCliente>(context.GruposClientes.ToList());
-                    //(ucContador as Contador).Actualizar();
+                Clientes = new ObservableCollection<Cliente>(context.Clientes.Include(c => c.Municipio.Provincia.Comunidad.Pais).ToList());
+                ClientesView = (CollectionView)CollectionViewSource.GetDefaultView(Clientes);
+                TiposClientes = new ObservableCollection<TipoCliente>(context.TiposClientes.ToList());
+                GruposClientes = new ObservableCollection<GrupoCliente>(context.GruposClientes.ToList());
+                //(ucContador as Contador).Actualizar();
 
-                    // Por defecto no está seleccionada ninguna fila del datagrid clientes 
-                    ClienteSeleccionado = null;
-                }
+                // Por defecto no está seleccionada ninguna fila del datagrid clientes 
+                ClienteSeleccionado = null;
             }
         }
 
@@ -106,20 +106,18 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 var clienteSeleccionado = e.Row.DataContext as Cliente;
-                using (var context = new BiomasaEUPTContext())
-                {
-                    var cliente = context.Clientes.Single(u => u.ClienteId == clienteSeleccionado.ClienteId);
 
-                    cliente.RazonSocial = clienteSeleccionado.RazonSocial;
-                    cliente.Nif = clienteSeleccionado.Nif;
-                    cliente.Email = clienteSeleccionado.Email;
-                    cliente.TipoId = clienteSeleccionado.TipoCliente.TipoClienteId;
-                    cliente.GrupoId = clienteSeleccionado.GrupoCliente.GrupoClienteId;
-                    cliente.Calle = clienteSeleccionado.Calle;
-                    cliente.MunicipioId = clienteSeleccionado.Municipio.MunicipioId;
-                    // cliente.Observaciones = clienteSeleccionado.Observaciones;
-                    context.SaveChanges();
-                }
+                /*var cliente = context.Clientes.Single(u => u.ClienteId == clienteSeleccionado.ClienteId);
+
+                cliente.RazonSocial = clienteSeleccionado.RazonSocial;
+                cliente.Nif = clienteSeleccionado.Nif;
+                cliente.Email = clienteSeleccionado.Email;
+                cliente.TipoId = clienteSeleccionado.TipoCliente.TipoClienteId;
+                cliente.GrupoId = clienteSeleccionado.GrupoCliente.GrupoClienteId;
+                cliente.Calle = clienteSeleccionado.Calle;
+                cliente.MunicipioId = clienteSeleccionado.Municipio.MunicipioId;
+                // cliente.Observaciones = clienteSeleccionado.Observaciones;*/
+                context.SaveChanges();
 
                 if (e.Column.DisplayIndex == 3) // 3 = Posición tipo cliente
                 {
@@ -179,22 +177,20 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             if ((bool)await DialogHost.Show(formCliente, "RootDialog"))
             {
                 var formClienteViewModel = formCliente.DataContext as FormClienteViewModel;
-                using (var context = new BiomasaEUPTContext())
+
+                context.Clientes.Add(new Cliente()
                 {
-                    context.Clientes.Add(new Cliente()
-                    {
-                        RazonSocial = formClienteViewModel.RazonSocial,
-                        Nif = formClienteViewModel.Nif,
-                        Email = formClienteViewModel.Email,
-                        Calle = formClienteViewModel.Calle,
-                        TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId,
-                        GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId,
-                        MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId,
-                        Observaciones = formClienteViewModel.Observaciones
-                    });
-                    context.SaveChanges();
-                }
-                //CargarClientes();
+                    RazonSocial = formClienteViewModel.RazonSocial,
+                    Nif = formClienteViewModel.Nif,
+                    Email = formClienteViewModel.Email,
+                    Calle = formClienteViewModel.Calle,
+                    TipoId = formClienteViewModel.TipoClienteSeleccionado.TipoClienteId,
+                    GrupoId = formClienteViewModel.GrupoClienteSeleccionado.GrupoClienteId,
+                    MunicipioId = formClienteViewModel.MunicipioSeleccionado.MunicipioId,
+                    Observaciones = formClienteViewModel.Observaciones
+                });
+                context.SaveChanges();
+                CargarClientes();
             }
         }
         #endregion
@@ -220,19 +216,17 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 var clientesABorrar = new List<Cliente>();
                 // var clientesSeleccionados = ucTablaClientes.dgClientes.SelectedItems.Cast<Cliente>().ToList();
 
-                using (var context = new BiomasaEUPTContext())
+                foreach (var cliente in ClientesSeleccionados)
                 {
-                    foreach (var cliente in ClientesSeleccionados)
+                    if (!context.PedidosCabeceras.Any(pc => pc.ClienteId == cliente.ClienteId))
                     {
-                        if (!context.PedidosCabeceras.Any(pc => pc.ClienteId == cliente.ClienteId))
-                        {
-                            clientesABorrar.Add(cliente);
-                        }
+                        clientesABorrar.Add(cliente);
                     }
-                    context.Clientes.RemoveRange(clientesABorrar);
-                    context.SaveChanges();
-                    CargarClientes();
                 }
+                context.Clientes.RemoveRange(clientesABorrar);
+                context.SaveChanges();
+                CargarClientes();
+
                 if (ClientesSeleccionados.Count != clientesABorrar.Count)
                 {
                     string mensaje = ClientesSeleccionados.Count == 1
@@ -263,15 +257,14 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 ClienteSeleccionado.RazonSocial = formClienteViewModel.RazonSocial;
                 ClienteSeleccionado.Nif = formClienteViewModel.Nif;
                 ClienteSeleccionado.Email = formClienteViewModel.Email;
-                ClienteSeleccionado.TipoId = (formCliente.cbTiposClientes.SelectedItem as TipoCliente).TipoClienteId;
-                ClienteSeleccionado.GrupoId = (formCliente.cbGruposClientes.SelectedItem as GrupoCliente).GrupoClienteId;
-                ClienteSeleccionado.MunicipioId = (formCliente.cbMunicipios.SelectedItem as Municipio).MunicipioId;
+                ClienteSeleccionado.TipoId = formClienteViewModel.TipoClienteSeleccionado.TipoClienteId;
+                ClienteSeleccionado.GrupoId = formClienteViewModel.GrupoClienteSeleccionado.GrupoClienteId;
+                ClienteSeleccionado.MunicipioId = formClienteViewModel.MunicipioSeleccionado.MunicipioId;
                 ClienteSeleccionado.Calle = formClienteViewModel.Calle;
                 ClienteSeleccionado.Observaciones = formClienteViewModel.Observaciones;
-                using (var context = new BiomasaEUPTContext())
-                {
-                    context.SaveChanges();
-                }
+
+                context.SaveChanges();
+                CargarClientes();
             }
         }
         #endregion
@@ -294,13 +287,11 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         private void ModificarObservacionesCliente()
         {
-            using (var context = new BiomasaEUPTContext())
-            {
-                var cliente = context.Clientes.Single(u => u.ClienteId == ClienteSeleccionado.ClienteId);
+            /*var cliente = context.Clientes.Single(u => u.ClienteId == ClienteSeleccionado.ClienteId);
 
-                cliente.Observaciones = ClienteSeleccionado.Observaciones;
-                context.SaveChanges();
-            }
+            cliente.Observaciones = ClienteSeleccionado.Observaciones;*/
+            context.SaveChanges();
+
             ObservacionesEnEdicion = false;
         }
         #endregion

@@ -22,9 +22,42 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public ObservableCollection<Provincia> Provincias { get; set; }
         public ObservableCollection<Municipio> Municipios { get; set; }
 
-        public Pais PaisSeleccionado { get; set; }
-        public Comunidad ComunidadSeleccionada { get; set; }
-        public Provincia ProvinciaSeleccionada { get; set; }
+        public TipoCliente TipoClienteSeleccionado { get; set; }
+        public GrupoCliente GrupoClienteSeleccionado { get; set; }
+
+        private Pais _paisSeleccionado;
+        public Pais PaisSeleccionado
+        {
+            get { return _paisSeleccionado; }
+            set
+            {
+                _paisSeleccionado = value;
+                CargarComunidades();
+            }
+        }
+
+        private Comunidad _comunidadSeleccionada;
+        public Comunidad ComunidadSeleccionada
+        {
+            get { return _comunidadSeleccionada; }
+            set
+            {
+                _comunidadSeleccionada = value;
+                CargarProvincias();
+            }
+        }
+
+        private Provincia _provinciaSeleccionada;
+        public Provincia ProvinciaSeleccionada
+        {
+            get { return _provinciaSeleccionada; }
+            set
+            {
+                _provinciaSeleccionada = value;
+                CargarMunicipios();
+            }
+        }
+
         public Municipio MunicipioSeleccionado { get; set; }
 
         public String RazonSocial { get; set; }
@@ -42,56 +75,64 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             FormTitulo = "Nuevo Cliente";
             Context = new BiomasaEUPTContext();
-            TiposClientes = new ObservableCollection<TipoCliente>(Context.TiposClientes.ToList());
-            GruposClientes = new ObservableCollection<GrupoCliente>(Context.GruposClientes.ToList());
-
+            CargarTipos();
+            CargarGrupos();
             CargarPaises();
         }
 
-        public void CargarPaises()
+        private void CargarTipos()
+        {
+            TiposClientes = new ObservableCollection<TipoCliente>(Context.TiposClientes.ToList());
+            TipoClienteSeleccionado = TipoClienteSeleccionado ?? TiposClientes.First();
+        }
+
+        private void CargarGrupos()
+        {
+            GruposClientes = new ObservableCollection<GrupoCliente>(Context.GruposClientes.ToList());
+            GrupoClienteSeleccionado = GrupoClienteSeleccionado ?? GruposClientes.First();
+        }
+
+        private void CargarPaises()
         {
             using (new CursorEspera())
             {
                 Paises = new ObservableCollection<Pais>(Context.Paises.ToList());
-                PaisSeleccionado = Paises.First();
+                PaisSeleccionado = PaisSeleccionado ?? Paises.First();
             }
         }
 
-        public void CargarComunidades()
+        private void CargarComunidades()
         {
             if (PaisSeleccionado != null)
             {
                 using (new CursorEspera())
                 {
                     Comunidades = new ObservableCollection<Comunidad>(Context.Comunidades.Where(d => d.PaisId == PaisSeleccionado.PaisId).ToList());
-
-                    ComunidadSeleccionada = Comunidades.First();
+                    ComunidadSeleccionada = ComunidadSeleccionada ?? Comunidades.First();
                 }
             }
         }
 
-        public void CargarProvincias()
+        private void CargarProvincias()
         {
             if (ComunidadSeleccionada != null)
             {
                 using (new CursorEspera())
                 {
                     Provincias = new ObservableCollection<Provincia>(Context.Provincias.Where(d => d.ComunidadId == ComunidadSeleccionada.ComunidadId).ToList());
-
-                    ProvinciaSeleccionada = Provincias.First();
+                    ProvinciaSeleccionada = ProvinciaSeleccionada ?? Provincias.First();
                 }
             }
         }
 
-        public void CargarMunicipios()
+        private void CargarMunicipios()
         {
             if (ProvinciaSeleccionada != null)
             {
                 using (new CursorEspera())
                 {
                     Municipios = new ObservableCollection<Municipio>(Context.Municipios.Where(d => d.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).ToList());
-
-                    MunicipioSeleccionado = Municipios.First();
+                    MunicipioSeleccionado = MunicipioSeleccionado ?? Municipios.First();
                 }
             }
         }

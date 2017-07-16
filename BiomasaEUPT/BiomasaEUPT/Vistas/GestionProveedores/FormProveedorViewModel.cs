@@ -21,9 +21,41 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         public ObservableCollection<Provincia> Provincias { get; set; }
         public ObservableCollection<Municipio> Municipios { get; set; }
 
-        public Pais PaisSeleccionado { get; set; }
-        public Comunidad ComunidadSeleccionada { get; set; }
-        public Provincia ProvinciaSeleccionada { get; set; }
+        public TipoProveedor TipoProveedorSeleccionado { get; set; }
+
+        private Pais _paisSeleccionado;
+        public Pais PaisSeleccionado
+        {
+            get { return _paisSeleccionado; }
+            set
+            {
+                _paisSeleccionado = value;
+                CargarComunidades();
+            }
+        }
+
+        private Comunidad _comunidadSeleccionada;
+        public Comunidad ComunidadSeleccionada
+        {
+            get { return _comunidadSeleccionada; }
+            set
+            {
+                _comunidadSeleccionada = value;
+                CargarProvincias();
+            }
+        }
+
+        private Provincia _provinciaSeleccionada;
+        public Provincia ProvinciaSeleccionada
+        {
+            get { return _provinciaSeleccionada; }
+            set
+            {
+                _provinciaSeleccionada = value;
+                CargarMunicipios();
+            }
+        }
+
         public Municipio MunicipioSeleccionado { get; set; }
 
         public String RazonSocial { get; set; }
@@ -41,55 +73,57 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             FormTitulo = "Nuevo Proveedor";
             Context = new BiomasaEUPTContext();
-            TiposProveedores = new ObservableCollection<TipoProveedor>(Context.TiposProveedores.ToList());
-
+            CargarTipos();
             CargarPaises();
         }
 
-        public void CargarPaises()
+        private void CargarTipos()
+        {
+            TiposProveedores = new ObservableCollection<TipoProveedor>(Context.TiposProveedores.ToList());
+            TipoProveedorSeleccionado = TipoProveedorSeleccionado ?? TiposProveedores.First();
+        }
+
+        private void CargarPaises()
         {
             using (new CursorEspera())
             {
                 Paises = new ObservableCollection<Pais>(Context.Paises.ToList());
-                PaisSeleccionado = Paises.First();
+                PaisSeleccionado = PaisSeleccionado ?? Paises.First();
             }
         }
 
-        public void CargarComunidades()
+        private void CargarComunidades()
         {
             if (PaisSeleccionado != null)
             {
                 using (new CursorEspera())
                 {
                     Comunidades = new ObservableCollection<Comunidad>(Context.Comunidades.Where(d => d.PaisId == PaisSeleccionado.PaisId).ToList());
-
-                    ComunidadSeleccionada = Comunidades.First();
+                    ComunidadSeleccionada = ComunidadSeleccionada ?? Comunidades.First();
                 }
             }
         }
 
-        public void CargarProvincias()
+        private void CargarProvincias()
         {
             if (ComunidadSeleccionada != null)
             {
                 using (new CursorEspera())
                 {
                     Provincias = new ObservableCollection<Provincia>(Context.Provincias.Where(d => d.ComunidadId == ComunidadSeleccionada.ComunidadId).ToList());
-
-                    ProvinciaSeleccionada = Provincias.First();
+                    ProvinciaSeleccionada = ProvinciaSeleccionada ?? Provincias.First();
                 }
             }
         }
 
-        public void CargarMunicipios()
+        private void CargarMunicipios()
         {
             if (ProvinciaSeleccionada != null)
             {
                 using (new CursorEspera())
                 {
                     Municipios = new ObservableCollection<Municipio>(Context.Municipios.Where(d => d.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).ToList());
-
-                    MunicipioSeleccionado = Municipios.First();
+                    MunicipioSeleccionado = MunicipioSeleccionado ?? Municipios.First();
                 }
             }
         }

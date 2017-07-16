@@ -175,9 +175,6 @@ namespace BiomasaEUPT
 
         private void GuardarAjustes()
         {
-            if (Properties.Settings.Default.VentanaMaximizada)
-                Properties.Settings.Default.VentanaMaximizada = (WindowState == WindowState.Maximized);
-
             if (Properties.Settings.Default.TamanoVentana != "")
                 Properties.Settings.Default.TamanoVentana = Width + "x" + Height;
 

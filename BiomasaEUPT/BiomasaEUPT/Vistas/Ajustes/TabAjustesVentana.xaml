@@ -10,75 +10,11 @@
              d:DesignHeight="400" d:DesignWidth="550"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource MaterialDesignSeparator}">
-            <Setter Property="Margin" Value="5" />
-        </Style>
-
-        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MaterialDesignCheckBox}">
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontWeight" Value="Medium" />
-        </Style>
-
-        <Style x:Key="TituloTextBlock" TargetType="{x:Type TextBlock}">
-            <Setter Property="Margin" Value="0 10 0 0" />
-            <Setter Property="FontSize" Value="23" />
-            <Setter Property="FontWeight" Value="Light" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-        </Style>
-
-        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="CommandParameter" Value="{Binding}" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Foreground">
-                <Setter.Value>
-                    <SolidColorBrush Color="{Binding ExemplarHue.Foreground, Mode=OneTime}" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <DataTemplate DataType="{x:Type materialDesignColors:Swatch}">
-            <materialDesign:Card Margin="10 10 0 0" Width="240" UniformCornerRadius="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{Binding Name}" Margin="8" Grid.ColumnSpan="2" />
-                    <Border Grid.Row="1" Grid.Column="0" MinWidth="120">
-                        <Border.Background>
-                            <SolidColorBrush Color="{Binding ExemplarHue.Color, Mode=OneTime}" />
-                        </Border.Background>
-                        <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyPrimaryCommand, Mode=OneTime}"
-                                CommandParameter="{Binding}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Primario" />
-                                <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
-                            </StackPanel>
-                        </Button>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="1" 
-                            Visibility="{Binding IsAccented, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}"
-                            Width="120">
-                        <Border.Background>
-                            <SolidColorBrush Color="{Binding AccentExemplarHue.Color, Mode=OneTime}" />
-                        </Border.Background>
-                        <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyAccentCommand, Mode=OneTime}"
-                                CommandParameter="{Binding}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Secundario" />
-                                <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
-                            </StackPanel>
-                        </Button>
-                    </Border>
-                </Grid>
-            </materialDesign:Card>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioAjustes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -91,20 +27,14 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Ventana" Style="{DynamicResource TituloTextBlock}"/>
         <Separator Grid.Row="1" Grid.ColumnSpan="2" />
         <CheckBox x:Name="cbTamanoVentana" Grid.Row="2" Grid.Column="0"  Content="Recordar tamaño ventana"/>
-        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Grid.Column="0" Content="Recordar ventana maximizada"/>
-        <CheckBox x:Name="cbPosicionVentana" Grid.Row="4" Grid.Column="0" Content="Recordar posición ventana"/>
+        <CheckBox x:Name="cbVentanaMaximizada" Grid.Row="3" Grid.Column="0" Content="Iniciar aplicación maximizada"/>
+        <CheckBox x:Name="cbPosicionVentana" Grid.Row="3" Grid.Column="1" Content="Recordar posición ventana"/>
         <CheckBox x:Name="cbTabActiva" Grid.Row="2" Grid.Column="1" Content="Recordar pestaña activa"/>
-        <CheckBox x:Name="cbPosicionTab" Grid.Row="3" Grid.Column="1" Content="Recordar orden de las pestañas"/>
+        <!-- x:Name="cbPosicionTab" Grid.Row="4" Grid.Column="0" Content="Recordar orden de las pestañas"/-->
     </Grid>
 </UserControl>
