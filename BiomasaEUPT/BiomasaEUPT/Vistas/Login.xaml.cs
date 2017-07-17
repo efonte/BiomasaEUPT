@@ -28,27 +28,13 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class Login : Window
     {
-        private string _usuario;
-        public string Usuario
-        {
-            get { return _usuario; }
-            set { _usuario = value; }
-        }
-
-        private SecureString _contrasena;
-        public SecureString Contrasena
-        {
-            get { return _contrasena; }
-            set
-            {
-                _contrasena = value;
-            }
-        }
+        public LoginViewModel ViewModel { get; set; }
 
         public Login()
         {
             InitializeComponent();
-            DataContext = this;
+            ViewModel = new LoginViewModel();
+            DataContext = ViewModel;
         }
 
         private void pbContrasena_PasswordChanged(object sender, RoutedEventArgs e)
@@ -64,28 +50,19 @@ namespace BiomasaEUPT
             mainWindows.Show();
         }
 
-        public Usuario IniciarSesion(String usuario, String hashContrasena)
-        {
-            using (var context = new BiomasaEUPTContext())
-            {
-                return context.Usuarios.FirstOrDefault(u => u.Nombre == usuario && u.Contrasena == hashContrasena
-                                                            && u.Baneado == false);
-            }
-        }
-
         private void bIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
             String hashContrasena = "";
-            if (Contrasena != null)
+            if (ViewModel.Contrasena != null)
             {
-                hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(Contrasena));
+                hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(ViewModel.Contrasena));
             }
 
-            var usuario = IniciarSesion(Usuario, hashContrasena);
+            var usuario = ViewModel.IniciarSesion(ViewModel.Usuario, hashContrasena);
             if (usuario != null)
             {
                 Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
-                Properties.Settings.Default.usuario = Usuario;
+                Properties.Settings.Default.usuario = ViewModel.Usuario;
                 Properties.Settings.Default.Save();
                 CargarVistaMain(usuario);
             }
@@ -93,20 +70,17 @@ namespace BiomasaEUPT
             {
                 MensajeLoginIncorrecto();
             }
-
         }
 
         public async void MensajeLoginIncorrecto()
         {
-            //MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Login incorrecto", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
             var mensaje = new MensajeInformacion()
             {
                 Titulo = "Login incorrecto",
                 Mensaje = "El usuario y/o la contraseña son incorrectos."
             };
             var resultado = await DialogHost.Show(mensaje, "RootDialog");
-            // Console.WriteLine("*******" + mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
+            // Console.WriteLine(mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
         }
     }
 }

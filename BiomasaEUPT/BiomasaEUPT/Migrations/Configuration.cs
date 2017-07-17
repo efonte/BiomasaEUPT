@@ -43,21 +43,21 @@ namespace BiomasaEUPT.Migrations
                      new Usuario()
                      {
                          Nombre = "admin",
-                         Contrasena = ContrasenaHashing.obtenerHashSHA256("admin"),
+                         Contrasena = ContrasenaHashing.ObtenerHashSHA256("admin"),
                          Email = "admin@biomasaeupt.es",
                          TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Administrador").TipoUsuarioId
                      },
                      new Usuario()
                      {
                          Nombre = "efonte",
-                         Contrasena = ContrasenaHashing.obtenerHashSHA256("efonte"),
+                         Contrasena = ContrasenaHashing.ObtenerHashSHA256("efonte"),
                          Email = "efonte@biomasaeupt.es",
                          TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Administrativo").TipoUsuarioId
                      },
                      new Usuario()
                      {
                          Nombre = "jbielsa",
-                         Contrasena = ContrasenaHashing.obtenerHashSHA256("jbielsa"),
+                         Contrasena = ContrasenaHashing.ObtenerHashSHA256("jbielsa"),
                          Email = "jbielsa@biomasaeupt.es",
                          TipoId = context.TiposUsuarios.Local.Single(u => u.Nombre == "Técnico").TipoUsuarioId
                      });

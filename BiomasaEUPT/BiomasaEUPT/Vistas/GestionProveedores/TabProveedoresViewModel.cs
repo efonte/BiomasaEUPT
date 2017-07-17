@@ -35,7 +35,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         public bool CodigoPostalSeleccionado { get; set; } = false;
         public bool MunicipioSeleccionado { get; set; } = false;
 
-        private string _textoFiltroProveedores;
+        private string _textoFiltroProveedores = "";
         public string TextoFiltroProveedores
         {
             get { return _textoFiltroProveedores; }

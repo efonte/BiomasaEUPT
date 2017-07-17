@@ -48,6 +48,18 @@
                     </ScrollViewer>
                 </TabItem>
 
+                <!-- Pestaña Usuario -->
+                <TabItem x:Name="tiUsuario">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                            <TextBlock Text="Usuario" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <local:TabAjustesUsuario x:Name="ucTabUsuario" Margin="0 0 0 20"/>
+                    </ScrollViewer>
+                </TabItem>
 
             </dragablz:TabablzControl>
         </dockablz:Layout>

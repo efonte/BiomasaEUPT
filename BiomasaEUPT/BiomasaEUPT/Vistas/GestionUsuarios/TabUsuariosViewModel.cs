@@ -33,7 +33,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public bool EmailSeleccionado { get; set; } = true;
         public bool BaneadoSeleccionado { get; set; } = false;
 
-        private string _textoFiltroUsuarios;
+        private string _textoFiltroUsuarios = "";
         public string TextoFiltroUsuarios
         {
             get { return _textoFiltroUsuarios; }
@@ -100,7 +100,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
                     PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
                     Console.WriteLine(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
-                    string hashContrasena = ContrasenaHashing.obtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
+                    string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuarioSeleccionado.Contrasena = hashContrasena;
                 }
                 if (e.Column.DisplayIndex == 3) // 3 = Posición columna tipo usuario
@@ -149,7 +149,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
             {
-                string hashContrasena = ContrasenaHashing.obtenerHashSHA256(formUsuario.Contrasena);
+                string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
 
                 context.Usuarios.Add(new Usuario()
                 {
@@ -229,7 +229,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             var formUsuario = new FormUsuario(UsuarioSeleccionado);
             if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
             {
-                string hashContrasena = ContrasenaHashing.obtenerHashSHA256(formUsuario.Contrasena);
+                string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
                 UsuarioSeleccionado.Nombre = formUsuario.Nombre;
                 UsuarioSeleccionado.Email = formUsuario.Email;
                 UsuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;

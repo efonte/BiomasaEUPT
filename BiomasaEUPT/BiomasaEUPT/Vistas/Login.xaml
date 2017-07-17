@@ -67,7 +67,9 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" FontWeight="Bold" Margin="0 10 0 20" HorizontalAlignment="Center">BiomasaEUPT</TextBlock>
 
-            <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="Account" Foreground="{Binding BorderBrush, ElementName=tbUsuario}" />
+            <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="Account" Margin="0 4 8 0"
+                                     Foreground="{Binding BorderBrush, ElementName=tbUsuario}"
+                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbUsuario" materialDesign:HintAssist.Hint="Usuario">
                 <TextBox.Text>
                     <Binding Path="Usuario" UpdateSourceTrigger="PropertyChanged">
@@ -78,10 +80,12 @@
                 </TextBox.Text>
             </TextBox>
 
-            <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Foreground="{Binding BorderBrush, ElementName=pbContrasena}" HorizontalAlignment="Right" />
+            <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Margin="0 4 8 0"
+                                     Foreground="{Binding BorderBrush, ElementName=pbContrasena}"
+                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena"
                          materialDesign:HintAssist.Hint="Contraseña"
-                         domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          PasswordChanged="pbContrasena_PasswordChanged">
             </PasswordBox>
             <CheckBox x:Name="cbRecordarme" Grid.Row="3" Grid.Column="1" Content="Recordar contraseña" HorizontalAlignment="Right" Margin="0 20 0 20" />
@@ -93,7 +97,9 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding  ElementName=tbUsuario, Path=(Validation.HasError)}" 
+                                    <Condition Binding="{Binding ElementName=tbUsuario, Path=(Validation.HasError)}" 
+                                               Value="false" />
+                                    <Condition Binding="{Binding ElementName=pbContrasena, Path=(Validation.HasError)}" 
                                                Value="false" />
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="true" />

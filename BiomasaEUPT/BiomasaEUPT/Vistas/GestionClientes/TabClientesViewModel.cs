@@ -36,7 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public bool CodigoPostalSeleccionado { get; set; } = false;
         public bool MunicipioSeleccionado { get; set; } = false;
 
-        private string _textoFiltroClientes;
+        private string _textoFiltroClientes = "";
         public string TextoFiltroClientes
         {
             get { return _textoFiltroClientes; }

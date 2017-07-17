@@ -141,7 +141,7 @@ namespace BiomasaEUPT.Migrations
                     foreach (var d in datos)
                     {
                         if (d.Contrasena == null)
-                            d.Contrasena = ContrasenaHashing.obtenerHashSHA256(d.Nombre);
+                            d.Contrasena = ContrasenaHashing.ObtenerHashSHA256(d.Nombre);
                     }
                     context.Usuarios.AddOrUpdate(d => d.Nombre, datos);
                 }

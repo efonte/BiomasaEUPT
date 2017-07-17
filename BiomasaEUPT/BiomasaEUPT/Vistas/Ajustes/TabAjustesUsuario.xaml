@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.Ajustes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="550"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,17 +20,58 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Usuario" Style="{DynamicResource TituloTextBlock}"/>
-        <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Usuario" Style="{DynamicResource TituloTextBlock}"/>
+        <Separator Grid.Row="1" Grid.ColumnSpan="4" />
+
+        <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Key" Margin="20 4 8 0"
+                                 Foreground="{Binding BorderBrush, ElementName=pbContrasena}"
+                                 HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Contraseña"
+                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10" Width="180">
+        </PasswordBox>
+
+        <materialDesign:PackIcon Grid.Row="2" Grid.Column="2" Kind="Key" Margin="0 4 8 0"
+                                 Foreground="{Binding BorderBrush, ElementName=pbContrasena}"
+                                 HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <PasswordBox Grid.Row="2" Grid.Column="3" x:Name="pbContrasenaConfirmacion" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Contraseña confirmación"
+                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding ContrasenaConfirmacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10 10 20 10" Width="180">
+        </PasswordBox>
+
+        <Button x:Name="bCambiarContrasena" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
+                Content="Cambiar contraseña" MaxWidth="180" Margin="10" VerticalAlignment="Bottom" Click="bCambiarContrasena_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="IsEnabled" Value="false" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=pbContrasena, Path=(Validation.HasError)}" 
+                                               Value="false" />
+                                <Condition Binding="{Binding ElementName=pbContrasenaConfirmacion, Path=(Validation.HasError)}" 
+                                               Value="false" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="true" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
     </Grid>
 </UserControl>

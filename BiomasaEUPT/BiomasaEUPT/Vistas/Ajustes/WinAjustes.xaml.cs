@@ -23,6 +23,7 @@ namespace BiomasaEUPT.Vistas.Ajustes
         public WinAjustes()
         {
             InitializeComponent();
+            DataContext = new WinAjustesViewModel();
             ucTabVentana.cbVentanaMaximizada.IsChecked = Properties.Settings.Default.VentanaMaximizada;
             ucTabVentana.cbTamanoVentana.IsChecked = Properties.Settings.Default.TamanoVentana != "";
             ucTabVentana.cbPosicionVentana.IsChecked = Properties.Settings.Default.PosicionVentana != "";

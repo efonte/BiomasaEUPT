@@ -168,8 +168,6 @@
     <Compile Include="Domain\PasswordHelper.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\RelayCommand2.cs" />
-    <Compile Include="Domain\SelectableViewModel.cs" />
-    <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\ValueToEqualsParameterConverter.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SeedTablas.cs" />
@@ -240,6 +238,7 @@
     <Compile Include="Vistas\Ajustes\WinAjustes.xaml.cs">
       <DependentUpon>WinAjustes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Ajustes\WinAjustesViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\Contador.xaml.cs">
       <DependentUpon>Contador.xaml</DependentUpon>
     </Compile>
@@ -354,6 +353,7 @@
     <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\LoginViewModel.cs" />
     <Compile Include="Vistas\MensajeConfirmacion.xaml.cs">
       <DependentUpon>MensajeConfirmacion.xaml</DependentUpon>
     </Compile>
