@@ -285,6 +285,7 @@
     <Compile Include="Vistas\GestionElaboraciones\TabElaboraciones.xaml.cs">
       <DependentUpon>TabElaboraciones.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\TabElaboracionesViewModel.cs" />
     <Compile Include="Vistas\GestionElaboraciones\TablaElaboraciones.xaml.cs">
       <DependentUpon>TablaElaboraciones.xaml</DependentUpon>
     </Compile>
