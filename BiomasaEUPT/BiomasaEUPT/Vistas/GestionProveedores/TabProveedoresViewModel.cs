@@ -26,6 +26,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         public Proveedor ProveedorSeleccionado { get; set; }
         public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
         public bool ObservacionesEnEdicion { get; set; }
+        public ContadorViewModel<TipoProveedor> ContadorViewModel { get; set; }
 
         // Checkbox Filtro Proveedores
         public bool RazonSocialSeleccionada { get; set; } = true;
@@ -80,6 +81,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 Proveedores = new ObservableCollection<Proveedor>(context.Proveedores.Include(p => p.Municipio.Provincia.Comunidad.Pais).ToList());
                 ProveedoresView = (CollectionView)CollectionViewSource.GetDefaultView(Proveedores);
                 TiposProveedores = new ObservableCollection<TipoProveedor>(context.TiposProveedores.ToList());
+                ContadorViewModel.Tipos = TiposProveedores;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid proveedores
                 ProveedorSeleccionado = null;
@@ -114,7 +116,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
                 if (e.Column.DisplayIndex == 3) // 3 = Posición tipo proveedor
                 {
-                    //(ucContador as Contador).Actualizar();
+                    ContadorViewModel.Tipos = new ObservableCollection<TipoProveedor>(context.TiposProveedores.ToList());
                 }
             }
         }

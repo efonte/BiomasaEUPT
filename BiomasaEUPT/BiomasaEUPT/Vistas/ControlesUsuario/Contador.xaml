@@ -4,25 +4,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="200" Loaded="UserControl_Loaded">
     <Grid>
         <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Contador">
-
-            <Grid x:Name="gContador" TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="9*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="FontSize" Value="15"/>
-                        <Setter Property="Margin" Value="5 5 0 5"/>
-                    </Style>
-                </Grid.Resources>
-
-            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="icContador" ItemsSource="{Binding Tipos}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Stretch"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type tablas:TipoUsuario}">
+                            <!--DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type WrapPanel}}}">
+                                <TextBlock DockPanel.Dock="Left" Text="{Binding Nombre}"
+                                       HorizontalAlignment="Left" Margin="8 5 5 5"/>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding Usuarios.Count}"
+                                       HorizontalAlignment="Right" Margin="5 5 8 5"/>
+                            </DockPanel-->
+                            <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type WrapPanel}}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Nombre}"
+                                       HorizontalAlignment="Left" Margin="8 5 5 5"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Usuarios.Count}"
+                                       HorizontalAlignment="Right" Margin="5 5 8 5"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type tablas:TipoCliente}">
+                            <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type WrapPanel}}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Nombre}" TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Left" Margin="8 5 5 5"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Clientes.Count}"
+                                       HorizontalAlignment="Right" Margin="5 5 8 5"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type tablas:TipoProveedor}">
+                            <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type WrapPanel}}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Nombre}" TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Left" Margin="8 5 5 5"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Proveedores.Count}"
+                                       HorizontalAlignment="Right" Margin="5 5 8 5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </ScrollViewer>
         </GroupBox>
     </Grid>
 </UserControl>

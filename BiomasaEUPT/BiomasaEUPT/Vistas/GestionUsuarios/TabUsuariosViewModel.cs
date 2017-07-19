@@ -27,6 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public IList<Usuario> UsuariosSeleccionados { get; set; }
         public Usuario UsuarioSeleccionado { get; set; }
         public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
+        public ContadorViewModel<TipoUsuario> ContadorViewModel { get; set; }
 
         // Checkbox Filtro Usuarios
         public bool NombreSeleccionado { get; set; } = true;
@@ -70,13 +71,16 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         public void CargarUsuarios()
         {
-            Usuarios = new ObservableCollection<Usuario>(context.Usuarios.ToList());
-            UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
-            // UsuariosView.Filter = OnFilterMovie;
-            TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
-            //(ucContador as Contador).Actualizar();
-            UsuarioSeleccionado = null;
+            using (new CursorEspera())
+            {
+                Usuarios = new ObservableCollection<Usuario>(context.Usuarios.ToList());
+                UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
+                TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
+                ContadorViewModel.Tipos = TiposUsuarios;
 
+                // Por defecto no está seleccionada ninguna fila del datagrid usuarios
+                UsuarioSeleccionado = null;
+            }
         }
 
         // Asigna el valor de UsuariosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -103,10 +107,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuarioSeleccionado.Contrasena = hashContrasena;
                 }
-                if (e.Column.DisplayIndex == 3) // 3 = Posición columna tipo usuario
-                {
-                    //   (ucContador as Contador).Actualizar();
-                }
 
                 // Comprueba si se va a baneado al admin que haya a menos otro admin activo
                 if (usuarioSeleccionado.TipoUsuario.TipoUsuarioId == 1 && usuarioSeleccionado.Baneado == true
@@ -118,20 +118,13 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                         Mensaje = "No se puede banear el usuario ya que al menos tiene que haber un admin activo."
                     }, "RootDialog");
                 }
-                else
-                {
-                    /* var usuario = context.Usuarios.Single(u => u.UsuarioId == usuarioSeleccionado.UsuarioId);
 
-                     usuario.Nombre = usuarioSeleccionado.Nombre;
-                     usuario.Contrasena = usuarioSeleccionado.Contrasena;
-                     usuario.TipoId = usuarioSeleccionado.TipoUsuario.TipoUsuarioId;
-                     usuario.Email = usuarioSeleccionado.Email;
-                     usuario.Baneado = usuarioSeleccionado.Baneado;
-                     //usuario = usuarioSeleccionado;
-                     // context.Usuarios.Attach(usuarioSeleccionado);
-                    context.SaveChanges();*/
-                }
                 context.SaveChanges();
+
+                if (e.Column.DisplayIndex == 3) // 3 = Posición columna tipo usuario
+                {
+                    ContadorViewModel.Tipos = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
+                }
             }
         }
         #endregion

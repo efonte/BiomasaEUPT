@@ -27,6 +27,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public Cliente ClienteSeleccionado { get; set; }
         public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
         public bool ObservacionesEnEdicion { get; set; }
+        public ContadorViewModel<TipoCliente> ContadorViewModel { get; set; }
 
         // Checkbox Filtro Clientes
         public bool RazonSocialSeleccionada { get; set; } = true;
@@ -83,7 +84,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 ClientesView = (CollectionView)CollectionViewSource.GetDefaultView(Clientes);
                 TiposClientes = new ObservableCollection<TipoCliente>(context.TiposClientes.ToList());
                 GruposClientes = new ObservableCollection<GrupoCliente>(context.GruposClientes.ToList());
-                //(ucContador as Contador).Actualizar();
+                ContadorViewModel.Tipos = TiposClientes;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid clientes 
                 ClienteSeleccionado = null;
@@ -121,7 +122,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
                 if (e.Column.DisplayIndex == 3) // 3 = Posición tipo cliente
                 {
-                    //(ucContador as Contador).Actualizar();
+                    ContadorViewModel.Tipos = new ObservableCollection<TipoCliente>(context.TiposClientes.ToList());
                 }
             }
         }

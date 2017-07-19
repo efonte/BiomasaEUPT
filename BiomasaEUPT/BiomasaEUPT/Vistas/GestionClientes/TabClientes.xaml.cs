@@ -34,7 +34,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             InitializeComponent();
 
-            viewModel = new TabClientesViewModel();
+            var viewModelContador = new ContadorViewModel<TipoCliente>();
+            ucContador.DataContext = viewModelContador;
+            viewModel = new TabClientesViewModel() { ContadorViewModel = viewModelContador };
             DataContext = viewModel;
 
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;

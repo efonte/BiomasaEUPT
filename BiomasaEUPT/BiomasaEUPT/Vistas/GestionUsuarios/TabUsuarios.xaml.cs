@@ -34,10 +34,14 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     {
         private TabUsuariosViewModel viewModel;
 
+
         public TabUsuarios()
         {
             InitializeComponent();
-            viewModel = new TabUsuariosViewModel();
+
+            var viewModelContador = new ContadorViewModel<TipoUsuario>();
+            ucContador.DataContext = viewModelContador;
+            viewModel = new TabUsuariosViewModel() { ContadorViewModel = viewModelContador };
             DataContext = viewModel;
 
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;

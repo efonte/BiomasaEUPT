@@ -34,7 +34,9 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             InitializeComponent();
 
-            viewModel = new TabProveedoresViewModel();
+            var viewModelContador = new ContadorViewModel<TipoProveedor>();
+            ucContador.DataContext = viewModelContador;
+            viewModel = new TabProveedoresViewModel() { ContadorViewModel = viewModelContador };
             DataContext = viewModel;
 
             ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;

@@ -242,6 +242,7 @@
     <Compile Include="Vistas\ControlesUsuario\Contador.xaml.cs">
       <DependentUpon>Contador.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\ContadorViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
       <DependentUpon>FiltroTabla.xaml</DependentUpon>
     </Compile>

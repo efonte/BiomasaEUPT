@@ -19,6 +19,35 @@ ALTER TABLE HuecosAlmacenajes ADD CONSTRAINT DF_HuecosAlmacenajesOcupado DEFAULT
 
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_Usuarios_U]
+    ON [dbo].[Usuarios]
+    AFTER UPDATE
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+    IF UPDATE(Baneado)
+    BEGIN
+        UPDATE u
+        SET    FechaBaja = CASE WHEN i.Baneado = 1 THEN GETDATE() ELSE NULL END
+        FROM   Usuarios u        
+        JOIN   inserted i ON u.UsuarioId = i.UsuarioId;
+    END
+    IF UPDATE(Contrasena)
+    BEGIN
+        UPDATE u
+        SET    FechaContrasena = CASE WHEN i.Contrasena != NULL THEN GETDATE() ELSE NULL END
+        FROM   Usuarios u
+        JOIN   inserted i ON u.UsuarioId = i.UsuarioId;
+    END
+END
+'
+
+
 -- IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[TR_HistorialHuecosRecepciones_I]'))
 EXEC dbo.sp_executesql @statement = N'
 CREATE TRIGGER [dbo].[TR_HistorialHuecosRecepciones_I]
