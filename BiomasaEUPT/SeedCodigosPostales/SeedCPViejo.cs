@@ -10,34 +10,45 @@ using System.Threading.Tasks;
 
 namespace SeedCodigosPostales
 {
-    public class SeedCP
+    class SeedCPViejo
     {
         string URL_DESCARGA = "http://download.geonames.org/export/zip/{0}.zip";
+        string NOMBRE_FICHERO = "SeedCodigosPostales.txt";
 
-        public SeedCP()
+        private string[] codigosPaises = { "ES", "FR" };
+        private List<string> seedCP;
+        private List<string> datosCP;
+
+        public SeedCPViejo()
         {
 
+        }
+
+        public SeedCPViejo(string[] codigosPaises) : base()
+        {
+            this.codigosPaises = codigosPaises;
         }
 
         public void Generar()
         {
-            string[] paises = { "ES", "FR" };
-            var datosCP = new List<string>();
-
-            foreach (var p in paises)
+            datosCP = new List<string>();
+            foreach (var p in codigosPaises)
             {
-                datosCP = datosCP.Concat(ObtenerDatosCP(p)).ToList();
+                datosCP = datosCP.Concat(ObtenerListaDatosCP(p)).ToList();
             }
 
-            SeedPaises(datosCP);
+            seedCP = ObtenerListaSeedCP(datosCP);
+
+            File.WriteAllLines(NOMBRE_FICHERO, seedCP);
+            Console.WriteLine("\nFichero \"" + NOMBRE_FICHERO + "\" generado correctamente.");
         }
 
-        private List<string> ObtenerDatosCP(string codigoPais)
+        private List<string> ObtenerListaDatosCP(string codigoPais)
         {
-            var lineas = new List<string>();
+            List<string> lineas = new List<string>();
             using (ZipFile zip = ZipFile.Read(new MemoryStream(new WebClient().DownloadData(string.Format(URL_DESCARGA, codigoPais)))))
             {
-                var memoryStream = new MemoryStream();
+                MemoryStream memoryStream = new MemoryStream();
                 zip[codigoPais + ".txt"].Extract(memoryStream);
                 //string datosPais = Encoding.UTF8.GetString(memoryStream.ToArray());
 
@@ -55,9 +66,9 @@ namespace SeedCodigosPostales
             }
         }
 
-        private void SeedPaises(List<string> datosCP)
+        private List<string> ObtenerListaSeedCP(List<string> datosCP)
         {
-            var lineas = new List<string>();
+            List<string> lineas = new List<string>();
             //var datos = from linea in lineas select (linea.Split('\t')).ToArray();
             //Console.WriteLine(datos.Select(d => d[1]).Count());
             var codigosPostales = datosCP.Select(l => new
@@ -73,60 +84,56 @@ namespace SeedCodigosPostales
                 Longitud = l.Split('\t').ElementAt(10)
             });
 
-            lineas.Add("Codigo;Nombre");
+            lineas.Add("context.Paises.AddOrUpdate( c => c.Codigo,");
             var paises = codigosPostales.Select(c => new { c.CodigoPais }).Distinct().OrderBy(c => c.CodigoPais).ToList();
             for (int i = 0; i < paises.Count(); i++)
             {
-                lineas.Add(paises[i].CodigoPais + ";" + new RegionInfo(paises[i].CodigoPais).DisplayName);
+                lineas.Add("    new Pais() { Codigo = \"" + paises[i].CodigoPais + "\", Nombre = \"" + new RegionInfo(paises[i].CodigoPais).DisplayName + "\" }" + (i != paises.Count() - 1 ? "," : ""));
                 Console.Write("\rParseando Países {0,3}%", i * 100 / paises.Count());
             }
             Console.WriteLine("\rParseando Países 100%");
+            lineas.Add(");\n\ncontext.SaveChanges();\n\n");
 
-            File.WriteAllLines("SeedPaises.csv", lineas);
-            lineas.Clear();
-
-            lineas.Add("Codigo;Nombre");
+            lineas.Add("context.Comunidades.AddOrUpdate( c => c.Codigo,");
             var comunidades = codigosPostales.Select(c => new { c.CodigoPais, c.CodigoComunidad, c.Comunidad }).Distinct().OrderBy(c => c.Comunidad).ToList();
             for (int i = 0; i < comunidades.Count(); i++)
             {
                 if (comunidades[i].CodigoComunidad != "") // El fichero de Francia no está bien
                 {
-                    lineas.Add(comunidades[i].CodigoPais + "-" + comunidades[i].CodigoComunidad + ";" + comunidades[i].Comunidad);
+                    lineas.Add("    new Comunidad() { Codigo = \"" + comunidades[i].CodigoPais + "-" + comunidades[i].CodigoComunidad + "\", Nombre = \"" + comunidades[i].Comunidad + "\", PaisId = context.Paises.FirstOrDefault(x => x.Codigo == \"" + comunidades[i].CodigoPais + "\").PaisId }" + (i != comunidades.Count() - 1 ? "," : ""));
                 }
                 Console.Write("\rParseando Comunidades {0,3}%", i * 100 / comunidades.Count());
             }
             Console.WriteLine("\rParseando Comunidades 100%");
-            File.WriteAllLines("SeedComunidades.csv", lineas);
-            lineas.Clear();
+            lineas.Add(");\n\ncontext.SaveChanges();\n\n");
 
-            lineas.Add("Codigo;Nombre;CodigoComunidad");
+            lineas.Add("context.Provincias.AddOrUpdate( c => c.Codigo,");
             var provincias = codigosPostales.Select(c => new { c.CodigoPais, c.CodigoComunidad, c.CodigoProvincia, c.Provincia }).Distinct().OrderBy(c => c.Provincia).ToList();
             for (int i = 0; i < provincias.Count(); i++)
             {
                 if (provincias[i].CodigoProvincia != "") // El fichero de Francia no está bien
                 {
-                    lineas.Add(provincias[i].CodigoPais + "-" + provincias[i].CodigoProvincia + ";" + provincias[i].Provincia + ";" + provincias[i].CodigoPais + "-" + provincias[i].CodigoComunidad);
+                    lineas.Add("    new Provincia() { Codigo = \"" + provincias[i].CodigoPais + "-" + provincias[i].CodigoProvincia + "\", Nombre = \"" + provincias[i].Provincia + "\", ComunidadId = context.Comunidades.FirstOrDefault(x => x.Codigo == \"" + provincias[i].CodigoPais + "-" + provincias[i].CodigoComunidad + "\").ComunidadId }" + (i != provincias.Count() - 1 ? "," : ""));
                 }
                 Console.Write("\rParseando Provincias {0,3}%", i + 1 * 100 / provincias.Count());
             }
             Console.WriteLine("\rParseando Provincias 100%");
-            File.WriteAllLines("SeedProvincias.csv", lineas);
-            lineas.Clear();
+            lineas.Add(");\n\ncontext.SaveChanges();\n\n");
 
-            lineas.Add("CodigoPostal;Nombre;Latitud;Longitud;CodigoProvincia");
-            var municipios = codigosPostales.Select(c => new { c.CodidoPostal, c.CodigoPais, c.CodigoProvincia, c.Municipio, c.Latitud, c.Longitud }).Distinct().OrderBy(c => c.Municipio).ToList();
+            lineas.Add("context.Municipios.AddOrUpdate( c => c.MunicipioId,");
+            var municipios = codigosPostales.Select(c => new { c.CodigoPais, c.CodigoProvincia, c.Municipio, c.Latitud, c.Longitud }).Distinct().OrderBy(c => c.Municipio).ToList();
             for (int i = 0; i < municipios.Count(); i++)
             {
                 if (municipios[i].CodigoProvincia != "") // El fichero de Francia no está bien
                 {
-                    lineas.Add(municipios[i].CodidoPostal + ";" + municipios[i].Municipio.Replace(";", ",") + ";" + municipios[i].Latitud + ";" + municipios[i].Longitud + ";" + municipios[i].CodigoPais + "-" + municipios[i].CodigoProvincia);
+                    lineas.Add("    new Municipio() { Nombre = \"" + municipios[i].Municipio + "\", Latitud = " + municipios[i].Latitud + ", Longitud = " + municipios[i].Longitud + ", ProvinciaId = context.Provincias.FirstOrDefault(x => x.Codigo == \"" + municipios[i].CodigoPais + "-" + municipios[i].CodigoProvincia + "\").ProvinciaId }" + (i != municipios.Count() - 1 ? "," : ""));
                 }
                 Console.Write("\rParseando Municipios {0,3}%", i * 100 / municipios.Count());
             }
             Console.WriteLine("\rParseando Municipios 100%");
-            File.WriteAllLines("SeedMunicipios.csv", lineas);
-            lineas.Clear();
-            Console.WriteLine("\nFicheros CSV generados correctamente.");
+            lineas.Add(");\n\ncontext.SaveChanges();\n\n");
+
+            return lineas;
         }
     }
 }
