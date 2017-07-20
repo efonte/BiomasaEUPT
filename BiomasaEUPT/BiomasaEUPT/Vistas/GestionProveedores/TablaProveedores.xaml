@@ -130,29 +130,7 @@
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <!--DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
-                                                                 StaysOpen="True" Opened="pbDireccion_Opened">
-                                            <materialDesign:PopupBox.ToggleContent>
-                                                <TextBlock>
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
-                                                            <Binding Path="Municipio.CodigoPostal"/>
-                                                            <Binding Path="Municipio.Nombre"/>
-                                                            <Binding Path="Municipio.Provincia.Nombre"/>
-                                                            <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
-                                                            <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </materialDesign:PopupBox.ToggleContent>
-                                        </materialDesign:PopupBox>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </-->
-                            <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
+                            <!--DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -173,6 +151,28 @@
                                         <ControlesUsuario:FormDireccion />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
+                            </-->
+                            <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
+                                                                 StaysOpen="True" Opened="pbDireccion_Opened">
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                            <Binding Path="Municipio.CodigoPostal"/>
+                                                            <Binding Path="Municipio.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                            <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>

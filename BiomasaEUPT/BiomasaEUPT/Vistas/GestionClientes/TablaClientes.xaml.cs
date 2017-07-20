@@ -42,7 +42,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             tabClientes = (TabClientes)ucParent;
         }
 
-       /* private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
             // a PopupContent. No se añade en TabClientes.xaml para que así no cargue en memoria cada uno
@@ -50,17 +50,17 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             using (new CursorEspera())
             {
                 PopupBox popupBox = sender as PopupBox;
+                var formDireccionViewModel = new FormDireccionViewModel()
+                {
+                    Context = (tabClientes.DataContext as TabClientesViewModel).Context
+                };
                 popupBox.PopupContent = new FormDireccion()
                 {
-                    DataContext = new FormDireccionViewModel()
-                    {
-                        MunicipioSeleccionado = (tabClientes.DataContext as TabClientesViewModel).ClienteSeleccionado.Municipio
-                    }
+                    DataContext = formDireccionViewModel
                 };
-
+                formDireccionViewModel.CargarPaises();
 
             }
-        }*/
-
+        }
     }
 }

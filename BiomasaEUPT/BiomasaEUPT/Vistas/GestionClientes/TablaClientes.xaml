@@ -198,7 +198,7 @@
                                 </materialDesign:MaterialDataGridTextColumn.Binding-->
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
+                            <!--DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -216,12 +216,12 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <ControlesUsuario:FormDireccion />
+                                        <ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
+                            </-->
 
-                            <!--DataGridTemplateColumn x:Name="direccionColumn" Header="Dirección">
+                            <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
@@ -242,7 +242,7 @@
                                         </materialDesign:PopupBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn-->
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

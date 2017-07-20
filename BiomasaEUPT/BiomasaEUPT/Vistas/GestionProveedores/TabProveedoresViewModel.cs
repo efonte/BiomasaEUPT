@@ -56,7 +56,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         private ICommand _dgProveedores_RowEditEndingComando;
         private ICommand _modificarObservacionesProveedorComando;
 
-        private BiomasaEUPTContext context;
+        public BiomasaEUPTContext Context { get; set; }
 
 
         public TabProveedoresViewModel()
@@ -69,7 +69,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         public override void Inicializar()
         {
-            context = new BiomasaEUPTContext();
+            Context = new BiomasaEUPTContext();
             CargarProveedores();
             FiltroTablaViewModel.CargarFiltro();
         }
@@ -78,9 +78,9 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             using (new CursorEspera())
             {
-                Proveedores = new ObservableCollection<Proveedor>(context.Proveedores.Include(p => p.Municipio.Provincia.Comunidad.Pais).ToList());
+                Proveedores = new ObservableCollection<Proveedor>(Context.Proveedores.Include(p => p.Municipio.Provincia.Comunidad.Pais).ToList());
                 ProveedoresView = (CollectionView)CollectionViewSource.GetDefaultView(Proveedores);
-                TiposProveedores = new ObservableCollection<TipoProveedor>(context.TiposProveedores.ToList());
+                TiposProveedores = new ObservableCollection<TipoProveedor>(Context.TiposProveedores.ToList());
                 ContadorViewModel.Tipos = TiposProveedores;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid proveedores
@@ -103,6 +103,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 var proveedorSeleccionado = e.Row.DataContext as Proveedor;
+
                 /*var proveedor = context.Proveedores.Single(u => u.ProveedorId == proveedorSeleccionado.ProveedorId);
 
                 proveedor.RazonSocial = proveedorSeleccionado.RazonSocial;
@@ -112,11 +113,11 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 proveedor.Calle = proveedorSeleccionado.Calle;
                 proveedor.MunicipioId = proveedorSeleccionado.Municipio.MunicipioId;
                 // Proveedor.Observaciones = ProveedorSeleccionado.Observaciones;*/
-                context.SaveChanges();
+                Context.SaveChanges();
 
                 if (e.Column.DisplayIndex == 3) // 3 = Posición tipo proveedor
                 {
-                    ContadorViewModel.Tipos = new ObservableCollection<TipoProveedor>(context.TiposProveedores.ToList());
+                    ContadorViewModel.Tipos = new ObservableCollection<TipoProveedor>(Context.TiposProveedores.ToList());
                 }
             }
         }
@@ -171,7 +172,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             {
                 var formProveedorViewModel = formProveedor.DataContext as FormProveedorViewModel;
 
-                context.Proveedores.Add(new Proveedor()
+                Context.Proveedores.Add(new Proveedor()
                 {
                     RazonSocial = formProveedorViewModel.RazonSocial,
                     Nif = formProveedorViewModel.Nif,
@@ -181,7 +182,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                     MunicipioId = formProveedorViewModel.MunicipioSeleccionado.MunicipioId,
                     Observaciones = formProveedorViewModel.Observaciones
                 });
-                context.SaveChanges();
+                Context.SaveChanges();
                 CargarProveedores();
             }
         }
@@ -209,13 +210,13 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
                 foreach (var proveedor in ProveedoresSeleccionados)
                 {
-                    if (!context.Recepciones.Any(pc => pc.ProveedorId == proveedor.ProveedorId))
+                    if (!Context.Recepciones.Any(pc => pc.ProveedorId == proveedor.ProveedorId))
                     {
                         proveedoresABorrar.Add(proveedor);
                     }
                 }
-                context.Proveedores.RemoveRange(proveedoresABorrar);
-                context.SaveChanges();
+                Context.Proveedores.RemoveRange(proveedoresABorrar);
+                Context.SaveChanges();
                 CargarProveedores();
 
                 if (ProveedoresSeleccionados.Count != proveedoresABorrar.Count)
@@ -253,7 +254,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 ProveedorSeleccionado.Calle = formProveedorViewModel.Calle;
                 ProveedorSeleccionado.Observaciones = formProveedorViewModel.Observaciones;
 
-                context.SaveChanges();
+                Context.SaveChanges();
                 CargarProveedores();
             }
         }
@@ -280,7 +281,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             /*var proveedor = context.Proveedores.Single(u => u.ProveedorId == ProveedorSeleccionado.ProveedorId);
 
             proveedor.Observaciones = ProveedorSeleccionado.Observaciones;*/
-            context.SaveChanges();
+            Context.SaveChanges();
 
             ObservacionesEnEdicion = false;
         }

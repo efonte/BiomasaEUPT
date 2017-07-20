@@ -19,7 +19,7 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.GestionProveedores
 {
     /// <summary>
-    /// Lógica de interacción para TablaClientes.xaml
+    /// Lógica de interacción para TablaProveedores.xaml
     /// </summary>
     public partial class TablaProveedores : UserControl
     {
@@ -42,19 +42,26 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             tabProveedores = (TabProveedores)ucParent;
         }
 
-     
-
-       /* private void pbDireccion_Opened(object sender, RoutedEventArgs e)
+        private void pbDireccion_Opened(object sender, RoutedEventArgs e)
         {
             // Al hacer clic en la columna de Dirección se creará un FromDireccion y será asignado
             // a PopupContent. No se añade en TabProveedores.xaml para que así no cargue en memoria cada uno
             // de los PopupBox (para cada fila) hasta que se quiera editar.
             using (new CursorEspera())
             {
-                PopupBox popupBox = sender as PopupBox; ;
-                popupBox.PopupContent = new FormDireccion();
+                PopupBox popupBox = sender as PopupBox;
+                var formDireccionViewModel = new FormDireccionViewModel()
+                {
+                    Context = (tabProveedores.DataContext as TabProveedoresViewModel).Context
+                };
+                popupBox.PopupContent = new FormDireccion()
+                {
+                    DataContext = formDireccionViewModel
+                };
+                formDireccionViewModel.CargarPaises();
+
             }
-        }*/
+        }
 
     }
 }

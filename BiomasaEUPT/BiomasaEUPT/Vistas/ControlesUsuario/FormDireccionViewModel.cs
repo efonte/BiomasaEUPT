@@ -19,33 +19,64 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     public class FormDireccionViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Pais> Paises { get; set; }
-        public Pais PaisSeleccionado { get; set; }
-
         public ObservableCollection<Comunidad> Comunidades { get; set; }
-        public Comunidad ComunidadSeleccionada { get; set; }
-
         public ObservableCollection<Provincia> Provincias { get; set; }
-        public Provincia ProvinciaSeleccionada { get; set; }
-
         public ObservableCollection<Municipio> Municipios { get; set; }
+
+        private Pais _paisSeleccionado;
+        public Pais PaisSeleccionado
+        {
+            get { return _paisSeleccionado; }
+            set
+            {
+                _paisSeleccionado = value;
+                CargarComunidades();
+            }
+        }
+
+        private Comunidad _comunidadSeleccionada;
+        public Comunidad ComunidadSeleccionada
+        {
+            get { return _comunidadSeleccionada; }
+            set
+            {
+                _comunidadSeleccionada = value;
+                CargarProvincias();
+            }
+        }
+
+        private Provincia _provinciaSeleccionada;
+        public Provincia ProvinciaSeleccionada
+        {
+            get { return _provinciaSeleccionada; }
+            set
+            {
+                _provinciaSeleccionada = value;
+                CargarMunicipios();
+            }
+        }
+
         public Municipio MunicipioSeleccionado { get; set; }
+
+        public BiomasaEUPTContext Context;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ICommand CBPaises_SelectionChangedComando => new RelayComando(param => CargarComunidades());
-        public ICommand CBComunidades_SelectionChangedComando => new RelayComando(param => CargarProvincias());
-        public ICommand CBProvincias_SelectionChangedComando => new RelayComando(param => CargarMunicipios());
+        // public ICommand CBPaises_SelectionChangedComando => new RelayComando(param => CargarComunidades());
+        // public ICommand CBComunidades_SelectionChangedComando => new RelayComando(param => CargarProvincias());
+        // public ICommand CBProvincias_SelectionChangedComando => new RelayComando(param => CargarMunicipios());
 
         public FormDireccionViewModel()
         {
-            CargarPaises();
+
         }
 
         public void CargarPaises()
         {
-            using (var context = new BiomasaEUPTContext())
+            using (new CursorEspera())
             {
-                Paises = new ObservableCollection<Pais>(context.Paises.ToList());
+                Paises = new ObservableCollection<Pais>(Context.Paises.ToList());
+                PaisSeleccionado = PaisSeleccionado ?? Paises.First();
             }
         }
 
@@ -53,9 +84,10 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (PaisSeleccionado != null)
             {
-                using (var context = new BiomasaEUPTContext())
+                using (new CursorEspera())
                 {
-                    Comunidades = new ObservableCollection<Comunidad>(context.Comunidades.Where(c => c.PaisId == PaisSeleccionado.PaisId).ToList());
+                    Comunidades = new ObservableCollection<Comunidad>(Context.Comunidades.Where(d => d.PaisId == PaisSeleccionado.PaisId).ToList());
+                    ComunidadSeleccionada = ComunidadSeleccionada ?? Comunidades.First();
                 }
             }
         }
@@ -64,9 +96,10 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (ComunidadSeleccionada != null)
             {
-                using (var context = new BiomasaEUPTContext())
+                using (new CursorEspera())
                 {
-                    Provincias = new ObservableCollection<Provincia>(context.Provincias.Where(p => p.ComunidadId == ComunidadSeleccionada.ComunidadId).ToList());
+                    Provincias = new ObservableCollection<Provincia>(Context.Provincias.Where(d => d.ComunidadId == ComunidadSeleccionada.ComunidadId).ToList());
+                    ProvinciaSeleccionada = ProvinciaSeleccionada ?? Provincias.First();
                 }
             }
         }
@@ -75,9 +108,11 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         {
             if (ProvinciaSeleccionada != null)
             {
-                using (var context = new BiomasaEUPTContext())
+                using (new CursorEspera())
                 {
-                    Municipios = new ObservableCollection<Municipio>(context.Municipios.Where(m => m.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).Include(m => m.Provincia.Comunidad.Pais).ToList());
+                    Municipios = new ObservableCollection<Municipio>(Context.Municipios.Where(d => d.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).ToList());
+
+                    MunicipioSeleccionado = MunicipioSeleccionado ?? Municipios.First();
                 }
             }
         }

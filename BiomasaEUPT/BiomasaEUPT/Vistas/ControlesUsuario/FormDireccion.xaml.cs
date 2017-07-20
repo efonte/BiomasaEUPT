@@ -28,7 +28,14 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         public FormDireccion()
         {
             InitializeComponent();
-            DataContext = new FormDireccionViewModel();
+            //DataContext = new FormDireccionViewModel();
+
+            // Si el municipio seleccionado es null entonces se selecciona el primero disponible
+            cbMunicipios.SelectionChanged += (sender, e) =>
+             {
+                 if (cbMunicipios.SelectedIndex == -1)
+                     cbMunicipios.SelectedIndex = 0;
+             };
         }
     }
 }

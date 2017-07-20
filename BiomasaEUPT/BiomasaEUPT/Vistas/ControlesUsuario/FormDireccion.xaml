@@ -29,14 +29,15 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
+        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"                  
+                  SelectedItem="{Binding PaisSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ItemsSource="{Binding Paises}"
-                  SelectedItem="{Binding PaisSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-            <i:Interaction.Triggers>
+                  SelectedValuePath="Codigo">
+            <!--i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding CBPaises_SelectionChangedComando}"/>
                 </i:EventTrigger>
-            </i:Interaction.Triggers>
+            </i:Interaction.Triggers-->
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -49,30 +50,32 @@
         </ComboBox>
 
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbComunidades" materialDesign:HintAssist.Hint="Comunidad"
-                  ItemsSource="{Binding Comunidades}"
                   SelectedItem="{Binding ComunidadSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                  DisplayMemberPath="Nombre">
-            <i:Interaction.Triggers>
+                  ItemsSource="{Binding Comunidades}"
+                  DisplayMemberPath="Nombre"
+                  SelectedValuePath="Nombre">
+            <!--i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding CBComunidades_SelectionChangedComando}"/>
                 </i:EventTrigger>
-            </i:Interaction.Triggers>
+            </i:Interaction.Triggers-->
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbProvincias" materialDesign:HintAssist.Hint="Provincia"
-                  ItemsSource="{Binding Provincias}"
                   SelectedItem="{Binding ProvinciaSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                  DisplayMemberPath="Nombre">
-            <i:Interaction.Triggers>
+                  ItemsSource="{Binding Provincias}"
+                  DisplayMemberPath="Nombre"
+                  SelectedValuePath="Nombre">
+            <!--i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding CBProvincias_SelectionChangedComando}"/>
                 </i:EventTrigger>
-            </i:Interaction.Triggers>
+            </i:Interaction.Triggers-->
         </ComboBox>
 
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbMunicipios" materialDesign:HintAssist.Hint="Código Postal"
                   ItemsSource="{Binding Municipios}"
-                  SelectedItem="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=TwoWay}">
+                  SelectedValue="{Binding DataContext.Municipio, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
