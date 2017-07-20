@@ -112,11 +112,36 @@
                           DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
                           SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
-                
 
-                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosRecepciones" Height="100"
-                         ItemsSource="{Binding HistorialHuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}"
-                         PreviewMouseLeftButtonDown="lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown">
+                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbProductosTerminados" Height="100"
+                         ItemsSource="{Binding ProductosTerminados, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbProductosTerminados_PreviewMouseLeftButtonDown">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Producto Terminado {0}">
+                                            <Binding Path="Nombre"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} m³ / {1} ud.">
+                                            <Binding Path="VolumenTotal"/>
+                                            <Binding Path="UnidadesTotales"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <!--ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosAlmacenajes" Height="100"
+                         ItemsSource="{Binding HistorialHuecosAlmacenajesDisponibles, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbHistorialHuecosAlmacenajes_PreviewMouseLeftButtonDown">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -138,7 +163,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListBox>
+                </-->
 
                 <WrapPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="wpProductosTerminadosComposiciones" Orientation="Horizontal"
                            AllowDrop="True" Drop="spProductosTerminadosComposiciones_Drop" Margin="0 0 0 10" Width="400"

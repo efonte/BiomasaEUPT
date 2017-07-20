@@ -334,23 +334,23 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(viewModel.HistorialHuecosAlmacenajes.ToList());
         }
 
-        private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void lbProductosTerminados_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            /*var parent = sender as ListBox;
-            var tipoProductoTerminado = GetDataFromListBox(lbTiposProductosTerminados, e.GetPosition(parent)) as TipoProductoTerminado;
-            if (tipoProductoTerminado != null)
+            var parent = sender as ListBox;
+            var ProductoTerminado = GetDataFromListBox(lbProductosTerminados, e.GetPosition(parent)) as ProductoTerminado;
+            if (ProductoTerminado != null)
             {
-                DataObject dragData = new DataObject("TipoProductoTerminado", tipoProductoTerminado);
+                DataObject dragData = new DataObject("ProductoTerminado", ProductoTerminado);
                 DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }*/
+            }
         }
 
         private void spProductosTerminadosComposiciones_Drop(object sender, DragEventArgs e)
         {
-            /*var tipoProductoTerminado = e.Data.GetData("TipoProductoTerminado") as TipoProductoTerminado;
-            var productoTerminadoComposicion = new ProductoTerminadoComposicion() { ProductoTerminado = productoTerminadoComposicion };
-            ProductosTerminadosComposiciones.Add(productoTerminadoComposicion);
-            HistorialHuecosRecepciones.Remove(tipoProductoTerminado);*/
+            /*var ProductoTerminado = e.Data.GetData("ProductoTerminado") as ProductoTerminado;
+            var productoTerminado = new ProductoTerminadoComposicion() { ProductoTerminado = productoTerminado };
+            ProductoTerminado.Add(productoTerminado;
+            HistorialHuecosAlmacenajes.Remove(ProductoTerminado);*/
         }
 
         private void cProductoTerminadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
