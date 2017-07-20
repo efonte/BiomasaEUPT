@@ -42,8 +42,7 @@ namespace BiomasaEUPT.Clases
         internal static PdfNumber PORTRAIT = new PdfNumber(0);
         internal static PdfNumber SEASCAPE = new PdfNumber(270);
 
-        //internal static Color COLOR_FONDO_PAGINA = new DeviceCmyk(0.208f, 0, 0.584f, 0);
-        internal static Color COLOR_FONDO_PAGINA = Color.WHITE;
+        internal static Color COLOR_FONDO_PAGINA = null;
 
         internal static Style estiloCelda = null;
 
@@ -59,6 +58,8 @@ namespace BiomasaEUPT.Clases
 
             estiloCelda = new Style().SetFont(calibri).SetFontSize(13).SetBorder(Border.NO_BORDER)
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE).SetTextAlignment(TextAlignment.CENTER);
+
+            //COLOR_FONDO_PAGINA = new DeviceCmyk(0.208f, 0, 0.584f, 0);
         }
 
         public InformePDF(string ruta) : this()
@@ -437,16 +438,51 @@ namespace BiomasaEUPT.Clases
 
                 // Color limeColor = new DeviceCmyk(0.208f, 0, 0.584f, 0);
                 // Color blueColor = new DeviceCmyk(0.445f, 0.0546f, 0, 0.0667f);
+                int margenSuperior = 36;
+                int margenInferior = 36;
+                int margenIzquierdo = 36;
+                int margenDerecho = 36;
+                float anchuraCaracter = 3.25f; // Esto está a ojo ya que depende del tamaño de la fuente!!!!
+                float alturaCaracter = 6f;
+                int longitudLineaNumPagina = 20;
+                int margenLineaNumPagina = 5;
 
-                // Color de fondo
-                pdfCanvas.SaveState()//.SetFillColor(numeroPagina % 2 == 1 ? limeColor : blueColor)
-                    .SetFillColor(COLOR_FONDO_PAGINA)
-                    .Rectangle(dimensionPagina.GetLeft(), dimensionPagina.GetBottom(), dimensionPagina.GetWidth(), dimensionPagina.GetHeight()).Fill().RestoreState();
+                if (COLOR_FONDO_PAGINA != null)
+                {
+                    // Color de fondo
+                    pdfCanvas.SaveState()//.SetFillColor(numeroPagina % 2 == 1 ? limeColor : blueColor)
+                        .SetFillColor(COLOR_FONDO_PAGINA)
+                        .Rectangle(dimensionPagina.GetLeft(), dimensionPagina.GetBottom(), dimensionPagina.GetWidth(), dimensionPagina.GetHeight())
+                        .Fill().RestoreState();
+                }
 
-                // Cabecera y pie de página
-                pdfCanvas.BeginText().SetFontAndSize(helvetica, 11)
-                    .MoveText(40, dimensionPagina.GetTop() - 20).ShowText("BiomasaEUPT " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))
-                    .MoveText(60, -dimensionPagina.GetTop() + 30).ShowText(numeroPagina.ToString()).EndText();
+                // Cabecera página
+                pdfCanvas.BeginText().SetFontAndSize(calibri, 11)
+                    .MoveText(margenIzquierdo, dimensionPagina.GetHeight() - margenSuperior / 2 - +alturaCaracter / 2)
+                    .ShowText("BiomasaEUPT")
+                    .EndText();
+                var formatoFecha = "dd/MM/yyyy HH:mm:ss";
+                pdfCanvas.BeginText().BeginText().SetFontAndSize(calibri, 11)
+                   .MoveText(dimensionPagina.GetWidth() - margenIzquierdo - margenDerecho - formatoFecha.Length * anchuraCaracter,
+                   dimensionPagina.GetHeight() - margenSuperior / 2 - alturaCaracter / 2)
+                   .ShowText(DateTime.Now.ToString(formatoFecha))
+                   .EndText();
+
+                // Pie de Página
+                pdfCanvas.SetStrokeColor(Color.BLACK)
+                    .SetLineWidth(.2f)
+                    .MoveTo(dimensionPagina.GetWidth() / 2 - anchuraCaracter - margenLineaNumPagina - longitudLineaNumPagina, margenInferior / 2 + alturaCaracter / 2)
+                    .LineTo(dimensionPagina.GetWidth() / 2 - anchuraCaracter - margenLineaNumPagina, margenInferior / 2 + alturaCaracter / 2)
+                    .Stroke();
+                pdfCanvas.BeginText().SetFontAndSize(calibri, 11)
+                    .MoveText(dimensionPagina.GetWidth() / 2 - anchuraCaracter, margenInferior / 2)
+                    .ShowText(numeroPagina.ToString())
+                    .EndText();
+                pdfCanvas.SetStrokeColor(Color.BLACK)
+                    .SetLineWidth(.2f)
+                    .MoveTo(dimensionPagina.GetWidth() / 2 + anchuraCaracter + margenLineaNumPagina, margenInferior / 2 + alturaCaracter / 2)
+                    .LineTo(dimensionPagina.GetWidth() / 2 + anchuraCaracter + margenLineaNumPagina + longitudLineaNumPagina, margenInferior / 2 + alturaCaracter / 2)
+                    .Stroke();
             }
 
             internal FinPaginaEventHandler(InformePDF _enclosing)
