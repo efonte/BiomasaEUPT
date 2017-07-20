@@ -320,9 +320,7 @@
       <DependentUpon>TabProveedores.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionRecepciones\TabRecepcionesViewModel.cs" />
-    <Compile Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml.cs">
-      <DependentUpon>TrazabilidadCodigos.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Vistas\GestionTrazabilidad\TabTrazabilidadViewModel.cs" />
     <Compile Include="Vistas\GestionUsuarios\FormUsuario.xaml.cs">
       <DependentUpon>FormUsuario.xaml</DependentUpon>
     </Compile>
@@ -489,10 +487,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionProveedores\TabProveedores.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionTrazabilidad\TrazabilidadCodigos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

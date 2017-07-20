@@ -5,6 +5,7 @@ using BiomasaEUPT.Vistas.GestionClientes;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
 using BiomasaEUPT.Vistas.GestionProveedores;
 using BiomasaEUPT.Vistas.GestionRecepciones;
+using BiomasaEUPT.Vistas.GestionTrazabilidad;
 using BiomasaEUPT.Vistas.GestionUsuarios;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
@@ -167,6 +168,15 @@ namespace BiomasaEUPT
                 if (ti.IsLoaded)
                 {
                     //ti.CargarElaboraciones();
+                }
+            }
+
+            else if (tabItem.Content is TabTrazabilidad)
+            {
+                var ti = (tabItem.Content as TabTrazabilidad);
+                if (ti.IsLoaded)
+                {
+                    (ti.DataContext as ViewModelBase).Inicializar();
                 }
             }
         }
