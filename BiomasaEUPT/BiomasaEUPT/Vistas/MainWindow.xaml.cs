@@ -203,18 +203,21 @@ namespace BiomasaEUPT
                 }
             }
 
+            // Se obtiene la primera pestaña disponible
+            TabItem tabItem = tabItem = tcTabs.Items.OfType<TabItem>().First();
             if (Properties.Settings.Default.TabActiva != "")
             {
-                var tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);
-                if (tabItem == null)
-                {
-                    // Si la pestaña que se quería seleccionar no existe se obtiene la primera disponible
-                    tabItem = tcTabs.Items.OfType<TabItem>().First();
-                }
-                tabItem.IsSelected = true;
-                // InicializarTab hay que ejecutarlo después de que se cargue la vista
-                tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };
+                 tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);                
             }
+            if (tabItem == null)
+            {
+                // Si la pestaña que se quería seleccionar no existe (de otro tipo de usuario)
+                // se obtiene la primera disponible
+                tabItem = tcTabs.Items.OfType<TabItem>().First();
+            }
+            tabItem.IsSelected = true;
+            // InicializarTab hay que ejecutarlo después de que se cargue la vista
+            tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };
 
             var paletteHelper = new PaletteHelper();
             paletteHelper.SetLightDark(Properties.Settings.Default.ModoNocturno);

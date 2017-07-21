@@ -25,8 +25,8 @@ namespace BiomasaEUPT
         public Splash()
         {
             InitializeComponent();
-            IniciarConfig();
-            IniciarCarpetas();
+            //IniciarConfig();
+            //IniciarCarpetas();
         }
 
         private void IniciarConfig()
