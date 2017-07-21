@@ -859,9 +859,7 @@
     <None Include="FodyWeavers.xml" />
     <Content Include="Resources\icono.svg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vistas\Plantillas\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>

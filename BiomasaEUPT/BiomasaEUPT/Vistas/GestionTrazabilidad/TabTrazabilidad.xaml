@@ -17,8 +17,9 @@
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition MinWidth="250"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition MinWidth="250"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -26,7 +27,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBox x:Name="tbCodigo" FontFamily="Roboto" FontSize="15"
                      materialDesign:HintAssist.Hint=" Buscar Código..." MaxLength="10" Width="120" FontWeight="Bold"
                      Foreground="{DynamicResource MaterialDesignBody}" Text="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -39,7 +40,7 @@
             </Button>
         </StackPanel>
 
-        <Border Grid.Column="0" Grid.Row="1" Margin="0 10 5 0">
+        <Border Grid.Column="0" Grid.Row="1" Margin="0 10 0 0">
             <GroupBox x:Name="gbArbol" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                       Header="{Binding TextoTrazabilidad,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                       Style="{DynamicResource MaterialDesignGroupBox}"
@@ -123,12 +124,13 @@
                 </TreeView>
             </GroupBox>
         </Border>
-        <Border Grid.Column="1" Grid.Row="1" Margin="5 10 5 0">
-            <GroupBox x:Name="gbArbolElaboracion" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+        <GridSplitter Grid.Column="1" Grid.Row="1" />
+        <Border Grid.Column="2" Grid.Row="1" Margin="0 10 5 0">
+            <GroupBox x:Name="gbInfo" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                       Header="Info" Style="{DynamicResource MaterialDesignGroupBox}">
-                <!--TextBlock Text="{Binding SelectedItem, ElementName=tvArbol}"/-->
-                <ContentPresenter Grid.Column="2" Content="{Binding SelectedItem, ElementName=tvArbol}">
-                    <!--ContentPresenter.Style>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ContentPresenter Grid.Column="2" Content="{Binding SelectedItem, ElementName=tvArbol}">
+                        <!--ContentPresenter.Style>
                         <Style TargetType="ContentPresenter">
                             <Setter Property="ContentTemplate" Value="{StaticResource DefaultDataTemplate}" />
                             <Style.Triggers>
@@ -138,25 +140,302 @@
                             </Style.Triggers>
                         </Style>
                     </-->
-                    <ContentPresenter.ContentTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="10">
-                                <TextBlock TextWrapping="Wrap"
-                                           Text="Aquí aparecerá información detallada del item seleccionado."/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ContentPresenter.ContentTemplate>
-                    <ContentPresenter.Resources>
-                        <DataTemplate DataType="{x:Type tablas:Proveedor}">
-                            <StackPanel Margin="10">
-                                <TextBlock Text="{Binding Nif}"/>
-                                <TextBlock Text="{Binding Calle}"/>
-                                <TextBlock Text="{Binding Observaciones}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ContentPresenter.Resources>
-                </ContentPresenter>
+                        <ContentPresenter.Resources>
+                            <Style x:Key="tbValor" TargetType="TextBlock">
+                                <Setter Property="Margin" Value="0 0 10 10" />
+                            </Style>
+                            <Style x:Key="tbTipo" TargetType="TextBlock" BasedOn="{StaticResource tbValor}">
+                                <Setter Property="FontWeight" Value="Medium"/>
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                            </Style>
+                            <Style x:Key="tbTitulo" TargetType="TextBlock" BasedOn="{StaticResource tbValor}">
+                                <Setter Property="Typography.Capitals" Value="SmallCaps"/>
+                                <Setter Property="FontWeight" Value="Medium"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                            <DataTemplate x:Key="PlantillaVacia">
+                                <TextBlock TextWrapping="Wrap" MaxWidth="250"
+                                           Text="Por favor, seleccione un item del árbol para mostrar información detallada."/>
+                            </DataTemplate>
 
+                            <DataTemplate DataType="{x:Type tablas:Proveedor}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Proveedor" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Razón Social:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding RazonSocial}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Nif}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Email:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Email}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TipoProveedor.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Dirección:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                <Binding Path="Municipio.CodigoPostal"/>
+                                                <Binding Path="Municipio.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Calle:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Calle}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="7" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Observaciones}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:Recepcion}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Recepción" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Nº Albarán:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding NumeroAlbaran}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding FechaRecepcion}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Estado:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding EstadoRecepcion.Nombre}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:MateriaPrima}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Materia Prima" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TipoMateriaPrima.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Procedencia:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Procedencia.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} m³" >
+                                                            <Binding Path="Volumen" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Código:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Codigo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Fecha Baja:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding FechaBaja}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Observaciones}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:HistorialHuecoRecepcion}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Hueco Recepción" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Sitio:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding HuecoRecepcion.SitioRecepcion.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Hueco:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding HuecoRecepcion.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                            <Binding Path="Volumen" />
+                                                            <Binding Path="HuecoRecepcion.VolumenTotal" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding MateriaPrima.TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                    <Binding Path="HuecoRecepcion.UnidadesTotales" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:ProductoTerminadoComposicion}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Producto Terminado" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} m³" >
+                                                            <Binding Path="ProductoTerminado.Volumen" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <Binding Path="ProductoTerminado.Unidades" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Código:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding ProductoTerminado.Codigo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Fecha Baja:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding ProductoTerminado.FechaBaja}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding ProductoTerminado.Observaciones}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:HistorialHuecoAlmacenaje}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Hueco Almacenaje" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Sitio:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding HuecoAlmacenaje.SitioAlmacenaje.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Hueco:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding HuecoAlmacenaje.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                            <Binding Path="Volumen" />
+                                                            <Binding Path="HuecoAlmacenaje.VolumenTotal" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding MateriaPrima.TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                    <Binding Path="HuecoAlmacenaje.UnidadesTotales" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+
+                        </ContentPresenter.Resources>
+                        <ContentPresenter.Style>
+                            <Style TargetType="{x:Type ContentPresenter}">
+                                <Style.Triggers>
+                                    <DataTrigger Value="{x:Null}" Binding="{Binding SelectedItem, ElementName=tvArbol}">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource PlantillaVacia}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentPresenter.Style>
+                    </ContentPresenter>
+                </ScrollViewer>
             </GroupBox>
         </Border>
     </Grid>

@@ -24,7 +24,10 @@ namespace BiomasaEUPT.Clases
         {
             var materiaPrima = context.MateriasPrimas
                 .Include("Recepcion.Proveedor.TipoProveedor")
+                .Include("Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
+                .Include("Recepcion.EstadoRecepcion")
                 .Include("TipoMateriaPrima")
+                .Include("Procedencia")
                 .Include("HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
                 .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
                 .Include("HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
@@ -39,7 +42,10 @@ namespace BiomasaEUPT.Clases
         public Proveedor Recepcion(string numeroAlbaran)
         {
             var recepcion = context.Recepciones
+                .Include("EstadoRecepcion")
                 .Include("Proveedor.TipoProveedor")
+                .Include("Proveedor.Municipio.Provincia.Comunidad.Pais")
+                .Include("MateriasPrimas.Procedencia")
                 .Include("MateriasPrimas.TipoMateriaPrima")
                 .Include("MateriasPrimas.HistorialHuecosRecepciones.HuecoRecepcion.SitioRecepcion")
                 .Include("MateriasPrimas.HistorialHuecosRecepciones.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
