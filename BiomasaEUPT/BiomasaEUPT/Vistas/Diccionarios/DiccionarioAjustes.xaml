@@ -17,6 +17,7 @@
         <Setter Property="FontSize" Value="23" />
         <Setter Property="FontWeight" Value="Light" />
         <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Typography.Capitals" Value="SmallCaps" />
     </Style>
 
     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">

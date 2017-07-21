@@ -1,5 +1,4 @@
 ﻿using BiomasaEUPT.Vistas;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +26,6 @@ namespace BiomasaEUPT
         {
             InitializeComponent();
             IniciarConfig();
-            IniciarLogger();
             IniciarCarpetas();
         }
 
@@ -37,23 +35,6 @@ namespace BiomasaEUPT
             {
                 File.WriteAllText(@"BiomasaEUPT.exe.config", Properties.Resources.App);
             }
-        }
-
-        private void IniciarLogger()
-        {
-            if (Properties.Settings.Default.ModoDebug)
-            {
-                if (File.Exists("BiomasaEUPT.log"))
-                {
-                    File.Delete("BiomasaEUPT.log");
-                }
-                Log.Logger = new LoggerConfiguration()
-                    .MinimumLevel.Debug()
-                    .WriteTo.File("BiomasaEUPT.log")
-                    .CreateLogger();
-            }
-
-            Log.Information("SPLASH: Logger inicializado.");
         }
 
         private void IniciarCarpetas()
@@ -68,7 +49,6 @@ namespace BiomasaEUPT
         {
             await Task.Run(() => IniciarPrograma());
 
-            Log.Information("SPLASH: Inicialización completa.");
             Login login = new Login();
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.usuario) && !string.IsNullOrWhiteSpace(Properties.Settings.Default.contrasena))
             {

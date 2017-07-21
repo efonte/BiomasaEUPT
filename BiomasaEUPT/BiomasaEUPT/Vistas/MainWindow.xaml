@@ -84,8 +84,12 @@
                     <TabItem x:Name="tiUsuarios" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Usuarios" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Usuarios" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -97,8 +101,12 @@
                     <TabItem x:Name="tiClientes" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Clientes" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="Account" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Clientes" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -110,8 +118,12 @@
                     <TabItem x:Name="tiProveedores" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Worker" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Proveedores" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="Worker" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Proveedores" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -123,8 +135,12 @@
                     <TabItem x:Name="tiRecepciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Truck" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Recepciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="Truck" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Recepciones" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -135,8 +151,12 @@
                     <TabItem x:Name="tiElaboraciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -147,8 +167,12 @@
                     <TabItem x:Name="tiVentas" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Shopping" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Ventas" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="Shopping" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Ventas" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -159,8 +183,12 @@
                     <TabItem x:Name="tiTrazabilidad" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
                             </StackPanel>
                         </TabItem.Header>
 

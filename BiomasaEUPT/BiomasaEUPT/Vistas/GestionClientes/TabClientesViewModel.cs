@@ -274,8 +274,17 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         #region Refrescar Clientes
         public ICommand RefrescarClientesComando => _refrescarClientesComando ??
             (_refrescarClientesComando = new RelayComando(
-                param => CargarClientes()
+                param => RefrescarClientes()
              ));
+
+        private void RefrescarClientes()
+        {
+            // Hay que volver a instanciar un nuevo context ya que sino no se pueden refrescar los datos
+            // debido a que se guardardan en una cache
+            Context.Dispose();
+            Context = new BiomasaEUPTContext();
+            CargarClientes();
+        }
         #endregion
 
 

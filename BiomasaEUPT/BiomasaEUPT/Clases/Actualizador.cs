@@ -1,5 +1,4 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,7 +20,8 @@ namespace BiomasaEUPT
 
         public bool ComprobarActualizacionPrograma()
         {
-            Log.Information("ACTUALIZADOR: Buscando una nueva actualización del programa...");
+            //Serilog
+            //Log.Information("ACTUALIZADOR: Buscando una nueva actualización del programa...");
 
             string version;
             using (var wc = new WebClient())
@@ -31,11 +31,11 @@ namespace BiomasaEUPT
 
             if (!version.Equals(Assembly.GetExecutingAssembly().GetName().Version.ToString()))
             {
-                Log.Information("ACTUALIZADOR: Actualización encontrada.");
+                //Log.Information("ACTUALIZADOR: Actualización encontrada.");
             }
             else
             {
-                Log.Information("ACTUALIZADOR: No se ha encontrado ninguna actualización.");
+                //Log.Information("ACTUALIZADOR: No se ha encontrado ninguna actualización.");
             }
             return !version.Equals(Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
@@ -43,18 +43,18 @@ namespace BiomasaEUPT
 
         public void actualizarPrograma()
         {
-            Log.Information("ACTUALIZADOR: Actualizando BiomasaEUPT...");
+            //Log.Information("ACTUALIZADOR: Actualizando BiomasaEUPT...");
 
             WebClient wc = new WebClient();
 
             try
             {
                 wc.DownloadFile(URL_PROGRAMA, "BiomasaEUPT.exe");
-                Log.Information("UPDATER: Actualización completada.");
+                //Log.Information("UPDATER: Actualización completada.");
             }
             catch (WebException ex)
             {
-                Log.Error("ACTUALIZADOR: Actualización fallida.", ex.Message);
+                //Log.Error("ACTUALIZADOR: Actualización fallida.", ex.Message);
             }
 
         }

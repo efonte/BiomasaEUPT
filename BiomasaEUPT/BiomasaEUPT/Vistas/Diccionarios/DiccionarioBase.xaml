@@ -30,7 +30,15 @@
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" FontFamily="Roboto" Style="{DynamicResource MaterialDesignTitleTextBlock}" HorizontalAlignment="Center" FontWeight="Black"/>
+                    <TextBlock Text="{Binding}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignTitleTextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="FontWeight" Value="Black"/>
+                                <Setter Property="FontFamily" Value="Roboto"/>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -70,6 +78,7 @@
     <Style x:Key="MaterialDesignDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
         <Setter Property="TextBlock.FontSize" Value="14" />
         <Setter Property="Padding" Value="5" />
-    </Style>
+        <Setter Property="Typography.Capitals" Value="SmallCaps"/>
+    </Style> 
 
 </ResourceDictionary>

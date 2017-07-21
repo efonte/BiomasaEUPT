@@ -264,8 +264,17 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         #region Refrescar Proveedores
         public ICommand RefrescarProveedoresComando => _refrescarProveedoresComando ??
             (_refrescarProveedoresComando = new RelayComando(
-                param => CargarProveedores()
+                param => RefrescarProveedores()
              ));
+
+        private void RefrescarProveedores()
+        {
+            // Hay que volver a instanciar un nuevo context ya que sino no se pueden refrescar los datos
+            // debido a que se guardardan en una cache
+            Context.Dispose();
+            Context = new BiomasaEUPTContext();
+            CargarProveedores();
+        }
         #endregion
 
 

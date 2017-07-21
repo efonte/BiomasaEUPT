@@ -26,8 +26,12 @@
                 <TabItem x:Name="tiVentana">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="WindowMaximize" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Ventana" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <materialDesign:PackIcon Kind="WindowMaximize" Foreground="White"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Height="20" Width="20"/>
+                            <TextBlock Text="Ventana" Margin="5,0,0,0"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                         </StackPanel>
                     </TabItem.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -39,8 +43,12 @@
                 <TabItem x:Name="tiApariencia">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Palette" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Apariencia" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <materialDesign:PackIcon Kind="Palette" Foreground="White"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Height="20" Width="20"/>
+                            <TextBlock Text="Apariencia" Margin="5,0,0,0"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                         </StackPanel>
                     </TabItem.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -52,8 +60,12 @@
                 <TabItem x:Name="tiUsuario">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Account" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                            <TextBlock Text="Usuario" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" Foreground="White"/>
+                            <materialDesign:PackIcon Kind="Account" Foreground="White"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Height="20" Width="20"/>
+                            <TextBlock Text="Usuario" Margin="5,0,0,0"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                         </StackPanel>
                     </TabItem.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">

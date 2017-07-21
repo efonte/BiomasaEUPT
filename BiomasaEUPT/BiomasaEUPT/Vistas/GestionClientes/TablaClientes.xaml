@@ -112,7 +112,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_NIF}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -127,7 +127,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Email" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -184,9 +184,10 @@
                                                 DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
                                                 EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumn" Header="Calle"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="calleColumna" Header="Calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
-                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                       MaxLength="{x:Static const:Constantes.LONG_MAX_CALLE}">
                                 <!--materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="calle" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
