@@ -9,7 +9,7 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:ControlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -19,8 +19,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <domain:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
-            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 

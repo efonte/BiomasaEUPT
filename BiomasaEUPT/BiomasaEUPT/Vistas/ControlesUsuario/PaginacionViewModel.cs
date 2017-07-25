@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
 using BiomasaEUPT.Vistas.GestionRecepciones;
@@ -65,7 +66,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 if (_paginacionComando == null)
                 {
-                    _paginacionComando = new RelayComando(
+                    _paginacionComando = new RelayCommand(
                         param => PaginacionUC((string)param),
                         param => CanPaginacionUC((string)param)
                     );

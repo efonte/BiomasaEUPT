@@ -93,12 +93,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
 
         // Asigna el valor de ClientesSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGClientes_SelectionChangedComando => new RelayCommand2<IList<object>>(param => ClientesSeleccionados = param.Cast<Cliente>().ToList());
+        public ICommand DGClientes_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ClientesSeleccionados = param.Cast<Cliente>().ToList());
 
 
         #region Editar Celda
         public ICommand DGClientes_CellEditEndingComando => _dgClientes_CellEditEndingComando ??
-            (_dgClientes_CellEditEndingComando = new RelayCommand2<DataGridCellEditEndingEventArgs>(
+            (_dgClientes_CellEditEndingComando = new RelayCommandGenerico<DataGridCellEditEndingEventArgs>(
                  param => EditarCeldaCliente(param)
             ));
 
@@ -131,7 +131,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Editar Fila
         public ICommand DGClientes_RowEditEndingComando => _dgClientes_RowEditEndingComando ??
-            (_dgClientes_RowEditEndingComando = new RelayCommand2<DataGridRowEditEndingEventArgs>(
+            (_dgClientes_RowEditEndingComando = new RelayCommandGenerico<DataGridRowEditEndingEventArgs>(
                  param => EditarFilaCliente(param)
             ));
 
@@ -167,7 +167,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Añadir Cliente
         public ICommand AnadirClienteComando => _anadirClienteComando ??
-            (_anadirClienteComando = new RelayComando(
+            (_anadirClienteComando = new RelayCommand(
                 param => AnadirCliente()
             ));
 
@@ -199,7 +199,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Borrar Cliente    
         public ICommand BorrarClienteComando => _borrarClienteComando ??
-            (_borrarClienteComando = new RelayCommand2<IList<object>>(
+            (_borrarClienteComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarCliente(),
                 param => ClienteSeleccionado != null
             ));
@@ -243,7 +243,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Modificar Cliente
         public ICommand ModificarClienteComando => _modificarClienteComando ??
-            (_modificarClienteComando = new RelayComando(
+            (_modificarClienteComando = new RelayCommand(
                 param => ModificarCliente(),
                 param => ClienteSeleccionado != null
              ));
@@ -273,7 +273,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Refrescar Clientes
         public ICommand RefrescarClientesComando => _refrescarClientesComando ??
-            (_refrescarClientesComando = new RelayComando(
+            (_refrescarClientesComando = new RelayCommand(
                 param => RefrescarClientes()
              ));
 
@@ -290,7 +290,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Modificar Observación Cliente
         public ICommand ModificarObservacionesClienteComando => _modificarObservacionesClienteComando ??
-            (_modificarObservacionesClienteComando = new RelayComando(
+            (_modificarObservacionesClienteComando = new RelayCommand(
                 param => ModificarObservacionesCliente(),
                 param => ClienteSeleccionado != null
              ));
@@ -309,7 +309,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         #region Filtro Clientes
         public ICommand FiltrarClientesComando => _filtrarClientesComando ??
-           (_filtrarClientesComando = new RelayComando(
+           (_filtrarClientesComando = new RelayCommand(
                 param => FiltrarClientes()
            ));
 

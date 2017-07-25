@@ -62,9 +62,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // public ICommand CBPaises_SelectionChangedComando => new RelayComando(param => CargarComunidades());
-        // public ICommand CBComunidades_SelectionChangedComando => new RelayComando(param => CargarProvincias());
-        // public ICommand CBProvincias_SelectionChangedComando => new RelayComando(param => CargarMunicipios());
+        // public ICommand CBPaises_SelectionChangedComando => new RelayCommand(param => CargarComunidades());
+        // public ICommand CBComunidades_SelectionChangedComando => new RelayCommand(param => CargarProvincias());
+        // public ICommand CBProvincias_SelectionChangedComando => new RelayCommand(param => CargarMunicipios());
 
         public FormDireccionViewModel()
         {

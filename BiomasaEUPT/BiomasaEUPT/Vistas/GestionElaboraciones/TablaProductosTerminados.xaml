@@ -7,7 +7,7 @@
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
@@ -16,7 +16,7 @@
         <ResourceDictionary>
             <CollectionViewSource x:Key="productosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminado}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoTerminado}, CreateList=True}"/>
-            <domain:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
+            <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 

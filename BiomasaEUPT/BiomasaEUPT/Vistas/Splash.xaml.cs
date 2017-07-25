@@ -106,7 +106,7 @@ namespace BiomasaEUPT
                         lInfoProgreso.Text = "Actualizando...";
                         pbProgreso.Value = 25;
                     });
-                    actualizador.actualizarPrograma();
+                    actualizador.ActualizarPrograma();
                     // Thread.Sleep(500);
                 }
             }

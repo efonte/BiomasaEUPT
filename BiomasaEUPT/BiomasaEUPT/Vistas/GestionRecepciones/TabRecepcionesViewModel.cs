@@ -142,7 +142,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         // Asigna el valor de RecepcionesSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGRecepciones_SelectionChangedComando => _dgRecepciones_SelectionChangedComando ??
-            (_dgRecepciones_SelectionChangedComando = new RelayCommand2<IList<object>>(
+            (_dgRecepciones_SelectionChangedComando = new RelayCommandGenerico<IList<object>>(
                 param => DGRecepciones_SelectionChanged(param)
             ));
 
@@ -153,12 +153,12 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         }
 
         // Asigna el valor de MateriasPrimasSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGMateriasPrimas_SelectionChangedComando => new RelayCommand2<IList<object>>(param => MateriasPrimasSeleccionadas = param.Cast<MateriaPrima>().ToList());
+        public ICommand DGMateriasPrimas_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => MateriasPrimasSeleccionadas = param.Cast<MateriaPrima>().ToList());
 
 
         #region Añadir Recepción
         public ICommand AnadirRecepcionComando => _anadirRecepcionComando ??
-            (_anadirRecepcionComando = new RelayComando(
+            (_anadirRecepcionComando = new RelayCommand(
                 param => AnadirRecepcion()
             ));
 
@@ -183,7 +183,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Borrar Recepción
         public ICommand BorrarRecepcionComando => _borrarRecepcionComando ??
-            (_borrarRecepcionComando = new RelayCommand2<IList<object>>(
+            (_borrarRecepcionComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarRecepcion(),
                 param => RecepcionSeleccionada != null
             ));
@@ -225,7 +225,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Modificar Recepción
         public ICommand ModificarRecepcionComando => _modificarRecepcionComando ??
-            (_modificarRecepcionComando = new RelayComando(
+            (_modificarRecepcionComando = new RelayCommand(
                 param => ModificarRecepcion(),
                 param => RecepcionSeleccionada != null
              ));
@@ -259,7 +259,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Refrescar Recepciones
         public ICommand RefrescarRecepcionesComando => _refrescarRecepcionesComando ??
-            (_refrescarRecepcionesComando = new RelayComando(
+            (_refrescarRecepcionesComando = new RelayCommand(
                 param => RefrescarRecepciones()
              ));
 
@@ -273,7 +273,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Filtro Recepciones
         public ICommand FiltrarRecepcionesComando => _filtrarRecepcionesComando ??
-           (_filtrarRecepcionesComando = new RelayComando(
+           (_filtrarRecepcionesComando = new RelayCommand(
                 param => FiltrarRecepciones()
            ));
 
@@ -301,7 +301,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Añadir Materia Prima
         public ICommand AnadirMateriaPrimaComando => _anadirMateriaPrimaComando ??
-            (_anadirMateriaPrimaComando = new RelayComando(
+            (_anadirMateriaPrimaComando = new RelayCommand(
                 param => AnadirMateriaPrima(),
                 param => CanAnadirMateriaPrima()
             ));
@@ -368,7 +368,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Borrar Materia Prima    
         public ICommand BorrarMateriaPrimaComando => _borrarMateriaPrimaComando ??
-            (_borrarMateriaPrimaComando = new RelayCommand2<IList<object>>(
+            (_borrarMateriaPrimaComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarMateriaPrima(),
                 param => MateriaPrimaSeleccionada != null
             ));
@@ -411,7 +411,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Modificar Materia Prima
         public ICommand ModificarMateriaPrimaComando => _modificarMateriaPrimaComando ??
-            (_modificarMateriaPrimaComando = new RelayComando(
+            (_modificarMateriaPrimaComando = new RelayCommand(
                 param => ModificarMateriaPrima(),
                 param => MateriaPrimaSeleccionada != null
              ));
@@ -473,7 +473,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Refrescar Materias Primas
         public ICommand RefrescarMateriasPrimasComando => _refrescarMateriasPrimasComando ??
-            (_refrescarMateriasPrimasComando = new RelayComando(
+            (_refrescarMateriasPrimasComando = new RelayCommand(
                 param => CargarMateriasPrimas(),
                 param => RecepcionSeleccionada != null
              ));
@@ -482,7 +482,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Modificar Observaciones Materia Prima
         public ICommand ModificarObservacionesMateriaPrimaComando => _modificarObservacionesMateriaPrimaComando ??
-            (_modificarObservacionesMateriaPrimaComando = new RelayComando(
+            (_modificarObservacionesMateriaPrimaComando = new RelayCommand(
                 param => ModificarObservacionesMateriaPrima(),
                 param => MateriaPrimaSeleccionada != null
              ));
@@ -500,7 +500,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         #region Filtro Materias Primas
         public ICommand FiltrarMateriasPrimasComando => _filtrarMateriasPrimasComando ??
-           (_filtrarMateriasPrimasComando = new RelayComando(
+           (_filtrarMateriasPrimasComando = new RelayCommand(
                 param => FiltrarMateriasPrimas()
            ));
 

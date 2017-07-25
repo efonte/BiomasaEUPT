@@ -74,8 +74,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
         }
 
-        //public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommand2<IList<object>>(param => TiposSeleccionados = new ObservableCollection<Object>(param.ToList())/*.Cast<object>().ToList()*/);
-        public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommand2<IList<object>>(
+        //public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => TiposSeleccionados = new ObservableCollection<Object>(param.ToList())/*.Cast<object>().ToList()*/);
+        public ICommand LBFiltroTipo_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(
             param =>
             {
                 // Asigna el valor de TiposSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -95,7 +95,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             });
 
-        public ICommand LBFiltroGrupo_SelectionChangedComando => new RelayCommand2<IList<object>>(
+        public ICommand LBFiltroGrupo_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(
             param =>
             {
                 // Asigna el valor de GruposSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -109,7 +109,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         #region AñadirTipo
         public ICommand AnadirTipoComando => _anadirTipoComando ??
-           (_anadirTipoComando = new RelayComando(
+           (_anadirTipoComando = new RelayCommand(
                param => AnadirTipo()
            ));
 
@@ -163,7 +163,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         #region AñadirGrupo
         public ICommand AnadirGrupoComando => _anadirGrupoComando ??
-           (_anadirGrupoComando = new RelayComando(
+           (_anadirGrupoComando = new RelayCommand(
                param => AnadirGrupo()
            ));
 
@@ -194,7 +194,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
 
         #region BorrarTipo
         public ICommand BorrarTipoComando => _borrarTipoComando ??
-          (_borrarTipoComando = new RelayComando(
+          (_borrarTipoComando = new RelayCommand(
               param => BorrarTipo(),
               param => TipoSeleccionado != null
           ));
@@ -261,7 +261,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 if (_modificarTipoComando == null)
                 {
-                    _modificarTipoComando = new RelayComando(
+                    _modificarTipoComando = new RelayCommand(
                         param => ModificarTipo(),
                         param => TipoSeleccionado != null
                     );
@@ -332,7 +332,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 if (_borrarGrupoComando == null)
                 {
-                    _borrarGrupoComando = new RelayComando(
+                    _borrarGrupoComando = new RelayCommand(
                         param => BorrarGrupo(),
                         param => GrupoSeleccionado != null
                     );
@@ -378,7 +378,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             {
                 if (_modificarGrupoComando == null)
                 {
-                    _modificarGrupoComando = new RelayComando(
+                    _modificarGrupoComando = new RelayCommand(
                         param => ModificarGrupo(),
                         param => GrupoSeleccionado != null
                     );

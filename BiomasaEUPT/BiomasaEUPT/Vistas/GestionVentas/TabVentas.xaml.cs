@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas.ControlesUsuario;
@@ -183,7 +184,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             {
                 if (_borrarPedidoComando == null)
                 {
-                    _borrarPedidoComando = new RelayComando(
+                    _borrarPedidoComando = new RelayCommand(
                         param => BorrarPedido(),
                         param => CanBorrarPedido()
                     );
@@ -243,7 +244,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             {
                 if (_borrarProductoEnvasadoComando == null)
                 {
-                    _borrarProductoEnvasadoComando = new RelayComando(
+                    _borrarProductoEnvasadoComando = new RelayCommand(
                         param => BorrarProductoEnvasado(),
                         param => CanBorrarProductoEnvasado()
                     );

@@ -41,21 +41,21 @@ namespace BiomasaEUPT
 
         }
 
-        public void actualizarPrograma()
+        public void ActualizarPrograma()
         {
             //Log.Information("ACTUALIZADOR: Actualizando BiomasaEUPT...");
 
             WebClient wc = new WebClient();
 
-            try
-            {
+            //try
+            //{
                 wc.DownloadFile(URL_PROGRAMA, "BiomasaEUPT.exe");
                 //Log.Information("UPDATER: Actualización completada.");
-            }
-            catch (WebException ex)
-            {
+            //}
+            //catch (WebException ex)
+            //{
                 //Log.Error("ACTUALIZADOR: Actualización fallida.", ex.Message);
-            }
+            //}
 
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace BiomasaEUPT.Domain
+namespace BiomasaEUPT.Domain.Converters
 {
     public class ValueToEqualsParameterConverter : IValueConverter
     {

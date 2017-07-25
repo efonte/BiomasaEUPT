@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
@@ -16,8 +16,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
-            <domain:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
+            <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <conv:PaisISOA2ImagenConverter x:Key="PaisISOA2ImagenConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>

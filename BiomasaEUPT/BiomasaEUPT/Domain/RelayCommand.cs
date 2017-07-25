@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,39 +8,76 @@ using System.Windows.Input;
 
 namespace BiomasaEUPT.Domain
 {
-    public class RelayCommand : ICommand
+    /* public class RelayCommand : ICommand
+     {
+         #region Fields
+
+         readonly Action<object> _execute;
+         readonly Predicate<object> _canExecute;
+
+         #endregion // Fields
+
+         #region Constructors
+
+         /// <summary>
+         /// Creates a new command that can always execute.
+         /// </summary>
+         /// <param name="execute">The execution logic.</param>
+         public RelayCommand(Action<object> execute)
+             : this(execute, null)
+         {
+
+         }
+
+         /// <summary>
+         /// Creates a new command.
+         /// </summary>
+         /// <param name="execute">The execution logic.</param>
+         /// <param name="canExecute">The execution status logic.</param>
+         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+         {
+             if (execute == null)
+             {
+                 throw new ArgumentNullException("execute");
+             }
+             _execute = execute;
+             _canExecute = canExecute;
+         }
+
+         #endregion // Constructors
+
+         #region ICommand Members
+
+         [DebuggerStepThrough]
+         public bool CanExecute(object parameters)
+         {
+             return _canExecute == null ? true : _canExecute(parameters);
+         }
+
+         public event EventHandler CanExecuteChanged
+         {
+             add { CommandManager.RequerySuggested += value; }
+             remove { CommandManager.RequerySuggested -= value; }
+         }
+
+         public void Execute(object parameters)
+         {
+             _execute(parameters);
+         }
+
+         #endregion // ICommand Members
+     }
+     */
+    public sealed class RelayCommand: RelayCommandGenerico<object>
     {
-        readonly Action<object> Execute_;
-        readonly Predicate<object> CanExecute_;
-
-        public RelayCommand(Action<object> Execute) : this(Execute, null)
+       public RelayCommand(Action<object> execute) :
+            base(execute)
         {
         }
 
-        public RelayCommand(Action<object> Execute, Predicate<object> CanExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute) :
+           base(execute,canExecute)
         {
-            if (Execute == null)
-            {
-                throw new ArgumentNullException("No hay ninguna acción que ejecutar para este comando.");
-            }
-            Execute_ = Execute;
-            CanExecute_ = CanExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return (CanExecute_ == null) ? true : CanExecute_(parameter);
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public void Execute(object parameter)
-        {
-            Execute_(parameter);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using System;
@@ -145,7 +146,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 
         #region Generar PDF
         public ICommand GenerarPDFComando => _generarPDFComando ??
-            (_generarPDFComando = new RelayComando(
+            (_generarPDFComando = new RelayCommand(
                 param => GenerarPDF()
             ));
 

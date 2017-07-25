@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Domain;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Domain;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System;

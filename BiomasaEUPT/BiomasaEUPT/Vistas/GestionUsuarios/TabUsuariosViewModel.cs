@@ -84,11 +84,11 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         }
 
         // Asigna el valor de UsuariosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGUsuarios_SelectionChangedComando => new RelayCommand2<IList<object>>(param => UsuariosSeleccionados = param.Cast<Usuario>().ToList());
+        public ICommand DGUsuarios_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => UsuariosSeleccionados = param.Cast<Usuario>().ToList());
 
         #region Editar Celda
         public ICommand DGUsuarios_CellEditEndingComando => _dgUsuarios_CellEditEndingComando ??
-            (_dgUsuarios_CellEditEndingComando = new RelayCommand2<DataGridCellEditEndingEventArgs>(
+            (_dgUsuarios_CellEditEndingComando = new RelayCommandGenerico<DataGridCellEditEndingEventArgs>(
                  param => EditarCeldaUsuario(param)
             ));
 
@@ -132,7 +132,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         #region Añadir Usuario
         public ICommand AnadirUsuarioComando => _anadirUsuarioComando ??
-            (_anadirUsuarioComando = new RelayComando(
+            (_anadirUsuarioComando = new RelayCommand(
                 param => AnadirUsuario()
             ));
 
@@ -161,7 +161,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         #region Borrar Usuario    
         public ICommand BorrarUsuarioComando => _borrarUsuarioComando ??
-            (_borrarUsuarioComando = new RelayCommand2<IList<object>>(
+            (_borrarUsuarioComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarUsuario(),
                 param => UsuarioSeleccionado != null
             ));
@@ -212,7 +212,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         #region Modificar Usuario
         public ICommand ModificarUsuarioComando => _modificarUsuarioComando ??
-            (_modificarUsuarioComando = new RelayComando(
+            (_modificarUsuarioComando = new RelayCommand(
                 param => ModificarUsuario(),
                 param => UsuarioSeleccionado != null
              ));
@@ -236,7 +236,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         #region Refrescar Usuarios
         public ICommand RefrescarUsuariosComando => _refrescarUsuariosComando ??
-            (_refrescarUsuariosComando = new RelayComando(
+            (_refrescarUsuariosComando = new RelayCommand(
                 param => RefrescarUsurios()
              ));
 
@@ -253,7 +253,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         #region Filtro Usuarios
         public ICommand FiltrarUsuariosComando => _filtrarUsuariosComando ??
-           (_filtrarUsuariosComando = new RelayComando(
+           (_filtrarUsuariosComando = new RelayCommand(
                 param => FiltrarUsuarios()
            ));
 

@@ -26,18 +26,6 @@ namespace BiomasaEUPT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ModoDebug {
-            get {
-                return ((bool)(this["ModoDebug"]));
-            }
-            set {
-                this["ModoDebug"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ActualizarPrograma {
             get {
                 return ((bool)(this["ActualizarPrograma"]));

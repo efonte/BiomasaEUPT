@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <domain:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="10">

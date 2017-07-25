@@ -89,12 +89,12 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         }
 
         // Asigna el valor de ProveedoresSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGProveedores_SelectionChangedComando => new RelayCommand2<IList<object>>(param => ProveedoresSeleccionados = param.Cast<Proveedor>().ToList());
+        public ICommand DGProveedores_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ProveedoresSeleccionados = param.Cast<Proveedor>().ToList());
 
 
         #region Editar Celda
         public ICommand DGProveedores_CellEditEndingComando => _dgProveedores_CellEditEndingComando ??
-            (_dgProveedores_CellEditEndingComando = new RelayCommand2<DataGridCellEditEndingEventArgs>(
+            (_dgProveedores_CellEditEndingComando = new RelayCommandGenerico<DataGridCellEditEndingEventArgs>(
                  param => EditarCeldaProveedor(param)
             ));
 
@@ -126,7 +126,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Editar Fila
         public ICommand DGProveedores_RowEditEndingComando => _dgProveedores_RowEditEndingComando ??
-            (_dgProveedores_RowEditEndingComando = new RelayCommand2<DataGridRowEditEndingEventArgs>(
+            (_dgProveedores_RowEditEndingComando = new RelayCommandGenerico<DataGridRowEditEndingEventArgs>(
                  param => EditarFilaProveedor(param)
             ));
 
@@ -160,7 +160,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Añadir Proveedor
         public ICommand AnadirProveedorComando => _anadirProveedorComando ??
-            (_anadirProveedorComando = new RelayComando(
+            (_anadirProveedorComando = new RelayCommand(
                 param => AnadirProveedor()
             ));
 
@@ -191,7 +191,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Borrar Proveedor
         public ICommand BorrarProveedorComando => _borrarProveedorComando ??
-            (_borrarProveedorComando = new RelayCommand2<IList<object>>(
+            (_borrarProveedorComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarProveedor(),
                 param => ProveedorSeleccionado != null
             ));
@@ -234,7 +234,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Modificar Proveedor
         public ICommand ModificarProveedorComando => _modificarProveedorComando ??
-            (_modificarProveedorComando = new RelayComando(
+            (_modificarProveedorComando = new RelayCommand(
                 param => ModificarProveedor(),
                 param => ProveedorSeleccionado != null
              ));
@@ -263,7 +263,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Refrescar Proveedores
         public ICommand RefrescarProveedoresComando => _refrescarProveedoresComando ??
-            (_refrescarProveedoresComando = new RelayComando(
+            (_refrescarProveedoresComando = new RelayCommand(
                 param => RefrescarProveedores()
              ));
 
@@ -280,7 +280,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Modificar Observaciones Proveedor
         public ICommand ModificarObservacionesProveedorComando => _modificarObservacionesProveedorComando ??
-            (_modificarObservacionesProveedorComando = new RelayComando(
+            (_modificarObservacionesProveedorComando = new RelayCommand(
                 param => ModificarObservacionesProveedor(),
                 param => ProveedorSeleccionado != null
              ));
@@ -299,7 +299,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
 
         #region Filtro Proveedores
         public ICommand FiltrarProveedoresComando => _filtrarProveedoresComando ??
-           (_filtrarProveedoresComando = new RelayComando(
+           (_filtrarProveedoresComando = new RelayCommand(
                 param => FiltrarProveedores()
            ));
 

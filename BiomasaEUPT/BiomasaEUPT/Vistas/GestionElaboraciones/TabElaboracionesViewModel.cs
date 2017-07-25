@@ -102,7 +102,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         // Asigna el valor de OrdenesElaboracionesSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGOrdenesElaboraciones_SelectionChangedComando => _dgOrdenesElaboraciones_SelectionChangedComando ??
-            (_dgOrdenesElaboraciones_SelectionChangedComando = new RelayCommand2<IList<object>>(
+            (_dgOrdenesElaboraciones_SelectionChangedComando = new RelayCommandGenerico<IList<object>>(
                 param => DGOrdenesElaboraciones_SelectionChanged(param)
             ));
 
@@ -113,7 +113,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
 
         // Asigna el valor de ProductosTerminadosSeleccinodos ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGProductosTerminados_SelectionChangedComando => new RelayCommand2<IList<object>>(param => ProductosTerminadosSeleccionados = param.Cast<ProductoTerminado>().ToList());
+        public ICommand DGProductosTerminados_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ProductosTerminadosSeleccionados = param.Cast<ProductoTerminado>().ToList());
 
     }
 }
