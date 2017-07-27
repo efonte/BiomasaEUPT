@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:BiomasaEUPT"
         mc:Ignorable="d"
         Title="AcercaDe" Height="250" Width="450" WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource MaterialDesignPaper}" WindowStyle="None"
-        ResizeMode="NoResize" AllowsTransparency="True" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+        Background="Transparent" WindowStyle="None"
+        ResizeMode="NoResize" AllowsTransparency="True"
+        TextElement.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
         Loaded="Window_Loaded">
     <Window.Resources>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
@@ -20,32 +21,44 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid Background="{DynamicResource PrimaryHueMidBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+    <Border CornerRadius="10 10 10 10"
+            BorderBrush="{DynamicResource PrimaryHueMidBrush}" BorderThickness="1"
+            Background="{DynamicResource PrimaryHueMidBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <Label x:Name="lTitulo" Grid.Row="0" Content="Acerca de..." HorizontalAlignment="Center"
+            <Label x:Name="lTitulo" Grid.Row="0" Content="Acerca de..." HorizontalAlignment="Center"
                VerticalAlignment="Top" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                FontFamily="Roboto" FontSize="22" FontWeight="Black" Margin="10"/>
 
-        <StackPanel Grid.Row="1" Margin="20 0 20 0" VerticalAlignment="Center">
-            <TextBlock Margin="0 20 0 40" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}BiomasaEUPT v{0} - Aplicación de trazabilidad">
-                        <Binding Path="Version"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-            <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© Javier Bielsa Hernández 2017</TextBlock>
-            <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© Eduardo Fonte Polo 2017</TextBlock>
-        </StackPanel>
+            <StackPanel Grid.Row="1" Margin="20 0 20 0" VerticalAlignment="Center"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <TextBlock Margin="0 10 0 30" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}BiomasaEUPT v{0} - Aplicación de trazabilidad">
+                            <Binding Path="Version"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© 2017 Eduardo Fonte Polo</TextBlock>
+                <TextBlock Margin="0 5 0 5" FontStyle="Italic" FontWeight="Medium">© 2017 Javier Bielsa Hernández</TextBlock>
+                <TextBlock Margin="0 20 0 5" FontWeight="Medium" HorizontalAlignment="Center">
+                    Gracias a Hampus Joakim Nilsson por las 
+                    <Hyperlink Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                               RequestNavigate="Hyperlink_RequestNavigate"
+                               NavigateUri="http://hjnilsson.github.io/country-flags">banderas de los países</Hyperlink>
+                    .
+                </TextBlock>
+            </StackPanel>
 
 
-        <Button x:Name="bAceptar" Grid.Row="2" Content="Aceptar" HorizontalAlignment="Center"
+            <Button x:Name="bAceptar" Grid.Row="2" Content="Aceptar" HorizontalAlignment="Center"
                 VerticalAlignment="Bottom" 
                 Click="bAceptar_Click"/>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

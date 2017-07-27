@@ -13,13 +13,7 @@
     using Z.EntityFramework.Plus;
 
     public class BiomasaEUPTContext : DbContext
-    {
-        // El contexto se ha configurado para usar una cadena de conexión 'BiomasaEUPTContext' del archivo 
-        // de configuración de la aplicación (App.config o Web.config). De forma predeterminada, 
-        // esta cadena de conexión tiene como destino la base de datos 'BiomasaEUPT.Modelos.BiomasaEUPTContext' de la instancia LocalDb. 
-        // 
-        // Si desea tener como destino una base de datos y/o un proveedor de base de datos diferente, 
-        // modifique la cadena de conexión 'BiomasaEUPTContext'  en el archivo de configuración de la aplicación.
+    {     
         public BiomasaEUPTContext()
             : base("name=BiomasaEUPTContext")
         //: base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")

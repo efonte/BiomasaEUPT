@@ -93,7 +93,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         if (context.MateriasPrimas.Any(mp => mp.Codigo == Codigo))
                         {
                             MostrarGenerarPDF = true;
-                            TextoTrazabilidad = "Trazabilidad Meteria Prima";
+                            TextoTrazabilidad = "Trazabilidad Materia Prima";
                             Arbol.Add(trazabilidad.MateriaPrima(Codigo));
                         }
 

@@ -34,13 +34,13 @@ namespace BiomasaEUPT
             var animacion = new DoubleAnimation();
             animacion.From = 1;
             animacion.To = 0;
-            animacion.Duration = new Duration(TimeSpan.FromSeconds(1));
+            animacion.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             animacion.EasingFunction = new QuadraticEase();
             animacion.Completed += (_s, _e) =>
             {
                 Close();
             };
-            this.BeginAnimation(UIElement.OpacityProperty, animacion);
+            BeginAnimation(OpacityProperty, animacion);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,9 +48,14 @@ namespace BiomasaEUPT
             var animacion = new DoubleAnimation();
             animacion.From = 0;
             animacion.To = 1;
-            animacion.Duration = new Duration(TimeSpan.FromSeconds(1));
+            animacion.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             animacion.EasingFunction = new QuadraticEase();
-            this.BeginAnimation(UIElement.OpacityProperty, animacion);
+            BeginAnimation(OpacityProperty, animacion);
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://hjnilsson.github.io/country-flags");
         }
     }
 }

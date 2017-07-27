@@ -22,9 +22,12 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class Splash : Window
     {
+        private SplashViewModel viewModel;
         public Splash()
         {
             InitializeComponent();
+            viewModel = new SplashViewModel();
+            DataContext = viewModel;
             //IniciarConfig();
             //IniciarCarpetas();
         }
@@ -82,39 +85,26 @@ namespace BiomasaEUPT
 
         private void IniciarPrograma()
         {
+            // Estado 1 - Actualización
+            //Properties.Settings.Default.ActualizarPrograma = true;
             if (Properties.Settings.Default.ActualizarPrograma)
             {
-                Actualizador actualizador = new Actualizador();
-
-                // Estado 1 - Actualización programa
-                Dispatcher.Invoke(() =>
+                var actualizador = new Actualizador()
                 {
-                    lInfoProgreso.Text = "Buscando actualizaciones...";
-                    pbProgreso.Value = 10;
-                });
-                // Thread.Sleep(500);
+                    SplashViewModel = viewModel
+                };
+
+
                 if (actualizador.ComprobarActualizacionPrograma())
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        lInfoProgreso.Text = "¡Actualización encontrada!";
-                    });
-                    // Thread.Sleep(500);
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        lInfoProgreso.Text = "Actualizando...";
-                        pbProgreso.Value = 25;
-                    });
                     actualizador.ActualizarPrograma();
-                    // Thread.Sleep(500);
                 }
             }
             // Estado 2 - Conexión BD
             Dispatcher.Invoke(() =>
             {
-                lInfoProgreso.Text = "Conectándose a la BD...";
-                pbProgreso.Value = 50;
+                viewModel.MensajeInformacion = "Conectándose a la BD...";
+                viewModel.Progreso = 50;
             });
             // Thread.Sleep(500);
         }
@@ -123,8 +113,9 @@ namespace BiomasaEUPT
         {
             Dispatcher.Invoke(() =>
             {
-                lInfoProgreso.Text = "Iniciando...";
-                pbProgreso.Value = 100;
+                viewModel.MensajeInformacion = "Iniciando...";
+                viewModel.Progreso = 100;
+
             });
 
             // Thread.Sleep(1000);

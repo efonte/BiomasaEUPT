@@ -87,9 +87,10 @@ namespace BiomasaEUPT
                 }
             }
 
-            var mensajeInformacion = new MensajeInformacion(mensaje);
-            mensajeInformacion.Width = 350;
-
+            var mensajeInformacion = new MensajeInformacion(mensaje)
+            {
+                Width = 350
+            };
             DialogHost.Show(mensajeInformacion, "RootDialog");
             e.Handled = true;
         }

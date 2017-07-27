@@ -144,7 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Clases\Comando.cs" />
     <Compile Include="Clases\CursorEspera.cs" />
     <Compile Include="Clases\InformePDF.cs" />
     <Compile Include="Clases\Trazabilidad.cs" />
@@ -358,6 +357,7 @@
     <Compile Include="Vistas\GestionTrazabilidad\TabTrazabilidad.xaml.cs">
       <DependentUpon>TabTrazabilidad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\SplashViewModel.cs" />
     <Compile Include="Vistas\ViewModelBase.cs" />
     <Page Include="Vistas\AcercaDe.xaml">
       <SubType>Designer</SubType>
