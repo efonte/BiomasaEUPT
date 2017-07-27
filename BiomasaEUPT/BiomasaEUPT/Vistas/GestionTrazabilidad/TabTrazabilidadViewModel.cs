@@ -15,7 +15,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
     public class TabTrazabilidadViewModel : ViewModelBase
     {
         public ObservableCollection<Proveedor> Arbol { get; set; } = new ObservableCollection<Proveedor>();
-        private string _codigo = "A-0100";
+        private string _codigo = "";
         public string Codigo
         {
             get { return _codigo; }

@@ -9,9 +9,9 @@
              d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded" Name="UCTabRecepciones">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="520"/>
+            <ColumnDefinition Width="400" MinWidth="320" MaxWidth="520"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*" MinWidth="300"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <local:TablaRecepciones Grid.Column="0" x:Name="ucTablaRecepciones" Margin="10 10 0 10" />

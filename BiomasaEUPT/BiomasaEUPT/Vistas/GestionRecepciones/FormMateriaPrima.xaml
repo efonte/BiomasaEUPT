@@ -9,10 +9,9 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             Height="450" Width="440" Loaded="UserControl_Loaded">
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,9 +22,14 @@
             <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
             <CollectionViewSource x:Key="sitiosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:SitioRecepcion}, CreateList=True}"/>
             <CollectionViewSource x:Key="huecosRecepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:HuecoRecepcion}, CreateList=True}"/>
+            <conv:PorcentajeConverter x:Key="PorcentajeConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Materia Prima">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Materia Prima"
+              MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor,
+                                  AncestorType={x:Type Window}},
+                                  Path=ActualHeight, UpdateSourceTrigger=PropertyChanged,
+                                  Converter={StaticResource PorcentajeConverter}, ConverterParameter=0.9}">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>

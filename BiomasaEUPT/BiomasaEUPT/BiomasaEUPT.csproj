@@ -151,6 +151,7 @@
     <Compile Include="Domain\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Domain\Converters\CadenaVaciaConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
+    <Compile Include="Domain\Converters\PorcentajeConverter.cs" />
     <Compile Include="Domain\EventCommandExecuter.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\RelayCommandGenerico.cs" />

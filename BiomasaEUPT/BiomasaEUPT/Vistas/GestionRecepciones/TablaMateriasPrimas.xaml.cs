@@ -33,7 +33,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             InitializeComponent();
             trazabilidad = new Trazabilidad();
         }
-        
+
         private void bPdfMateria_Click(object sender, RoutedEventArgs e)
         {
             /*for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -55,7 +55,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
 
-            System.Diagnostics.Process.Start(new InformePDF().ImprimirCodigoMateriaPrima(materiaPrima));
+            System.Diagnostics.Process.Start(new InformePDF().GenerarPDFCodigoMateriaPrima(materiaPrima));
             /*  var visorPDF = new VisorPDFCodigos(new InformePDF().ImprimirCodigoMateriaPrima(materiaPrima));
               var resultado = await DialogHost.Show(visorPDF, "RootDialog");*/
         }

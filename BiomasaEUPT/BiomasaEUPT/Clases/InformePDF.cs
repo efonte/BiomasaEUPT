@@ -247,7 +247,6 @@ namespace BiomasaEUPT.Clases
             return tablaProveedor;
         }
 
-
         private Table TablaMateriaPrima(MateriaPrima materiaPrima)
         {
             var tablaMP = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
@@ -507,7 +506,7 @@ namespace BiomasaEUPT.Clases
         }
 
 
-        public string ImprimirCodigoMateriaPrima(MateriaPrima materiaPrima)
+        public string GenerarPDFCodigoMateriaPrima(MateriaPrima materiaPrima)
         {
             // MemoryStream memStream = new MemoryStream();
             //  PdfDocument pdfDoc = new PdfDocument(new PdfWriter(memStream));
@@ -516,11 +515,17 @@ namespace BiomasaEUPT.Clases
             if (!Directory.Exists(ruta))
                 Directory.CreateDirectory(ruta);
 
-            var rutaPDF = ruta + "Materia Prima #" + materiaPrima.Codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+            var rutaPDF = ruta + "Código Materia Prima #" + materiaPrima.Codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
             PdfDocument pdfDoc = new PdfDocument(new PdfWriter(rutaPDF));
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Código Materia Prima #" + materiaPrima.Codigo + " " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             Document doc = new Document(pdfDoc, new PageSize(60, 140));
-            //Document doc = new Document(pdfDoc, PageSize.A6);
             doc.SetMargins(5, 5, 5, 5);
+
+            //pdfDoc.AddEventHandler(PdfDocumentEvent.START_PAGE, new OrientacionPaginaEventHandler() { Orientacion = LANDSCAPE });
 
             PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
             PdfFont regular = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
@@ -559,7 +564,6 @@ namespace BiomasaEUPT.Clases
                 // doc.Add(p3);
                 primeraPagina = false;
             }
-
 
             doc.Close();
             // return memStream;
