@@ -226,7 +226,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <materialDesign:PopupBox x:Name="pbDireccion" Grid.Row="1" Grid.Column="1"
-                                                                 StaysOpen="True" Opened="pbDireccion_Opened">
+                                                                 StaysOpen="True" Opened="pbDireccion_Opened" Closed="pbDireccion_Closed">
                                             <materialDesign:PopupBox.ToggleContent>
                                                 <TextBlock>
                                                     <TextBlock.Text>

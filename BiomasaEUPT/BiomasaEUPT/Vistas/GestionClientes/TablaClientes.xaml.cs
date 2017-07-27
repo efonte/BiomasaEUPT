@@ -49,10 +49,12 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             // de los PopupBox (para cada fila) hasta que se quiera editar.
             using (new CursorEspera())
             {
-                PopupBox popupBox = sender as PopupBox;
+                var popupBox = sender as PopupBox;
+                var tabClientesViewModel = tabClientes.DataContext as TabClientesViewModel;
                 var formDireccionViewModel = new FormDireccionViewModel()
                 {
-                    Context = (tabClientes.DataContext as TabClientesViewModel).Context
+                    Context = tabClientesViewModel.Context,
+                    PaisSeleccionado = tabClientesViewModel.ClienteSeleccionado.Municipio.Provincia.Comunidad.Pais
                 };
                 popupBox.PopupContent = new FormDireccion()
                 {
@@ -61,6 +63,13 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 formDireccionViewModel.CargarPaises();
 
             }
+        }
+
+        private void pbDireccion_Closed(object sender, RoutedEventArgs e)
+        {
+            // Al cerrar el popupBox de la dirección se guarda el municipio seleccionado
+            var popupBox = sender as PopupBox;
+            ((popupBox.PopupContent as FormDireccion).DataContext as FormDireccionViewModel).Context.SaveChanges();
         }
     }
 }

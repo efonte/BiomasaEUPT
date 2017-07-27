@@ -109,8 +109,7 @@
                 <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPaises" materialDesign:HintAssist.Hint="País"
                           SelectedItem="{Binding PaisSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           ItemsSource="{Binding Paises}"                          
-                          SelectedValuePath="Codigo"
-                          SelectedIndex="0">
+                          SelectedValuePath="Codigo">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

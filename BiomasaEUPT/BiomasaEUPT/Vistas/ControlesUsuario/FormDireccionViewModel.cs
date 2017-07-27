@@ -56,7 +56,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             }
         }
 
-        public Municipio MunicipioSeleccionado { get; set; }
+        //public Municipio MunicipioSeleccionado { get; set; }
 
         public BiomasaEUPTContext Context;
 
@@ -112,7 +112,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 {
                     Municipios = new ObservableCollection<Municipio>(Context.Municipios.Where(d => d.ProvinciaId == ProvinciaSeleccionada.ProvinciaId).ToList());
 
-                    MunicipioSeleccionado = MunicipioSeleccionado ?? Municipios.First();
+                    //MunicipioSeleccionado = MunicipioSeleccionado ?? Municipios.First();
                 }
             }
         }

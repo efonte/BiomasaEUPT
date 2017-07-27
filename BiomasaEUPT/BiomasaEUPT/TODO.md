@@ -5,4 +5,3 @@
 * Timer para refrescar la vista
 * PDF de productoTerminado, Recepciones y productoEnvasado
 * Añadir tiposMateriasPrimas (filtro) y tiposProductosTerminados (filtro)
-* Arreglar direccion clientes y proveedores
