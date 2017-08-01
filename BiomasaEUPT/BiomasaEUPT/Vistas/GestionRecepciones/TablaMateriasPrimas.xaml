@@ -16,11 +16,6 @@
              d:DesignHeight="300" d:DesignWidth="700" Name="UCTablaMateriasPrimas">
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="materiasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:MateriaPrima}, CreateList=True}"/>
-            <CollectionViewSource x:Key="tiposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoMateriaPrima}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposMateriasPrimasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoMateriaPrima}, CreateList=True}"/>
-            <CollectionViewSource x:Key="recepcionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Recepcion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="procedenciasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Procedencia}, CreateList=True}"/>
             <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -62,13 +57,13 @@
                                         CommandParameter="{Binding Path=SelectedItems, ElementName=dgMateriasPrimas, Mode=OneWay}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoColuman" Header="Tipo"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"
                                                                        Binding="{Binding TipoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo"
                                                                        Binding="{Binding TipoMateriaPrima.GrupoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
+                            <DataGridTemplateColumn x:Name="volumenUnidadesColumna" Header="Volumen/Unidades">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -159,7 +154,7 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource materiasPrimasViewSource}" Grid.Column="1" 
+                <StackPanel Grid.Column="1" 
                             HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
@@ -172,7 +167,7 @@
                         </Expander.Header>
                         <WrapPanel x:Name="wpHuecosRecepciones" Margin="15 25 0 0"
                                    Orientation="Horizontal" MinHeight="40" Width="150">
-                            <ItemsControl ItemsSource="{Binding HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl ItemsSource="{Binding MateriaPrimaSeleccionada.HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">
                                         <Style.Triggers>

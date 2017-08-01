@@ -280,7 +280,7 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private void RefrescarClientes()
         {
             // Hay que volver a instanciar un nuevo context ya que sino no se pueden refrescar los datos
-            // debido a que se guardardan en una cache
+            // debido a que se guardan en una cache
             Context.Dispose();
             Context = new BiomasaEUPTContext();
             CargarClientes();

@@ -52,7 +52,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ucTablaRecepciones.ucPaginacion.DataContext = (DataContext as TabRecepcionesViewModel).PaginacionViewModel;
+            ucTablaRecepciones.ucPaginacion.DataContext = viewModel.PaginacionViewModel;
+            ucMasOpcionesRecepciones.DataContext = viewModel.MasOpcionesRecepcionesViewModel;
         }
 
     }

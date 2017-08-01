@@ -104,6 +104,31 @@ namespace BiomasaEUPT.Modelos.Validadores
                         if (Atributo == "NumeroAlbaran" && context.Recepciones.Any(r => r.NumeroAlbaran == valor && r.NumeroAlbaran != NombreActual))
                             return new ValidationResult(false, String.Format(mensajeError, "nº albarán"));
                     }
+                    else if (Tipo == "GrupoMateriaPrima")
+                    {
+                        if (Atributo == "Nombre" && context.GruposMateriasPrimas.Any(gmp => gmp.Nombre == valor && gmp.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
+                    else if (Tipo == "TipoMateriaPrima")
+                    {
+                        if (Atributo == "Nombre" && context.TiposMateriasPrimas.Any(tmp => tmp.Nombre == valor && tmp.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
+                    else if (Tipo == "Procedencia")
+                    {
+                        if (Atributo == "Nombre" && context.Procedencias.Any(p => p.Nombre == valor && p.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
+                    else if (Tipo == "SitioRecepcion")
+                    {
+                        if (Atributo == "Nombre" && context.SitiosRecepciones.Any(sr => sr.Nombre == valor && sr.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
+                    else if (Tipo == "HuecoRecepcion")
+                    {
+                        if (Atributo == "Nombre" && context.HuecosRecepciones.Any(hr => hr.Nombre == valor && hr.Nombre != NombreActual))
+                            return new ValidationResult(false, String.Format(mensajeError, "nombre"));
+                    }
                 }
             }
 

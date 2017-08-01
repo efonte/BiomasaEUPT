@@ -30,6 +30,29 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public MateriaPrima MateriaPrimaSeleccionada { get; set; }
         public bool ObservacionesMateriasPrimasEnEdicion { get; set; }
 
+        // Más Opciones       
+        public string TextoMasOpciones { get; set; } = "Más Opciones";
+
+        private bool _masOpcionesActivado;
+        public bool MasOpcionesActivado
+        {
+            get => _masOpcionesActivado;
+            set
+            {
+                _masOpcionesActivado = value;
+                if (_masOpcionesActivado == true)
+                {
+                    MasOpcionesRecepcionesViewModel.Inicializar();
+                    TextoMasOpciones = "Volver";
+                }
+                else
+                {
+                    TextoMasOpciones = "Más Opciones";
+                    Inicializar();
+                }
+            }
+        }
+
         // Checkbox Filtro Recepciones
         public bool FechaRecepcionSeleccionada { get; set; } = true;
         public bool NumeroAlbaranRecepcionSeleccionado { get; set; } = true;
@@ -39,7 +62,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private string _textoFiltroRecepciones;
         public string TextoFiltroRecepciones
         {
-            get { return _textoFiltroRecepciones; }
+            get => _textoFiltroRecepciones;
             set
             {
                 _textoFiltroRecepciones = value.ToLower();
@@ -57,7 +80,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private string _textoFiltroMateriasPrimas;
         public string TextoFiltroMateriasPrimas
         {
-            get { return _textoFiltroMateriasPrimas; }
+            get => _textoFiltroMateriasPrimas;
             set
             {
                 _textoFiltroMateriasPrimas = value.ToLower();
@@ -79,39 +102,42 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private ICommand _filtrarMateriasPrimasComando;
         private ICommand _modificarObservacionesMateriaPrimaComando;
 
+        private ICommand _masOpcionesComando;
+
         private BiomasaEUPTContext context;
         public PaginacionViewModel PaginacionViewModel { get; set; }
-
+        public MasOpcionesRecepcionesViewModel MasOpcionesRecepcionesViewModel { get; set; }
 
         public TabRecepcionesViewModel()
         {
             PaginacionViewModel = new PaginacionViewModel();
+            MasOpcionesRecepcionesViewModel = new MasOpcionesRecepcionesViewModel();
+            MasOpcionesActivado = false;
         }
 
         public override void Inicializar()
         {
-            context = new BiomasaEUPTContext();
-            CargarRecepciones();
-            PaginacionViewModel.GetItemsTotales = () => { return context.Recepciones.Count(); };
-            PaginacionViewModel.ActualizarContadores();
-            PaginacionViewModel.CargarItems = CargarRecepciones;
+            using (new CursorEspera())
+            {
+                context = new BiomasaEUPTContext();
+                CargarRecepciones();
+                PaginacionViewModel.GetItemsTotales = () => { return context.Recepciones.Count(); };
+                PaginacionViewModel.ActualizarContadores();
+                PaginacionViewModel.CargarItems = CargarRecepciones;
+            }
         }
 
         public void CargarRecepciones(int cantidad = 10, int saltar = 0)
         {
-            using (new CursorEspera())
-            {
-                Recepciones = new ObservableCollection<Recepcion>(
-                    context.Recepciones
-                    .Include(r => r.EstadoRecepcion).Include(r => r.Proveedor)
-                    .OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList());
-                RecepcionesView = (CollectionView)CollectionViewSource.GetDefaultView(Recepciones);
-                // ClientesView.Filter = OnFilterMovie;
+            Recepciones = new ObservableCollection<Recepcion>(
+                context.Recepciones
+                .Include(r => r.EstadoRecepcion).Include(r => r.Proveedor)
+                .OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList());
+            RecepcionesView = (CollectionView)CollectionViewSource.GetDefaultView(Recepciones);
+            // ClientesView.Filter = OnFilterMovie;
 
-                // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
-                RecepcionSeleccionada = null;
-
-            }
+            // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
+            RecepcionSeleccionada = null;
         }
 
         public void CargarMateriasPrimas()
@@ -528,5 +554,28 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         }
         #endregion
+
+
+        #region Más Opciones
+        public ICommand MasOpcionesComando => _masOpcionesComando ??
+           (_masOpcionesComando = new RelayCommand(
+                param => VisibilidadMasOpciones()
+           ));
+
+        public void VisibilidadMasOpciones()
+        {
+            if (MasOpcionesActivado == true)
+            {
+                MasOpcionesActivado = false;
+            }
+            else
+            {
+                MasOpcionesActivado = true;
+            }
+        }
+        #endregion
+
+
+
     }
 }

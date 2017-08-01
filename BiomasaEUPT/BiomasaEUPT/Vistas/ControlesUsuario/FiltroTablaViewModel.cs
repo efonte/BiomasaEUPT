@@ -107,7 +107,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                 }
             });
 
-        #region AñadirTipo
+        #region Añadir Tipo
         public ICommand AnadirTipoComando => _anadirTipoComando ??
            (_anadirTipoComando = new RelayCommand(
                param => AnadirTipo()
@@ -127,7 +127,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             // Pestaña Proveedores
             else if (ViewModel is TabProveedoresViewModel)
             {
-                formTipo.vNombreUnico.Tipo = "TiposProveedor";
+                formTipo.vNombreUnico.Tipo = "TipoProveedor";
             }
 
             if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
@@ -161,7 +161,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         }
         #endregion
 
-        #region AñadirGrupo
+
+        #region Añadir Grupo
         public ICommand AnadirGrupoComando => _anadirGrupoComando ??
            (_anadirGrupoComando = new RelayCommand(
                param => AnadirGrupo()
@@ -192,7 +193,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         }
         #endregion
 
-        #region BorrarTipo
+
+        #region Borrar Tipo
         public ICommand BorrarTipoComando => _borrarTipoComando ??
           (_borrarTipoComando = new RelayCommand(
               param => BorrarTipo(),
@@ -221,7 +223,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         }
                         else
                         {
-                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso."), "RootDialog");
                         }
                     }
                 }
@@ -254,7 +256,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         #endregion
 
 
-        #region EditarTipo
+        #region Modificar Tipo
         public ICommand ModificarTipoComando
         {
             get
@@ -325,7 +327,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         }
         #endregion
 
-        #region BorrarGrupo
+
+        #region Borrar Grupo
         public ICommand BorrarGrupoComando
         {
             get
@@ -363,7 +366,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
                         }
                         else
                         {
-                            await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso"), "RootDialog");
+                            await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso."), "RootDialog");
                         }
                     }
                 }
@@ -371,7 +374,8 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         }
         #endregion
 
-        #region EditarGrupo
+
+        #region Modificar Grupo
         public ICommand ModificarGrupoComando
         {
             get

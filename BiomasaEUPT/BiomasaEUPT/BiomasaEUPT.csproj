@@ -244,6 +244,9 @@
       <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormDireccionViewModel.cs" />
+    <Compile Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml.cs">
+      <DependentUpon>FormTipoMateriaPrima.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
     <Compile Include="Vistas\GestionRecepciones\FormRecepcion.xaml.cs">
       <DependentUpon>FormRecepcion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionRecepciones\MasOpcionesRecepciones.xaml.cs">
+      <DependentUpon>MasOpcionesRecepciones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionRecepciones\MasOpcionesRecepcionesViewModel.cs" />
     <Compile Include="Vistas\GestionRecepciones\TablaMateriasPrimas.xaml.cs">
       <DependentUpon>TablaMateriasPrimas.xaml</DependentUpon>
     </Compile>
@@ -392,6 +399,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -457,6 +468,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionRecepciones\FormRecepcion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionRecepciones\MasOpcionesRecepciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
