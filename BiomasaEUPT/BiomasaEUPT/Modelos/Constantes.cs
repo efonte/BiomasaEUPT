@@ -19,6 +19,8 @@ namespace BiomasaEUPT.Modelos
         public const string REGEX_CALLE = @"^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$";
         public const string REGEX_NOMBRE_USUARIO = @"^[a-z]*$";
         public const string REGEX_CANTIDAD = @"^\d+(\.\d+)?$";
+        public const string REGEX_UNIDADES = @"^\d+$";
+        public const string REGEX_VOLUMEN = @"^\d+(\.\d+)?$";
         public const string REGEX_NUMERO_ALBARAN = @"^([A-Z]-[\dA-Z]{1,8})$";
 
 
@@ -111,5 +113,11 @@ namespace BiomasaEUPT.Modelos
 
         public const int LONG_MIN_CANTIDAD = 1;
         public const int LONG_MAX_CANTIDAD = 6;
+
+        public const int LONG_MIN_UNIDADES = 1;
+        public const int LONG_MAX_UNIDADES = 3;
+
+        public const int LONG_MIN_VOLUMEN = 1;
+        public const int LONG_MAX_VOLUMEN = 6;
     }
 }

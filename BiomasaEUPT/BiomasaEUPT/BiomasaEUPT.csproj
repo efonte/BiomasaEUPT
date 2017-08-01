@@ -244,6 +244,9 @@
       <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormDireccionViewModel.cs" />
+    <Compile Include="Vistas\ControlesUsuario\FormHueco.xaml.cs">
+      <DependentUpon>FormHueco.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml.cs">
       <DependentUpon>FormTipoMateriaPrima.xaml</DependentUpon>
     </Compile>
@@ -398,6 +401,10 @@
     <Page Include="Vistas\ControlesUsuario\FormDireccion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\FormHueco.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml">
       <Generator>MSBuild:Compile</Generator>

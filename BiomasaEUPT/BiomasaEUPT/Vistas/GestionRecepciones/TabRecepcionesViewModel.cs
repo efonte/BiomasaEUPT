@@ -30,8 +30,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public MateriaPrima MateriaPrimaSeleccionada { get; set; }
         public bool ObservacionesMateriasPrimasEnEdicion { get; set; }
 
-        // Más Opciones       
-        public string TextoMasOpciones { get; set; } = "Más Opciones";
+        /*public string TextoMasOpciones { get; set; } = "Más Opciones";
 
         private bool _masOpcionesActivado;
         public bool MasOpcionesActivado
@@ -51,7 +50,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     Inicializar();
                 }
             }
-        }
+        }*/
 
         // Checkbox Filtro Recepciones
         public bool FechaRecepcionSeleccionada { get; set; } = true;
@@ -112,7 +111,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             PaginacionViewModel = new PaginacionViewModel();
             MasOpcionesRecepcionesViewModel = new MasOpcionesRecepcionesViewModel();
-            MasOpcionesActivado = false;
+            // MasOpcionesActivado = false;
         }
 
         public override void Inicializar()
@@ -556,7 +555,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         #endregion
 
 
-        #region Más Opciones
+        /*#region Más Opciones
         public ICommand MasOpcionesComando => _masOpcionesComando ??
            (_masOpcionesComando = new RelayCommand(
                 param => VisibilidadMasOpciones()
@@ -573,9 +572,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 MasOpcionesActivado = true;
             }
         }
-        #endregion
-
-
+        #endregion*/
 
     }
 }

@@ -4,6 +4,7 @@ using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas.ControlesUsuario;
 using MaterialDesignThemes.Wpf;
+using MaterialDesignThemes.Wpf.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,5 +57,16 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             ucMasOpcionesRecepciones.DataContext = viewModel.MasOpcionesRecepcionesViewModel;
         }
 
+        private void bMasOpciones_Click(object sender, RoutedEventArgs e)
+        {
+            transicion.SelectedIndex = 1;
+            viewModel.MasOpcionesRecepcionesViewModel.Inicializar();
+        }
+
+        private void bVolver_Click(object sender, RoutedEventArgs e)
+        {
+            transicion.SelectedIndex = 0;
+            viewModel.Inicializar();
+        }
     }
 }

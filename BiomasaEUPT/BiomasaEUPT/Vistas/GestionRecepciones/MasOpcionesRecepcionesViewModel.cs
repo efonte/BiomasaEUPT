@@ -78,7 +78,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private ICommand _anadirHuecoRecepcionComando;
         private ICommand _modificarHuecoRecepcionComando;
         private ICommand _borrarHuecoRecepcionComando;
-        private ICommand _refrescarHuecoRecepcionesComando;
+        private ICommand _refrescarHuecosRecepcionesComando;
 
         private BiomasaEUPTContext context;
 
@@ -440,7 +440,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 });
 
                 context.SaveChanges();
-                CargarTiposMateriasPrimas();
+                CargarSitiosRecepciones();
             }
         }
         #endregion
@@ -465,11 +465,11 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 {
                     context.SitiosRecepciones.Remove(SitioRecepcionSeleccionado);
                     context.SaveChanges();
-                    CargarTiposMateriasPrimas();
+                    CargarSitiosRecepciones();
                 }
                 else
                 {
-                    await DialogHost.Show(new MensajeInformacion("No puede borrar el sitio recepción debido a que está en uso."), "RootDialog");
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el sitio de recepción debido a que está en uso."), "RootDialog");
                 }
             }
         }
@@ -499,6 +499,95 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 SitioRecepcionSeleccionado.Descripcion = formTipo.Descripcion;
                 context.SaveChanges();
                 CargarSitiosRecepciones();
+            }
+        }
+        #endregion
+
+
+        #region Añadir Hueco Recepción
+        public ICommand AnadirHuecoRecepcionComando => _anadirHuecoRecepcionComando ??
+           (_anadirHuecoRecepcionComando = new RelayCommand(
+               param => AnadirHuecoRecepcion()
+           ));
+
+        private async void AnadirHuecoRecepcion()
+        {
+            var formHueco = new FormHueco("Nuevo Hueco de Recepción");
+            formHueco.vNombreUnico.Atributo = "Nombre";
+            formHueco.vNombreUnico.Tipo = "HuecoRecepcion";
+
+            if ((bool)await DialogHost.Show(formHueco, "RootDialog"))
+            {
+                context.HuecosRecepciones.Add(new HuecoRecepcion()
+                {
+                    Nombre = formHueco.Nombre,
+                    UnidadesTotales = formHueco.Unidades,
+                    VolumenTotal = formHueco.Volumen,
+                    SitioId = SitioRecepcionSeleccionado.SitioRecepcionId
+                });
+
+                context.SaveChanges();
+                CargarHuecosRecepciones();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Hueco Recepción
+        public ICommand BorrarHuecoRecepcionComando => _borrarHuecoRecepcionComando ??
+          (_borrarHuecoRecepcionComando = new RelayCommand(
+              param => BorrarHuecoRecepcion(),
+              param => HuecoRecepcionSeleccionado != null
+          ));
+
+        private async void BorrarHuecoRecepcion()
+        {
+            var mensajeConf = new MensajeConfirmacion()
+            {
+                Mensaje = "¿Está seguro de que desea borrar el hueco de recepción " + HuecoRecepcionSeleccionado.Nombre + "?"
+            };
+            if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+            {
+                if (!context.HistorialHuecosRecepciones.Any(hhr => hhr.HuecoRecepcionId == HuecoRecepcionSeleccionado.HuecoRecepcionId))
+                {
+                    context.HuecosRecepciones.Remove(HuecoRecepcionSeleccionado);
+                    context.SaveChanges();
+                    CargarHuecosRecepciones();
+                }
+                else
+                {
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el hueco de recepción debido a que está en uso."), "RootDialog");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Modificar Hueco Recepción
+        public ICommand ModificarHuecoRecepcionComando => _modificarHuecoRecepcionComando ??
+          (_modificarSitioRecepcionComando = new RelayCommand(
+              param => ModificarHuecoRecepcion(),
+              param => HuecoRecepcionSeleccionado != null
+          ));
+
+        private async void ModificarHuecoRecepcion()
+        {
+            var formHueco = new FormHueco("Editar Hueco de Recepcion");
+            formHueco.vNombreUnico.Atributo = "Nombre";
+            formHueco.vNombreUnico.Tipo = "HuecoRecepcion";
+            formHueco.vNombreUnico.NombreActual = HuecoRecepcionSeleccionado.Nombre;
+
+            formHueco.Nombre = HuecoRecepcionSeleccionado.Nombre;
+            formHueco.Unidades = HuecoRecepcionSeleccionado.UnidadesTotales;
+            formHueco.Volumen = HuecoRecepcionSeleccionado.VolumenTotal;
+
+            if ((bool)await DialogHost.Show(formHueco, "RootDialog"))
+            {
+                HuecoRecepcionSeleccionado.Nombre = formHueco.Nombre;
+                HuecoRecepcionSeleccionado.UnidadesTotales = formHueco.Unidades;
+                HuecoRecepcionSeleccionado.VolumenTotal = formHueco.Volumen;
+                context.SaveChanges();
+                CargarHuecosRecepciones();
             }
         }
         #endregion
