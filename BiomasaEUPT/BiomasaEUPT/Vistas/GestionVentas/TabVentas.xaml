@@ -23,8 +23,8 @@
 
         <local:TablaPedidos Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaPedidos" Margin="10 10 0 10" />
 
-        <local:TablaProductosEnvasados Grid.Column="1" Grid.Row="0" x:Name="ucTablaProductosEnvasados" Margin="10 10 10 10" />
+        <local:TablaProductosEnvasados Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="ucTablaProductosEnvasados" Margin="10 10 10 10" />
 
-        <!--local:FormOrdenElaboracion Grid.Column="1" Grid.Row="1" Margin="10 0 10 10"/-->
+        
     </Grid>
 </UserControl>

@@ -4,27 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
-             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
-             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
-             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
-             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
+             xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600" Loaded="UserControl_Loaded">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="225"/>
-        </Grid.RowDefinitions>
+             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded" Name="UCTabElaboraciones">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
+            <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <materialDesign:Transitioner x:Name="transicion" SelectedIndex="0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" MinWidth="320" MaxWidth="520"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <local:TablaElaboraciones Grid.Column="0" Grid.RowSpan="2" x:Name="ucTablaElaboraciones" Margin="10 10 0 10" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <local:TablaProductosTerminados Grid.Column="1" Grid.Row="0" x:Name="ucTablaProductosTerminados" Margin="10 10 10 10" />
+            <local:TablaElaboraciones Grid.Column="0" Grid.Row="0" x:Name="ucTablaElaboraciones" Margin="10 10 0 10" />
 
-        <local:FormOrdenElaboracion Grid.Column="1" Grid.Row="1" Margin="10 0 10 10"/>
-    </Grid>
+            <GridSplitter Grid.Column="1" Grid.Row="0"/>
+
+            <local:TablaProductosTerminados Grid.Column="2" Grid.Row="0" x:Name="ucTablaProductosTerminados" Margin="0 10 10 10" />
+
+            <materialDesign:ColorZone Grid.ColumnSpan="3" Grid.Row="1" Mode="PrimaryMid" Margin="10 0 10 10"
+                                          Height="20" Width="150" CornerRadius="2 10 10 2" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Margin="8 0 8 0" VerticalAlignment="Center"
+                                   Typography.Capitals="SmallCaps" Text="Más Opciones"></TextBlock>
+                    <Button x:Name="bMasOpciones" Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                VerticalAlignment="Center" Click="bMasOpciones_Click">
+                        <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right"/>
+                    </Button>
+                </StackPanel>
+            </materialDesign:ColorZone>
+        </Grid>
+        <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <local:MasOpcionesElaboraciones Grid.Column="0" Grid.Row="0" x:Name="ucMasOpcionesElaboraciones"/>
+                <materialDesign:ColorZone Grid.Column="0" Grid.Row="1" Mode="PrimaryMid" Margin="10 0 10 10"
+                                              Height="20" Width="150" CornerRadius="2 10 10 2" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Margin="8 0 8 0" VerticalAlignment="Center"
+                                       Typography.Capitals="SmallCaps" Text="Volver"></TextBlock>
+                        <Button x:Name="bVolver" Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                    VerticalAlignment="Center" Click="bVolver_Click">
+                            <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right"/>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+    </materialDesign:Transitioner>
 </UserControl>

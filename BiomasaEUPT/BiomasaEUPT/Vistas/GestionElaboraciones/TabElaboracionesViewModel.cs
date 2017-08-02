@@ -81,10 +81,12 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         private BiomasaEUPTContext context;
         public PaginacionViewModel PaginacionViewModel { get; set; }
+        public MasOpcionesElaboracionesViewModel MasOpcionesElaboracionesViewModel { get; set; }
 
         public TabElaboracionesViewModel()
         {
             PaginacionViewModel = new PaginacionViewModel();
+            MasOpcionesElaboracionesViewModel = new MasOpcionesElaboracionesViewModel();
         }
 
         public override void Inicializar()

@@ -253,6 +253,9 @@
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FormTipoProductoTerminado.xaml.cs">
+      <DependentUpon>FormTipoProductoTerminado.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\ControlesUsuario\Paginacion.xaml.cs">
       <DependentUpon>Paginacion.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
       <DependentUpon>FormProductoTerminado.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionElaboraciones\FormProductoTerminadoViewModel.cs" />
+    <Compile Include="Vistas\GestionElaboraciones\MasOpcionesElaboraciones.xaml.cs">
+      <DependentUpon>MasOpcionesElaboraciones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionElaboraciones\MasOpcionesElaboracionesViewModel.cs" />
     <Compile Include="Vistas\GestionElaboraciones\TabElaboraciones.xaml.cs">
       <DependentUpon>TabElaboraciones.xaml</DependentUpon>
     </Compile>
@@ -414,6 +421,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\ControlesUsuario\FormTipoProductoTerminado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\ControlesUsuario\Paginacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -455,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionElaboraciones\FormProductoTerminado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionElaboraciones\MasOpcionesElaboraciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
