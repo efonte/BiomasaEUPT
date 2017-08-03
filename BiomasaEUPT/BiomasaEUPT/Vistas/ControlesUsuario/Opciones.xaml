@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="220" d:DesignWidth="190" Loaded="UserControl_Loaded">
+             d:DesignHeight="220" d:DesignWidth="190">
     <Grid>
         <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Opciones" >
 
             <StackPanel VerticalAlignment="Bottom">
-                <Button x:Name="bAnadir" Margin="0 10 0 0" Content="Añadir" />
-                <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar"/>
-                <Button x:Name="bEditar" Margin="0 10 0 0" Content="Modificar"/>
-                <Button x:Name="bRefrescar" Margin="0 10 0 0" Content="Refrescar" />
+                <Button x:Name="bAnadir" Margin="0 10 0 0" Content="Añadir" Command="{Binding AnadirComando}"/>
+                <Button x:Name="bBorrar" Margin="0 10 0 0" Content="Borrar" Command="{Binding BorrarComando}"/>
+                <Button x:Name="bEditar" Margin="0 10 0 0" Content="Modificar" Command="{Binding ModificarComando}"/>
+                <Button x:Name="bRefrescar" Margin="0 10 0 0" Content="Refrescar" Command="{Binding RefrescarComando}"/>
             </StackPanel>
         </GroupBox>
     </Grid>

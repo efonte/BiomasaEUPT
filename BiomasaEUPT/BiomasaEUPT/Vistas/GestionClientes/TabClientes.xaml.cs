@@ -28,23 +28,19 @@ namespace BiomasaEUPT.Vistas.GestionClientes
     /// </summary>
     public partial class TabClientes : UserControl
     {
-        //  private TabClientesViewModel viewModel;
-
         public TabClientes()
         {
             InitializeComponent();
-
-            //  var viewModelContador = new ContadorViewModel<TipoCliente>();
-            //  ucContador.DataContext = viewModelContador;
-            //  viewModel = new TabClientesViewModel() { ContadorViewModel = viewModelContador };
-            //  DataContext = viewModel;
-
-            //  ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void bFiltroGrupos_Click(object sender, RoutedEventArgs e)
         {
-            // CargarClientes();
+            transicion.SelectedIndex = 1;
+        }
+
+        private void bFiltroTipos_Click(object sender, RoutedEventArgs e)
+        {
+            transicion.SelectedIndex = 0;
         }
     }
 }

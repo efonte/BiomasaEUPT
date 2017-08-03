@@ -22,17 +22,9 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
     /// </summary>
     public partial class Opciones : UserControl
     {
-        // private BiomasaEUPTEntidades context;
         public Opciones()
         {
             InitializeComponent();
-            // DataContext = this;
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            // context = new BiomasaEUPTEntidades();
-        }
-
     }
 }

@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>
@@ -22,9 +23,54 @@
                                        Height="200" VerticalAlignment="Top"
                                        DataContext="{Binding ContadorViewModel}" />
 
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
+            <!--controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
                                           Height="250" VerticalAlignment="Bottom"
-                                          DataContext="{Binding FiltroTablaViewModel}" />
+                                          DataContext="{Binding FiltroTablaViejoViewModel}" /-->
+
+            <materialDesign:Transitioner Grid.Row="1" x:Name="transicion" SelectedIndex="0"
+                                         Margin="0" Padding="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <controlesUsuario:Filtro Grid.Row="0" x:Name="ucFiltroTipoTabla"
+                                             Height="220" Width="180" VerticalAlignment="Bottom"
+                                             DataContext="{Binding FiltroTiposViewModel}" Margin="10 10 0 0"/>
+                    <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid" Margin="10 10 0 10"
+                                              Height="20" CornerRadius="2 10 10 2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">GRUPOS</TextBlock>
+                            <Button x:Name="bFiltroGrupos" Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                    VerticalAlignment="Center" Click="bFiltroGrupos_Click">
+                                <materialDesign:PackIcon Kind="ArrowRight" HorizontalAlignment="Right"/>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:ColorZone>
+                </Grid>
+                <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <controlesUsuario:Filtro Grid.Row="0" x:Name="ucFiltroGrupoTabla"
+                                                 Height="220" VerticalAlignment="Bottom"
+                                                 DataContext="{Binding FiltroGruposViewModel}" Margin="10 10 0 0"/>
+                        <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid" Margin="10 10 0 10"
+                                              Height="20" CornerRadius="10 2 2 10">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Button x:Name="bFiltroTipos" Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                    VerticalAlignment="Center" Click="bFiltroTipos_Click">
+                                    <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Left"/>
+                                </Button>
+                                <TextBlock Margin="8 0 8 0" VerticalAlignment="Center">TIPOS</TextBlock>
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                    </Grid>
+                </materialDesign:TransitionerSlide>
+            </materialDesign:Transitioner>
         </Grid>
 
         <local:TablaClientes Grid.Column="1" x:Name="ucTablaClientes" Margin="10 10 10 10" />

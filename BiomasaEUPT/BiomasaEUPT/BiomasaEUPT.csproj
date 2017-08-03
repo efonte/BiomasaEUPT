@@ -236,10 +236,14 @@
       <DependentUpon>Contador.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\ContadorViewModel.cs" />
-    <Compile Include="Vistas\ControlesUsuario\FiltroTabla.xaml.cs">
-      <DependentUpon>FiltroTabla.xaml</DependentUpon>
+    <Compile Include="Vistas\ControlesUsuario\FiltroTablaViejo.xaml.cs">
+      <DependentUpon>FiltroTablaViejo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\ControlesUsuario\FiltroTablaViewModel.cs" />
+    <Compile Include="Vistas\ControlesUsuario\FiltroTablaViejoViewModel.cs" />
+    <Compile Include="Vistas\ControlesUsuario\Filtro.xaml.cs">
+      <DependentUpon>Filtro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FiltroViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\FormDireccion.xaml.cs">
       <DependentUpon>FormDireccion.xaml</DependentUpon>
     </Compile>
@@ -256,6 +260,7 @@
     <Compile Include="Vistas\ControlesUsuario\FormTipoProductoTerminado.xaml.cs">
       <DependentUpon>FormTipoProductoTerminado.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\ControlesUsuario\OpcionesViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\Paginacion.xaml.cs">
       <DependentUpon>Paginacion.xaml</DependentUpon>
     </Compile>
@@ -402,7 +407,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\ControlesUsuario\FiltroTabla.xaml">
+    <Page Include="Vistas\ControlesUsuario\FiltroTablaViejo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\Filtro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>
@@ -22,10 +22,13 @@
                                        Height="200" VerticalAlignment="Top"
                                        DataContext="{Binding ContadorViewModel}" />
 
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
+            <!--controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
                                           Height="250" VerticalAlignment="Bottom"
                                           MostrarGrupo="False"
-                                          DataContext="{Binding FiltroTablaViewModel}" />
+                                          DataContext="{Binding FiltroTablaViejoViewModel}" /-->
+            <controlesUsuario:Filtro Grid.Row="1" x:Name="ucFiltroTabla" Margin="10 10 0 10"
+                                     Height="250" VerticalAlignment="Bottom"
+                                     DataContext="{Binding FiltroTiposViewModel}" />
         </Grid>
 
         <local:TablaProveedores Grid.Column="1" x:Name="ucTablaProveedores" Margin="10 10 10 10" />

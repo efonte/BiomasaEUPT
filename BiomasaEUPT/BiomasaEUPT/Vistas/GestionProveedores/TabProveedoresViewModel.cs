@@ -24,8 +24,8 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         public ObservableCollection<TipoProveedor> TiposProveedores { get; set; }
         public IList<Proveedor> ProveedoresSeleccionados { get; set; }
         public Proveedor ProveedorSeleccionado { get; set; }
-        public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
         public bool ObservacionesEnEdicion { get; set; }
+        public FiltroViewModel<TipoProveedor> FiltroTiposViewModel { get; set; }
         public ContadorViewModel<TipoProveedor> ContadorViewModel { get; set; }
 
         // Checkbox Filtro Proveedores
@@ -56,16 +56,22 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         private ICommand _dgProveedores_RowEditEndingComando;
         private ICommand _modificarObservacionesProveedorComando;
 
+        private ICommand _anadirTipoComando;
+        private ICommand _modificarTipoComando;
+        private ICommand _borrarTipoComando;
+
         public BiomasaEUPTContext Context { get; set; }
 
 
         public TabProveedoresViewModel()
         {
-            FiltroTablaViewModel = new FiltroTablaViewModel()
+            FiltroTiposViewModel = new FiltroViewModel<TipoProveedor>()
             {
-                ViewModel = this
+                FiltrarItems = FiltrarProveedores,
+                AnadirComando = AnadirTipoComando,
+                ModificarComando = ModificarTipoComando,
+                BorrarComando = BorrarTipoComando
             };
-
             ContadorViewModel = new ContadorViewModel<TipoProveedor>();
         }
 
@@ -73,7 +79,6 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
         {
             Context = new BiomasaEUPTContext();
             CargarProveedores();
-            FiltroTablaViewModel.CargarFiltro();
         }
 
         public void CargarProveedores()
@@ -84,6 +89,7 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 ProveedoresView = (CollectionView)CollectionViewSource.GetDefaultView(Proveedores);
                 TiposProveedores = new ObservableCollection<TipoProveedor>(Context.TiposProveedores.ToList());
                 ContadorViewModel.Tipos = TiposProveedores;
+                FiltroTiposViewModel.Items = TiposProveedores;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid proveedores
                 ProveedorSeleccionado = null;
@@ -331,13 +337,13 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 || (MunicipioSeleccionado == true ? municipio.Contains(TextoFiltroProveedores) : false);
 
             // Filtra Tipos Proveedores
-            if (FiltroTablaViewModel.TiposSeleccionados == null || FiltroTablaViewModel.TiposSeleccionados.Count == 0)
+            if (FiltroTiposViewModel.ItemsSeleccionados == null || FiltroTiposViewModel.ItemsSeleccionados.Count == 0)
             {
                 itemAceptado = condicion;
             }
             else
             {
-                foreach (TipoProveedor tipoproveedor in FiltroTablaViewModel.TiposSeleccionados)
+                foreach (TipoProveedor tipoproveedor in FiltroTiposViewModel.ItemsSeleccionados)
                 {
                     if (tipoproveedor.Nombre.ToLower().Equals(tipo))
                     {
@@ -349,6 +355,97 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
                 }
             }
             return itemAceptado;
+        }
+        #endregion
+
+
+        #region Añadir Tipo
+        public ICommand AnadirTipoComando => _anadirTipoComando ??
+           (_anadirTipoComando = new RelayCommand(
+               param => AnadirTipo()
+           ));
+
+        private async void AnadirTipo()
+        {
+            var formTipo = new FormTipo();
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoProveedor";
+
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                Context.TiposProveedores.Add(new TipoProveedor()
+                {
+                    Nombre = formTipo.Nombre,
+                    Descripcion = formTipo.Descripcion
+                });
+                Context.SaveChanges();
+                CargarProveedores();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Tipo
+        public ICommand BorrarTipoComando => _borrarTipoComando ??
+          (_borrarTipoComando = new RelayCommand(
+              param => BorrarTipo(),
+              param => FiltroTiposViewModel.ItemSeleccionado != null
+          ));
+
+        private async void BorrarTipo()
+        {
+            var mensajeConf = new MensajeConfirmacion()
+            {
+                Mensaje = "¿Está seguro de que desea borrar el tipo " + FiltroTiposViewModel.ItemSeleccionado.Nombre + "?"
+            };
+            if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+            {
+                if (!Context.Proveedores.Any(t => t.TipoId == FiltroTiposViewModel.ItemSeleccionado.TipoProveedorId))
+                {
+                    Context.TiposProveedores.Remove(FiltroTiposViewModel.ItemSeleccionado);
+                    Context.SaveChanges();
+                    CargarProveedores();
+                }
+                else
+                {
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso"), "RootDialog");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Modificar Tipo
+        public ICommand ModificarTipoComando
+        {
+            get
+            {
+                if (_modificarTipoComando == null)
+                {
+                    _modificarTipoComando = new RelayCommand(
+                        param => ModificarTipo(),
+                        param => FiltroTiposViewModel.ItemSeleccionado != null
+                    );
+                }
+                return _modificarTipoComando;
+            }
+        }
+
+        private async void ModificarTipo()
+        {
+            var formTipo = new FormTipo("Editar Tipo");
+            formTipo.Nombre = FiltroTiposViewModel.ItemSeleccionado.Nombre;
+            formTipo.Descripcion = FiltroTiposViewModel.ItemSeleccionado.Descripcion;
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoProveedor";
+            formTipo.vNombreUnico.NombreActual = FiltroTiposViewModel.ItemSeleccionado.Nombre;
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                FiltroTiposViewModel.ItemSeleccionado.Nombre = formTipo.Nombre;
+                FiltroTiposViewModel.ItemSeleccionado.Descripcion = formTipo.Descripcion;
+                Context.SaveChanges();
+                CargarProveedores();
+            }
         }
         #endregion
     }

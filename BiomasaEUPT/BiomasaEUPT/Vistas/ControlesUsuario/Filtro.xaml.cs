@@ -1,13 +1,5 @@
-﻿using BiomasaEUPT.Clases;
-using BiomasaEUPT.Modelos;
-using BiomasaEUPT.Modelos.Tablas;
-using BiomasaEUPT.Vistas.ControlesUsuario;
-using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionProveedores
+namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
     /// <summary>
-    /// Lógica de interacción para TabProveedores.xaml
+    /// Lógica de interacción para Filtro.xaml
     /// </summary>
-    public partial class TabProveedores : UserControl
+    public partial class Filtro : UserControl
     {
-        public TabProveedores()
+        public Filtro()
         {
             InitializeComponent();
         }

@@ -25,8 +25,9 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         public ObservableCollection<GrupoCliente> GruposClientes { get; set; }
         public IList<Cliente> ClientesSeleccionados { get; set; }
         public Cliente ClienteSeleccionado { get; set; }
-        public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
         public bool ObservacionesEnEdicion { get; set; }
+        public FiltroViewModel<TipoCliente> FiltroTiposViewModel { get; set; }
+        public FiltroViewModel<GrupoCliente> FiltroGruposViewModel { get; set; }
         public ContadorViewModel<TipoCliente> ContadorViewModel { get; set; }
 
         // Checkbox Filtro Clientes
@@ -57,16 +58,33 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         private ICommand _dgClientes_RowEditEndingComando;
         private ICommand _modificarObservacionesClienteComando;
 
+        private ICommand _anadirTipoComando;
+        private ICommand _modificarTipoComando;
+        private ICommand _borrarTipoComando;
+        private ICommand _anadirGrupoComando;
+        private ICommand _modificarGrupoComando;
+        private ICommand _borrarGrupoComando;
+
         public BiomasaEUPTContext Context { get; set; }
 
 
         public TabClientesViewModel()
         {
-            FiltroTablaViewModel = new FiltroTablaViewModel()
+            FiltroTiposViewModel = new FiltroViewModel<TipoCliente>()
             {
-                ViewModel = this
+                FiltrarItems = FiltrarClientes,
+                AnadirComando = AnadirTipoComando,
+                ModificarComando = ModificarTipoComando,
+                BorrarComando = BorrarTipoComando
             };
-
+            FiltroGruposViewModel = new FiltroViewModel<GrupoCliente>()
+            {
+                Titulo = "Filtro Grupo",
+                FiltrarItems = FiltrarClientes,
+                AnadirComando = AnadirGrupoComando,
+                ModificarComando = ModificarGrupoComando,
+                BorrarComando = BorrarGrupoComando
+            };
             ContadorViewModel = new ContadorViewModel<TipoCliente>();
         }
 
@@ -75,7 +93,6 @@ namespace BiomasaEUPT.Vistas.GestionClientes
         {
             Context = new BiomasaEUPTContext();
             CargarClientes();
-            FiltroTablaViewModel.CargarFiltro();
         }
 
         public void CargarClientes()
@@ -87,6 +104,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 TiposClientes = new ObservableCollection<TipoCliente>(Context.TiposClientes.ToList());
                 GruposClientes = new ObservableCollection<GrupoCliente>(Context.GruposClientes.ToList());
                 ContadorViewModel.Tipos = TiposClientes;
+                FiltroTiposViewModel.Items = TiposClientes;
+                FiltroGruposViewModel.Items = GruposClientes;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid clientes 
                 ClienteSeleccionado = null;
@@ -342,13 +361,13 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 || (MunicipioSeleccionado == true ? municipio.Contains(TextoFiltroClientes) : false);
 
             // Filtra Tipos Clientes
-            if (FiltroTablaViewModel.TiposSeleccionados == null || FiltroTablaViewModel.TiposSeleccionados.Count == 0)
+            if (FiltroTiposViewModel.ItemsSeleccionados == null || FiltroTiposViewModel.ItemsSeleccionados.Count == 0)
             {
                 itemAceptado = condicion;
             }
             else
             {
-                foreach (TipoCliente tipoCliente in FiltroTablaViewModel.TiposSeleccionados)
+                foreach (TipoCliente tipoCliente in FiltroTiposViewModel.ItemsSeleccionados)
                 {
                     if (tipoCliente.Nombre.ToLower().Equals(tipo))
                     {
@@ -364,13 +383,13 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             if (itemAceptado)
             {
                 // Filtra Grupos Clientes
-                if (FiltroTablaViewModel.GruposSeleccionados == null || FiltroTablaViewModel.GruposSeleccionados.Count == 0)
+                if (FiltroGruposViewModel.ItemsSeleccionados == null || FiltroGruposViewModel.ItemsSeleccionados.Count == 0)
                 {
                     itemAceptado = condicion;
                 }
                 else
                 {
-                    foreach (GrupoCliente grupoCliente in FiltroTablaViewModel.GruposSeleccionados)
+                    foreach (GrupoCliente grupoCliente in FiltroGruposViewModel.ItemsSeleccionados)
                     {
                         if (grupoCliente.Nombre.ToLower().Equals(grupo))
                         {
@@ -385,5 +404,201 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             return itemAceptado;
         }
         #endregion
+
+
+
+        #region Añadir Tipo
+        public ICommand AnadirTipoComando => _anadirTipoComando ??
+           (_anadirTipoComando = new RelayCommand(
+               param => AnadirTipo()
+           ));
+
+        private async void AnadirTipo()
+        {
+            var formTipo = new FormTipo();
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoCliente";
+
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                Context.TiposClientes.Add(new TipoCliente()
+                {
+                    Nombre = formTipo.Nombre,
+                    Descripcion = formTipo.Descripcion
+                });
+                Context.SaveChanges();
+                CargarClientes();
+            }
+        }
+        #endregion
+
+
+        #region Añadir Grupo
+        public ICommand AnadirGrupoComando => _anadirGrupoComando ??
+           (_anadirGrupoComando = new RelayCommand(
+               param => AnadirGrupo()
+           ));
+
+        private async void AnadirGrupo()
+        {
+            var formGrupo = new FormTipo("Nuevo Grupo");
+            formGrupo.vNombreUnico.Atributo = "Nombre";
+            formGrupo.vNombreUnico.Tipo = "GrupoCliente";
+
+            if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
+            {
+                Context.GruposClientes.Add(new GrupoCliente()
+                {
+                    Nombre = formGrupo.Nombre,
+                    Descripcion = formGrupo.Descripcion
+                });
+                Context.SaveChanges();
+                CargarClientes();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Tipo
+        public ICommand BorrarTipoComando => _borrarTipoComando ??
+          (_borrarTipoComando = new RelayCommand(
+              param => BorrarTipo(),
+              param => FiltroTiposViewModel.ItemSeleccionado != null
+          ));
+
+        private async void BorrarTipo()
+        {
+            var mensajeConf = new MensajeConfirmacion()
+            {
+                Mensaje = "¿Está seguro de que desea borrar el tipo " + FiltroTiposViewModel.ItemSeleccionado.Nombre + "?"
+            };
+            if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+            {
+                if (!Context.Clientes.Any(t => t.TipoId == FiltroTiposViewModel.ItemSeleccionado.TipoClienteId))
+                {
+                    Context.TiposClientes.Remove(FiltroTiposViewModel.ItemSeleccionado);
+                    Context.SaveChanges();
+                    CargarClientes();
+                }
+                else
+                {
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo debido a que está en uso."), "RootDialog");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Modificar Tipo
+        public ICommand ModificarTipoComando
+        {
+            get
+            {
+                if (_modificarTipoComando == null)
+                {
+                    _modificarTipoComando = new RelayCommand(
+                        param => ModificarTipo(),
+                        param => FiltroTiposViewModel.ItemSeleccionado != null
+                    );
+                }
+                return _modificarTipoComando;
+            }
+        }
+
+        private async void ModificarTipo()
+        {
+            var formTipo = new FormTipo("Editar Tipo");
+            formTipo.Nombre = FiltroTiposViewModel.ItemSeleccionado.Nombre;
+            formTipo.Descripcion = FiltroTiposViewModel.ItemSeleccionado.Descripcion;
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoCliente";
+            formTipo.vNombreUnico.NombreActual = FiltroTiposViewModel.ItemSeleccionado.Nombre;
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                FiltroTiposViewModel.ItemSeleccionado.Nombre = formTipo.Nombre;
+                FiltroTiposViewModel.ItemSeleccionado.Descripcion = formTipo.Descripcion;
+                Context.SaveChanges();
+                CargarClientes();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Grupo
+        public ICommand BorrarGrupoComando
+        {
+            get
+            {
+                if (_borrarGrupoComando == null)
+                {
+                    _borrarGrupoComando = new RelayCommand(
+                        param => BorrarGrupo(),
+                        param => FiltroGruposViewModel.ItemSeleccionado != null
+                    );
+                }
+                return _borrarGrupoComando;
+            }
+        }
+
+        private async void BorrarGrupo()
+        {
+            var mensajeConf = new MensajeConfirmacion()
+            {
+                Mensaje = "¿Está seguro de que desea borrar el grupo " + FiltroGruposViewModel.ItemSeleccionado.Nombre + "?"
+            };
+            if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+            {
+                if (!Context.GruposClientes.Any(gc => gc.GrupoClienteId == FiltroGruposViewModel.ItemSeleccionado.GrupoClienteId))
+                {
+                    Context.GruposClientes.Remove(FiltroGruposViewModel.ItemSeleccionado);
+                    Context.SaveChanges();
+                    CargarClientes();
+                }
+                else
+                {
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el grupo debido a que está en uso."), "RootDialog");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Modificar Grupo
+        public ICommand ModificarGrupoComando
+        {
+            get
+            {
+                if (_modificarGrupoComando == null)
+                {
+                    _modificarGrupoComando = new RelayCommand(
+                        param => ModificarGrupo(),
+                        param => FiltroGruposViewModel.ItemSeleccionado != null
+                    );
+                }
+                return _modificarGrupoComando;
+            }
+        }
+
+        private async void ModificarGrupo()
+        {
+            var formGrupo = new FormTipo("Editar Grupo");
+            formGrupo.Nombre = FiltroGruposViewModel.ItemSeleccionado.Nombre;
+            formGrupo.Descripcion = FiltroGruposViewModel.ItemSeleccionado.Descripcion;
+            formGrupo.vNombreUnico.Atributo = "Nombre";
+            formGrupo.vNombreUnico.Tipo = "GrupoCliente";
+            formGrupo.vNombreUnico.NombreActual = FiltroGruposViewModel.ItemSeleccionado.Nombre;
+            if ((bool)await DialogHost.Show(formGrupo, "RootDialog"))
+            {
+                FiltroGruposViewModel.ItemSeleccionado.Nombre = formGrupo.Nombre;
+                FiltroGruposViewModel.ItemSeleccionado.Descripcion = formGrupo.Descripcion;
+
+                FiltroGruposViewModel.ItemSeleccionado.Nombre = formGrupo.Nombre;
+                FiltroGruposViewModel.ItemSeleccionado.Descripcion = formGrupo.Descripcion;
+                Context.SaveChanges();
+                CargarClientes();
+            }
+        }
+        #endregion
+
     }
 }

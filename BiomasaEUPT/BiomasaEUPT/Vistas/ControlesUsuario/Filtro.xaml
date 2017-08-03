@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.ControlesUsuario.Filtro"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d"
+             d:DesignHeight="250" d:DesignWidth="200">
+    <GroupBox Grid.Row="0" Style="{DynamicResource MaterialDesignCardGroupBox}">
+        <GroupBox.Header>
+            <materialDesign:ColorZone Mode="PrimaryMid">
+                <DockPanel>
+                    <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
+                                             StaysOpen="False" Width="25"
+                                             Visibility="{Binding MostrarMenu, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel>
+                            <Button x:Name="bAnadir" Content="Añadir" Command="{Binding AnadirComando}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            <Button x:Name="bEditar" Content="Editar" Command="{Binding ModificarComando}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            <Button x:Name="bBorrar" Content="Borrar" Command="{Binding BorrarComando}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"/>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                    <TextBlock Text="{Binding Titulo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Roboto" HorizontalAlignment="Center"
+                               Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                               VerticalAlignment="Center" FontWeight="Black"/>
+                </DockPanel>
+            </materialDesign:ColorZone>
+        </GroupBox.Header>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ListBox x:Name="lbFiltro" Margin="0 0 0 0" SelectedIndex="-1" SelectionMode="Multiple"
+                     ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     SelectedItem="{Binding ItemSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding LBFiltro_SelectionChangedComando}"
+                                               CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
+                                                             Opacity="0" RunHint="Loaded">
+                            <materialDesign:TransitioningContent.OpeningEffects>
+                                <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                                <materialDesign:TransitionEffect Kind="FadeIn" />
+                            </materialDesign:TransitioningContent.OpeningEffects>
+                            <StackPanel Margin="8 0 0 0">
+                                <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                            </StackPanel>
+                        </materialDesign:TransitioningContent>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

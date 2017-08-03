@@ -26,8 +26,9 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public ObservableCollection<TipoUsuario> TiposUsuarios { get; set; }
         public IList<Usuario> UsuariosSeleccionados { get; set; }
         public Usuario UsuarioSeleccionado { get; set; }
-        public FiltroTablaViewModel FiltroTablaViewModel { get; set; }
+        public FiltroViewModel<TipoUsuario> FiltroTiposViewModel { get; set; }
         public ContadorViewModel<TipoUsuario> ContadorViewModel { get; set; }
+        public OpcionesViewModel OpcionesViewModel { get; set; }
 
         // Checkbox Filtro Usuarios
         public bool NombreSeleccionado { get; set; } = true;
@@ -56,19 +57,24 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         public TabUsuariosViewModel()
         {
-            FiltroTablaViewModel = new FiltroTablaViewModel()
+            FiltroTiposViewModel = new FiltroViewModel<TipoUsuario>()
             {
-                ViewModel = this
+                FiltrarItems = FiltrarUsuarios
             };
-
             ContadorViewModel = new ContadorViewModel<TipoUsuario>();
+            OpcionesViewModel = new OpcionesViewModel()
+            {
+                AnadirComando = AnadirUsuarioComando,
+                BorrarComando = BorrarUsuarioComando,
+                ModificarComando = ModificarUsuarioComando,
+                RefrescarComando = RefrescarUsuariosComando
+            };
         }
 
         public override void Inicializar()
         {
             context = new BiomasaEUPTContext();
             CargarUsuarios();
-            FiltroTablaViewModel.CargarFiltro();
         }
 
         public void CargarUsuarios()
@@ -79,6 +85,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
                 TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
                 ContadorViewModel.Tipos = TiposUsuarios;
+                FiltroTiposViewModel.Items = TiposUsuarios;
 
                 // Por defecto no está seleccionada ninguna fila del datagrid usuarios
                 UsuarioSeleccionado = null;
@@ -278,13 +285,13 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 || (BaneadoSeleccionado == true ? usuario.Baneado == true : false);
 
             // Filtra todos
-            if (FiltroTablaViewModel.TiposSeleccionados == null || FiltroTablaViewModel.TiposSeleccionados.Count == 0)
+            if (FiltroTiposViewModel.ItemsSeleccionados == null || FiltroTiposViewModel.ItemsSeleccionados.Count == 0)
             {
                 itemAceptado = condicion;
             }
             else
             {
-                foreach (TipoUsuario tipoUsuario in FiltroTablaViewModel.TiposSeleccionados)
+                foreach (TipoUsuario tipoUsuario in FiltroTiposViewModel.ItemsSeleccionados)
                 {
                     if (tipoUsuario.Nombre.ToLower().Equals(tipo))
                     {

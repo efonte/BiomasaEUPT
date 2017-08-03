@@ -9,6 +9,7 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
-    public class FiltroTablaViewModel : ViewModelBase
+    public class FiltroTablaViejoViewModel : INotifyPropertyChanged
     {
         public CollectionView TiposView { get; private set; }
         public object TipoSeleccionado { get; set; }
@@ -36,16 +37,12 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
         private ICommand _modificarGrupoComando;
         private ICommand _borrarGrupoComando;
 
-        public FiltroTablaViewModel()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public FiltroTablaViejoViewModel()
         {
 
         }
-
-        public override void Inicializar()
-        {
-
-        }
-
 
         public void CargarFiltro()
         {

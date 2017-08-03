@@ -27,9 +27,9 @@ using System.Data.Entity;
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
     /// <summary>
-    /// Lógica de interacción para FiltroTabla.xaml
+    /// Lógica de interacción para FiltroTablaViejo.xaml
     /// </summary>
-    public partial class FiltroTabla : UserControl
+    public partial class FiltroTablaViejo : UserControl
     {
         public bool MostrarGrupo { get; set; } = true;
         public bool MostrarMenuGrupo { get; set; } = true;
@@ -50,7 +50,7 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
          }*/
 
 
-        public FiltroTabla()
+        public FiltroTablaViejo()
         {
             InitializeComponent();
         }
