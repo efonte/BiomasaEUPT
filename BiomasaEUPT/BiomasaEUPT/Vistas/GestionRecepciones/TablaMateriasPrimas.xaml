@@ -55,6 +55,8 @@
                             <KeyBinding Gesture="Delete" Key="Delete"
                                         Command="{Binding BorrarMateriaPrimaComando}"
                                         CommandParameter="{Binding Path=SelectedItems, ElementName=dgMateriasPrimas, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarMateriaPrimaComando}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"

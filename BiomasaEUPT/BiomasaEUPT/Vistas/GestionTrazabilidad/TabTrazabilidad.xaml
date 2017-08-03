@@ -8,7 +8,7 @@
              xmlns:tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

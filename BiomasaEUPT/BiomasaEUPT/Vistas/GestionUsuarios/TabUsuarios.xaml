@@ -19,14 +19,20 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0" Height="200" VerticalAlignment="Top"/>
-            <!--local:TiposUsuarios Grid.Row="1" x:Name="ucTiposUsuarios" Margin="10 10 0 10" Height="250" VerticalAlignment="Bottom"/-->
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5" Height="250" VerticalAlignment="Bottom" MostrarMenuTipo="False" MostrarGrupo="False"/>
+            <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0"
+                                       Height="200" VerticalAlignment="Top"
+                                       DataContext="{Binding ContadorViewModel}" />
+            
+            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
+                                          Height="250" VerticalAlignment="Bottom"
+                                          MostrarMenuTipo="False" MostrarGrupo="False"
+                                          DataContext="{Binding FiltroTablaViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </Grid>
 
         <local:TablaUsuarios Grid.Column="1" x:Name="ucTablaUsuarios" Margin="10 10 0 10" />
 
-        <controlesUsuario:Opciones Grid.Row="0" Grid.Column="2" x:Name="ucOpciones" Margin="10 10 10 0" Height="220" VerticalAlignment="Top"/>
+        <controlesUsuario:Opciones Grid.Row="0" Grid.Column="2" x:Name="ucOpciones"
+                                   Margin="10 10 10 0" Height="220" VerticalAlignment="Top" />
 
     </Grid>
 </UserControl>

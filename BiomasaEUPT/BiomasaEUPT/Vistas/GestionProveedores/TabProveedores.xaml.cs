@@ -28,18 +28,18 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
     /// </summary>
     public partial class TabProveedores : UserControl
     {
-        private TabProveedoresViewModel viewModel;
+        // private TabProveedoresViewModel viewModel;
 
         public TabProveedores()
         {
             InitializeComponent();
 
-            var viewModelContador = new ContadorViewModel<TipoProveedor>();
+            /*var viewModelContador = new ContadorViewModel<TipoProveedor>();
             ucContador.DataContext = viewModelContador;
             viewModel = new TabProveedoresViewModel() { ContadorViewModel = viewModelContador };
             DataContext = viewModel;
 
-            ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
+            ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;*/
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -363,6 +363,7 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\LoginViewModel.cs" />
+    <Compile Include="Vistas\MainWindowViewModel.cs" />
     <Compile Include="Vistas\MensajeConfirmacion.xaml.cs">
       <DependentUpon>MensajeConfirmacion.xaml</DependentUpon>
     </Compile>

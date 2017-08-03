@@ -32,24 +32,23 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
     /// </summary>
     public partial class TabUsuarios : UserControl
     {
-        private TabUsuariosViewModel viewModel;
-
+        //private TabUsuariosViewModel viewModel;
 
         public TabUsuarios()
         {
             InitializeComponent();
 
-            var viewModelContador = new ContadorViewModel<TipoUsuario>();
-            ucContador.DataContext = viewModelContador;
-            viewModel = new TabUsuariosViewModel() { ContadorViewModel = viewModelContador };
-            DataContext = viewModel;
+            //var viewModelContador = new ContadorViewModel<TipoUsuario>();
+            //ucContador.DataContext = viewModelContador;
+            // viewModel = new TabUsuariosViewModel() { ContadorViewModel = viewModelContador };
+            // DataContext = viewModel;
+            //viewModel = (DataContext as TabUsuariosViewModel);
+            //ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
 
-            ucFiltroTabla.DataContext = viewModel.FiltroTablaViewModel;
-
-            ucOpciones.bAnadir.Command = viewModel.AnadirUsuarioComando;
+           /* ucOpciones.bAnadir.Command = viewModel.AnadirUsuarioComando;
             ucOpciones.bEditar.Command = viewModel.ModificarUsuarioComando;
             ucOpciones.bBorrar.Command = viewModel.BorrarUsuarioComando;
-            ucOpciones.bRefrescar.Command = viewModel.RefrescarUsuariosComando;
+            ucOpciones.bRefrescar.Command = viewModel.RefrescarUsuariosComando;*/
 
             /*   Style style = new Style(typeof(CheckBox));
                style.Setters.Add(new EventSetter(CheckBox.CheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));

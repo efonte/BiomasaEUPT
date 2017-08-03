@@ -10,6 +10,8 @@
              xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700" >
     <UserControl.Resources>
@@ -40,10 +42,24 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProductosTerminados" DataContext="{StaticResource productosTerminadosViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProductosTerminados"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding ProductosTerminadosView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding ProductoTerminadoSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGProductosTerminados_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgProductosTerminados}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarProductoTerminadoComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgProductosTerminados, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarProductoTerminadoComando}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"
                                                                        Binding="{Binding TipoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>

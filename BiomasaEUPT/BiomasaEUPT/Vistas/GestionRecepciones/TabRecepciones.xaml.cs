@@ -33,40 +33,36 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
     /// </summary>
     public partial class TabRecepciones : UserControl
     {
-        private TabRecepcionesViewModel viewModel;
         public TabRecepciones()
         {
             InitializeComponent();
-            viewModel = new TabRecepcionesViewModel();
-            DataContext = viewModel;
 
-            // Hacer doble clic en una fila del datagrid de recepcions hará que se ejecuta el evento RowRecepciones_DoubleClick
-            Style rowStyleRecepciones = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
-            rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { viewModel.ModificarRecepcion(); })));
-            ucTablaRecepciones.dgRecepciones.RowStyle = rowStyleRecepciones;
+            // Hacer doble clic en una fila del datagrid de recepciones hará que se ejecuta el evento RowRecepciones_DoubleClick
+            /* Style rowStyleRecepciones = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
+             rowStyleRecepciones.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { (DataContext as TabRecepcionesViewModel).ModificarRecepcion(); })));
+             ucTablaRecepciones.dgRecepciones.RowStyle = rowStyleRecepciones;
 
-            // Hacer doble clic en una fila del datagrid de materias primas hará que se ejecuta el evento RowMateriasPrimas_DoubleClick
-            Style rowStyleMateriasPrimas = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
-            rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { viewModel.ModificarMateriaPrima(); })));
-            ucTablaMateriasPrimas.dgMateriasPrimas.RowStyle = rowStyleMateriasPrimas;
+             // Hacer doble clic en una fila del datagrid de materias primas hará que se ejecuta el evento RowMateriasPrimas_DoubleClick
+             Style rowStyleMateriasPrimas = new Style(typeof(DataGridRow), (Style)TryFindResource(typeof(DataGridRow)));
+             rowStyleMateriasPrimas.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler((s, e1) => { (DataContext as TabRecepcionesViewModel).ModificarMateriaPrima(); })));
+             ucTablaMateriasPrimas.dgMateriasPrimas.RowStyle = rowStyleMateriasPrimas;*/
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ucTablaRecepciones.ucPaginacion.DataContext = viewModel.PaginacionViewModel;
-            ucMasOpcionesRecepciones.DataContext = viewModel.MasOpcionesRecepcionesViewModel;
+
         }
 
         private void bMasOpciones_Click(object sender, RoutedEventArgs e)
         {
             transicion.SelectedIndex = 1;
-            viewModel.MasOpcionesRecepcionesViewModel.Inicializar();
+            (DataContext as TabRecepcionesViewModel).MasOpcionesRecepcionesViewModel.Inicializar();
         }
 
         private void bVolver_Click(object sender, RoutedEventArgs e)
         {
             transicion.SelectedIndex = 0;
-            viewModel.Inicializar();
+            (DataContext as TabRecepcionesViewModel).Inicializar();
         }
     }
 }

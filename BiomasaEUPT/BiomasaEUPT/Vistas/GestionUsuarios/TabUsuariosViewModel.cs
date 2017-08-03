@@ -60,6 +60,8 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 ViewModel = this
             };
+
+            ContadorViewModel = new ContadorViewModel<TipoUsuario>();
         }
 
         public override void Inicializar()

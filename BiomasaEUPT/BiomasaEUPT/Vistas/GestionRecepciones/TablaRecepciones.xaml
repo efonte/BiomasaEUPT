@@ -47,6 +47,8 @@
                             <KeyBinding Gesture="Delete" Key="Delete"
                                         Command="{Binding BorrarRecepcionComando}"
                                         CommandParameter="{Binding Path=SelectedItems, ElementName=dgRecepciones, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarRecepcionComando}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="numeroAlbaranColumna" Header="Albarán" Width="auto" IsReadOnly="True"
@@ -105,7 +107,11 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="1" Grid.ColumnSpan="2" Padding="10 20 10 10"/>
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="1" Grid.ColumnSpan="2"
+                                             Padding="10 20 10 10"
+                                             DataContext="{Binding RelativeSource={RelativeSource 
+                                                            FindAncestor, AncestorType={x:Type UserControl}},
+                                                            Path=DataContext.PaginacionViewModel}" />
 
                 <TextBox x:Name="tbBuscar" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"

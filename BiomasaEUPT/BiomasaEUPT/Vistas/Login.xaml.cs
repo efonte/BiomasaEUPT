@@ -45,7 +45,8 @@ namespace BiomasaEUPT
 
         private void CargarVistaMain(Usuario usuario)
         {
-            MainWindow mainWindows = new MainWindow(usuario);
+            MainWindow mainWindows = new MainWindow();
+            (mainWindows.DataContext as MainWindowViewModel).Usuario = usuario;
             Close();
             mainWindows.Show();
         }

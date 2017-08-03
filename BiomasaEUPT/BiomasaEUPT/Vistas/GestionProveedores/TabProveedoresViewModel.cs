@@ -65,6 +65,8 @@ namespace BiomasaEUPT.Vistas.GestionProveedores
             {
                 ViewModel = this
             };
+
+            ContadorViewModel = new ContadorViewModel<TipoProveedor>();
         }
 
         public override void Inicializar()

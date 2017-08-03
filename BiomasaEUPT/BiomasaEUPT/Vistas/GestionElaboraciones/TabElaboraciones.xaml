@@ -54,7 +54,9 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <local:MasOpcionesElaboraciones Grid.Column="0" Grid.Row="0" x:Name="ucMasOpcionesElaboraciones"/>
+                <local:MasOpcionesElaboraciones Grid.Column="0" Grid.Row="0" x:Name="ucMasOpcionesElaboraciones"
+                                                DataContext="{Binding MasOpcionesRecepcionesViewModel}" />
+                
                 <materialDesign:ColorZone Grid.Column="0" Grid.Row="1" Mode="PrimaryMid" Margin="10 0 10 10"
                                               Height="20" Width="150" CornerRadius="2 10 10 2" HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

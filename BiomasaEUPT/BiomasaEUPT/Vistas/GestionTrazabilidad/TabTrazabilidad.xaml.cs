@@ -31,22 +31,6 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
         public TabTrazabilidad()
         {
             InitializeComponent();
-            DataContext = new TabTrazabilidadViewModel();
-
-            /* NO FUNCIONA
-            var bindingTvArbol = new Binding()
-            {
-                Path = new PropertyPath("ItemArbolSeleccionado"),
-                Source = DataContext,
-                Mode = BindingMode.TwoWay
-            };
-            BindingOperations.SetBinding(tvArbol, Selector.SelectedItemProperty, bindingTvArbol);*/
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

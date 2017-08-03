@@ -10,3 +10,4 @@
 * Añadir gestión de Sitios y Huecos de Almacenaje
 * Añadir gestión de Grupos y Tipos de Productos Terminados
 * Añadir gestión de Picking
+* Corregir Ajustes (añadir propiedad bool)

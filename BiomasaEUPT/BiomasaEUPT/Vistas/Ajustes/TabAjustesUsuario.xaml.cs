@@ -49,7 +49,7 @@ namespace BiomasaEUPT.Vistas.Ajustes
 
         private async void bCambiarContrasena_Click(object sender, RoutedEventArgs e)
         {
-            int usuarioId = (winAjustes.Owner as MainWindow).Usuario.UsuarioId;
+            int usuarioId = ((winAjustes.Owner as MainWindow).DataContext as MainWindowViewModel).Usuario.UsuarioId;
             var viewModel = DataContext as WinAjustesViewModel;
             var hashContrasena = ContrasenaHashing.ObtenerHashSHA256(
                     ContrasenaHashing.SecureStringToString(viewModel.Contrasena)

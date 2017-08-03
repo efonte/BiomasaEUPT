@@ -66,6 +66,8 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             {
                 ViewModel = this
             };
+
+            ContadorViewModel = new ContadorViewModel<TipoCliente>();
         }
 
 

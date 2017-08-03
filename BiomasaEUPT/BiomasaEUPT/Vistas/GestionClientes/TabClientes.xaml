@@ -18,8 +18,13 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0" Height="200" VerticalAlignment="Top"/>
-            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5" Height="250" VerticalAlignment="Bottom"/>
+            <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0"
+                                       Height="200" VerticalAlignment="Top"
+                                       DataContext="{Binding ContadorViewModel}" />
+
+            <controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
+                                          Height="250" VerticalAlignment="Bottom"
+                                          DataContext="{Binding FiltroTablaViewModel}" />
         </Grid>
 
         <local:TablaClientes Grid.Column="1" x:Name="ucTablaClientes" Margin="10 10 10 10" />

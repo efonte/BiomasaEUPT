@@ -93,7 +93,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             context = new BiomasaEUPTContext();
             CargarOrdenesElaboraciones();
-            PaginacionViewModel.GetItemsTotales = () => { return context.Recepciones.Count(); };
+            PaginacionViewModel.GetItemsTotales = () => { return context.OrdenesElaboraciones.Count(); };
             PaginacionViewModel.ActualizarContadores();
             PaginacionViewModel.CargarItems = CargarOrdenesElaboraciones;
         }

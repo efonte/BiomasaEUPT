@@ -59,7 +59,8 @@ namespace BiomasaEUPT
                 if (usuario != null)
                 {
                     login.Close();
-                    MainWindow main = new MainWindow(usuario);
+                    MainWindow main = new MainWindow();
+                    (main.DataContext as MainWindowViewModel).Usuario = usuario;
                     await Task.Run(() => InicioFinalizado());
                     Close();
                     main.Show();

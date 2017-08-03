@@ -11,11 +11,12 @@
              xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="ordenesElaboracionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenElaboracion}, CreateList=True}"/>
             <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -36,11 +37,24 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgElaboraciones" DataContext="{StaticResource ordenesElaboracionesViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgElaboraciones"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding OrdenesElaboracionesView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding OrdenElaboracionSeleccionada, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGElaboraciones_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgElaboraciones}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarElaboracionComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgElaboraciones, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarElaboracionComando}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha Elaboración" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding FechaElaboracion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
@@ -69,7 +83,7 @@
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <StackPanel DataContext="{StaticResource ordenesElaboracionesViewSource}" Grid.Column="1" 
+                <StackPanel Grid.Column="1" 
                             HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Stretch"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
@@ -81,21 +95,24 @@
                             </TextBlock>
                         </Expander.Header>
 
-                        <TextBlock x:Name="tbDescripcion" Text="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock x:Name="tbDescripcion" Text="{Binding OrdenElaboracionSeleccionada.Descripcion, UpdateSourceTrigger=PropertyChanged}"
                                    FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
                                    Foreground="{DynamicResource MaterialDesignBody}"/>
                     </Expander>
                 </StackPanel>
 
-                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="1" Grid.ColumnSpan="2" Padding="10 20 10 10"/>
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="1" Grid.ColumnSpan="2"
+                                             Padding="10 20 10 10"
+                                             DataContext="{Binding RelativeSource={RelativeSource 
+                                                            FindAncestor, AncestorType={x:Type UserControl}},
+                                                            Path=DataContext.PaginacionViewModel}" />
 
-
-                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                <TextBox x:Name="tbBuscar" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                          TextChanged="tbBuscar_TextChanged"/>
 
-                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                <materialDesign:PopupBox Grid.Row="2" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
                         <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
                     </materialDesign:PopupBox.ToggleContent>

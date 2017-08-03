@@ -34,43 +34,10 @@ namespace BiomasaEUPT
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Usuario _usuario;
-        public Usuario Usuario
+        public MainWindow()
         {
-            get { return _usuario; }
-            set
-            {
-                _usuario = value;
-                CargarVista();
-            }
-        }
-
-        public MainWindow(Usuario Usuario)
-        {
-            this.Usuario = Usuario;
             InitializeComponent();
-            CargarAjustes();
-        }
-
-        private void CargarVista()
-        {
-            switch (Usuario.TipoId)
-            {
-                case 1:
-                    // No hay que borrar ninguna pestaña
-                    break;
-                case 2:
-                    tcTabs.Items.Remove(tiUsuarios);
-                    tcTabs.Items.Remove(tiRecepciones);
-                    tcTabs.Items.Remove(tiElaboraciones);
-                    tcTabs.Items.Remove(tiVentas);
-                    break;
-                case 3:
-                    tcTabs.Items.Remove(tiUsuarios);
-                    tcTabs.Items.Remove(tiClientes);
-                    tcTabs.Items.Remove(tiProveedores);
-                    break;
-            }
+            DataContext = new MainWindowViewModel();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -80,164 +47,13 @@ namespace BiomasaEUPT
 
         private void menuSalir_Click(object sender, RoutedEventArgs e)
         {
+            (DataContext as MainWindowViewModel).GuardarAjustes();
             Close();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            GuardarAjustes();
-        }
-
-        private void menuAcercaDe_Click(object sender, RoutedEventArgs e)
-        {
-            AcercaDe acercaDe = new AcercaDe();
-            acercaDe.Owner = GetWindow(this);
-            acercaDe.ShowDialog();
         }
 
         private void menuGitHub_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/F0NT3/BiomasaEUPT");
         }
-
-        private void menuCerrarSesion_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.contrasena = "";
-            Properties.Settings.Default.Save();
-            Login login = new Login();
-            login.Show();
-            login.tbUsuario.Text = Properties.Settings.Default.usuario;
-            Close();
-        }
-
-        private void ti_Selected(object sender, RoutedEventArgs e)
-        {
-            var tabItem = (e.Source as TabItem);
-            if (tabItem != null)
-            {
-                InicializarTab(tabItem);
-            }
-        }
-
-        private void InicializarTab(TabItem tabItem)
-        {
-            if (tabItem.Content is TabUsuarios)
-            {
-                var ti = (tabItem.Content as TabUsuarios);
-                if (ti.IsLoaded)
-                {
-                    (ti.DataContext as ViewModelBase).Inicializar();
-                }
-            }
-
-            else if (tabItem.Content is TabClientes)
-            {
-                var ti = (tabItem.Content as TabClientes);
-                if (ti.IsLoaded)
-                {
-                    (ti.DataContext as ViewModelBase).Inicializar();
-                    //ti.CargarClientes();
-                    //ti.ucFiltroTabla.CargarFiltro();
-                }
-            }
-
-            else if (tabItem.Content is TabProveedores)
-            {
-                var ti = (tabItem.Content as TabProveedores);
-                if (ti.IsLoaded)
-                {
-                    (ti.DataContext as ViewModelBase).Inicializar();
-                    //ti.CargarProveedores();
-                    //ti.ucFiltroTabla.CargarFiltro();
-                }
-            }
-
-            else if (tabItem.Content is TabRecepciones)
-            {
-                var ti = (tabItem.Content as TabRecepciones);
-                if (ti.IsLoaded)
-                {
-                    (ti.DataContext as ViewModelBase).Inicializar();
-                    //ti.CargarRecepciones();
-                }
-            }
-
-            else if (tabItem.Content is TabElaboraciones)
-            {
-                var ti = (tabItem.Content as TabElaboraciones);
-                if (ti.IsLoaded)
-                {
-                    //ti.CargarElaboraciones();
-                }
-            }
-
-            else if (tabItem.Content is TabTrazabilidad)
-            {
-                var ti = (tabItem.Content as TabTrazabilidad);
-                if (ti.IsLoaded)
-                {
-                    (ti.DataContext as ViewModelBase).Inicializar();
-                }
-            }
-        }
-
-        private void menuAjustes_Click(object sender, RoutedEventArgs e)
-        {
-            WinAjustes ajustes = new WinAjustes();
-            ajustes.Owner = GetWindow(this);
-            ajustes.ShowDialog();
-        }
-
-        private void CargarAjustes()
-        {
-            if (Properties.Settings.Default.VentanaMaximizada)
-                WindowState = WindowState.Maximized;
-
-            if (Properties.Settings.Default.TamanoVentana != "")
-            {
-                var m = Regex.Match(Properties.Settings.Default.TamanoVentana, @"(\d+)x(\d+)");
-                if (m.Success)
-                {
-                    Width = Int32.Parse(m.Groups[1].Value);
-                    Height = Int32.Parse(m.Groups[2].Value);
-                }
-            }
-
-            // Se obtiene la primera pestaña disponible
-            TabItem tabItem = tabItem = tcTabs.Items.OfType<TabItem>().First();
-            if (Properties.Settings.Default.TabActiva != "")
-            {
-                 tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);                
-            }
-            if (tabItem == null)
-            {
-                // Si la pestaña que se quería seleccionar no existe (de otro tipo de usuario)
-                // se obtiene la primera disponible
-                tabItem = tcTabs.Items.OfType<TabItem>().First();
-            }
-            tabItem.IsSelected = true;
-            // InicializarTab hay que ejecutarlo después de que se cargue la vista
-            tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };
-
-            var paletteHelper = new PaletteHelper();
-            paletteHelper.SetLightDark(Properties.Settings.Default.ModoNocturno);
-            paletteHelper.ReplacePrimaryColor(Properties.Settings.Default.ColorPrimario);
-            paletteHelper.ReplaceAccentColor(Properties.Settings.Default.ColorSecundario);
-        }
-
-        private void GuardarAjustes()
-        {
-            if (Properties.Settings.Default.TamanoVentana != "")
-                Properties.Settings.Default.TamanoVentana = Width + "x" + Height;
-
-            if (Properties.Settings.Default.PosicionVentana != "")
-                Properties.Settings.Default.PosicionVentana = Left + "," + Top;
-
-            if (Properties.Settings.Default.TabActiva != "")
-                Properties.Settings.Default.TabActiva = (tcTabs.SelectedItem as TabItem).Name;
-
-            Properties.Settings.Default.Save();
-        }
-
     }
 }

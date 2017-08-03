@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
-        xmlns:lGestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
+        xmlns:GestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
@@ -16,11 +16,16 @@
         xmlns:GestionTrazabilidad="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
         xmlns:materialDesignColors="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
-        Title="BiomasaEUPT" Height="650" Width="900" MinHeight="600" MinWidth="800"
+        Title="BiomasaEUPT" MinHeight="600" MinWidth="800"
+        Height="{Binding HeightVentana, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Width="{Binding WidthVentana, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Top="{Binding TopVentana, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Left="{Binding LeftVentana, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        WindowState="{Binding EstadoVentana, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen"
-        Closing="Window_Closing"        
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
@@ -28,7 +33,11 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <cmd:EventToCommand Command="{Binding WindowClosingComando}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="280" MinHeight="300">
         <DockPanel>
             <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth0" Mode="Dark" DockPanel.Dock="Top">
@@ -37,7 +46,7 @@
                     <Menu IsMainMenu="True" DockPanel.Dock="Left" Background="#303030">
                         <!-- Archivo -->
                         <MenuItem Header="_Archivo" Foreground="White" Height="35">
-                            <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Click="menuCerrarSesion_Click">
+                            <MenuItem x:Name="menuCerrarSesion" Header="_Cerrar Sesión" Command="{Binding CerrarSesionComando}">
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Logout" />
                                 </MenuItem.Icon>
@@ -51,7 +60,7 @@
                         </MenuItem>
                         <!-- Opciones -->
                         <MenuItem Header="_Opciones" Foreground="White" Height="35">
-                            <MenuItem x:Name="menuAjustes" Header="_Ajustes" Click="menuAjustes_Click">
+                            <MenuItem x:Name="menuAjustes" Header="_Ajustes" Command="{Binding MostrarAjustesComando}">
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Settings" />
                                 </MenuItem.Icon>
@@ -64,24 +73,159 @@
                                     <materialDesign:PackIcon Kind="GithubCircle" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Click="menuAcercaDe_Click">
+                            <MenuItem x:Name="menuAcercaDe" Header="A_cerca de..." Command="{Binding MostrarAcercaDeComando}">
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Information" />
                                 </MenuItem.Icon>
                             </MenuItem>
                         </MenuItem>
                     </Menu>
-                    <TextBlock x:Name="tbInfoProgreso" Foreground="White" FontWeight="Light" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"></TextBlock>
-                    <ProgressBar x:Name="pbProgreso" Style="{DynamicResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="False" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                    <TextBlock x:Name="tbInfoProgreso" Foreground="White" FontWeight="Light"
+                               DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                    <ProgressBar x:Name="pbProgreso" Value="0" IsIndeterminate="False"
+                                 DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"
+                                 Style="{DynamicResource MaterialDesignCircularProgressBar}"/>
                 </DockPanel>
             </materialDesign:ColorZone>
 
             <!-- Pestañas -->
             <dockablz:Layout>
-                <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0">
+                <dragablz:TabablzControl x:Name="tcTabs" BorderThickness="0" Margin="0 0 0 0"
+                                         ItemsSource="{Binding Tabs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         SelectedItem="{Binding TabSeleccionada, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <dragablz:TabablzControl.HeaderItemTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Usuarios" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionClientes:TabClientesViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Clientes" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionProveedores:TabProveedoresViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Worker" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Proveedores" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionRecepciones:TabRecepcionesViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Truck" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Recepciones" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionElaboraciones:TabElaboracionesViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Elaboraciones" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionTrazabilidad:TabTrazabilidadViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                         Height="20" Width="20"/>
+                                            <TextBlock Text="Trazabilidad" Margin="5,0,0,0"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                        </DataTemplate>
+                    </dragablz:TabablzControl.HeaderItemTemplate>
+
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
+                                        <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionClientes:TabClientesViewModel}">
+                                        <GestionClientes:TabClientes x:Name="ucTabClientes" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionProveedores:TabProveedoresViewModel}">
+                                        <GestionProveedores:TabProveedores x:Name="ucTabProveedores" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionRecepciones:TabRecepcionesViewModel}">
+                                        <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionElaboraciones:TabElaboracionesViewModel}">
+                                        <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionTrazabilidad:TabTrazabilidadViewModel}">
+                                        <GestionTrazabilidad:TabTrazabilidad x:Name="ucTabTrazabilidad" />
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+
+                    <TabControl.Resources>
+                        <!--ContentControl x:Key="MainContent" Content="{Binding}">
+                            <ContentControl.Resources>
+                                <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
+                                    <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios" DataContext="{Binding }" />
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type GestionClientes:TabClientesViewModel}">
+                                    <GestionClientes:TabClientes x:Name="ucTabClientes" />
+                                </DataTemplate>
+
+                                <DataTemplate DataType="{x:Type local:ViewModelBase}">
+                                    <TextBlock Text="aaa"/>
+                                </DataTemplate>
+                            </ContentControl.Resources>
+                        </-->
+                    </TabControl.Resources>
+
+                    <!--dragablz:TabablzControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <StaticResource ResourceKey="MainContent"/>
+                            </Grid>
+                        </DataTemplate>
+                    </-->
 
                     <!-- Pestaña Usuarios -->
-                    <TabItem x:Name="tiUsuarios" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiUsuarios" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White"
@@ -93,12 +237,12 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <lGestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
+                        <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
 
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Clientes -->
-                    <TabItem x:Name="tiClientes" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiClientes" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Account" Foreground="White"
@@ -112,10 +256,10 @@
 
                         <GestionClientes:TabClientes x:Name="ucTabClientes" />
 
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Proveedores -->
-                    <TabItem x:Name="tiProveedores" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiProveedores" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Worker" Foreground="White"
@@ -129,10 +273,10 @@
 
                         <GestionProveedores:TabProveedores x:Name="ucTabProveedores" />
 
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Recepciones -->
-                    <TabItem x:Name="tiRecepciones" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiRecepciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Truck" Foreground="White"
@@ -145,10 +289,10 @@
                         </TabItem.Header>
 
                         <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Elaboraciones -->
-                    <TabItem x:Name="tiElaboraciones" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiElaboraciones" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White"
@@ -161,10 +305,10 @@
                         </TabItem.Header>
 
                         <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Ventas -->
-                    <TabItem x:Name="tiVentas" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiVentas" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Shopping" Foreground="White"
@@ -177,10 +321,10 @@
                         </TabItem.Header>
 
                         <GestionVentas:TabVentas x:Name="ucTabVentas" />
-                    </TabItem>
+                    </-->
 
                     <!-- Pestaña Trazabilidad -->
-                    <TabItem x:Name="tiTrazabilidad" Selector.Selected="ti_Selected">
+                    <!--TabItem x:Name="tiTrazabilidad" Selector.Selected="ti_Selected">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
@@ -193,10 +337,9 @@
                         </TabItem.Header>
 
                         <GestionTrazabilidad:TabTrazabilidad x:Name="ucTabTrazabilidad" />
-                    </TabItem>
+                    </-->
                 </dragablz:TabablzControl>
             </dockablz:Layout>
-
         </DockPanel>
     </materialDesign:DialogHost>
 </Window>
