@@ -1,4 +1,5 @@
 ﻿TipoUsuarioId;Nombre;Descripcion
-1;Administrador;Usuario con máximos privilegios
-2;Administrativo;Encargado de los clientes y proveedores
-3;Técnico;Encargado de las recepciones, elaboraciones y ventas
+1;Super Administrador;Super usuario con máximos privilegios
+2;Administrador;Usuario con máximos privilegios
+3;Administrativo;Encargado de los clientes y proveedores
+4;Técnico;Encargado de las recepciones, elaboraciones y ventas

@@ -36,6 +36,9 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MIN_CALLE = 5;
         public const int LONG_MAX_CALLE = 60;
 
+        public const int LONG_MIN_NOMBRE_TIPO_USUARIO = 3;
+        public const int LONG_MAX_NOMBRE_TIPO_USUARIO = 25;
+
         public const int LONG_MIN_NOMBRE_USUARIO = 3;
         public const int LONG_MAX_NOMBRE_USUARIO = 10;
 

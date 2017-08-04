@@ -392,7 +392,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                     string mensaje = ProductosTerminadosSeleccionados.Count == 1
                            ? "No se ha podido borrar el producto terminado seleccionado."
                            : "No se han podido borrar todos los productos terminados seleccionados.";
-                    mensaje += "\n\nAsegurese de no que no exista ningun producto terminado elaborado con dicha materia prima.";
+                    mensaje += "\n\nAsegurese de no que no exista ningún producto terminado elaborado con dicha materia prima.";
                     await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
                 }
             }

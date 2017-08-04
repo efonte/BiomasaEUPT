@@ -133,7 +133,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 .Include(r => r.EstadoRecepcion).Include(r => r.Proveedor)
                 .OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList());
             RecepcionesView = (CollectionView)CollectionViewSource.GetDefaultView(Recepciones);
-            // ClientesView.Filter = OnFilterMovie;
 
             // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
             RecepcionSeleccionada = null;
@@ -417,18 +416,17 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     }
                 }
                 context.MateriasPrimas.RemoveRange(materiasPrimasABorrar);
-                context.SaveChanges();
-                CargarMateriasPrimas();
+                context.SaveChanges();                
 
-                // materiasPrimasViewSource.View.Refresh();
                 if (MateriasPrimasSeleccionadas.Count != materiasPrimasABorrar.Count)
                 {
                     string mensaje = MateriasPrimasSeleccionadas.Count == 1
                            ? "No se ha podido borrar la materia prima seleccionada."
                            : "No se han podido borrar todas las materias primas seleccionadas.";
-                    mensaje += "\n\nAsegurese de no que no exista ningun producto terminado elaborado con dicha materia prima.";
+                    mensaje += "\n\nAsegurese de no que no exista ningún producto terminado elaborado con dicha materia prima.";
                     await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
                 }
+                CargarMateriasPrimas();
             }
         }
         #endregion

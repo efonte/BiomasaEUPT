@@ -48,7 +48,9 @@ namespace BiomasaEUPT.Vistas
         {
             using (var context = new BiomasaEUPTContext())
             {
-                return context.Usuarios.FirstOrDefault(u => u.Nombre == usuario && u.Contrasena == hashContrasena
+                return context.Usuarios
+                    .Include("TipoUsuario.Permisos")
+                    .FirstOrDefault(u => u.Nombre == usuario && u.Contrasena == hashContrasena
                                                             && u.Baneado == false);
             }
         }

@@ -1,8 +1,5 @@
-﻿using BiomasaEUPT.Clases;
-using BiomasaEUPT.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionUsuarios
+namespace BiomasaEUPT.Vistas.GestionPermisos
 {
     /// <summary>
-    /// Lógica de interacción para TablaUsuarios.xaml
+    /// Lógica de interacción para TabPermisos.xaml
     /// </summary>
-    public partial class TablaUsuarios : UserControl
+    public partial class TabPermisos : UserControl
     {
-        public TablaUsuarios()
+        public TabPermisos()
         {
             InitializeComponent();
         }

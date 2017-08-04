@@ -183,6 +183,7 @@
         // Tablas
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
+        public DbSet<Permiso> Permisos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<TipoCliente> TiposClientes { get; set; }
         public DbSet<GrupoCliente> GruposClientes { get; set; }

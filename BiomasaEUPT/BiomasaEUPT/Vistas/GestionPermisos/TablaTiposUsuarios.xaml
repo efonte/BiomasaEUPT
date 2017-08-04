@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionPermisos.TablaTiposUsuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionPermisos"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="400">
+    <Grid>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Tipos de Usuarios">
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgTiposUsuarios"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding TiposUsuariosView}" CanUserAddRows="False"
+                              EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All"
+                              CanUserDeleteRows="False" SelectedItem="{Binding TipoUsuarioSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}" IsReadOnly="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGTiposUsuarios_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgTiposUsuarios}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="CellEditEnding">
+                                <cmd:EventToCommand Command="{Binding DGTiposUsuarios_CellEditEndingComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarTipoUsuarioComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgTiposUsuarios, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarTipoUsuarioComando}"/>
+                        </DataGrid.InputBindings>
+
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Header="Nombre"
+                                                                       EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_TIPO_USUARIO}"
+                                                                       Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}">
+                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
+                                    <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
+                                            <validadores:LongitudValidationRule NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE_TIPO_USUARIO}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE_TIPO_USUARIO}" ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </-->
+                            </materialDesign:MaterialDataGridTextColumn>
+
+                            <DataGridTemplateColumn Header="Permisos" x:Name="permisosColumna" >
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <WrapPanel x:Name="wpPermisos" Orientation="Horizontal">
+                                            <ItemsControl ItemsSource="{Binding Permisos, UpdateSourceTrigger=PropertyChanged}" >
+                                                <ItemsControl.Style>
+                                                    <Style TargetType="ItemsControl">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="HasItems" Value="false">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate>
+                                                                            <TextBlock Text="S/D"/>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ItemsControl.Style>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <materialDesign:Chip Cursor="Arrow" Margin="0 0 5 0">
+                                                            <materialDesign:Chip.Content>
+                                                                <TextBlock FontStyle="Italic" Text="{Binding Tab}"/>
+                                                            </materialDesign:Chip.Content>                                                           
+                                                        </materialDesign:Chip>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>                                
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar tipos de usuarios"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="bAnadirUsuario" ToolTip="Añadir tipo de usuario"
+                                    Command="{Binding AnadirTipoUsuarioComando}">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Borrar el tipo de usuario seleccionado"
+                                    Command="{Binding BorrarTipoUsuarioComando}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar tipos de usuarios"
+                                    Command="{Binding RefrescarTiposUsuariosComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+                <StackPanel Grid.Column="1" 
+                            HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Stretch"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Descripción" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <TextBlock x:Name="tbObservaciones" Text="{Binding TipoUsuarioSeleccionado.Descripcion, UpdateSourceTrigger=PropertyChanged}"
+                                   FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource MaterialDesignBody}"/>
+                    </Expander>
+                </StackPanel>
+                
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         Text="{Binding TextoFiltroTiposUsuarios, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Nombre" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Permisos" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbNombre" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding NombreSeleccionado}" Command="{Binding FiltrarTiposUsuariosComando}"/>
+                        <CheckBox x:Name="cbPermisos" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding PermisosSeleccionado}" Command="{Binding FiltrarTiposUsuariosComando}"/>
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

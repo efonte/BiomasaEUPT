@@ -7,6 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
+        xmlns:GestionPermisos="clr-namespace:BiomasaEUPT.Vistas.GestionPermisos"
         xmlns:GestionUsuarios="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
         xmlns:GestionClientes="clr-namespace:BiomasaEUPT.Vistas.GestionClientes"
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
@@ -97,69 +98,80 @@
                         <DataTemplate>
                             <ContentControl Content="{Binding}">
                                 <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type GestionPermisos:TabPermisosViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="LockOpen" Foreground="White"
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
+                                            <TextBlock Text="Permisos" Margin="5,0,0,0"
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
                                     <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Usuarios" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionClientes:TabClientesViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Account" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Clientes" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionProveedores:TabProveedoresViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Worker" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Proveedores" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionRecepciones:TabRecepcionesViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="Truck" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Recepciones" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionElaboraciones:TabElaboracionesViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Elaboraciones" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionTrazabilidad:TabTrazabilidadViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
                                             <TextBlock Text="Trazabilidad" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -171,6 +183,10 @@
                         <DataTemplate>
                             <ContentControl Content="{Binding}">
                                 <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type GestionPermisos:TabPermisosViewModel}">
+                                        <GestionPermisos:TabPermisos x:Name="ucTabPermisos" />
+                                    </DataTemplate>
+
                                     <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
                                         <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios" />
                                     </DataTemplate>
@@ -198,146 +214,6 @@
                             </ContentControl>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
-
-                    <TabControl.Resources>
-                        <!--ContentControl x:Key="MainContent" Content="{Binding}">
-                            <ContentControl.Resources>
-                                <DataTemplate DataType="{x:Type GestionUsuarios:TabUsuariosViewModel}">
-                                    <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios" DataContext="{Binding }" />
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type GestionClientes:TabClientesViewModel}">
-                                    <GestionClientes:TabClientes x:Name="ucTabClientes" />
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type local:ViewModelBase}">
-                                    <TextBlock Text="aaa"/>
-                                </DataTemplate>
-                            </ContentControl.Resources>
-                        </-->
-                    </TabControl.Resources>
-
-                    <!--dragablz:TabablzControl.ContentTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <StaticResource ResourceKey="MainContent"/>
-                            </Grid>
-                        </DataTemplate>
-                    </-->
-
-                    <!-- Pestaña Usuarios -->
-                    <!--TabItem x:Name="tiUsuarios" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="AccountMultiple" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Usuarios" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionUsuarios:TabUsuarios x:Name="ucTabUsuarios"/>
-
-                    </-->
-
-                    <!-- Pestaña Clientes -->
-                    <!--TabItem x:Name="tiClientes" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Account" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Clientes" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionClientes:TabClientes x:Name="ucTabClientes" />
-
-                    </-->
-
-                    <!-- Pestaña Proveedores -->
-                    <!--TabItem x:Name="tiProveedores" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Worker" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Proveedores" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionProveedores:TabProveedores x:Name="ucTabProveedores" />
-
-                    </-->
-
-                    <!-- Pestaña Recepciones -->
-                    <!--TabItem x:Name="tiRecepciones" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Truck" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Recepciones" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionRecepciones:TabRecepciones x:Name="ucTabRecepciones" />
-                    </-->
-
-                    <!-- Pestaña Elaboraciones -->
-                    <!--TabItem x:Name="tiElaboraciones" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="PackageVariantClosed" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Elaboraciones" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
-                    </-->
-
-                    <!-- Pestaña Ventas -->
-                    <!--TabItem x:Name="tiVentas" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Shopping" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Ventas" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionVentas:TabVentas x:Name="ucTabVentas" />
-                    </-->
-
-                    <!-- Pestaña Trazabilidad -->
-                    <!--TabItem x:Name="tiTrazabilidad" Selector.Selected="ti_Selected">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
-                                                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                         Height="20" Width="20"/>
-                                <TextBlock Text="Trazabilidad" Margin="5,0,0,0"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="White" Typography.Capitals="SmallCaps"/>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <GestionTrazabilidad:TabTrazabilidad x:Name="ucTabTrazabilidad" />
-                    </-->
                 </dragablz:TabablzControl>
             </dockablz:Layout>
         </DockPanel>

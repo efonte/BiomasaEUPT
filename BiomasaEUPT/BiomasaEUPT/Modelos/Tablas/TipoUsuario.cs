@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace BiomasaEUPT.Modelos.Tablas
 {
     /// <summary>
-    /// Distintos tipos de usuarios que hay en la aplicación (administrador y técnico)
-    /// Cada tipo de cliente se asocia a un grupo de cliente
+    /// Distintos tipos de usuarios que hay en la aplicación.
     /// </summary>
     [Table("TiposUsuarios")]
     public class TipoUsuario
@@ -29,6 +28,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         [StringLength(Constantes.LONG_MAX_DESCRIPCION, MinimumLength = Constantes.LONG_MIN_DESCRIPCION)]
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+
+        public virtual List<Permiso> Permisos { get; set; }
 
         public virtual List<Usuario> Usuarios { get; set; }
     }

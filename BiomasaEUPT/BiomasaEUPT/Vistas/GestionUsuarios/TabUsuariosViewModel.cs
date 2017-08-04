@@ -246,10 +246,10 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         #region Refrescar Usuarios
         public ICommand RefrescarUsuariosComando => _refrescarUsuariosComando ??
             (_refrescarUsuariosComando = new RelayCommand(
-                param => RefrescarUsurios()
+                param => RefrescarUsuarios()
              ));
 
-        private void RefrescarUsurios()
+        private void RefrescarUsuarios()
         {
             // Hay que volver a instanciar un nuevo context ya que sino no se pueden refrescar los datos
             // debido a que se guardardan en una cache

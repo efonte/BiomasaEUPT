@@ -155,6 +155,7 @@
     <Compile Include="Domain\EventCommandExecuter.cs" />
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\RelayCommandGenerico.cs" />
+    <Compile Include="Modelos\Tablas\Permiso.cs" />
     <Compile Include="Modelos\Validadores\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\Converters\PaisISOA2Converter.cs" />
@@ -303,6 +304,17 @@
     <Compile Include="Vistas\GestionElaboraciones\TablaProductosTerminados.xaml.cs">
       <DependentUpon>TablaProductosTerminados.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionPermisos\FormTipoUsuario.xaml.cs">
+      <DependentUpon>FormTipoUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
+    <Compile Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml.cs">
+      <DependentUpon>TablaTiposUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionPermisos\TabPermisos.xaml.cs">
+      <DependentUpon>TabPermisos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionPermisos\TabPermisosViewModel.cs" />
     <Compile Include="Vistas\GestionProveedores\FormProveedorViewModel.cs" />
     <Compile Include="Vistas\GestionProveedores\TabProveedoresViewModel.cs" />
     <Compile Include="Vistas\GestionRecepciones\FormMateriaPrima.xaml.cs">
@@ -492,6 +504,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionElaboraciones\TablaProductosTerminados.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionPermisos\FormTipoUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionPermisos\TabPermisos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

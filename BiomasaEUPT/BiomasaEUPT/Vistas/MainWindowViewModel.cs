@@ -3,6 +3,7 @@ using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
+using BiomasaEUPT.Vistas.GestionPermisos;
 using BiomasaEUPT.Vistas.GestionProveedores;
 using BiomasaEUPT.Vistas.GestionRecepciones;
 using BiomasaEUPT.Vistas.GestionTrazabilidad;
@@ -58,47 +59,33 @@ namespace BiomasaEUPT.Vistas
         private ICommand _mostrarAjustesComando;
         private ICommand _mostrarAcercaDeComando;
 
+        private Dictionary<Tab, ViewModelBase> viewModelsDisponibles;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowViewModel()
         {
+            viewModelsDisponibles = new Dictionary<Tab, ViewModelBase>()
+            {
+                { Tab.Permisos, new TabPermisosViewModel() },
+                { Tab.Usuarios, new TabUsuariosViewModel() },
+                { Tab.Clientes, new TabClientesViewModel() },
+                { Tab.Proveedores, new TabProveedoresViewModel() },
+                { Tab.Recepciones, new TabRecepcionesViewModel() },
+                { Tab.Elaboraciones, new TabElaboracionesViewModel() },
+               // { Tab.Ventas, new TabVentasViewModel() },
+                { Tab.Trazabilidad, new TabTrazabilidadViewModel() },
+            };
             CargarAjustes();
         }
 
         private void CargarTabs()
         {
-            switch (Usuario.TipoId)
-            {
-                case 1:
-                    Tabs = new ObservableCollection<ViewModelBase>()
-                    {
-                        new TabUsuariosViewModel(),
-                        new TabClientesViewModel(),
-                        new TabProveedoresViewModel(),
-                        new TabRecepcionesViewModel(),
-                        new TabElaboracionesViewModel(),
-                        //new TabVentasViewModel(),
-                        new TabTrazabilidadViewModel()
-                    };
-                    break;
-                case 2:
-                    Tabs = new ObservableCollection<ViewModelBase>()
-                    {
-                        new TabClientesViewModel(),
-                        new TabProveedoresViewModel(),
-                        new TabTrazabilidadViewModel()
-                    };
-                    break;
-                case 3:
-                    Tabs = new ObservableCollection<ViewModelBase>()
-                    {
-                        new TabRecepcionesViewModel(),
-                        new TabElaboracionesViewModel(),
-                        //new TabVentasViewModel(),
-                        new TabTrazabilidadViewModel()
-                    };
-                    break;
-            }
+            Tabs = new ObservableCollection<ViewModelBase>(
+                Usuario.TipoUsuario.Permisos
+                .Select(p => p.Tab)
+                .Where(k => viewModelsDisponibles.ContainsKey(k))
+                .Select(k => viewModelsDisponibles[k]).ToList());
         }
 
         public void CargarAjustes()
@@ -163,7 +150,7 @@ namespace BiomasaEUPT.Vistas
         }
 
 
-        #region Cerrar Sesión
+        #region Cerrar Aplicación
         public ICommand WindowClosingComando => _windowClosingComando ??
            (_windowClosingComando = new RelayCommandGenerico<CancelEventArgs>(
                param => CerrarAplicacion(param)
@@ -187,7 +174,7 @@ namespace BiomasaEUPT.Vistas
             Properties.Settings.Default.contrasena = "";
             Properties.Settings.Default.Save();
             Login login = new Login();
-            Application.Current.MainWindow.Close();
+            Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive).Close();
             login.Show();
             login.tbUsuario.Text = Properties.Settings.Default.usuario;
         }

@@ -13,7 +13,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="400" Loaded="UserControl_Loaded">
+             d:DesignHeight="250" d:DesignWidth="400">
     <Grid>
         <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Usuarios">
             <Grid Margin="0 0 0 0">
