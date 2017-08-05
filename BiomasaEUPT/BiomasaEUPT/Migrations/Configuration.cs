@@ -25,70 +25,25 @@ namespace BiomasaEUPT.Migrations
                  new TipoUsuario()
                  {
                      Nombre = "Super Administrador",
-                     Descripcion = "Super usuario con máximos privilegios",
-                     /*Permisos = new List<Permiso>()
-                     {
-                         new Permiso() { Tab = Tab.Permisos },
-                         new Permiso() { Tab = Tab.Usuarios },
-                         new Permiso() { Tab = Tab.Clientes },
-                         new Permiso() { Tab = Tab.Proveedores },
-                         new Permiso() { Tab = Tab.Recepciones },
-                         new Permiso() { Tab = Tab.Elaboraciones },
-                         new Permiso() { Tab = Tab.Ventas },
-                         new Permiso() { Tab = Tab.Trazabilidad }
-                     }*/
+                     Descripcion = "Super usuario con máximos privilegios"
                  },
                 new TipoUsuario()
                 {
                     Nombre = "Administrador",
-                    Descripcion = "Usuario con máximos privilegios",
-                    /*Permisos = new List<Permiso>()
-                     {
-                         new Permiso() { Tab = Tab.Usuarios },
-                         new Permiso() { Tab = Tab.Clientes },
-                         new Permiso() { Tab = Tab.Proveedores },
-                         new Permiso() { Tab = Tab.Recepciones },
-                         new Permiso() { Tab = Tab.Elaboraciones },
-                         new Permiso() { Tab = Tab.Ventas },
-                         new Permiso() { Tab = Tab.Trazabilidad }
-                     }*/
+                    Descripcion = "Usuario con máximos privilegios"
                 },
                 new TipoUsuario()
                 {
                     Nombre = "Administrativo",
-                    Descripcion = "Encargado de los clientes y proveedores",
-                    /*Permisos = new List<Permiso>()
-                     {
-                         new Permiso() { Tab = Tab.Clientes },
-                         new Permiso() { Tab = Tab.Proveedores },
-                         new Permiso() { Tab = Tab.Trazabilidad }
-                     }*/
+                    Descripcion = "Encargado de los clientes y proveedores"
                 },
                 new TipoUsuario()
                 {
                     Nombre = "Técnico",
-                    Descripcion = "Encargado de las recepciones, elaboraciones y ventas",
-                    /*Permisos = new List<Permiso>()
-                     {
-                         new Permiso() { Tab = Tab.Proveedores },
-                         new Permiso() { Tab = Tab.Recepciones },
-                         new Permiso() { Tab = Tab.Elaboraciones },
-                         new Permiso() { Tab = Tab.Ventas },
-                         new Permiso() { Tab = Tab.Trazabilidad }
-                     }*/
+                    Descripcion = "Encargado de las recepciones, elaboraciones y ventas"
                 });
             context.SaveChanges();
 
-            /*context.Permisos.AddOrUpdate(
-                p => p.PermisoId,
-                 new Permiso() { PermisoId = Tab.Permisos },
-                 new Permiso() { PermisoId = Tab.Usuarios },
-                 new Permiso() { PermisoId = Tab.Clientes },
-                 new Permiso() { PermisoId = Tab.Proveedores },
-                 new Permiso() { PermisoId = Tab.Recepciones },
-                 new Permiso() { PermisoId = Tab.Elaboraciones },
-                 new Permiso() { PermisoId = Tab.Ventas },
-                 new Permiso() { PermisoId = Tab.Trazabilidad });*/
             context.Permisos.AddOrUpdate(
                 p => p.PermisoId,
                  new Permiso()

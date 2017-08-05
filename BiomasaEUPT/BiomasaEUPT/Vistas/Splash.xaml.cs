@@ -71,7 +71,7 @@ namespace BiomasaEUPT
                     login.Show();
                     login.tbUsuario.Text = Properties.Settings.Default.usuario;
                     Close();
-                    login.MensajeLoginIncorrecto();
+                    login.ViewModel.MensajeLoginIncorrecto();
                 }
             }
             else

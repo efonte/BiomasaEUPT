@@ -1,5 +1,7 @@
-﻿using BiomasaEUPT.Modelos;
+﻿using BiomasaEUPT.Domain;
+using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,12 +10,13 @@ using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas
 {
     public class LoginViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
-
         private string _usuario;
         public string Usuario
         {
@@ -36,6 +39,10 @@ namespace BiomasaEUPT.Vistas
             }
         }
 
+        public bool RecordarContrasena { get; set; }
+
+        private ICommand _iniciarSesionComando;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 
@@ -55,6 +62,56 @@ namespace BiomasaEUPT.Vistas
             }
         }
 
+
+        #region Iniciar Sesión
+        public ICommand IniciarSesionComando => _iniciarSesionComando ??
+            (_iniciarSesionComando = new RelayCommand(
+                param => IniciarSesion(),
+                param => Validate("Usuario") == null && Validate("Contrasena") == null
+            ));
+
+        private void IniciarSesion()
+        {
+            Console.WriteLine(Usuario);
+            String hashContrasena = "";
+            if (Contrasena != null)
+            {
+                hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(Contrasena));
+            }
+
+            var usuario = IniciarSesion(Usuario, hashContrasena);
+            if (usuario != null)
+            {
+                Properties.Settings.Default.contrasena = RecordarContrasena == true ? hashContrasena : "";
+                Properties.Settings.Default.usuario = Usuario;
+                Properties.Settings.Default.Save();
+                CargarVistaMain(usuario);
+            }
+            else
+            {
+                MensajeLoginIncorrecto();
+            }
+        }
+        #endregion      
+
+        public async void MensajeLoginIncorrecto()
+        {
+            var mensaje = new MensajeInformacion()
+            {
+                Titulo = "Login incorrecto",
+                Mensaje = "El usuario y/o la contraseña son incorrectos."
+            };
+            var resultado = await DialogHost.Show(mensaje, "RootDialog");
+            // Console.WriteLine(mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
+        }
+
+        private void CargarVistaMain(Usuario usuario)
+        {
+            MainWindow mainWindows = new MainWindow();
+            (mainWindows.DataContext as MainWindowViewModel).Usuario = usuario;
+            Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive).Close();
+            mainWindows.Show();
+        }
 
         #region Validación Contraseña
         string IDataErrorInfo.Error { get { return Validate(null); } }

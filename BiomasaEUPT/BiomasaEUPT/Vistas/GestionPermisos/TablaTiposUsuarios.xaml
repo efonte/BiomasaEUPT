@@ -34,7 +34,7 @@
                     </Grid.RowDefinitions>
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgTiposUsuarios"
                               RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding TiposUsuariosView}" CanUserAddRows="False"
-                              EnableRowVirtualization="True" AutoGenerateColumns="False" HeadersVisibility="All"
+                              EnableRowVirtualization="True" AutoGenerateColumns="False"
                               CanUserDeleteRows="False" SelectedItem="{Binding TipoUsuarioSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}" IsReadOnly="True">
                         <i:Interaction.Triggers>

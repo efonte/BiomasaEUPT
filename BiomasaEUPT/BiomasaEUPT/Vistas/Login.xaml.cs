@@ -42,46 +42,5 @@ namespace BiomasaEUPT
             PasswordBox pBox = sender as PasswordBox;
             PasswordBoxAttachedProperties.SetEncryptedPassword(pBox, pBox.SecurePassword);
         }
-
-        private void CargarVistaMain(Usuario usuario)
-        {
-            MainWindow mainWindows = new MainWindow();
-            (mainWindows.DataContext as MainWindowViewModel).Usuario = usuario;
-            Close();
-            mainWindows.Show();
-        }
-
-        private void bIniciarSesion_Click(object sender, RoutedEventArgs e)
-        {
-            String hashContrasena = "";
-            if (ViewModel.Contrasena != null)
-            {
-                hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(ViewModel.Contrasena));
-            }
-
-            var usuario = ViewModel.IniciarSesion(ViewModel.Usuario, hashContrasena);
-            if (usuario != null)
-            {
-                Properties.Settings.Default.contrasena = cbRecordarme.IsChecked == true ? hashContrasena : "";
-                Properties.Settings.Default.usuario = ViewModel.Usuario;
-                Properties.Settings.Default.Save();
-                CargarVistaMain(usuario);
-            }
-            else
-            {
-                MensajeLoginIncorrecto();
-            }
-        }
-
-        public async void MensajeLoginIncorrecto()
-        {
-            var mensaje = new MensajeInformacion()
-            {
-                Titulo = "Login incorrecto",
-                Mensaje = "El usuario y/o la contraseña son incorrectos."
-            };
-            var resultado = await DialogHost.Show(mensaje, "RootDialog");
-            // Console.WriteLine(mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
-        }
     }
 }
