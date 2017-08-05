@@ -73,7 +73,7 @@
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Width="SizeToHeader" Header="Nombre"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Header="Nombre"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
                                     <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">

@@ -11,3 +11,4 @@
 * Añadir gestión de Grupos y Tipos de Productos Terminados
 * Añadir gestión de Picking
 * Corregir Ajustes (añadir propiedad bool)
+* Corregir contraseña formUsuario

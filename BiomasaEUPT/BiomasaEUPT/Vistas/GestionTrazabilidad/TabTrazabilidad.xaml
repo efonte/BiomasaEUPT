@@ -13,6 +13,8 @@
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <conv:PorcentajeConverter x:Key="PorcentajeConverter"/>
+            <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="10">
@@ -62,17 +64,6 @@
                                     <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.15" />
                                 </materialDesign:TransitioningContent.OpeningEffects>
                                 <StackPanel Orientation="Horizontal">
-                                    <StackPanel.ToolTip>
-                                        <ToolTip Background="Transparent">
-                                            <materialDesign:ColorZone Mode="PrimaryMid" CornerRadius="5 0 5 0">
-                                                <StackPanel Margin="10">
-                                                    <TextBlock Text="{Binding Nif}"/>
-                                                    <TextBlock Text="{Binding Calle}"/>
-                                                    <TextBlock Text="{Binding Observaciones}"/>
-                                                </StackPanel>
-                                            </materialDesign:ColorZone>
-                                        </ToolTip>
-                                    </StackPanel.ToolTip>
                                     <materialDesign:PackIcon Kind="Worker"/>
                                     <TextBlock Text="{Binding RazonSocial}" Margin="8 0 0 0"/>
                                 </StackPanel>
@@ -127,7 +118,7 @@
         <GridSplitter Grid.Column="1" Grid.Row="1" />
         <Border Grid.Column="2" Grid.Row="1" Margin="0 10 5 0">
             <GroupBox x:Name="gbInfo" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
-                      Header="Info" Style="{DynamicResource MaterialDesignGroupBox}">
+                      Header="Información" Style="{DynamicResource MaterialDesignGroupBox}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <ContentPresenter Grid.Column="2" Content="{Binding SelectedItem, ElementName=tvArbol}">
                         <!--ContentPresenter.Style>
@@ -141,6 +132,10 @@
                         </Style>
                     </-->
                         <ContentPresenter.Resources>
+                            <Style TargetType="Grid">
+                                <Setter Property="Margin" Value="10" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
                             <Style x:Key="tbValor" TargetType="TextBlock">
                                 <Setter Property="Margin" Value="0 0 10 10" />
                             </Style>
@@ -149,13 +144,18 @@
                                 <Setter Property="HorizontalAlignment" Value="Right"/>
                             </Style>
                             <Style x:Key="tbTitulo" TargetType="TextBlock" BasedOn="{StaticResource tbValor}">
+                                <Setter Property="Margin" Value="0 0 0 20" />
                                 <Setter Property="Typography.Capitals" Value="SmallCaps"/>
                                 <Setter Property="FontWeight" Value="Medium"/>
                                 <Setter Property="FontSize" Value="20"/>
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                             </Style>
                             <DataTemplate x:Key="PlantillaVacia">
-                                <TextBlock TextWrapping="Wrap" MaxWidth="250"
+                                <TextBlock TextWrapping="Wrap" Margin="10 10 10 10"
+                                           MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor,
+                                                              AncestorType={x:Type ContentPresenter}},
+                                                              Path=ActualWidth, UpdateSourceTrigger=PropertyChanged,
+                                                              Converter={StaticResource PorcentajeConverter}, ConverterParameter=0.9}"
                                            Text="Por favor, seleccione un item del árbol para mostrar información detallada."/>
                             </DataTemplate>
 
@@ -199,7 +199,7 @@
                                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Calle:" Style="{DynamicResource tbTipo}"/>
                                     <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Calle}"/>
                                     <TextBlock Grid.Column="0" Grid.Row="7" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Observaciones}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
                                 </Grid>
                             </DataTemplate>
 
@@ -273,9 +273,9 @@
                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Código:" Style="{DynamicResource tbTipo}"/>
                                     <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Codigo}"/>
                                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Fecha Baja:" Style="{DynamicResource tbTipo}"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding FechaBaja}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding FechaBaja, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Observaciones}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
                                 </Grid>
                             </DataTemplate>
 
@@ -371,9 +371,9 @@
                                     <TextBlock Grid.Column="0" Grid.Row="3" Text="Código:" Style="{DynamicResource tbTipo}"/>
                                     <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding ProductoTerminado.Codigo}"/>
                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Fecha Baja:" Style="{DynamicResource tbTipo}"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding ProductoTerminado.FechaBaja}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding ProductoTerminado.FechaBaja, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
                                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding ProductoTerminado.Observaciones}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding ProductoTerminado.Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
                                 </Grid>
                             </DataTemplate>
 

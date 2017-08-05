@@ -15,45 +15,51 @@
                 <ResourceDictionary Source="../Diccionarios/DiccionarioAjustes.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type materialDesignColors:Swatch}">
-                <materialDesign:Card Margin="10 10 0 0" Width="240" UniformCornerRadius="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Margin="8" Grid.ColumnSpan="2" />
-                        <Border Grid.Row="1" Grid.Column="0" MinWidth="120">
-                            <Border.Background>
-                                <SolidColorBrush Color="{Binding ExemplarHue.Color, Mode=OneTime}" />
-                            </Border.Background>
-                            <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyPrimaryCommand, Mode=OneTime}"
-                                CommandParameter="{Binding}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Primario" />
-                                    <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
-                                </StackPanel>
-                            </Button>
-                        </Border>
-                        <Border Grid.Row="1" Grid.Column="1" 
-                            Visibility="{Binding IsAccented, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}"
-                            Width="120">
-                            <Border.Background>
-                                <SolidColorBrush Color="{Binding AccentExemplarHue.Color, Mode=OneTime}" />
-                            </Border.Background>
-                            <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyAccentCommand, Mode=OneTime}"
-                                CommandParameter="{Binding}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Secundario" />
-                                    <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
-                                </StackPanel>
-                            </Button>
-                        </Border>
-                    </Grid>
-                </materialDesign:Card>
+                <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.2}"
+                                                     Opacity="0" RunHint="All">
+                    <materialDesign:TransitioningContent.OpeningEffects>
+                        <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                        <materialDesign:TransitionEffect Kind="FadeIn" />
+                    </materialDesign:TransitioningContent.OpeningEffects>
+                    <materialDesign:Card Margin="10 10 0 0" Width="240" UniformCornerRadius="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Margin="8" Grid.ColumnSpan="2" />
+                            <Border Grid.Row="1" Grid.Column="0" MinWidth="120">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding ExemplarHue.Color, Mode=OneTime}" />
+                                </Border.Background>
+                                <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyPrimaryCommand, Mode=OneTime}"
+                                        CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Primario" />
+                                        <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                            <Border Grid.Row="1" Grid.Column="1" Width="120"
+                                    Visibility="{Binding IsAccented, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding AccentExemplarHue.Color, Mode=OneTime}" />
+                                </Border.Background>
+                                <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TabAjustesApariencia}}, Path=DataContext.ApplyAccentCommand, Mode=OneTime}"
+                                        CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Secundario" />
+                                        <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        </Grid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
             </DataTemplate>
         </ResourceDictionary>
 

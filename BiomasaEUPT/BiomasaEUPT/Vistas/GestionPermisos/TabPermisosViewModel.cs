@@ -264,7 +264,7 @@ namespace BiomasaEUPT.Vistas.GestionPermisos
             string nombre = tipoUsuario.Nombre.ToLower();
 
             return (NombreSeleccionado == true ? nombre.Contains(TextoFiltroTiposUsuarios) : false)
-                || (PermisosSeleccionado == true ? tipoUsuario.Permisos.Any(p => p.PermisoId.ToString().ToLower().Contains(TextoFiltroTiposUsuarios)) : false);
+                || (PermisosSeleccionado == true ? tipoUsuario.Permisos.Any(p => p.Tab.ToString().ToLower().Contains(TextoFiltroTiposUsuarios)) : false);
         }
         #endregion
     }
