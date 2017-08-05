@@ -920,11 +920,8 @@
     <Resource Include="Resources\Paises\za.png" />
     <Resource Include="Resources\Paises\zm.png" />
     <Resource Include="Resources\Paises\zw.png" />
-    <Resource Include="Resources\icono.ico" />
     <None Include="FodyWeavers.xml" />
-    <Content Include="Resources\icono.svg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>

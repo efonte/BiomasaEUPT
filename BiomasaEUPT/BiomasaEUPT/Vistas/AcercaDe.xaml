@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BiomasaEUPT"
         mc:Ignorable="d"
-        Title="AcercaDe" Height="250" Width="450" WindowStartupLocation="CenterScreen"
+        Title="AcercaDe" Height="250" Width="450" WindowStartupLocation="CenterOwner"
         Background="Transparent" WindowStyle="None"
         ResizeMode="NoResize" AllowsTransparency="True"
         TextElement.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"

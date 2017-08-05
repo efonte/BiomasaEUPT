@@ -8,7 +8,7 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         mc:Ignorable="d"
-        Title="Ajustes" Height="350" Width="550" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="Ajustes" Height="350" Width="550" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         Loaded="Window_Loaded"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
