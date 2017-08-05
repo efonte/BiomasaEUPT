@@ -37,6 +37,10 @@
                                 <i:InvokeCommandAction Command="{Binding DGUsuarios_SelectionChangedComando}"
                                     CommandParameter="{Binding Path=SelectedItems, ElementName=dgUsuarios}"/>
                             </i:EventTrigger>
+                            <i:EventTrigger EventName="BeginningEdit">
+                                <cmd:EventToCommand Command="{Binding DGUsuarios_BeginningEditComando, Mode=OneWay}"
+                                                    PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
                             <i:EventTrigger EventName="CellEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGUsuarios_CellEditEndingComando, Mode=OneWay}"
                                                     PassEventArgsToCommand="True"/>
@@ -76,7 +80,7 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Header="Nombre"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}">
                                 <materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Nombre" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                         <Binding.ValidationRules>
                                             <validadores:RequeridoValidationRule NombreCampo="nombre" ValidatesOnTargetUpdated="True" />
                                             <validadores:LongitudValidationRule NombreCampo="nombre" Min="{x:Static const:Constantes.LONG_MIN_NOMBRE_USUARIO}" Max="{x:Static const:Constantes.LONG_MAX_NOMBRE_USUARIO}" ValidatesOnTargetUpdated="True" />
@@ -158,7 +162,8 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado" Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged}"
+                            <DataGridCheckBoxColumn x:Name="baneadoColumna" Width="SizeToHeader" Header="Baneado"
+                                                    Binding="{Binding Baneado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                     ElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                                     EditingElementStyle="{DynamicResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
                                 <!--DataGridCheckBoxColumn.CellStyle>

@@ -53,6 +53,7 @@
                             <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
                             <validadores:LongitudValidationRule NombreCampo="volumen" Min="{x:Static const:Constantes.LONG_MIN_VOLUMEN}" Max="{x:Static const:Constantes.LONG_MAX_VOLUMEN}" ValidatesOnTargetUpdated="True" />
                             <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="{x:Static const:Constantes.REGEX_VOLUMEN}" ValidatesOnTargetUpdated="True" />
+                            <validadores:RangoValidationRule NombreCampo="volumen" Min="1" Max="999" ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

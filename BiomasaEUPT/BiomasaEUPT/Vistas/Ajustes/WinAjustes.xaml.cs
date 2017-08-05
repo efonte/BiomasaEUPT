@@ -25,9 +25,9 @@ namespace BiomasaEUPT.Vistas.Ajustes
             InitializeComponent();
             DataContext = new WinAjustesViewModel();
             ucTabVentana.cbVentanaMaximizada.IsChecked = Properties.Settings.Default.VentanaMaximizada;
-            ucTabVentana.cbTamanoVentana.IsChecked = Properties.Settings.Default.TamanoVentana != "";
-            ucTabVentana.cbPosicionVentana.IsChecked = Properties.Settings.Default.PosicionVentana != "";
-            ucTabVentana.cbTabActiva.IsChecked = Properties.Settings.Default.TabActiva != "";
+            ucTabVentana.cbTamanoVentana.IsChecked = Properties.Settings.Default.RecordarTamanoVentana;
+            ucTabVentana.cbPosicionVentana.IsChecked = Properties.Settings.Default.RecordarPosicionVentana;
+            ucTabVentana.cbTabActiva.IsChecked = Properties.Settings.Default.RecordarTabActiva;
             ucTabApariencia.cbModoNocturno.IsChecked = Properties.Settings.Default.ModoNocturno;
 
             ucTabVentana.cbVentanaMaximizada.Checked += CheckBox_Checked;
@@ -56,13 +56,22 @@ namespace BiomasaEUPT.Vistas.Ajustes
                 Properties.Settings.Default.VentanaMaximizada = true;
 
             if (checkBox == ucTabVentana.cbTamanoVentana)
+            {
+                Properties.Settings.Default.RecordarTamanoVentana = true;
                 Properties.Settings.Default.TamanoVentana = (Owner as MainWindow).Width + "x" + (Owner as MainWindow).Height;
+            }
 
             if (checkBox == ucTabVentana.cbPosicionVentana)
+            {
+                Properties.Settings.Default.RecordarPosicionVentana = true;
                 Properties.Settings.Default.PosicionVentana = (Owner as MainWindow).Left + "," + (Owner as MainWindow).Top;
+            }
 
             if (checkBox == ucTabVentana.cbTabActiva)
+            {
+                Properties.Settings.Default.RecordarTabActiva = true;
                 Properties.Settings.Default.TabActiva = ((Owner as MainWindow).tcTabs.SelectedItem as TabItem).Name;
+            }
 
             if (checkBox == ucTabApariencia.cbModoNocturno)
             {
@@ -81,13 +90,13 @@ namespace BiomasaEUPT.Vistas.Ajustes
                 Properties.Settings.Default.VentanaMaximizada = false;
 
             if (checkBox == ucTabVentana.cbTamanoVentana)
-                Properties.Settings.Default.TamanoVentana = "";
+                Properties.Settings.Default.RecordarTamanoVentana = false;
 
             if (checkBox == ucTabVentana.cbPosicionVentana)
-                Properties.Settings.Default.PosicionVentana = "";
+                Properties.Settings.Default.RecordarPosicionVentana = false;
 
             if (checkBox == ucTabVentana.cbTabActiva)
-                Properties.Settings.Default.TabActiva = "";
+                Properties.Settings.Default.RecordarTabActiva = false;
 
             if (checkBox == ucTabApariencia.cbModoNocturno)
             {

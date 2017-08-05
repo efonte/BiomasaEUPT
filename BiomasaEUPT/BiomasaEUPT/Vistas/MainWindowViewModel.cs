@@ -45,6 +45,7 @@ namespace BiomasaEUPT.Vistas
             {
                 _usuario = value;
                 CargarTabs();
+                CargarAjustes();
             }
         }
 
@@ -76,7 +77,6 @@ namespace BiomasaEUPT.Vistas
                // { Tab.Ventas, new TabVentasViewModel() },
                 { Tab.Trazabilidad, new TabTrazabilidadViewModel() },
             };
-            CargarAjustes();
         }
 
         private void CargarTabs()
@@ -93,7 +93,7 @@ namespace BiomasaEUPT.Vistas
             if (Properties.Settings.Default.VentanaMaximizada)
                 EstadoVentana = WindowState.Maximized;
 
-            if (Properties.Settings.Default.TamanoVentana != "")
+            if (Properties.Settings.Default.RecordarTamanoVentana)
             {
                 var m = Regex.Match(Properties.Settings.Default.TamanoVentana, @"(\d+)x(\d+)");
                 if (m.Success)
@@ -103,7 +103,7 @@ namespace BiomasaEUPT.Vistas
                 }
             }
 
-            if (Properties.Settings.Default.PosicionVentana != "")
+            if (Properties.Settings.Default.RecordarPosicionVentana)
             {
                 var m = Regex.Match(Properties.Settings.Default.PosicionVentana, @"(\d+),(\d+)");
                 if (m.Success)
@@ -112,10 +112,16 @@ namespace BiomasaEUPT.Vistas
                     TopVentana = Int32.Parse(m.Groups[2].Value);
                 }
             }
+            else
+            {
+                // Centra la ventana a la pantalla
+                LeftVentana = Convert.ToInt32((SystemParameters.PrimaryScreenWidth / 2) - (WidthVentana / 2));
+                TopVentana = Convert.ToInt32((SystemParameters.PrimaryScreenHeight / 2) - (HeightVentana / 2));
+            }
 
             // Se obtiene la primera pestaña disponible
             /*TabItem tabItem = tabItem = tcTabs.Items.OfType<TabItem>().First();
-            if (Properties.Settings.Default.TabActiva != "")
+            if (Properties.Settings.Default.RecordarTabActiva)
             {
                 tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);
             }
@@ -128,6 +134,16 @@ namespace BiomasaEUPT.Vistas
             tabItem.IsSelected = true;
             // InicializarTab hay que ejecutarlo después de que se cargue la vista
             tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };*/
+            if (Properties.Settings.Default.RecordarTabActiva)
+            {
+                var tabASeleccionar = viewModelsDisponibles
+                    .FirstOrDefault(vmd => vmd.Key.ToString() == Properties.Settings.Default.TabActiva)
+                    .Value;
+                if (tabASeleccionar != null && Tabs.Contains(tabASeleccionar))
+                {
+                    TabSeleccionada = tabASeleccionar;
+                }
+            }
 
             var paletteHelper = new PaletteHelper();
             paletteHelper.SetLightDark(Properties.Settings.Default.ModoNocturno);
@@ -137,14 +153,16 @@ namespace BiomasaEUPT.Vistas
 
         public void GuardarAjustes()
         {
-            if (Properties.Settings.Default.TamanoVentana != "")
+            if (Properties.Settings.Default.RecordarTamanoVentana)
                 Properties.Settings.Default.TamanoVentana = WidthVentana + "x" + HeightVentana;
 
-            if (Properties.Settings.Default.PosicionVentana != "")
+            if (Properties.Settings.Default.RecordarPosicionVentana)
                 Properties.Settings.Default.PosicionVentana = LeftVentana + "," + TopVentana;
 
-            // if (Properties.Settings.Default.TabActiva != "")
-            //     Properties.Settings.Default.TabActiva = (tcTabs.SelectedItem as TabItem).Name;
+            if (Properties.Settings.Default.RecordarTabActiva)
+                Properties.Settings.Default.TabActiva = viewModelsDisponibles
+                    .Single(vmd => vmd.Value == TabSeleccionada)
+                    .Key.ToString();
 
             Properties.Settings.Default.Save();
         }
@@ -207,6 +225,7 @@ namespace BiomasaEUPT.Vistas
 
         public void MostrarAcercaDe()
         {
+            Console.WriteLine(LeftVentana + " " + TopVentana);
             AcercaDe acercaDe = new AcercaDe()
             {
                 Owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive)

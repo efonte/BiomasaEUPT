@@ -73,8 +73,25 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             context = new BiomasaEUPTContext();
             tiposUsuariosViewSource = ((CollectionViewSource)(FindResource("tiposUsuariosViewSource")));
-            context.TiposUsuarios.Load();
-            tiposUsuariosViewSource.Source = context.TiposUsuarios.Local;
+
+            var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
+            var tiposUsuarios = context.TiposUsuarios.ToList();
+
+            // Si el usuario no es Super Administrador no puede seleccionar dicho tipo
+            if (usuarioLogeado.TipoId != 1)
+            {
+                tiposUsuarios = tiposUsuarios.Where(tu => tu.TipoUsuarioId != 1).ToList();
+            }
+
+            // Si el usuario no tiene la gestión de permisos no puede seleccionar los tipos de usuarios con dicho permiso
+            if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+            {
+                var tiposUsuariosConPermisos = context.TiposUsuarios.Where(tu => tu.Permisos.Any(p => p.Tab == Tab.Permisos)).ToList();
+                tiposUsuarios = tiposUsuarios.Where(tui => !tiposUsuariosConPermisos.Any(tue => tui.TipoUsuarioId == tue.TipoUsuarioId)).ToList();
+
+            }
+
+            tiposUsuariosViewSource.Source = tiposUsuarios;
         }
     }
 }

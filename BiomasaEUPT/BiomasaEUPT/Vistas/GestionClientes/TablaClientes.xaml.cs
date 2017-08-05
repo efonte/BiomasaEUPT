@@ -54,14 +54,16 @@ namespace BiomasaEUPT.Vistas.GestionClientes
                 var formDireccionViewModel = new FormDireccionViewModel()
                 {
                     Context = tabClientesViewModel.Context,
-                    PaisSeleccionado = tabClientesViewModel.ClienteSeleccionado.Municipio.Provincia.Comunidad.Pais
+                    PaisSeleccionado = tabClientesViewModel.ClienteSeleccionado.Municipio.Provincia.Comunidad.Pais,
+                    ComunidadSeleccionada = tabClientesViewModel.ClienteSeleccionado.Municipio.Provincia.Comunidad,
+                    ProvinciaSeleccionada = tabClientesViewModel.ClienteSeleccionado.Municipio.Provincia,
+                    // MunicipioSeleccionado = tabClientesViewModel.ClienteSeleccionado.Municipio
                 };
                 popupBox.PopupContent = new FormDireccion()
                 {
                     DataContext = formDireccionViewModel
                 };
                 formDireccionViewModel.CargarPaises();
-
             }
         }
 

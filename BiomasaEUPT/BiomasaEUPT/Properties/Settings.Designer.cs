@@ -154,5 +154,41 @@ namespace BiomasaEUPT.Properties {
                 this["ColorSecundario"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecordarTabActiva {
+            get {
+                return ((bool)(this["RecordarTabActiva"]));
+            }
+            set {
+                this["RecordarTabActiva"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RecordarPosicionVentana {
+            get {
+                return ((bool)(this["RecordarPosicionVentana"]));
+            }
+            set {
+                this["RecordarPosicionVentana"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecordarTamanoVentana {
+            get {
+                return ((bool)(this["RecordarTamanoVentana"]));
+            }
+            set {
+                this["RecordarTamanoVentana"] = value;
+            }
+        }
     }
 }

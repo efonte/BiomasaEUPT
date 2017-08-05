@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         private ICommand _borrarUsuarioComando;
         private ICommand _refrescarUsuariosComando;
         private ICommand _filtrarUsuariosComando;
+        private ICommand _dgUsuarios_BeginningEditComando;
         private ICommand _dgUsuarios_CellEditEndingComando;
 
         private BiomasaEUPTContext context;
@@ -83,7 +85,25 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
             {
                 Usuarios = new ObservableCollection<Usuario>(context.Usuarios.ToList());
                 UsuariosView = (CollectionView)CollectionViewSource.GetDefaultView(Usuarios);
-                TiposUsuarios = new ObservableCollection<TipoUsuario>(context.TiposUsuarios.ToList());
+
+                var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
+                var tiposUsuarios = context.TiposUsuarios.ToList();
+
+                // Si el usuario no es Super Administrador no puede seleccionar dicho tipo
+                if (usuarioLogeado.TipoId != 1)
+                {
+                    tiposUsuarios = tiposUsuarios.Where(tu => tu.TipoUsuarioId != 1).ToList();
+                }
+
+                // Si el usuario no tiene la gestión de permisos no puede seleccionar los tipos de usuarios con dicho permiso
+                if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+                {
+                    var tiposUsuariosConPermisos = context.TiposUsuarios.Where(tu => tu.Permisos.Any(p => p.Tab == Tab.Permisos)).ToList();
+                    tiposUsuarios = tiposUsuarios.Where(tui => !tiposUsuariosConPermisos.Any(tue => tui.TipoUsuarioId == tue.TipoUsuarioId)).ToList();
+
+                }
+                TiposUsuarios = new ObservableCollection<TipoUsuario>(tiposUsuarios);
+
                 ContadorViewModel.Tipos = TiposUsuarios;
                 FiltroTiposViewModel.Items = TiposUsuarios;
 
@@ -95,18 +115,56 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         // Asigna el valor de UsuariosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGUsuarios_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => UsuariosSeleccionados = param.Cast<Usuario>().ToList());
 
-        #region Editar Celda
+
+        #region Editar Celda Beginning
+        public ICommand DGUsuarios_BeginningEditComando => _dgUsuarios_BeginningEditComando ??
+             (_dgUsuarios_BeginningEditComando = new RelayCommandGenerico<DataGridBeginningEditEventArgs>(
+                  param => EditarCeldaBeginningUsuario(param)
+             ));
+
+        private async void EditarCeldaBeginningUsuario(DataGridBeginningEditEventArgs e)
+        {
+
+            var usuarioSeleccionado = e.Row.DataContext as Usuario;
+            var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
+
+            // El usuario Super Administrador no se puede borrar
+            if (usuarioSeleccionado.TipoId == 1 && usuarioLogeado.TipoId != 1)
+            {
+                await DialogHost.Show(new MensajeInformacion()
+                {
+                    Mensaje = "No se puede modificar ese usuario."
+                }, "RootDialog");
+                //context.Entry(usuarioSeleccionado).State = EntityState.Unchanged;
+                e.Cancel = true;
+            }
+
+            // Si el usuario logeado o tiene la gestión de permisos y el usuario seleccionado sí, entonces no se puede modificar
+            else if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos)
+                     && usuarioSeleccionado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+            {
+                await DialogHost.Show(new MensajeInformacion()
+                {
+                    Mensaje = "No se puede modificar ese usuario ya que no se tiene permisos suficientes."
+                }, "RootDialog");
+                //context.Entry(usuarioSeleccionado).State = EntityState.Unchanged;
+                e.Cancel = true;
+            }
+        }
+        #endregion
+
+
+        #region Editar Celda Ending
         public ICommand DGUsuarios_CellEditEndingComando => _dgUsuarios_CellEditEndingComando ??
             (_dgUsuarios_CellEditEndingComando = new RelayCommandGenerico<DataGridCellEditEndingEventArgs>(
-                 param => EditarCeldaUsuario(param)
+                 param => EditarCeldaEndingUsuario(param)
             ));
 
-        private async void EditarCeldaUsuario(DataGridCellEditEndingEventArgs e)
+        private async void EditarCeldaEndingUsuario(DataGridCellEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 var usuarioSeleccionado = e.Row.DataContext as Usuario;
-
                 if (e.Column.DisplayIndex == 1) // 1 = Posición columna contraseña
                 {
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
@@ -177,43 +235,68 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private async void BorrarUsuario()
         {
-            string pregunta = UsuariosSeleccionados.Count == 1
-                ? "¿Está seguro de que desea borrar al usuario " + UsuarioSeleccionado.Nombre + "?"
-                : "¿Está seguro de que desea borrar los usuarios seleccionados?";
+            var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
 
-            var resultado = (bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog");
-
-            if (resultado)
+            // El usuario Super Administrador no se puede borrar
+            if (UsuarioSeleccionado.TipoId == 1 && usuarioLogeado.TipoId != 1)
             {
-                var usuariosABorrar = new List<Usuario>();
-                var adminsABorrar = new List<Usuario>();
-                var noAdminsABorrar = new List<Usuario>();
-                foreach (var usuario in UsuariosSeleccionados)
+                await DialogHost.Show(new MensajeInformacion()
                 {
-                    if (usuario.TipoId == 1) { adminsABorrar.Add(usuario); }
-                    else { noAdminsABorrar.Add(usuario); }
-                }
+                    Mensaje = "No se puede borrar ese usuario."
+                }, "RootDialog");
+            }
 
-                // Si aún quedan admins activos en el sistema se procede a borrar los usuarios
-                if (context.Usuarios.Where(u => u.TipoId == 1 && u.Baneado != false).ToList().Except(adminsABorrar).Any())
+            // Si el usuario logeado o tiene la gestión de permisos y el usuario seleccionado sí, entonces no se puede borrar
+            else if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos)
+                     && UsuarioSeleccionado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+            {
+                await DialogHost.Show(new MensajeInformacion()
                 {
-                    context.Usuarios.RemoveRange(usuariosABorrar);
-                    context.SaveChanges();
-                }
-                else
+                    Mensaje = "No se puede borrar ese usuario ya que no se tiene permisos suficientes."
+                }, "RootDialog");
+            }
+
+            // Se procede a borrar
+            else
+            {
+                string pregunta = UsuariosSeleccionados.Count == 1
+                    ? "¿Está seguro de que desea borrar al usuario " + UsuarioSeleccionado.Nombre + "?"
+                    : "¿Está seguro de que desea borrar los usuarios seleccionados?";
+
+                var resultado = (bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog");
+
+                if (resultado)
                 {
-                    context.Usuarios.RemoveRange(noAdminsABorrar);
-                    if (adminsABorrar.Any())
+                    var usuariosABorrar = new List<Usuario>();
+                    var adminsABorrar = new List<Usuario>();
+                    var noAdminsABorrar = new List<Usuario>();
+                    foreach (var usuario in UsuariosSeleccionados)
                     {
-                        string mensaje = adminsABorrar.Count == 1
-                         ? "No se ha podido borrar el administrador seleccionado."
-                         : "No se han podido borrar los administradores seleccionados.";
-                        mensaje += "\n\nDebe haber en el sistema al menos un admin activo.";
-                        await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                        if (usuario.TipoId == 1) { adminsABorrar.Add(usuario); }
+                        else { noAdminsABorrar.Add(usuario); }
                     }
-                    context.SaveChanges();
+
+                    // Si aún quedan supearadmins activos en el sistema se procede a borrar los usuarios
+                    if (context.Usuarios.Where(u => u.TipoId == 1 && u.Baneado != false).ToList().Except(adminsABorrar).Any())
+                    {
+                        context.Usuarios.RemoveRange(usuariosABorrar);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        context.Usuarios.RemoveRange(noAdminsABorrar);
+                        if (adminsABorrar.Any())
+                        {
+                            string mensaje = adminsABorrar.Count == 1
+                             ? "No se ha podido borrar el administrador seleccionado."
+                             : "No se han podido borrar los administradores seleccionados.";
+                            mensaje += "\n\nDebe haber en el sistema al menos un admin activo.";
+                            await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                        }
+                        context.SaveChanges();
+                    }
+                    CargarUsuarios();
                 }
-                CargarUsuarios();
             }
         }
         #endregion
@@ -228,16 +311,41 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
         private async void ModificarUsuario()
         {
-            var formUsuario = new FormUsuario(UsuarioSeleccionado);
-            if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
+            var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
+
+            // El usuario Super Administrador no se puede borrar
+            if (UsuarioSeleccionado.TipoId == 1 && usuarioLogeado.TipoId != 1)
             {
-                string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
-                UsuarioSeleccionado.Nombre = formUsuario.Nombre;
-                UsuarioSeleccionado.Email = formUsuario.Email;
-                UsuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;
-                UsuarioSeleccionado.Contrasena = hashContrasena;
-                UsuarioSeleccionado.Baneado = formUsuario.Baneado;
-                context.SaveChanges();
+                await DialogHost.Show(new MensajeInformacion()
+                {
+                    Mensaje = "No se puede modificar ese usuario."
+                }, "RootDialog");
+            }
+
+            // Si el usuario logeado o tiene la gestión de permisos y el usuario seleccionado sí, entonces no se puede modificar
+            else if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos)
+                     && UsuarioSeleccionado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+            {
+                await DialogHost.Show(new MensajeInformacion()
+                {
+                    Mensaje = "No se puede modificar ese usuario ya que no se tiene permisos suficientes."
+                }, "RootDialog");
+            }
+
+            // Se procede a modificar
+            else
+            {
+                var formUsuario = new FormUsuario(UsuarioSeleccionado);
+                if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
+                {
+                    string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
+                    UsuarioSeleccionado.Nombre = formUsuario.Nombre;
+                    UsuarioSeleccionado.Email = formUsuario.Email;
+                    UsuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;
+                    UsuarioSeleccionado.Contrasena = hashContrasena;
+                    UsuarioSeleccionado.Baneado = formUsuario.Baneado;
+                    context.SaveChanges();
+                }
             }
         }
         #endregion

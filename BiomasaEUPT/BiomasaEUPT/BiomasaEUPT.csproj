@@ -210,6 +210,7 @@
     <Compile Include="Modelos\Validadores\IgualValidationRule.cs" />
     <Compile Include="Modelos\Validadores\LongitudValidationRule.cs" />
     <Compile Include="Modelos\Validadores\ProveedorValidationRule.cs" />
+    <Compile Include="Modelos\Validadores\RangoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RecepcionValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RegexValidationRule.cs" />
     <Compile Include="Modelos\Validadores\RequeridoValidationRule.cs" />

@@ -10,7 +10,5 @@
 * Añadir gestión de Sitios y Huecos de Almacenaje
 * Añadir gestión de Grupos y Tipos de Productos Terminados
 * Añadir gestión de Picking
-* Corregir Ajustes (añadir propiedad bool)
 * Corregir contraseña formUsuario
 * Al cambiar la contraseña se tiene que introducir la anterior
-* Añadir formHueco y permitir añadir y modificarlos

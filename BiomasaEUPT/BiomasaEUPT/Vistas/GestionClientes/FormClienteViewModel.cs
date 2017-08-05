@@ -60,11 +60,21 @@ namespace BiomasaEUPT.Vistas.GestionClientes
 
         public Municipio MunicipioSeleccionado { get; set; }
 
-        public String RazonSocial { get; set; }
-        public String Nif { get; set; }
-        public String Email { get; set; }
-        public String Calle { get; set; }
-        public String Observaciones { get; set; }
+        public string RazonSocial { get; set; }
+        public string Nif { get; set; }
+        public string Email { get; set; }
+        public string Calle { get; set; }
+
+        private string _observaciones;
+        public string Observaciones
+        {
+            get => _observaciones;
+            set
+            {
+                // Si las observaciones es cadena vacía hay que asignarle el valor null
+                _observaciones = value == "" ? null : value;
+            }
+        }
 
         public BiomasaEUPTContext Context { get; set; }
 
