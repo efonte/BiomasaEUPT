@@ -20,6 +20,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInvertido" True="Collapsed" False="Visible" />
             <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
+            <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -239,7 +240,8 @@
                                     <materialDesign:PackIcon Kind="Pin"/>
                                 </materialDesign:ToggleButtonAssist.OnContent>
                             </ToggleButton>
-                            <TextBlock x:Name="tbObservaciones" Text="{Binding ProveedorSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBlock x:Name="tbObservaciones" Text="{Binding ProveedorSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged,
+                                                                               Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"
                                        Visibility="{Binding IsChecked, ElementName=tbEditarObservaciones, Converter={StaticResource BooleanToVisibilityConverterInvertido}}"
                                        FontSize="16" MaxHeight="260" TextWrapping="Wrap"/>
                             <TextBox x:Name="tboxObservaciones" Text="{Binding ProveedorSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged}"

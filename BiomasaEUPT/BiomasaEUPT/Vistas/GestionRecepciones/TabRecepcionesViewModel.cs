@@ -28,7 +28,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public CollectionView MateriasPrimasView { get; private set; }
         public IList<MateriaPrima> MateriasPrimasSeleccionadas { get; set; }
         public MateriaPrima MateriaPrimaSeleccionada { get; set; }
-        public bool ObservacionesMateriasPrimasEnEdicion { get; set; }
 
         /*public string TextoMasOpciones { get; set; } = "Más Opciones";
 
@@ -51,6 +50,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 }
             }
         }*/
+
+        public int IndiceMasOpciones { get; set; }
 
         // Checkbox Filtro Recepciones
         public bool FechaRecepcionSeleccionada { get; set; } = true;
@@ -99,7 +100,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private ICommand _borrarMateriaPrimaComando;
         private ICommand _refrescarMateriasPrimasComando;
         private ICommand _filtrarMateriasPrimasComando;
-        private ICommand _modificarObservacionesMateriaPrimaComando;
 
         private ICommand _masOpcionesComando;
 
@@ -118,6 +118,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             using (new CursorEspera())
             {
+                IndiceMasOpciones = 0;
                 context = new BiomasaEUPTContext();
                 CargarRecepciones();
                 PaginacionViewModel.GetItemsTotales = () => { return context.Recepciones.Count(); };
@@ -500,24 +501,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 param => CargarMateriasPrimas(),
                 param => RecepcionSeleccionada != null
              ));
-        #endregion
-
-
-        #region Modificar Observaciones Materia Prima
-        public ICommand ModificarObservacionesMateriaPrimaComando => _modificarObservacionesMateriaPrimaComando ??
-            (_modificarObservacionesMateriaPrimaComando = new RelayCommand(
-                param => ModificarObservacionesMateriaPrima(),
-                param => MateriaPrimaSeleccionada != null
-             ));
-
-        private void ModificarObservacionesMateriaPrima()
-        {
-            /*var materiaPrima = context.MateriasPrimas.Single(mp => mp.MateriaPrimaId == MateriaPrimaSeleccionada.MateriaPrimaId);
-            materiaPrima.Observaciones = MateriaPrimaSeleccionada.Observaciones;*/
-            context.SaveChanges();
-
-            ObservacionesMateriasPrimasEnEdicion = false;
-        }
         #endregion
 
 

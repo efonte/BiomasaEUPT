@@ -19,7 +19,18 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         public string CantidadHint { get; set; }
         public double Cantidad { get; set; }
         //public String Codigo { get; set; }
-        public String Observaciones { get; set; }
+
+        private string _observaciones;
+        public string Observaciones
+        {
+            get => _observaciones;
+            set
+            {
+                // Si las observaciones es cadena vacía hay que asignarle el valor null
+                _observaciones = value == "" ? null : value;
+            }
+        }
+
         public DateTime? FechaBaja { get; set; }
         public DateTime? HoraBaja { get; set; }
         public bool QuedaCantidadPorAlmacenar { get; set; }

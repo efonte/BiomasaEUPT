@@ -12,3 +12,5 @@
 * Añadir gestión de Picking
 * Corregir Ajustes (añadir propiedad bool)
 * Corregir contraseña formUsuario
+* Al cambiar la contraseña se tiene que introducir la anterior
+* Añadir formHueco y permitir añadir y modificarlos

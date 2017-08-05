@@ -151,7 +151,7 @@
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                             </Style>
                             <DataTemplate x:Key="PlantillaVacia">
-                                <TextBlock TextWrapping="Wrap" Margin="10 10 10 10"
+                                <TextBlock TextWrapping="Wrap" Margin="10 10 10 10" FontSize="14"
                                            MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor,
                                                               AncestorType={x:Type ContentPresenter}},
                                                               Path=ActualWidth, UpdateSourceTrigger=PropertyChanged,

@@ -176,6 +176,7 @@
                          ItemsSource="{Binding HuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.Style>
                         <Style TargetType="ItemsControl">
+                            <Setter Property="BorderBrush" Value="Transparent"/>
                             <Style.Triggers>
                                 <Trigger Property="HasItems" Value="false">
                                     <Setter Property="Template">

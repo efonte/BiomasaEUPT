@@ -55,13 +55,14 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private void bMasOpciones_Click(object sender, RoutedEventArgs e)
         {
-            transicion.SelectedIndex = 1;
+            //transicion.SelectedIndex = 1;
+            (DataContext as TabRecepcionesViewModel).IndiceMasOpciones = 1;
             (DataContext as TabRecepcionesViewModel).MasOpcionesRecepcionesViewModel.Inicializar();
         }
 
         private void bVolver_Click(object sender, RoutedEventArgs e)
         {
-            transicion.SelectedIndex = 0;
+            // transicion.SelectedIndex = 0;
             (DataContext as TabRecepcionesViewModel).Inicializar();
         }
     }

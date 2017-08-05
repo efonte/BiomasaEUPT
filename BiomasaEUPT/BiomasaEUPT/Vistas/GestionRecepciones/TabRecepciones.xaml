@@ -16,7 +16,7 @@
             <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:Transitioner x:Name="transicion" SelectedIndex="0">
+    <materialDesign:Transitioner x:Name="transicion" SelectedIndex="{Binding IndiceMasOpciones, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="400" MinWidth="320" MaxWidth="520"/>
