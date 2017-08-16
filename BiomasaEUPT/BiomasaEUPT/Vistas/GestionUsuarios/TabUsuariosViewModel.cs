@@ -25,6 +25,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         public ObservableCollection<Usuario> Usuarios { get; set; }
         public CollectionView UsuariosView { get; private set; }
         public ObservableCollection<TipoUsuario> TiposUsuarios { get; set; }
+        public ObservableCollection<TipoUsuario> TiposUsuariosDisponibles { get; set; }
         public IList<Usuario> UsuariosSeleccionados { get; set; }
         public Usuario UsuarioSeleccionado { get; set; }
         public FiltroViewModel<TipoUsuario> FiltroTiposViewModel { get; set; }
@@ -88,7 +89,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
                 var usuarioLogeado = context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
                 var tiposUsuarios = context.TiposUsuarios.ToList();
-
+                TiposUsuarios = new ObservableCollection<TipoUsuario>(tiposUsuarios);
                 // Si el usuario no es Super Administrador no puede seleccionar dicho tipo
                 if (usuarioLogeado.TipoId != 1)
                 {
@@ -102,7 +103,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     tiposUsuarios = tiposUsuarios.Where(tui => !tiposUsuariosConPermisos.Any(tue => tui.TipoUsuarioId == tue.TipoUsuarioId)).ToList();
 
                 }
-                TiposUsuarios = new ObservableCollection<TipoUsuario>(tiposUsuarios);
+                TiposUsuariosDisponibles = new ObservableCollection<TipoUsuario>(tiposUsuarios);               
 
                 ContadorViewModel.Tipos = TiposUsuarios;
                 FiltroTiposViewModel.Items = TiposUsuarios;

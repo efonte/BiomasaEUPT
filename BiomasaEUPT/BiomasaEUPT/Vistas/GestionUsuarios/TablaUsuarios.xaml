@@ -151,7 +151,7 @@
                                     <DataTemplate>
                                         <ComboBox SelectedValue="{Binding TipoUsuario, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                   DisplayMemberPath="Nombre"
-                                                  ItemsSource="{Binding DataContext.TiposUsuarios, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabUsuarios}}">
+                                                  ItemsSource="{Binding DataContext.TiposUsuariosDisponibles, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TabUsuarios}}">
                                         </ComboBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>

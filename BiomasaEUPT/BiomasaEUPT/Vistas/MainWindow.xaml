@@ -61,7 +61,7 @@
                         </MenuItem>
                         <!-- Opciones -->
                         <MenuItem Header="_Opciones" Foreground="White" Height="35">
-                            <MenuItem x:Name="menuAjustes" Header="_Ajustes" Command="{Binding MostrarAjustesComando}">
+                            <MenuItem x:Name="menuAjustes" Header="A_justes" Command="{Binding MostrarAjustesComando}">
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Settings" />
                                 </MenuItem.Icon>
@@ -69,7 +69,7 @@
                         </MenuItem>
                         <!-- Ayuda -->
                         <MenuItem Header="A_yuda" Foreground="White" Height="35">
-                            <MenuItem x:Name="menuGitHub" Header="_Página GitHub" Click="menuGitHub_Click">
+                            <MenuItem x:Name="menuGitHub" Header="Página _GitHub" Click="menuGitHub_Click">
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="GithubCircle" />
                                 </MenuItem.Icon>
