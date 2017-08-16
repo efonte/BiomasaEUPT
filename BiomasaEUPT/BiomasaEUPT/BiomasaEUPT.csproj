@@ -368,6 +368,7 @@
     <Compile Include="Vistas\GestionVentas\FormProductoEnvasado.xaml.cs">
       <DependentUpon>FormProductoEnvasado.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\MasOpcionesVentasViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
       <DependentUpon>TablaPedidos.xaml</DependentUpon>
     </Compile>
@@ -377,6 +378,7 @@
     <Compile Include="Vistas\GestionVentas\TabVentas.xaml.cs">
       <DependentUpon>TabVentas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\TabVentasViewModel.cs" />
     <Compile Include="Vistas\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>

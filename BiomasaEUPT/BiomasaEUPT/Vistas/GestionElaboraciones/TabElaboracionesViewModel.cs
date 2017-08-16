@@ -177,7 +177,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         
         #region Borrar Orden Elaboración
-        public ICommand BorrarRecepcionComando => _borrarOrdenElaboracionComando ??
+        public ICommand BorrarOrdenElaboracionComando => _borrarOrdenElaboracionComando ??
             (_borrarOrdenElaboracionComando = new RelayCommandGenerico<IList<object>>(
                 param => BorrarOrdenElaboracion(),
                 param => OrdenElaboracionSeleccionada != null
@@ -192,7 +192,6 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
             {
                 var ordenesElaboracionesABorrar = new List<OrdenElaboracion>();
-                //var recepcionesSeleccionadas = ucTablaRecepciones.dgRecepciones.SelectedItems.Cast<Recepcion>().ToList();
 
                 foreach (var ordenElaboracion in OrdenesElaboracionesSeleccionadas)
                 {
@@ -228,7 +227,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         public async void ModificarOrdenElaboracion()
         {
 
-            var formElaboracion = new FormElaboracion(context, "Editar Recepción")
+            var formElaboracion = new FormElaboracion(context, "Editar Elaboración")
             {
                 
                 /*Descripcion= formElaboracion.Descripcion,
@@ -434,7 +433,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 }
                 if (!context.ProductosTerminadosComposiciones.Any(ptc => ptc.ProductoId == ProductoTerminadoSeleccionado.ProductoTerminadoId))
                 {
-                    // Se borran todos los historiales huecos recepciones antiguos y se añaden los nuevos
+                    // Se borran todos los historiales huecos almacenajes antiguos y se añaden los nuevos
                     context.HistorialHuecosAlmacenajes.RemoveRange(historialHuecosAlmacenajesIniciales);
                     var huecosProductosTerminados = new List<HistorialHuecoAlmacenaje>();
                     foreach (var hpt in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
