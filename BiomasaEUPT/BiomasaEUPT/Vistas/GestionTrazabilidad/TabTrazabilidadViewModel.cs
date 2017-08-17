@@ -152,7 +152,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 
         private void GenerarPDF()
         {
-            var informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
+            var informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
             var rutaInforme = "";
             if (context.Recepciones.Any(r => r.NumeroAlbaran == Codigo))
             {

@@ -66,6 +66,10 @@ namespace BiomasaEUPT.Clases
         {
             this.ruta = ruta;
 
+            // Si la ruta no terminado con "\" se le añade.
+            if (!ruta.EndsWith("\\"))
+                ruta += "\\";
+
             if (!Directory.Exists(ruta))
                 Directory.CreateDirectory(ruta);
         }

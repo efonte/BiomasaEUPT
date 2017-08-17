@@ -34,8 +34,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private void bPdfRecepcion_Click(object sender, RoutedEventArgs e)
         {
             Recepcion recepcion = (sender as Button).DataContext as Recepcion;
-
-            InformePDF informe = new InformePDF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\");
+            InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
             System.Diagnostics.Process.Start(informe.GenerarPDFRecepcion(trazabilidad.Recepcion(recepcion.NumeroAlbaran)));
         }
     }

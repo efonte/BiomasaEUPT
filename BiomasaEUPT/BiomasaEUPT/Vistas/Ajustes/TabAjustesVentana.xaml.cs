@@ -27,7 +27,7 @@ namespace BiomasaEUPT.Vistas.Ajustes
         public TabAjustesVentana()
         {
             InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
         }
 
     }

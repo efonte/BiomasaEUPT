@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas.Ajustes
 {
@@ -15,12 +17,47 @@ namespace BiomasaEUPT.Vistas.Ajustes
         public SecureString Contrasena { get; set; }
         public SecureString ContrasenaConfirmacion { get; set; }
 
+        private string _directorioInformes;
+        public string DirectorioInformes
+        {
+            get => _directorioInformes;
+            set
+            {
+                if (!value.EndsWith("\\"))
+                    value += "\\";
+                _directorioInformes = value;
+                Properties.Settings.Default.DirectorioInformes = DirectorioInformes;
+                Properties.Settings.Default.Save();
+                Console.WriteLine(Properties.Settings.Default.DirectorioInformes);
+            }
+        }
+
+        private ICommand _seleccionarDirectorioInformesComando;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WinAjustesViewModel()
         {
+            DirectorioInformes = Properties.Settings.Default.DirectorioInformes;
+        }
+
+        #region Seleccionar directorio informes PDF
+        public ICommand SeleccionarDirectorioInformesComando => _seleccionarDirectorioInformesComando ??
+            (_seleccionarDirectorioInformesComando = new RelayCommand(
+                param => SeleccionarDirectorioInformes()
+            ));
+
+        private void SeleccionarDirectorioInformes()
+        {
+            var dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DirectorioInformes = dialog.SelectedPath;
+            }
 
         }
+        #endregion
 
 
         #region Validación Contraseñas
@@ -38,7 +75,7 @@ namespace BiomasaEUPT.Vistas.Ajustes
                 {
                     error = "El campo contraseña es obligatorio.";
                 }
-                else if (Contrasena != null &&ContrasenaConfirmacion != null && !ContrasenaHashing.SecureStringEqual(Contrasena, ContrasenaConfirmacion))
+                else if (Contrasena != null && ContrasenaConfirmacion != null && !ContrasenaHashing.SecureStringEqual(Contrasena, ContrasenaConfirmacion))
                 {
                     error = "El campo contraseña y contraseña confirmación no son iguales.";
                 }

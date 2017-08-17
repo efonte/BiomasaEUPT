@@ -27,6 +27,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Ventana" Style="{DynamicResource TituloTextBlock}"/>
@@ -36,5 +38,19 @@
         <CheckBox x:Name="cbPosicionVentana" Grid.Row="3" Grid.Column="1" Content="Recordar posición ventana"/>
         <CheckBox x:Name="cbTabActiva" Grid.Row="2" Grid.Column="1" Content="Recordar pestaña activa"/>
         <!-- x:Name="cbPosicionTab" Grid.Row="4" Grid.Column="0" Content="Recordar orden de las pestañas"/-->
+        <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="Informes" Margin="0 20 0 0"
+                   Style="{DynamicResource TituloTextBlock}"/>
+        <Separator Grid.Row="5" Grid.ColumnSpan="2" />
+        <DockPanel Grid.Row="6" Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Left" Text="Directorio destino PDF:"
+                       Margin="10 0 10 0" FontSize="15" FontWeight="Medium"
+                       VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Content="..."
+                    Command="{Binding SeleccionarDirectorioInformesComando}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    FontSize="15" Margin="10 0 10 0" Padding="0" Height="30" Width="30"/>
+            <TextBox DockPanel.Dock="Right" Text="{Binding DirectorioInformes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     HorizontalAlignment="Stretch" IsReadOnly="True"/>
+        </DockPanel>
     </Grid>
 </UserControl>

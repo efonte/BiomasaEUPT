@@ -190,5 +190,17 @@ namespace BiomasaEUPT.Properties {
                 this["RecordarTamanoVentana"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DirectorioInformes {
+            get {
+                return ((string)(this["DirectorioInformes"]));
+            }
+            set {
+                this["DirectorioInformes"] = value;
+            }
+        }
     }
 }

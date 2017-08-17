@@ -38,81 +38,83 @@ namespace BiomasaEUPT.Vistas
                 // Hay que añadirlos cada vez porque sino al cambiar de pestaña se pierde el foco del teclado
                 // y no funcionarían hasta que no se hiciera clic en algún componente de la vista.
                 var ventana = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-                if (ventana.InputBindings != null && ventana.InputBindings.Count >= 4)
+                if (ventana != null)
                 {
-                    ventana.InputBindings.RemoveAt(3);
-                    ventana.InputBindings.RemoveAt(2);
-                    ventana.InputBindings.RemoveAt(1);
-                    ventana.InputBindings.RemoveAt(0);
-                }
+                    if (ventana.InputBindings != null && ventana.InputBindings.Count >= 4)
+                    {
+                        ventana.InputBindings.RemoveAt(3);
+                        ventana.InputBindings.RemoveAt(2);
+                        ventana.InputBindings.RemoveAt(1);
+                        ventana.InputBindings.RemoveAt(0);
+                    }
 
-                if (TabSeleccionada is TabPermisosViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
-                           AnadirTipoUsuarioComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
-                           ModificarTipoUsuarioComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
-                           BorrarTipoUsuarioComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
-                           RefrescarTiposUsuariosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    if (TabSeleccionada is TabPermisosViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
+                               AnadirTipoUsuarioComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
+                               ModificarTipoUsuarioComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
+                               BorrarTipoUsuarioComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabPermisosViewModel).
+                               RefrescarTiposUsuariosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
+                    else if (TabSeleccionada is TabUsuariosViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
+                               AnadirUsuarioComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
+                               ModificarUsuarioComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
+                               BorrarUsuarioComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
+                               RefrescarUsuariosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
+                    else if (TabSeleccionada is TabClientesViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
+                               AnadirClienteComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
+                               ModificarClienteComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
+                               BorrarClienteComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
+                               RefrescarClientesComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
+                    else if (TabSeleccionada is TabProveedoresViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
+                               AnadirProveedorComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
+                               ModificarProveedorComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
+                               BorrarProveedorComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
+                               RefrescarProveedoresComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
+                    else if (TabSeleccionada is TabRecepcionesViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
+                               AnadirMateriaPrimaComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
+                               ModificarMateriaPrimaComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
+                               BorrarMateriaPrimaComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
+                               RefrescarMateriasPrimasComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
+                    else if (TabSeleccionada is TabElaboracionesViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
+                               AnadirProductoTerminadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
+                               ModificarProductoTerminadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
+                               BorrarProductoTerminadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
+                               RefrescarProductosTerminadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
                 }
-                else if (TabSeleccionada is TabUsuariosViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
-                           AnadirUsuarioComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
-                           ModificarUsuarioComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
-                           BorrarUsuarioComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabUsuariosViewModel).
-                           RefrescarUsuariosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
-                }
-                else if (TabSeleccionada is TabClientesViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
-                           AnadirClienteComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
-                           ModificarClienteComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
-                           BorrarClienteComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabClientesViewModel).
-                           RefrescarClientesComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
-                }
-                else if (TabSeleccionada is TabProveedoresViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
-                           AnadirProveedorComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
-                           ModificarProveedorComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
-                           BorrarProveedorComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabProveedoresViewModel).
-                           RefrescarProveedoresComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
-                }
-                else if (TabSeleccionada is TabRecepcionesViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
-                           AnadirMateriaPrimaComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
-                           ModificarMateriaPrimaComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
-                           BorrarMateriaPrimaComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabRecepcionesViewModel).
-                           RefrescarMateriasPrimasComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
-                }
-                else if (TabSeleccionada is TabElaboracionesViewModel)
-                {
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
-                           AnadirProductoTerminadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
-                           ModificarProductoTerminadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
-                           BorrarProductoTerminadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
-                    ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
-                           RefrescarProductosTerminadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
-                }
-
                 TabSeleccionada.Inicializar();
             }
         }
@@ -170,6 +172,11 @@ namespace BiomasaEUPT.Vistas
 
         public void CargarAjustes()
         {
+            if (string.IsNullOrEmpty(Properties.Settings.Default.DirectorioInformes))
+            {
+                Properties.Settings.Default.DirectorioInformes = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Informes\";
+                Properties.Settings.Default.Save();
+            }
             if (Properties.Settings.Default.VentanaMaximizada)
                 EstadoVentana = WindowState.Maximized;
 
