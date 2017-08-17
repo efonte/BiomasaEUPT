@@ -400,7 +400,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
        
         #region Modificar Producto Terminado
-        public ICommand ModificarMateriaPrimaComando => _modificarProductoTerminadoComando ??
+        public ICommand ModificarProductoTerminadoComando => _modificarProductoTerminadoComando ??
             (_modificarProductoTerminadoComando = new RelayCommand(
                 param => ModificarProductoTerminado(),
                 param => ProductoTerminadoSeleccionado != null

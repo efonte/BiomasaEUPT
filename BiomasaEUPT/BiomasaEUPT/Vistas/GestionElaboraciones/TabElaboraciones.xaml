@@ -8,7 +8,13 @@
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded" Name="UCTabElaboraciones">
+             d:DesignHeight="600" d:DesignWidth="900" Name="UCTabElaboraciones">
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding AnadirProductoTerminadoComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+M" Command="{Binding ModificarProductoTerminadoComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding BorrarProductoTerminadoComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding RefrescarProductosTerminadosComando}" />
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

@@ -31,10 +31,16 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         public TabElaboraciones()
         {
             InitializeComponent();
+            IsVisibleChanged += new DependencyPropertyChangedEventHandler(MyControl_IsVisibleChanged);
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void MyControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            // Se añade el foco del teclado al UserControl para que funcionen los atajos de teclado
+            if (!(bool)(e.NewValue))
+                return;
+            Focusable = true;
+            Keyboard.Focus(this);
         }
 
         private void bMasOpciones_Click(object sender, RoutedEventArgs e)

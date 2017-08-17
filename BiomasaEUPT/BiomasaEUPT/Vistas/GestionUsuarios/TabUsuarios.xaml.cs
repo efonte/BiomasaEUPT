@@ -24,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace BiomasaEUPT.Vistas.GestionUsuarios
 {
@@ -40,7 +41,23 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                style.Setters.Add(new EventSetter(CheckBox.CheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));
                style.Setters.Add(new EventSetter(CheckBox.UncheckedEvent, new RoutedEventHandler(BaneadoColumna_Checked)));
                ucTablaUsuarios.baneadoColumna.CellStyle = style;*/
+            IsVisibleChanged += new DependencyPropertyChangedEventHandler(MyControl_IsVisibleChanged);
         }
 
+        private void MyControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // Se añade el foco del teclado al UserControl para que funcionen los atajos de teclado
+            if (!(bool)(e.NewValue))
+                return;
+            Focusable = true;
+            Keyboard.Focus(this);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Focusable = true;
+            // Keyboard.Focus(this);
+            // Focus();
+        }
     }
 }

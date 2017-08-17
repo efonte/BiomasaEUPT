@@ -7,6 +7,12 @@
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding AnadirProveedorComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+M" Command="{Binding ModificarProveedorComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding BorrarProveedorComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding RefrescarProveedoresComando}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>

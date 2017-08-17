@@ -6,7 +6,14 @@
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionUsuarios"
              xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             d:DesignHeight="600" d:DesignWidth="900" Loaded="UserControl_Loaded"
+             Focusable="True">
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding AnadirUsuarioComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+M" Command="{Binding ModificarUsuarioComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding BorrarUsuarioComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding RefrescarUsuariosComando}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>
@@ -22,7 +29,7 @@
             <controlesUsuario:Contador Grid.Row="0" x:Name="ucContador" Margin="10 10 0 0"
                                        Height="200" VerticalAlignment="Top"
                                        DataContext="{Binding ContadorViewModel}" />
-            
+
             <!--controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
                                           Height="250" VerticalAlignment="Bottom"
                                           MostrarMenuTipo="False" MostrarGrupo="False"

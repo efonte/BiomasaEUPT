@@ -27,5 +27,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
         {
             InitializeComponent();
         }
+       
     }
 }

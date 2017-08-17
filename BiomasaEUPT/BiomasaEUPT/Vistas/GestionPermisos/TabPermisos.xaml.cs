@@ -23,6 +23,16 @@ namespace BiomasaEUPT.Vistas.GestionPermisos
         public TabPermisos()
         {
             InitializeComponent();
+            IsVisibleChanged += new DependencyPropertyChangedEventHandler(MyControl_IsVisibleChanged);
+        }
+
+        private void MyControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // Se añade el foco del teclado al UserControl para que funcionen los atajos de teclado
+            if (!(bool)(e.NewValue))
+                return;
+            Focusable = true;
+            Keyboard.Focus(this);
         }
     }
 }
