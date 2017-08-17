@@ -108,17 +108,27 @@
                     </DataGrid>
 
                     <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
-                                     HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                     PlacementMode="RightAndAlignMiddles"
-                                     UnfurlOrientation="Horizontal"
-                                     ToolTip="Gestionar productos terminados"
-                                     Margin="15 15 15 30" Width="40" Height="40">
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar productos terminados"
+                                 Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar el producto terminado seleccionado" Command="{Binding BorrarProductoSeleccionadoComando}">
+                            <Button x:Name="bAnadirProductoTerminado" ToolTip="Añadir producto terminado"
+                                    Command="{Binding AnadirProductoTerminadoComando}">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Borrar el producto terminado seleccionado"
+                                    Command="{Binding BorrarProductoTerminadoComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bAnadirProductoTerminado" ToolTip="Añadir producto terminado">
-                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            <Button ToolTip="Modificar el producto terminado seleccionado"
+                                    Command="{Binding ModificarProductoTerminadoComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar productos terminados"
+                                     Command="{Binding RefrescarProductosTerminadosComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
@@ -175,11 +185,14 @@
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Fecha Baja" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Codigo" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCodigo" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" />
+                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
+                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding GrupoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
+                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaBajaProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
+                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding VolUniProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

@@ -76,8 +76,17 @@
                                     Command="{Binding AnadirOrdenElaboracionComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar la orden de elaboración seleccionada" Command="{Binding BorrarElaboracionComando}">
+                            <Button ToolTip="Borrar la orden de elaboración seleccionada"
+                                    Command="{Binding BorrarOrdenElaboracionComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar la orden de elaboración seleccionada"
+                                    Command="{Binding ModificarOrdenElaboracíonComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar órdenes de elaboración"
+                                     Command="{Binding RefrescarOrdenesElaboracionesComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
@@ -136,10 +145,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha elaboración" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado elaboración" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbFechaElaboracion" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaElaboracionSeleccionada}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EstadoElaboracionSeleccionado}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

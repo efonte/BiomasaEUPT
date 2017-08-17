@@ -154,7 +154,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         public ICommand DGProductosTerminados_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ProductosTerminadosSeleccionados = param.Cast<ProductoTerminado>().ToList());
 
         #region Añadir Orden Elaboración
-        public ICommand AnadirElaboracionComando => _anadirOrdenElaboracionComando ??
+        public ICommand AnadirOrdenElaboracionComando => _anadirOrdenElaboracionComando ??
             (_anadirOrdenElaboracionComando = new RelayCommand(
                 param => AnadirOrdenElaboracion()
             ));
