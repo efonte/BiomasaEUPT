@@ -10,6 +10,7 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace BiomasaEUPT
     {
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            string mensaje = e.Exception.Message;
+            string mensaje = "";
             //var excepcion = e.Exception.InnerException;
             var excepcion = e.Exception;
 
@@ -35,12 +36,12 @@ namespace BiomasaEUPT
 
                 mensaje = "No pueden guardar los cambios:\n\n" + string.Join("\n\n", mensajesError);
             }
-            else if (excepcion is DbUpdateException ex)
+            else if (excepcion is DbUpdateException ex1)
             {
-                if (ExceptionHelper.IsUniqueConstraintViolation(ex))
+                if (ExceptionHelper.IsUniqueConstraintViolation(ex1))
                 {
                     mensaje = "No se ha podido modificar el campo.";
-                    foreach (var entry in ex.Entries)
+                    foreach (var entry in ex1.Entries)
                     {
                         if (entry.State == EntityState.Modified)
                         {
@@ -83,16 +84,52 @@ namespace BiomasaEUPT
                             break;
                         }
                     }
-
                 }
             }
-
-            var mensajeInformacion = new MensajeInformacion(mensaje)
+            else if (excepcion is SqlException ex2)
             {
-                Width = 350
+                if (ex2.Number == -2) // System.Data.SqlClient.TdsEnums.TIMEOUT_EXPIRED (No es accesible)
+                {
+                    mensaje = "No se ha podido conectar con la Base de Datos. Tiempo de espera excedido.";
+                }
+            }
+            else if (excepcion is EntityCommandExecutionException ex3)
+            {
+                // if (ex3.InnerException is SqlException ex3Inner)
+                // {
+                //     if (ex3Inner.Number == -2146232060) // No se puede utilizar la conexión física
+                //     {
+                mensaje = "Se ha perdido la conexión con la Base de Datos.";
+                //     }
+                // }
+            }
+            else if (excepcion is EntityException ex4)
+            {
+                /* if (ex4.Number == -2) // System.Data.SqlClient.TdsEnums.TIMEOUT_EXPIRED (No es accesible)
+                 {
+                     mensaje = "No se ha podido conectar con la Base de Datos. Tiempo de espera excedido.";
+                 }*/
+            }
+
+
+            // Si ocurre otra excepción, se muestr el mensaje de la excepción más interna.
+            if (string.IsNullOrEmpty(mensaje))
+            {
+                var excep = e.Exception;
+                while (excep.InnerException != null) excep = excep.InnerException;
+
+                mensaje = excep.Message;
+            }
+
+            var mensajeInformacion = new MensajeInformacion()
+            {
+                Width = 350,
+                Mensaje = mensaje
             };
             DialogHost.Show(mensajeInformacion, "RootDialog");
             e.Handled = true;
+
+            // Process.GetCurrentProcess().Kill();
         }
     }
 

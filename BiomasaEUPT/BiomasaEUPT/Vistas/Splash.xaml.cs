@@ -1,6 +1,9 @@
-﻿using BiomasaEUPT.Vistas;
+﻿using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Vistas;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -101,12 +104,32 @@ namespace BiomasaEUPT
                     actualizador.ActualizarPrograma();
                 }
             }
+
             // Estado 2 - Conexión BD
             Dispatcher.Invoke(() =>
             {
                 viewModel.MensajeInformacion = "Conectándose a la BD...";
                 viewModel.Progreso = 50;
+
             });
+
+            using (var context = new BiomasaEUPTContext())
+            {
+                try { context.Database.Connection.Open(); }
+                catch
+                {                    
+                    Dispatcher.Invoke(() =>
+                    {
+                        viewModel.MensajeInformacion = "No se ha podido conectar con la Base de Datos. Saliendo...";
+                        viewModel.Progreso = 100;
+                    });
+                    Thread.Sleep(2000);
+
+                    /// Cierra la aplicación
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+
             // Thread.Sleep(500);
         }
 

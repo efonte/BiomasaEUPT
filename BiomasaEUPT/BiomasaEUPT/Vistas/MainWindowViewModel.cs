@@ -206,23 +206,9 @@ namespace BiomasaEUPT.Vistas
                 TopVentana = Convert.ToInt32((SystemParameters.PrimaryScreenHeight / 2) - (HeightVentana / 2));
             }
 
-            // Se obtiene la primera pestaña disponible
-            /*TabItem tabItem = tabItem = tcTabs.Items.OfType<TabItem>().First();
             if (Properties.Settings.Default.RecordarTabActiva)
             {
-                tabItem = tcTabs.Items.OfType<TabItem>().SingleOrDefault(n => n.Name == Properties.Settings.Default.TabActiva);
-            }
-            if (tabItem == null)
-            {
-                // Si la pestaña que se quería seleccionar no existe (de otro tipo de usuario)
-                // se obtiene la primera disponible
-                tabItem = tcTabs.Items.OfType<TabItem>().First();
-            }
-            tabItem.IsSelected = true;
-            // InicializarTab hay que ejecutarlo después de que se cargue la vista
-            tabItem.Loaded += (s, e1) => { InicializarTab(tabItem); };*/
-            if (Properties.Settings.Default.RecordarTabActiva)
-            {
+                // Se obtiene la primera pestaña disponible
                 var tabASeleccionar = viewModelsDisponibles
                     .FirstOrDefault(vmd => vmd.Key.ToString() == Properties.Settings.Default.TabActiva)
                     .Value;

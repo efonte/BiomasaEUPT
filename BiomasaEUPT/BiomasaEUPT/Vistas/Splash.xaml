@@ -12,26 +12,28 @@
         Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
         ContentRendered="Window_ContentRendered">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" x:Name="lTitulo" Content="BiomasaEUPT" HorizontalAlignment="Left"
+    <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="600" MinHeight="350">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" x:Name="lTitulo" Content="BiomasaEUPT" HorizontalAlignment="Left"
                VerticalAlignment="Top" FontFamily="Roboto" FontWeight="Medium" Margin="25 30 0 0"
                FontSize="48" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-        <Label Grid.Row="1" x:Name="lDescripcion" Content="Aplicación para la trazabilidad de biomasa forestal"
+            <Label Grid.Row="1" x:Name="lDescripcion" Content="Aplicación para la trazabilidad de biomasa forestal"
                HorizontalAlignment="Left" Margin="25 20 0 0"
                FontFamily="Roboto" FontSize="22" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-        <TextBlock Grid.Row="2" x:Name="lInfoProgreso" HorizontalAlignment="Left" Margin="10 10 0 0"
+            <TextBlock Grid.Row="2" x:Name="lInfoProgreso" HorizontalAlignment="Left" Margin="10 10 0 0"
                    FontFamily="Roboto" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                    FontWeight="Medium" VerticalAlignment="Bottom"
                    Text="{Binding MensajeInformacion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        <ProgressBar Grid.Row="3" x:Name="pbProgreso" HorizontalAlignment="Left" Height="12" Margin="0 5 0 20"
+            <ProgressBar Grid.Row="3" x:Name="pbProgreso" HorizontalAlignment="Left" Height="12" Margin="0 5 0 20"
                      VerticalAlignment="Top" Width="600" Minimum="0" Maximum="100"
                      Value="{Binding Progreso, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-    </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>
