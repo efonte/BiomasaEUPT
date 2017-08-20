@@ -227,6 +227,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Ajustes\TabAjustesGeneral.xaml.cs">
+      <DependentUpon>TabAjustesGeneral.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Ajustes\TabAjustesUsuario.xaml.cs">
       <DependentUpon>TabAjustesUsuario.xaml</DependentUpon>
     </Compile>
@@ -405,6 +408,10 @@
     <Compile Include="Vistas\SplashViewModel.cs" />
     <Compile Include="Vistas\ViewModelBase.cs" />
     <Page Include="Vistas\AcercaDe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Ajustes\TabAjustesGeneral.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

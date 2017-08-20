@@ -24,18 +24,21 @@ namespace BiomasaEUPT.Vistas.Ajustes
         {
             InitializeComponent();
             DataContext = new WinAjustesViewModel();
+            ucTabGeneral.cbComprobarActualizaciones.IsChecked = Properties.Settings.Default.ActualizarPrograma;
             ucTabVentana.cbVentanaMaximizada.IsChecked = Properties.Settings.Default.VentanaMaximizada;
             ucTabVentana.cbTamanoVentana.IsChecked = Properties.Settings.Default.RecordarTamanoVentana;
             ucTabVentana.cbPosicionVentana.IsChecked = Properties.Settings.Default.RecordarPosicionVentana;
             ucTabVentana.cbTabActiva.IsChecked = Properties.Settings.Default.RecordarTabActiva;
             ucTabApariencia.cbModoNocturno.IsChecked = Properties.Settings.Default.ModoNocturno;
 
+            ucTabGeneral.cbComprobarActualizaciones.Checked += CheckBox_Checked;
             ucTabVentana.cbVentanaMaximizada.Checked += CheckBox_Checked;
             ucTabVentana.cbTamanoVentana.Checked += CheckBox_Checked;
             ucTabVentana.cbPosicionVentana.Checked += CheckBox_Checked;
             ucTabVentana.cbTabActiva.Checked += CheckBox_Checked;
             ucTabApariencia.cbModoNocturno.Checked += CheckBox_Checked;
 
+            ucTabGeneral.cbComprobarActualizaciones.Unchecked += CheckBox_Unchecked;
             ucTabVentana.cbVentanaMaximizada.Unchecked += CheckBox_Unchecked;
             ucTabVentana.cbTamanoVentana.Unchecked += CheckBox_Unchecked;
             ucTabVentana.cbPosicionVentana.Unchecked += CheckBox_Unchecked;
@@ -51,6 +54,9 @@ namespace BiomasaEUPT.Vistas.Ajustes
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             var checkBox = e.OriginalSource as CheckBox;
+
+            if (checkBox == ucTabGeneral.cbComprobarActualizaciones)
+                Properties.Settings.Default.ActualizarPrograma = true;
 
             if (checkBox == ucTabVentana.cbVentanaMaximizada)
                 Properties.Settings.Default.VentanaMaximizada = true;
@@ -85,6 +91,9 @@ namespace BiomasaEUPT.Vistas.Ajustes
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var checkBox = e.OriginalSource as CheckBox;
+
+            if (checkBox == ucTabGeneral.cbComprobarActualizaciones)
+                Properties.Settings.Default.ActualizarPrograma = false;
 
             if (checkBox == ucTabVentana.cbVentanaMaximizada)
                 Properties.Settings.Default.VentanaMaximizada = false;
