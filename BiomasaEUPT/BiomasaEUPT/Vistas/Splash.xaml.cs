@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,22 +33,28 @@ namespace BiomasaEUPT
             viewModel = new SplashViewModel();
             DataContext = viewModel;
             //IniciarConfig();
-            //IniciarCarpetas();
+            BorrarBackups();
         }
 
         private void IniciarConfig()
         {
+            // Si el usuario ha borradopor error el fichero de configuración se restaura
             if (!File.Exists("BiomasaEUPT.exe.config"))
             {
                 File.WriteAllText(@"BiomasaEUPT.exe.config", Properties.Resources.App);
             }
         }
 
-        private void IniciarCarpetas()
+        private void BorrarBackups()
         {
-            if (!Directory.Exists("carpeta"))
+            //Se borran todos los ficheros temporales (backups) que quedaron tras actualizar el programa.
+            Directory.GetFiles(".", "*", SearchOption.AllDirectories)
+                .Where(f => f.EndsWith(".bak")).ToList()
+                .ForEach(f => File.Delete(f));
+            // Se borra la carpeta de actualización si existe
+            if (Directory.Exists("actualizacion"))
             {
-                Directory.CreateDirectory("carpeta");
+                Directory.Delete("actualizacion", true);
             }
         }
 
@@ -93,15 +100,55 @@ namespace BiomasaEUPT
             //Properties.Settings.Default.ActualizarPrograma = true;
             if (Properties.Settings.Default.ActualizarPrograma)
             {
+                Dispatcher.Invoke(() =>
+                {
+                    viewModel.MensajeInformacion = "Buscando actualizaciones...";
+                    viewModel.Progreso = 10;
+                });
                 var actualizador = new Actualizador()
                 {
-                    SplashViewModel = viewModel
+                    //SplashViewModel = viewModel
                 };
-
-
                 if (actualizador.ComprobarActualizacionPrograma())
                 {
-                    actualizador.ActualizarPrograma();
+                    Dispatcher.Invoke(() =>
+                    {
+                        viewModel.MensajeInformacion = "Actualización encontrada. Actualizando...";
+                        viewModel.Progreso = 50;
+                    });
+                    try
+                    {
+                        actualizador.ActualizarPrograma();
+                        Dispatcher.Invoke(() =>
+                        {
+                            viewModel.MensajeInformacion = "Actualización completada. Reiniciando la aplicación...";
+                            viewModel.Progreso = 100;
+                        });
+#if (!DEBUG)
+                        Thread.Sleep(2500);
+#endif
+                        Process.Start("BiomasaEUPT.exe"); // Inicia la aplicación actualizada
+                        Process.GetCurrentProcess().Kill(); // Cierra la aplicación antigua
+                    }
+                    catch (WebException ex)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            viewModel.MensajeInformacion = "Actualización fallida.";
+                            viewModel.Progreso = 100;
+                        });
+#if (!DEBUG)
+                    Thread.Sleep(1000);
+#endif
+                    }
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        viewModel.MensajeInformacion = "No se ha encontrado ninguna actualización.";
+                        viewModel.Progreso = 25;
+                    });
                 }
             }
 
@@ -117,32 +164,33 @@ namespace BiomasaEUPT
             {
                 try { context.Database.Connection.Open(); }
                 catch
-                {                    
+                {
                     Dispatcher.Invoke(() =>
                     {
                         viewModel.MensajeInformacion = "No se ha podido conectar con la Base de Datos. Saliendo...";
                         viewModel.Progreso = 100;
                     });
+#if (!DEBUG)
                     Thread.Sleep(2000);
-
+#endif
                     /// Cierra la aplicación
                     Process.GetCurrentProcess().Kill();
                 }
             }
-
-            // Thread.Sleep(500);
         }
 
         private void InicioFinalizado()
         {
+            // Estado 3 - Iniciar
             Dispatcher.Invoke(() =>
             {
                 viewModel.MensajeInformacion = "Iniciando...";
                 viewModel.Progreso = 100;
 
             });
-
-            // Thread.Sleep(1000);
+#if (!DEBUG)
+            Thread.Sleep(500);
+#endif
         }
     }
 }

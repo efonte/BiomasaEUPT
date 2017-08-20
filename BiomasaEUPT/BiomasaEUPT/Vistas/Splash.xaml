@@ -10,7 +10,8 @@
         Title="Splash" Height="350" Width="600" WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryHueMidBrush}" WindowStyle="None" ResizeMode="NoResize"
         Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-        ContentRendered="Window_ContentRendered">
+        ContentRendered="Window_ContentRendered"
+        Topmost="True">
 
     <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="600" MinHeight="350">
         <Grid>

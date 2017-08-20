@@ -1,10 +1,14 @@
 ﻿using BiomasaEUPT.Vistas;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
@@ -16,10 +20,10 @@ namespace BiomasaEUPT
 {
     public class Actualizador
     {
-        private readonly string URL_PROGRAMA = "https://api.github.com/repos/F0NT3/BiomasaEUPT/releases/latest";
-        //private readonly string URL_ULTIMA_VERSION = "https://github.com/F0NT3/BiomasaEUPT/releases";
+        private readonly string URL_RELEASES = "https://api.github.com/repos/F0NT3/BiomasaEUPT/releases";
 
-        public SplashViewModel SplashViewModel { get; set; }
+        public string VersionOnline { get; set; }
+        public string UrlDescarga { get; set; }
 
         public Actualizador()
         {
@@ -28,67 +32,52 @@ namespace BiomasaEUPT
 
         public bool ComprobarActualizacionPrograma()
         {
-            SplashViewModel.MensajeInformacion = "Buscando actualizaciones...";
-            SplashViewModel.Progreso = 10;
-
-            string version = "";
-
+#if (DEBUG)
+            return false;
+#endif
             var wc = new WebClient();
             wc.Headers.Add("User-Agent", "Nothing");
 
-            try
-            {
-                var content = wc.DownloadString(URL_PROGRAMA);
-                var serializer = new DataContractJsonSerializer(typeof(List<DatosGitHub>));
-                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
-                {
-                    var datos = (List<DatosGitHub>)serializer.ReadObject(ms);
-                    datos.ForEach(Console.WriteLine);
-                }
-            }
-            catch (WebException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            var contenido = "";
+            try { contenido = wc.DownloadString(URL_RELEASES); }
+            catch (WebException ex) { Console.WriteLine(ex.Message); }
 
-            /*using (var wc = new WebClient())
-            {
-                version = wc.DownloadString(URL_ULTIMA_VERSION);
-            }*/
+            var o = JArray.Parse(contenido)[0];
+            string tag_name = (string)o["tag_name"];
+            bool prerelease = (bool)o["prerelease"];
+            UrlDescarga = (string)o.SelectToken("assets[0].browser_download_url");
 
-            if (!version.Equals(Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-            {
-                SplashViewModel.MensajeInformacion = "Actualización encontrada.";
-            }
-            else
-            {
-                SplashViewModel.MensajeInformacion = "No se ha encontrado ninguna actualización.";
-            }
-            return !version.Equals(Assembly.GetExecutingAssembly().GetName().Version.ToString());
-
+            // Se obtiene la versión sin la "v". Ejemplo v1.2.3 -> 1.2.3
+            VersionOnline = tag_name.StartsWith("v") ? tag_name.Substring(1) : tag_name;
+            //VersionOnline = "1";
+            return !VersionOnline.Equals(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         public void ActualizarPrograma()
         {
-            SplashViewModel.MensajeInformacion = "Actualizando...";
-
+            // Se descarga el zip que contiene la nueva versión
             var wc = new WebClient();
-
-            try
+            wc.DownloadFile(UrlDescarga, "BiomasaEUPT.zip");
+            if (Directory.Exists("actualizacion"))
             {
-                wc.DownloadFile(URL_PROGRAMA, "BiomasaEUPT.zip");
-                SplashViewModel.MensajeInformacion = "Actualización completada.";
+                Directory.Delete("actualizacion", true);
             }
-            catch (WebException ex)
-            {
-                SplashViewModel.MensajeInformacion = "Actualización fallida. " + ex.Message;
-            }
-        }
+            // Se extrae en la carpeta actualización
+            ZipFile.ExtractToDirectory("BiomasaEUPT.zip", "actualizacion");
 
-        internal class DatosGitHub
-        {
-            public string tag_name { get; set; }
+            // Se hace un backup de todos los ficheros menos los relativos al desinstalador
+            var directorioRaiz = new DirectoryInfo(".");
+            directorioRaiz.GetFiles("*", SearchOption.AllDirectories)
+                .Where(f => !f.DirectoryName.Contains("actualizacion") && !f.Name.Contains("unins"))
+                .ToList()
+                .ForEach(f => File.Move(f.FullName, f.FullName + ".bak"));
 
+            // Se mueven los nuevos ficheros
+            var rutaEjecutable = Directory.GetFiles("actualizacion", "BiomasaEUPT.exe", SearchOption.AllDirectories).FirstOrDefault();
+            var subdirectorio = Path.GetDirectoryName(rutaEjecutable);
+            var directorioActualizacion = new DirectoryInfo(subdirectorio);
+            directorioActualizacion.GetFiles("*", SearchOption.AllDirectories).ToList()
+              .ForEach(f => File.Copy(f.FullName, Path.Combine(".", f.Name)));
         }
     }
 }
