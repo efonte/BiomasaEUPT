@@ -54,10 +54,7 @@
   <PropertyGroup>
     <ApplicationIcon>icono.ico</ApplicationIcon>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
-    </Reference>
+  <ItemGroup>    
     <Reference Include="Dragablz, Version=0.0.3.190, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.190\lib\net45\Dragablz.dll</HintPath>
     </Reference>
@@ -145,6 +142,37 @@
       <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.6.5\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Compile Include="Migrations\Configuration.cs" />
+	<Compile Include="Migrations\SeedCodigosPostales.cs" />
+    <Compile Include="Migrations\SeedTablas.cs" />
+    <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
+	<EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedMunicipios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedPaises.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedProvincias.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Clientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Usuarios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposClientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Proveedores.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\GruposClientes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Recepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Provincias.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposUsuarios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Municipios.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosElaboraciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Paises.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Comunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposProveedores.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SitiosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\HuecosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\SitiosAlmacenajes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Procedencias.csv" />
+  </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="Vistas\App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -168,13 +196,9 @@
     <Compile Include="Domain\Converters\PaisISOA2NombreCompletoConverter.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Domain\PasswordHelper.cs" />
-    <Compile Include="Domain\Converters\ValueToEqualsParameterConverter.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\SeedTablas.cs" />
-    <Compile Include="Modelos\BiomasaEUPTContext.cs" />
-    <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
-    <Compile Include="Modelos\Constantes.cs" />
-    <Compile Include="Migrations\SeedCodigosPostales.cs" />
+    <Compile Include="Domain\Converters\ValueToEqualsParameterConverter.cs" />    
+    <Compile Include="Modelos\BiomasaEUPTContext.cs" />    
+    <Compile Include="Modelos\Constantes.cs" />    
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
     <Compile Include="Modelos\Tablas\Picking.cs" />
@@ -658,28 +682,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\_SeedMunicipios.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\_SeedPaises.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\_SeedProvincias.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Clientes.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Usuarios.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\TiposClientes.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Proveedores.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\EstadosRecepciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\GruposClientes.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Recepciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Provincias.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\TiposUsuarios.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Municipios.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\EstadosElaboraciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Paises.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Comunidades.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\TiposProveedores.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\SitiosRecepciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\HuecosRecepciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\SitiosAlmacenajes.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\Procedencias.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

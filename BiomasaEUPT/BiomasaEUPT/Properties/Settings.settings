@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BiomasaEUPT.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ActualizarPrograma" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="usuario" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -46,6 +43,9 @@
     </Setting>
     <Setting Name="DirectorioInformes" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ActualizarPrograma" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

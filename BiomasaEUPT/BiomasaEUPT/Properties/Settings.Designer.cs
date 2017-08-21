@@ -25,18 +25,6 @@ namespace BiomasaEUPT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ActualizarPrograma {
-            get {
-                return ((bool)(this["ActualizarPrograma"]));
-            }
-            set {
-                this["ActualizarPrograma"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string usuario {
             get {
@@ -200,6 +188,18 @@ namespace BiomasaEUPT.Properties {
             }
             set {
                 this["DirectorioInformes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ActualizarPrograma {
+            get {
+                return ((bool)(this["ActualizarPrograma"]));
+            }
+            set {
+                this["ActualizarPrograma"] = value;
             }
         }
     }

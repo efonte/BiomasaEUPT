@@ -27,10 +27,12 @@ namespace BiomasaEUPT
     public partial class Splash : Window
     {
         private SplashViewModel viewModel;
+        private Actualizador actualizador;
         public Splash()
         {
             InitializeComponent();
             viewModel = new SplashViewModel();
+            actualizador = new Actualizador();
             DataContext = viewModel;
             //IniciarConfig();
             BorrarBackups();
@@ -48,9 +50,13 @@ namespace BiomasaEUPT
         private void BorrarBackups()
         {
             //Se borran todos los ficheros temporales (backups) que quedaron tras actualizar el programa.
-            Directory.GetFiles(".", "*", SearchOption.AllDirectories)
-                .Where(f => f.EndsWith(".bak")).ToList()
-                .ForEach(f => File.Delete(f));
+            // AVISO -> ESTO PUEDE BORRAR TODOS LOS FICHEROS DE TODOS LOS SUBDIRECTORIOS DESDE DONDE SE ENCUENTRE EL EXE
+            /* Directory.GetFiles(".", "*", SearchOption.AllDirectories)
+                 .Where(f => f.EndsWith(".bak")).ToList()
+                 .ForEach(f => File.Delete(f));*/
+            var ficherosBak = new List<string>();
+            actualizador.Ficheros.ForEach(f => ficherosBak.Add(f += ".bak"));
+            ficherosBak.ToList().ForEach(f => { if (File.Exists(f)) File.Delete(f); });
             // Se borra la carpeta de actualización si existe
             if (Directory.Exists("actualizacion"))
             {
@@ -105,10 +111,6 @@ namespace BiomasaEUPT
                     viewModel.MensajeInformacion = "Buscando actualizaciones...";
                     viewModel.Progreso = 10;
                 });
-                var actualizador = new Actualizador()
-                {
-                    //SplashViewModel = viewModel
-                };
                 if (actualizador.ComprobarActualizacionPrograma())
                 {
                     Dispatcher.Invoke(() =>
