@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BiomasaEUPT"
-#define MyAppVersion "0.2.0.0"
+#define MyAppVersion "0.2.1.0"
 #define MyAppExeName "BiomasaEUPT.exe"
 
 [Setup]
@@ -12,6 +12,7 @@
 AppId={{4611F422-B962-4045-BD83-D1D86BF412E4}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+VersionInfoVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
