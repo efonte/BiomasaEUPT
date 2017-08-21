@@ -28,7 +28,7 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [CustomMessages]
 EliminarConfiguracion=Do you want to Remove settings?
-spanish.EliminarConfiguracion=¿Desea eliminar lo configuración?
+spanish.EliminarConfiguracion=¿Desea eliminar la configuración?
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
