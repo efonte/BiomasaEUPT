@@ -54,7 +54,7 @@
   <PropertyGroup>
     <ApplicationIcon>icono.ico</ApplicationIcon>
   </PropertyGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.3.190, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.190\lib\net45\Dragablz.dll</HintPath>
     </Reference>
@@ -147,10 +147,10 @@
       <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Compile Include="Migrations\Configuration.cs" />
-	<Compile Include="Migrations\SeedCodigosPostales.cs" />
+    <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Migrations\SeedTablas.cs" />
     <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
-	<EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedMunicipios.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedPaises.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedProvincias.csv" />
@@ -196,9 +196,9 @@
     <Compile Include="Domain\Converters\PaisISOA2NombreCompletoConverter.cs" />
     <Compile Include="Domain\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Domain\PasswordHelper.cs" />
-    <Compile Include="Domain\Converters\ValueToEqualsParameterConverter.cs" />    
-    <Compile Include="Modelos\BiomasaEUPTContext.cs" />    
-    <Compile Include="Modelos\Constantes.cs" />    
+    <Compile Include="Domain\Converters\ValueToEqualsParameterConverter.cs" />
+    <Compile Include="Modelos\BiomasaEUPTContext.cs" />
+    <Compile Include="Modelos\Constantes.cs" />
     <Compile Include="Modelos\Tablas\Cliente.cs" />
     <Compile Include="Modelos\Tablas\Comunidad.cs" />
     <Compile Include="Modelos\Tablas\Picking.cs" />
@@ -285,6 +285,9 @@
     <Compile Include="Vistas\ControlesUsuario\FormDireccionViewModel.cs" />
     <Compile Include="Vistas\ControlesUsuario\FormHueco.xaml.cs">
       <DependentUpon>FormHueco.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FormPicking.xaml.cs">
+      <DependentUpon>FormPicking.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml.cs">
       <DependentUpon>FormTipoMateriaPrima.xaml</DependentUpon>
@@ -401,6 +404,10 @@
     <Compile Include="Vistas\GestionVentas\FormProductoEnvasado.xaml.cs">
       <DependentUpon>FormProductoEnvasado.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\FormProductoEnvasadoViewModel.cs" />
+    <Compile Include="Vistas\GestionVentas\MasOpcionesVentas.xaml.cs">
+      <DependentUpon>MasOpcionesVentas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionVentas\MasOpcionesVentasViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
       <DependentUpon>TablaPedidos.xaml</DependentUpon>
@@ -474,6 +481,10 @@
     <Page Include="Vistas\ControlesUsuario\FormHueco.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\FormPicking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -616,6 +627,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionVentas\FormProductoEnvasado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\MasOpcionesVentas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

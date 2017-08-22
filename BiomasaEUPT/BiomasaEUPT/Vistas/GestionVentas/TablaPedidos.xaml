@@ -15,8 +15,6 @@
              d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
-            <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -36,9 +34,10 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" DataContext="{StaticResource pedidosViewSource}"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True">
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding PedidosCabecerasView}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoCabeceraSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaPedidoColumna" Header="Fecha pedido" Width="auto" IsReadOnly="True"
@@ -62,18 +61,32 @@
                                  ToolTip="Gestionar pedidos"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button ToolTip="Borrar el pedido seleccionado" Command="{Binding BorrarElaboracionComando}">
+                            <Button x:Name="bAnadirPedidoCabecera" ToolTip="Añadir pedido envasado"
+                                    Command="{Binding AnadirPedidoCabeceraComando}">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Borrar el pedido seleccionado"
+                                    Command="{Binding BorrarPedidoCabeceraComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bAnadirPedido" ToolTip="Añadir pedido">
-                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            <Button ToolTip="Modificar el pedido seleccionado"
+                                    Command="{Binding ModificarPedidoCabeceraComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar pedidos"
+                                     Command="{Binding RefrescarPedidosCabcerasComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
 
-                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="2" Grid.ColumnSpan="2" Padding="10 20 10 10"/>
-
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="2" Grid.ColumnSpan="2"
+                                             Padding="10 20 10 10"
+                                             DataContext="{Binding RelativeSource={RelativeSource 
+                                                            FindAncestor, AncestorType={x:Type UserControl}},
+                                                            Path=DataContext.PaginacionViewModel}" />
+                
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
@@ -107,10 +120,15 @@
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Fecha finalización" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Estado pedido" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Cliente" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbFechaPedido" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbFechaFinalizacion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" IsChecked="True"/>
-                        <CheckBox x:Name="cbEstadoPedido" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" IsChecked="False"/>
-                        <CheckBox x:Name="cbCliente" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" IsChecked="False"/>
+                        <CheckBox x:Name="cbFechaPedido" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaPedidoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        <CheckBox x:Name="cbFechaFinalizacion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaFinalizacionSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EstadoPedidoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        <CheckBox x:Name="cbCliente" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding VolumenSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        
                     </Grid>
 
                 </materialDesign:PopupBox>

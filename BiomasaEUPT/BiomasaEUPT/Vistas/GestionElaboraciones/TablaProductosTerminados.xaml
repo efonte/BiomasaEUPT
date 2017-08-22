@@ -187,9 +187,9 @@
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Codigo" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
                                   IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
-                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
                                   IsChecked="{Binding GrupoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
                                   IsChecked="{Binding FechaBajaProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>
                         <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
                                   IsChecked="{Binding VolUniProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>

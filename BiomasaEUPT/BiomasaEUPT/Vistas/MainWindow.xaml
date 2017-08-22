@@ -164,6 +164,17 @@
                                         </StackPanel>
                                     </DataTemplate>
 
+                                    <DataTemplate DataType="{x:Type GestionVentas:TabVentasViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Shopping" Foreground="White"
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
+                                            <TextBlock Text="Ventas" Margin="5,0,0,0"
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
                                     <DataTemplate DataType="{x:Type GestionTrazabilidad:TabTrazabilidadViewModel}">
                                         <StackPanel Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="FormatListBulleted" Foreground="White"
@@ -205,6 +216,10 @@
 
                                     <DataTemplate DataType="{x:Type GestionElaboraciones:TabElaboracionesViewModel}">
                                         <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionVentas:TabVentasViewModel}">
+                                        <GestionVentas:TabVentas x:Name="ucTabVentas" />
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionTrazabilidad:TabTrazabilidadViewModel}">

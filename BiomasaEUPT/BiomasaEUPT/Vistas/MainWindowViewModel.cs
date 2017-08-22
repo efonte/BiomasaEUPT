@@ -8,6 +8,7 @@ using BiomasaEUPT.Vistas.GestionProveedores;
 using BiomasaEUPT.Vistas.GestionRecepciones;
 using BiomasaEUPT.Vistas.GestionTrazabilidad;
 using BiomasaEUPT.Vistas.GestionUsuarios;
+using BiomasaEUPT.Vistas.GestionVentas;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -114,6 +115,17 @@ namespace BiomasaEUPT.Vistas
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
                                RefrescarProductosTerminadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
                     }
+                    else if (TabSeleccionada is TabVentasViewModel)
+                    {
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
+                               AnadirProductoEnvasadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
+                               ModificarProductoEnvasadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
+                               BorrarProductoEnvasadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
+                               RefrescarProductosEnvasadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                    }
                 }
                 TabSeleccionada.Inicializar();
             }
@@ -156,7 +168,7 @@ namespace BiomasaEUPT.Vistas
                 { Tab.Proveedores, new TabProveedoresViewModel() },
                 { Tab.Recepciones, new TabRecepcionesViewModel() },
                 { Tab.Elaboraciones, new TabElaboracionesViewModel() },
-               // { Tab.Ventas, new TabVentasViewModel() },
+                { Tab.Ventas, new TabVentasViewModel() },
                 { Tab.Trazabilidad, new TabTrazabilidadViewModel() },
             };
         }

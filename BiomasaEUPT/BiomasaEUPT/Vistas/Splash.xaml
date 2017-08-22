@@ -13,7 +13,7 @@
         ContentRendered="Window_ContentRendered"
         Topmost="True">
 
-    <materialDesign:DialogHost Identifier="RootDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="600" MinHeight="350">
+    <materialDesign:DialogHost Identifier="SplashDialog" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="600" MinHeight="350">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

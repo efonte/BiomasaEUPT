@@ -42,9 +42,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             this.context = context;
         }
 
-        public FormProductoEnvasado(BiomasaEUPTContext context, string _titulo) : this(context)
+        public FormProductoEnvasado(BiomasaEUPTContext context, ProductoEnvasado productoEnvasado) : this(context)
         {
-            gbTitulo.Header = _titulo;
+            gbTitulo.Header = "Editar Producto Envasado";
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

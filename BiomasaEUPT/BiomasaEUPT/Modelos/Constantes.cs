@@ -60,6 +60,9 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MIN_NOMBRE_ESTADO_PEDIDO = 3;
         public const int LONG_MAX_NOMBRE_ESTADO_PEDIDO = 10;
 
+        public const int LONG_MIN_DESCRIPCION_ESTADO_PEDIDO = 5;
+        public const int LONG_MAX_DESCRIPCION_ESTADO_PEDIDO = 80;
+
         public const int LONG_MIN_NOMBRE_ESTADO_RECEPCION = 3;
         public const int LONG_MAX_NOMBRE_ESTADO_RECEPCION = 20;
 

@@ -44,7 +44,7 @@
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding DGElaboraciones_SelectionChangedComando}"
+                                <i:InvokeCommandAction Command="{Binding DGOrdenesElaboraciones_SelectionChangedComando}"
                                     CommandParameter="{Binding Path=SelectedItems, ElementName=dgElaboraciones}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
