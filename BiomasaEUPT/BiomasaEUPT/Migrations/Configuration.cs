@@ -951,6 +951,25 @@ namespace BiomasaEUPT.Migrations
                  });
             context.SaveChanges();
 
+            context.EstadosPedidos.AddOrUpdate(
+                 sr => sr.Nombre,
+                 new EstadoPedido()
+                 {
+                     Nombre = "Pendiente",
+                     Descripcion = "Cuando un pedido nuevo se realiza su estado podría estar pendiente"
+                 },
+                 new EstadoPedido()
+                 {
+                     Nombre = "Procesando",
+                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a procesando"
+                 },
+                 new EstadoPedido()
+                 {
+                     Nombre = "Completo",
+                     Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado"
+                 });
+            context.SaveChanges();
+
 
 
             /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)

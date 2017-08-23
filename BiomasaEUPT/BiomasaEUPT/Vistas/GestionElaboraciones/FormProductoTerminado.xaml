@@ -116,12 +116,13 @@
                 <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbTiposMateriasPrimas" materialDesign:HintAssist.Hint="Tipo Materia Prima"
                           ItemsSource="{Binding Source={StaticResource tiposMateriasPrimasViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="TipoMateriaPrimaId"
-                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged}">
+                          SelectedItem="{Binding TipoMateriaPrima, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          SelectionChanged="cbTiposMateriasPrimas_SelectionChanged">
                 </ComboBox>
 
-                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbProductosTerminados" Height="100"
-                         ItemsSource="{Binding ProductosTerminados, UpdateSourceTrigger=PropertyChanged}"
-                         PreviewMouseLeftButtonDown="lbProductosTerminados_PreviewMouseLeftButtonDown">
+                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosRecepciones" Height="100"
+                         ItemsSource="{Binding HistorialHuecosRecepcionesDisponibles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         PreviewMouseLeftButtonDown="lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -134,9 +135,8 @@
                                 </TextBlock>
                                 <TextBlock FontSize="14" FontStyle="Italic">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} m³ / {1} ud.">
-                                            <Binding Path="VolumenTotal"/>
-                                            <Binding Path="UnidadesTotales"/>
+                                        <MultiBinding StringFormat="{}{0} m³">
+                                            <Binding Path="VolumenRestante"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>

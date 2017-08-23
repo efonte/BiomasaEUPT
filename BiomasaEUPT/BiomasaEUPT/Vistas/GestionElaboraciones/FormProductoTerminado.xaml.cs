@@ -54,7 +54,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         public FormProductoTerminado(BiomasaEUPTContext context, ProductoTerminado productoTerminado) : this(context)
         {
-            gbTitulo.Header = "Editar ProductoTerminado";
+            gbTitulo.Header = "Editar Producto Terminado";
 
             cbGruposProductosTerminados.SelectedValue = productoTerminado.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId;
             cbTiposProductosTerminados.SelectedValue = productoTerminado.TipoProductoTerminado.TipoProductoTerminadoId;
@@ -64,7 +64,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             viewModel.FechaBaja = productoTerminado.FechaBaja;
             viewModel.HoraBaja = productoTerminado.FechaBaja;
             viewModel.Observaciones = productoTerminado.Observaciones;
-            
+
             viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoTerminadoId == productoTerminado.ProductoTerminadoId).ToList());
             CalcularCantidades();
             if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.ProductoTerminado.ProductoTerminadoId == productoTerminado.ProductoTerminadoId))
@@ -133,12 +133,12 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 viewModel.Volumen = viewModel.Cantidad;
                 viewModel.Unidades = null;
             }
-            CalcularCantidades();
+            CalcularCantidades();           
         }
 
         private void cbTiposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
+           /* if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
             {
                 viewModel.CantidadHint = "Cantidad (ud.)";
                 viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
@@ -150,7 +150,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 viewModel.Volumen = viewModel.Cantidad;
                 viewModel.Unidades = null;
             }
-            CalcularCantidades();
+               CalcularCantidades();*/
+            viewModel.HistorialHuecosRecepcionesDisponibles = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrima.TipoId == ((TipoMateriaPrima)cbTiposMateriasPrimas.SelectedItem).TipoMateriaPrimaId && (viewModel.TipoMateriaPrima.MedidoEnUnidades == true ? (hhr.UnidadesRestantes > 0) : (hhr.VolumenRestante > 0))).ToList());
         }
 
         private void cbSitiosAlmacenajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -334,13 +335,13 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(viewModel.HistorialHuecosAlmacenajes.ToList());
         }
 
-        private void lbProductosTerminados_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var parent = sender as ListBox;
-            var ProductoTerminado = GetDataFromListBox(lbProductosTerminados, e.GetPosition(parent)) as ProductoTerminado;
-            if (ProductoTerminado != null)
+            var historialHuecoRecepcion = GetDataFromListBox(lbHistorialHuecosRecepciones, e.GetPosition(parent)) as HistorialHuecoRecepcion;
+            if (historialHuecoRecepcion != null)
             {
-                DataObject dragData = new DataObject("ProductoTerminado", ProductoTerminado);
+                DataObject dragData = new DataObject("HistorialHuecoRecepcion", historialHuecoRecepcion);
                 DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
             }
         }

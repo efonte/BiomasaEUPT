@@ -33,7 +33,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         // Checkbox Filtro Elaboraciones
         public bool FechaOrdenElaboracionSeleccionada { get; set; } = true;
-        public bool EstadoElaboracionSeleccionado { get; set; } = false;
+        public bool EstadoOrdenElaboracionSeleccionado { get; set; } = false;
 
         private string _textoFiltroOrdenesElaboraciones;
         public string TextoFiltroOrdenesElaboraciones
@@ -218,7 +218,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         
         #region Modificar Orden Elaboración
-        public ICommand ModificarOrdenElaboracíonComando => _modificarOrdenElaboracionComando ??
+        public ICommand ModificarOrdenElaboracionComando => _modificarOrdenElaboracionComando ??
             (_modificarOrdenElaboracionComando = new RelayCommand(
                 param => ModificarOrdenElaboracion(),
                 param => OrdenElaboracionSeleccionada != null
@@ -287,7 +287,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             string estado = ordenElaboracion.EstadoElaboracion.Nombre.ToLower();
 
             return (FechaOrdenElaboracionSeleccionada == true ? fechaElaboracion.Contains(TextoFiltroOrdenesElaboraciones) : false)
-                || (EstadoElaboracionSeleccionado == true ? estado.Contains(TextoFiltroOrdenesElaboraciones) : false);
+                || (EstadoOrdenElaboracionSeleccionado == true ? estado.Contains(TextoFiltroOrdenesElaboraciones) : false);
         }
         #endregion
 
@@ -303,7 +303,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             if (OrdenElaboracionSeleccionada != null)
             {
-                return OrdenElaboracionSeleccionada.EstadoElaboracionId == 1; // Disponible
+                return OrdenElaboracionSeleccionada.EstadoElaboracionId == 2; // Procesando
             }
             return false;
         }

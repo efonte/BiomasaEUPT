@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
              xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -150,11 +150,11 @@
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False" Width="25">
                             <StackPanel>
-                                <Button Content="Añadir" Command="{Binding AnadirSitioRecepcionComando}"
+                                <Button Content="Añadir" Command="{Binding AnadirSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Editar" Command="{Binding ModificarSitioRecepcionComando}"
+                                <Button Content="Editar" Command="{Binding ModificarSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Borrar" Command="{Binding BorrarSitioRecepcionComando}"
+                                <Button Content="Borrar" Command="{Binding BorrarSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
@@ -170,7 +170,7 @@
                                  SelectedItem="{Binding SitioAlmacenajeSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBSitiosRecepciones_SelectionChangedComando}"
+                            <i:InvokeCommandAction Command="{Binding LBSitiosAlmacenajes_SelectionChangedComando}"
                                                    CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -202,11 +202,11 @@
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False" Width="25">
                             <StackPanel>
-                                <Button Content="Añadir" Command="{Binding AnadirHuecoRecepcionComando}"
+                                <Button Content="Añadir" Command="{Binding AnadirHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Editar" Command="{Binding ModificarHuecoRecepcionComando}"
+                                <Button Content="Editar" Command="{Binding ModificarHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Borrar" Command="{Binding BorrarHuecoRecepcionComando}"
+                                <Button Content="Borrar" Command="{Binding BorrarHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
@@ -222,7 +222,7 @@
                                  SelectedItem="{Binding HuecoAlmacenajeSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBHuecosRecepciones_SelectionChangedComando}"
+                            <i:InvokeCommandAction Command="{Binding LBHuecosAlmacenajes_SelectionChangedComando}"
                                                    CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

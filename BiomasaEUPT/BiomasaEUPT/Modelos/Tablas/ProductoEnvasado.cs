@@ -18,11 +18,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int ProductoEnvasadoId { get; set; }
 
-        [Required]
-        [StringLength(Constantes.LONG_MAX_NOMBRE, MinimumLength = Constantes.LONG_MIN_NOMBRE)]
-        [DisplayName("Nombre"), Display(Name = "Nombre")]
-        public string Nombre { get; set; }
-
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public float? Volumen { get; set; }
 
@@ -30,20 +25,12 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
-        [DisplayName("Fecha baja"), Display(Name = "Fecha baja")]
-        public DateTime? FechaBaja { get; set; }
-
         [Required]
         [StringLength(Constantes.LONG_MAX_CODIGO, MinimumLength = Constantes.LONG_MIN_CODIGO)]
         [DisplayName("Código"), Display(Name = "Código")]
-        public string Codigo { get; set; }
-
-        public int TipoProductoTerminadoId { get; set; }
+        public string Codigo { get; set; }       
 
         public int PickingId { get; set; }
-
-        [ForeignKey("TipoProductoTerminadoId")]
-        public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
 
         [ForeignKey("PickingId")]
         public virtual Picking Picking { get; set; }

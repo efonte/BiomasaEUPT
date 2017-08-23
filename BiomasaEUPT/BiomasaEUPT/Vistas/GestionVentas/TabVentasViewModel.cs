@@ -130,7 +130,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                           Where(pe => pe.ProductoEnvasadoId == PedidoCabeceraSeleccionado.EstadoId)
                           .Include(pe => pe.ProductosEnvasadosComposiciones)
                           .Include(pe => pe.Picking)
-                          .Include(pe => pe.TipoProductoTerminado.GrupoProductoTerminado)
                           .ToList());
                     ProductosEnvasadosView = (CollectionView)CollectionViewSource.GetDefaultView(ProductosEnvasados);
 
@@ -324,12 +323,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     Observaciones = formProductoEnvasadoDataContext.Observaciones,
                     PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
-                    TipoProductoTerminadoId = (formProductoEnvasado.cbTipoProductoTerminado.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId,
+                    //TipoProductoTerminadoId = (formProductoEnvasado.cbTipoProductoTerminado.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId,
                     Volumen = formProductoEnvasadoDataContext.Volumen,
 
                 };
 
-                if (formProductoEnvasadoDataContext.FechaBaja != null)
+                /*if (formProductoEnvasadoDataContext.FechaBaja != null)
                 {
                     productoEnvasado.FechaBaja = new DateTime(
                         formProductoEnvasadoDataContext.FechaBaja.Value.Year,
@@ -338,7 +337,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                         formProductoEnvasadoDataContext.HoraBaja.Value.Hour,
                         formProductoEnvasadoDataContext.HoraBaja.Value.Minute,
                         formProductoEnvasadoDataContext.HoraBaja.Value.Second);
-                }
+                }*/
                 context.ProductosEnvasados.Add(productoEnvasado);
                 /*var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
                 foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
@@ -417,11 +416,11 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             //var historialHuecosRecepionesIniciales = formProductoEnvasadoDataContext.HistorialHuecosRecepciones.ToList();
             if ((bool)await DialogHost.Show(formProductoEnvasado, "RootDialog"))
             {
-                ProductoEnvasadoSeleccionado.TipoProductoTerminadoId = formProductoEnvasadoDataContext.TipoProductoTerminado.TipoProductoTerminadoId;
+                //ProductoEnvasadoSeleccionado.TipoProductoTerminadoId = formProductoEnvasadoDataContext.TipoProductoTerminado.TipoProductoTerminadoId;
                 ProductoEnvasadoSeleccionado.PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId;
                 ProductoEnvasadoSeleccionado.Volumen = formProductoEnvasadoDataContext.Volumen;
                 ProductoEnvasadoSeleccionado.Observaciones = formProductoEnvasadoDataContext.Observaciones;
-                if (formProductoEnvasadoDataContext.FechaBaja != null)
+                /*if (formProductoEnvasadoDataContext.FechaBaja != null)
                 {
                     ProductoEnvasadoSeleccionado.FechaBaja = new DateTime(
                         ProductoEnvasadoSeleccionado.FechaBaja.Value.Year,
@@ -434,7 +433,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 else
                 {
                     ProductoEnvasadoSeleccionado.FechaBaja = null;
-                }
+                }*/
                 if (!context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoEnvasado.ProductoEnvasadoId == ProductoEnvasadoSeleccionado.ProductoEnvasadoId))
                 {
                     // Se borran todos los historiales huecos recepciones antiguos y se añaden los nuevos
@@ -487,16 +486,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private bool FiltroProductosEnvasados(object item)
         {
             var productoEnvasado = item as ProductoEnvasado;
-            string tipo = productoEnvasado.TipoProductoTerminado.Nombre.ToLower();
-            string grupo = productoEnvasado.TipoProductoTerminado.GrupoProductoTerminado.Nombre.ToLower();
+            //string tipo = productoEnvasado.TipoProductoTerminado.Nombre.ToLower();
+            //string grupo = productoEnvasado.TipoProductoTerminado.GrupoProductoTerminado.Nombre.ToLower();
             string volumen = productoEnvasado.Volumen.ToString();
             string picking = productoEnvasado.Picking.Nombre.ToLower();
-            string fechaBaja = productoEnvasado.FechaBaja.ToString();
+            //string fechaBaja = productoEnvasado.FechaBaja.ToString();
 
-            return (FechaBajaProductoEnvasadoSeleccionado == true ? fechaBaja.Contains(TextoFiltroProductosEnvasados) : false)
-                || (TipoProductoTerminadoSeleccionado == true ? tipo.Contains(TextoFiltroProductosEnvasados) : false)
-                || (GrupoProductoTerminadoSeleccionado == true ? grupo.Contains(TextoFiltroProductosEnvasados) : false)
-                || (VolumenSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados)) : false)
+            return (VolumenSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados)) : false)
                 || (PickingNombreSeleccionado == true ? picking.Contains(TextoFiltroProductosEnvasados) : false);
 
         }

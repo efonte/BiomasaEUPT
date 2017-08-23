@@ -19,14 +19,22 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Key]
         public int PedidoDetalleId { get; set; }
 
+        [DisplayName("Volumen"), Display(Name = "Volumen")]
+        public double? Volumen { get; set; }
+
+        [Range(0, 1000)]
+        [DisplayName("Unidades"), Display(Name = "Unidades")]
+        public int? Unidades { get; set; }
+
         public int PedidoCabeceraId { get; set; }
 
-        public int ProductoEnvasadoId { get; set; }
+        public int TipoProductoTerminadoId { get; set; }
 
         [ForeignKey("PedidoCabeceraId")]
         public virtual PedidoCabecera PedidoCabecera { get; set; }
 
-        [ForeignKey("ProductoEnvasadoId")]
-        public virtual ProductoEnvasado ProductoEnvasado { get; set; }
+        [ForeignKey("TipoProductoTerminadoId")]
+        public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }
+
     }
 }

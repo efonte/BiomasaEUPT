@@ -50,10 +50,10 @@
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>
                             <KeyBinding Gesture="Delete" Key="Delete"
-                                        Command="{Binding BorrarElaboracionComando}"
+                                        Command="{Binding BorrarOrdenElaboracionComando}"
                                         CommandParameter="{Binding Path=SelectedItems, ElementName=dgElaboraciones, Mode=OneWay}"/>
                             <MouseBinding MouseAction="LeftDoubleClick"
-                                          Command="{Binding ModificarElaboracionComando}"/>
+                                          Command="{Binding ModificarOrdenElaboracionComando}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaElaboracionColumna" Header="Fecha Elaboración" Width="auto" IsReadOnly="True"
@@ -81,7 +81,7 @@
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Modificar la orden de elaboración seleccionada"
-                                    Command="{Binding ModificarOrdenElaboracíonComando}">
+                                    Command="{Binding ModificarOrdenElaboracionComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar órdenes de elaboración"
@@ -147,10 +147,10 @@
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbFechaRecepcion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding FechaElaboracionSeleccionada}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
-                        <CheckBox x:Name="cbEstado" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding EstadoElaboracionSeleccionado}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
+                        <CheckBox x:Name="cbFechaElaboracion" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaOrdenElaboracionSeleccionada}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
+                        <CheckBox x:Name="cbEstadoElaboracion" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EstadoOrdenElaboracionSeleccionado}" Command="{Binding FiltrarOrdenesElaboracionesComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>
