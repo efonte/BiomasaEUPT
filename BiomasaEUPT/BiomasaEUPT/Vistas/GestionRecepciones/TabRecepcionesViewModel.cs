@@ -369,20 +369,20 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                         formMateriaPrimaDataContext.HoraBaja.Value.Second);
                 }
                 context.MateriasPrimas.Add(materiaPrima);
-                var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
-                foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
+                var historialHuecosRecepciones = new List<HistorialHuecoRecepcion>();
+                foreach (var hhr in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
                 {
-                    var hrId = hmp.HuecoRecepcion.HuecoRecepcionId;
+                    var hrId = hhr.HuecoRecepcion.HuecoRecepcionId;
                     // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                    if (hmp.Unidades != 0 && hmp.Volumen != 0)
+                    if (hhr.Unidades != 0 && hhr.Volumen != 0)
                     {
-                        hmp.HuecoRecepcion = null;
-                        hmp.HuecoRecepcionId = hrId;
-                        hmp.MateriaPrima = materiaPrima;
-                        huecosMateriasPrimas.Add(hmp);
+                        hhr.HuecoRecepcion = null;
+                        hhr.HuecoRecepcionId = hrId;
+                        hhr.MateriaPrima = materiaPrima;
+                        historialHuecosRecepciones.Add(hhr);
                     }
                 }
-                context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
+                context.HistorialHuecosRecepciones.AddRange(historialHuecosRecepciones);
                 context.SaveChanges();
 
                 CargarMateriasPrimas();
@@ -471,7 +471,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 {
                     // Se borran todos los historiales huecos recepciones antiguos y se añaden los nuevos
                     context.HistorialHuecosRecepciones.RemoveRange(historialHuecosRecepionesIniciales);
-                    var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
+                    var historialHuecosRecepciones = new List<HistorialHuecoRecepcion>();
                     foreach (var hhr in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
                     {
                         var hrId = hhr.HuecoRecepcion.HuecoRecepcionId;
@@ -481,10 +481,10 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                             hhr.HuecoRecepcion = null;
                             hhr.HuecoRecepcionId = hrId;
                             hhr.MateriaPrima = MateriaPrimaSeleccionada;
-                            huecosMateriasPrimas.Add(hhr);
+                            historialHuecosRecepciones.Add(hhr);
                         }
                     }
-                    context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
+                    context.HistorialHuecosRecepciones.AddRange(historialHuecosRecepciones);
                 }
 
                 context.SaveChanges();

@@ -167,15 +167,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             {
                 context.OrdenesElaboraciones.Add(new OrdenElaboracion()
                 {
-                    Descripcion= formElaboracion.Descripcion,
-                    EstadoElaboracionId=1
+                    Descripcion = formElaboracion.Descripcion,
+                    EstadoElaboracionId = 1
                 });
                 context.SaveChanges();
             }
         }
         #endregion
 
-        
+
         #region Borrar Orden Elaboración
         public ICommand BorrarOrdenElaboracionComando => _borrarOrdenElaboracionComando ??
             (_borrarOrdenElaboracionComando = new RelayCommandGenerico<IList<object>>(
@@ -216,7 +216,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-        
+
         #region Modificar Orden Elaboración
         public ICommand ModificarOrdenElaboracionComando => _modificarOrdenElaboracionComando ??
             (_modificarOrdenElaboracionComando = new RelayCommand(
@@ -229,7 +229,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
             var formElaboracion = new FormElaboracion(context, "Editar Elaboración")
             {
-                
+
                 /*Descripcion= formElaboracion.Descripcion,
                 NumeroAlbaran = RecepcionSeleccionada.NumeroAlbaran,
                 FechaElaboracion = RecepcionSeleccionada.FechaRecepcion,
@@ -252,7 +252,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-        
+
         #region Refrescar Ordenes Elaboración
         public ICommand RefrescarOrdenesElaboracionesComando => _refrescarOrdenesElaboracionesComando ??
             (_refrescarOrdenesElaboracionesComando = new RelayCommand(
@@ -266,7 +266,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-       
+
         #region Filtro Orden Elaboracion
         public ICommand FiltrarOrdenesElaboracionesComando => _filtrarOrdenesElaboracionesComando ??
            (_filtrarOrdenesElaboracionesComando = new RelayCommand(
@@ -291,7 +291,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-       
+
         #region Añadir Producto Terminado
         public ICommand AnadirProductoTerminadoComando => _anadirProductoTerminadoComando ??
             (_anadirProductoTerminadoComando = new RelayCommand(
@@ -317,9 +317,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 var formProductoTerminadoDataContext = formProductoTerminado.DataContext as FormProductoTerminadoViewModel;
                 var productoTerminado = new ProductoTerminado()
                 {
-
                     OrdenId = OrdenElaboracionSeleccionada.OrdenElaboracionId,
-                    TipoId = (formProductoTerminado.cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId,
+                    TipoId = (formProductoTerminado.cbTiposProductosTerminados.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId,
                     Volumen = formProductoTerminadoDataContext.Volumen,
                     Unidades = formProductoTerminadoDataContext.Unidades,
                     Observaciones = formProductoTerminadoDataContext.Observaciones
@@ -336,20 +335,36 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                         formProductoTerminadoDataContext.HoraBaja.Value.Second);
                 }
                 context.ProductosTerminados.Add(productoTerminado);
-                var huecosProductosTerminados = new List<HistorialHuecoAlmacenaje>();
-                foreach (var hpt in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+
+                var productosTerminadosComposiciones = new List<ProductoTerminadoComposicion>();
+                foreach (var ptc in formProductoTerminadoDataContext.ProductosTerminadosComposiciones)
                 {
-                    var haId = hpt.HuecoAlmacenaje.HuecoAlmacenajeId;
+                    var hhrId = ptc.HistorialHuecoRecepcion.HistorialHuecoRecepcionId;
                     // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                    if (hpt.Unidades != 0 && hpt.Volumen != 0)
+                    if (ptc.Unidades != 0 && ptc.Volumen != 0)
                     {
-                        hpt.HuecoAlmacenaje = null;
-                        hpt.HuecoAlmacenajeId = haId;
-                        hpt.ProductoTerminado = productoTerminado;
-                        huecosProductosTerminados.Add(hpt);
+                        ptc.HistorialHuecoRecepcion = null;
+                        ptc.HistorialHuecoId = hhrId;
+                        ptc.ProductoTerminado = productoTerminado;
+                        productosTerminadosComposiciones.Add(ptc);
                     }
                 }
-                context.HistorialHuecosAlmacenajes.AddRange(huecosProductosTerminados);
+                context.ProductosTerminadosComposiciones.AddRange(productosTerminadosComposiciones);
+
+                var historialHuecosAlmacenajes = new List<HistorialHuecoAlmacenaje>();
+                foreach (var hha in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+                {
+                    var haId = hha.HuecoAlmacenaje.HuecoAlmacenajeId;
+                    // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                    if (hha.Unidades != 0 && hha.Volumen != 0)
+                    {
+                        hha.HuecoAlmacenaje = null;
+                        hha.HuecoAlmacenajeId = haId;
+                        hha.ProductoTerminado = productoTerminado;
+                        historialHuecosAlmacenajes.Add(hha);
+                    }
+                }
+                context.HistorialHuecosAlmacenajes.AddRange(historialHuecosAlmacenajes);
                 context.SaveChanges();
 
                 CargarProductosTerminados();
@@ -357,7 +372,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-       
+
         #region Borrar Producto Terminado 
         public ICommand BorrarProductoTerminadoComando => _borrarProductoTerminadoComando ??
             (_borrarProductoTerminadoComando = new RelayCommandGenerico<IList<object>>(
@@ -398,7 +413,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-       
+
         #region Modificar Producto Terminado
         public ICommand ModificarProductoTerminadoComando => _modificarProductoTerminadoComando ??
             (_modificarProductoTerminadoComando = new RelayCommand(
@@ -410,10 +425,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             var formProductoTerminado = new FormProductoTerminado(context, ProductoTerminadoSeleccionado);
             var formProductoTerminadoDataContext = formProductoTerminado.DataContext as FormProductoTerminadoViewModel;
+            var productosTerminadosComposicionesIniciales = formProductoTerminadoDataContext.ProductosTerminadosComposiciones.ToList();
             var historialHuecosAlmacenajesIniciales = formProductoTerminadoDataContext.HistorialHuecosAlmacenajes.ToList();
             if ((bool)await DialogHost.Show(formProductoTerminado, "RootDialog"))
             {
-                ProductoTerminadoSeleccionado.TipoId = formProductoTerminadoDataContext.TipoMateriaPrima.TipoMateriaPrimaId;
+                ProductoTerminadoSeleccionado.TipoId = formProductoTerminadoDataContext.TipoProductoTerminado.TipoProductoTerminadoId;
                 ProductoTerminadoSeleccionado.Unidades = formProductoTerminadoDataContext.Unidades;
                 ProductoTerminadoSeleccionado.Volumen = formProductoTerminadoDataContext.Volumen;
                 ProductoTerminadoSeleccionado.Observaciones = formProductoTerminadoDataContext.Observaciones;
@@ -433,22 +449,39 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 }
                 if (!context.ProductosTerminadosComposiciones.Any(ptc => ptc.ProductoId == ProductoTerminadoSeleccionado.ProductoTerminadoId))
                 {
-                    // Se borran todos los historiales huecos almacenajes antiguos y se añaden los nuevos
-                    context.HistorialHuecosAlmacenajes.RemoveRange(historialHuecosAlmacenajesIniciales);
-                    var huecosProductosTerminados = new List<HistorialHuecoAlmacenaje>();
-                    foreach (var hpt in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+                    // Se borran todos los productos terminados comosiciones antiguos y se añaden los nuevos
+                    context.ProductosTerminadosComposiciones.RemoveRange(productosTerminadosComposicionesIniciales);
+                    var productosTerminadosComposiciones = new List<ProductoTerminadoComposicion>();
+                    foreach (var ptc in formProductoTerminadoDataContext.ProductosTerminadosComposiciones)
                     {
-                        var haId = hpt.HuecoAlmacenaje.HuecoAlmacenajeId;
+                        var hhrId = ptc.HistorialHuecoRecepcion.HistorialHuecoRecepcionId;
                         // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                        if (hpt.Unidades != 0 && hpt.Volumen != 0)
+                        if (ptc.Unidades != 0 && ptc.Volumen != 0)
                         {
-                            hpt.HuecoAlmacenaje = null;
-                            hpt.HuecoAlmacenajeId = haId;
-                            hpt.ProductoTerminado = ProductoTerminadoSeleccionado;
-                            huecosProductosTerminados.Add(hpt);
+                            ptc.HistorialHuecoRecepcion = null;
+                            ptc.HistorialHuecoId = hhrId;
+                            ptc.ProductoTerminado = ProductoTerminadoSeleccionado;
+                            productosTerminadosComposiciones.Add(ptc);
                         }
                     }
-                    context.HistorialHuecosAlmacenajes.AddRange(huecosProductosTerminados);
+                    context.ProductosTerminadosComposiciones.AddRange(productosTerminadosComposiciones);
+
+                    // Se borran todos los historiales huecos almacenajes antiguos y se añaden los nuevos
+                    context.HistorialHuecosAlmacenajes.RemoveRange(historialHuecosAlmacenajesIniciales);
+                    var historialHuecosAlmacenajes = new List<HistorialHuecoAlmacenaje>();
+                    foreach (var hha in formProductoTerminadoDataContext.HistorialHuecosAlmacenajes)
+                    {
+                        var haId = hha.HuecoAlmacenaje.HuecoAlmacenajeId;
+                        // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                        if (hha.Unidades != 0 && hha.Volumen != 0)
+                        {
+                            hha.HuecoAlmacenaje = null;
+                            hha.HuecoAlmacenajeId = haId;
+                            hha.ProductoTerminado = ProductoTerminadoSeleccionado;
+                            historialHuecosAlmacenajes.Add(hha);
+                        }
+                    }
+                    context.HistorialHuecosAlmacenajes.AddRange(historialHuecosAlmacenajes);
                 }
 
                 context.SaveChanges();
@@ -457,7 +490,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-        
+
         #region Refrescar ProductosTerminados
         public ICommand RefrescarProductosTerminadosComando => _refrescarProductosTerminadosComando ??
             (_refrescarProductosTerminadosComando = new RelayCommand(
@@ -466,7 +499,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
              ));
         #endregion
 
-        
+
         #region Modificar Observaciones Producto Terminado
         public ICommand ModificarObservacionesProductoTerminadoComando => _modificarObservacionesProductoTerminadoComando ??
             (_modificarObservacionesProductoTerminadoComando = new RelayCommand(
@@ -484,7 +517,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         }
         #endregion
 
-        
+
         #region Filtro Productos Terminados
         public ICommand FiltrarProductosTerminadosComando => _filtrarProductosTerminadosComando ??
            (_filtrarProductosTerminadosComando = new RelayCommand(

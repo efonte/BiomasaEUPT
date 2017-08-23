@@ -64,18 +64,28 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             viewModel.FechaBaja = productoTerminado.FechaBaja;
             viewModel.HoraBaja = productoTerminado.FechaBaja;
             viewModel.Observaciones = productoTerminado.Observaciones;
-
+            if (productoTerminado.TipoProductoTerminado.MedidoEnUnidades == true)
+            {
+                viewModel.Cantidad = productoTerminado.Unidades.Value;
+            }
+            else
+            {
+                viewModel.Cantidad = productoTerminado.Volumen.Value;
+            }
+            viewModel.ProductosTerminadosComposiciones = new ObservableCollection<ProductoTerminadoComposicion>(context.ProductosTerminadosComposiciones.Where(ptc => ptc.ProductoId == productoTerminado.ProductoTerminadoId).ToList());
             viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoTerminadoId == productoTerminado.ProductoTerminadoId).ToList());
             CalcularCantidades();
+
+            // Si ya se han envasado algún producto envasado con dicho producto terminado entonces los controles estarán deshabilitados
             if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.ProductoTerminado.ProductoTerminadoId == productoTerminado.ProductoTerminadoId))
             {
-
                 cbGruposMateriasPrimas.IsEnabled = false;
                 cbTiposMateriasPrimas.IsEnabled = false;
                 cbSitiosAlmacenajes.IsEnabled = false;
                 lbHuecosAlmacenajes.IsEnabled = false;
                 tbCantidad.IsEnabled = false;
                 wpHuecosAlmacenajes.IsEnabled = false;
+                wpProductosTerminadosComposiciones.IsEnabled = false;
             }
         }
 
@@ -133,33 +143,56 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 viewModel.Volumen = viewModel.Cantidad;
                 viewModel.Unidades = null;
             }
-            CalcularCantidades();           
+            CalcularCantidades();
         }
 
         private void cbTiposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           /* if (viewModel.TipoMateriaPrima.MedidoEnUnidades == true)
-            {
-                viewModel.CantidadHint = "Cantidad (ud.)";
-                viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
-                viewModel.Volumen = null;
-            }
-            else
-            {
-                viewModel.CantidadHint = "Cantidad (m³)";
-                viewModel.Volumen = viewModel.Cantidad;
-                viewModel.Unidades = null;
-            }
-               CalcularCantidades();*/
+            // Se añaden todos los HistorialHuecosRecepciones que contienen tienen el TipoMateriaPrima seleccionada
             viewModel.HistorialHuecosRecepcionesDisponibles = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrima.TipoId == ((TipoMateriaPrima)cbTiposMateriasPrimas.SelectedItem).TipoMateriaPrimaId && (viewModel.TipoMateriaPrima.MedidoEnUnidades == true ? (hhr.UnidadesRestantes > 0) : (hhr.VolumenRestante > 0))).ToList());
+
+            // Se borran los HistorialHuecosRecepciones que ya se han añadido (convertidos en ProductosTerminadosComposiciones)
+            viewModel.ProductosTerminadosComposiciones.ToList().ForEach(ptc => viewModel.HistorialHuecosRecepcionesDisponibles.Remove(ptc.HistorialHuecoRecepcion));
         }
 
         private void cbSitiosAlmacenajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Se añaden todos los HuecosAlmacenajes del SitioAlmacenaje seleccionado
             viewModel.HuecosAlmacenajesDisponibles = new ObservableCollection<HuecoAlmacenaje>(context.HuecosAlmacenajes.Where(ha => ha.SitioId == ((SitioAlmacenaje)cbSitiosAlmacenajes.SelectedItem).SitioAlmacenajeId && !ha.Ocupado.Value).ToList());
 
-            // Se borran los HuecosAlmacenajes que ya se han añadido (convertidos en HuecosAlmacenajes)
+            // Se borran los HuecosAlmacenajes que ya se han añadido (convertidos en HistorialHuecosAlmacenajes)
             viewModel.HistorialHuecosAlmacenajes.ToList().ForEach(hha => viewModel.HuecosAlmacenajesDisponibles.Remove(hha.HuecoAlmacenaje));
+        }
+
+        private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var parent = sender as ListBox;
+            var historialHuecoRecepcion = GetDataFromListBox(lbHistorialHuecosRecepciones, e.GetPosition(parent)) as HistorialHuecoRecepcion;
+            if (historialHuecoRecepcion != null)
+            {
+                DataObject dragData = new DataObject("HistorialHuecoRecepcion", historialHuecoRecepcion);
+                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void spProductosTerminadosComposiciones_Drop(object sender, DragEventArgs e)
+        {
+            var historialHuecoRecepcion = e.Data.GetData("HistorialHuecoRecepcion") as HistorialHuecoRecepcion;
+            var productoTerminadoComposicion = new ProductoTerminadoComposicion() { HistorialHuecoRecepcion = historialHuecoRecepcion };
+            viewModel.ProductosTerminadosComposiciones.Add(productoTerminadoComposicion);
+            viewModel.HistorialHuecosRecepcionesDisponibles.Remove(historialHuecoRecepcion);
+        }
+
+        private void cProductoTerminadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            var chip = sender as Chip;
+            int historialHuecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
+            var productoTerminadoComposicion = viewModel.ProductosTerminadosComposiciones.Single(ptc => ptc.HistorialHuecoRecepcion.HistorialHuecoRecepcionId == historialHuecoRecepcionId);
+            viewModel.ProductosTerminadosComposiciones.Remove(productoTerminadoComposicion);
+            if (productoTerminadoComposicion.HistorialHuecoRecepcion.MateriaPrima.TipoId == (cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId)
+            {
+                viewModel.HistorialHuecosRecepcionesDisponibles.Add(productoTerminadoComposicion.HistorialHuecoRecepcion);
+            }
         }
 
         private void lbHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -223,7 +256,6 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 viewModel.HuecosAlmacenajesDisponibles.Add(historialHuecoAlmacenaje.HuecoAlmacenaje);
             }
             CalcularCantidades();
-
         }
 
         private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
@@ -241,58 +273,6 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             }
             CalcularCantidades();
         }
-
-        /*private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CalcularUnidadesVolumen();
-        }
-
-        private void tbUnidades_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CalcularUnidadesVolumen();
-        }
-
-        private void CalcularUnidadesVolumen()
-        {
-
-            if (TipoProductoTerminado != null && TipoProductoTerminado.MedidoEnUnidades == true)
-            {
-                var unidadesRestantes = Unidades;
-                foreach (var hha in HistorialHuecosAlmacenajes)
-                {
-                    if (hha.HuecoAlmacenaje.UnidadesTotales <= unidadesRestantes)
-                    {
-                        unidadesRestantes -= hha.HuecoAlmacenaje.UnidadesTotales;
-                        hha.Unidades = hha.HuecoAlmacenaje.UnidadesTotales;
-                    }
-                    else
-                    {
-                        hha.Unidades = unidadesRestantes;
-                        unidadesRestantes = 0;
-                    }
-                }
-            }
-            else
-            {
-                var volumenRestante = Volumen;
-                foreach (var hha in HistorialHuecosAlmacenajes)
-                {
-                    if (hha.HuecoAlmacenaje.VolumenTotal <= volumenRestante)
-                    {
-                        volumenRestante -= hha.HuecoAlmacenaje.VolumenTotal;
-                        hha.Volumen = hha.HuecoAlmacenaje.VolumenTotal;
-                    }
-                    else
-                    {
-                        hha.Volumen = volumenRestante;
-                        volumenRestante = 0;
-                    }
-                }
-            }
-            var nuevosHistorialesHuecosAlmacenajes = HistorialHuecosAlmacenajes.ToList();
-            HistorialHuecosAlmacenajes.Clear();
-            nuevosHistorialesHuecosAlmacenajes.ForEach(HistorialHuecosAlmacenajes.Add);
-        }*/
 
         private void CalcularCantidades()
         {
@@ -333,37 +313,6 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 viewModel.QuedaCantidadPorAlmacenar = volumenRestante > 0 || viewModel.Cantidad == 0;
             }
             viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(viewModel.HistorialHuecosAlmacenajes.ToList());
-        }
-
-        private void lbHistorialHuecosRecepciones_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var parent = sender as ListBox;
-            var historialHuecoRecepcion = GetDataFromListBox(lbHistorialHuecosRecepciones, e.GetPosition(parent)) as HistorialHuecoRecepcion;
-            if (historialHuecoRecepcion != null)
-            {
-                DataObject dragData = new DataObject("HistorialHuecoRecepcion", historialHuecoRecepcion);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }
-        }
-
-        private void spProductosTerminadosComposiciones_Drop(object sender, DragEventArgs e)
-        {
-            /*var ProductoTerminado = e.Data.GetData("ProductoTerminado") as ProductoTerminado;
-            var productoTerminado = new ProductoTerminadoComposicion() { ProductoTerminado = productoTerminado };
-            ProductoTerminado.Add(productoTerminado;
-            HistorialHuecosAlmacenajes.Remove(ProductoTerminado);*/
-        }
-
-        private void cProductoTerminadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
-        {
-            /*var chip = sender as Chip;
-            int tipoProductoTerminadoId = int.Parse(chip.CommandParameter.ToString());
-            ProductoTerminado productoTerminado = ProductosTerminados.Single(pt => pt.TipoProductoTerminado.TipoProductoTerminadoId == tipoProductoTerminadoId);
-            ProductosTerminados.Remove(productoTerminado);
-            if (productoTerminado.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId == (cbGruposProductosTerminados.SelectedItem as GrupoProductoTerminado).GrupoProductoTerminadoId)
-            {
-                TiposProductosTerminadosDisponibles.Add(productoTerminado.TipoProductoTerminado);
-            }*/
         }
     }
 }

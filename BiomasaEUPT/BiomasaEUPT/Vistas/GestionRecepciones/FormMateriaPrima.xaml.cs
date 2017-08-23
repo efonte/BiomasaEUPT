@@ -64,6 +64,8 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             }
             viewModel.HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList());
             CalcularCantidades();
+
+            // Si ya se han fabricado algún producto terminado con dicha materia prima entonces los controles estarán deshabilitados
             if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.HistorialHuecoRecepcion.MateriaPrimaId == materiaPrima.MateriaPrimaId))
             {
 
@@ -119,7 +121,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             // Se añaden todos los HuecosRecepciones del SitioRecepcion seleccionado
             viewModel.HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>(context.HuecosRecepciones.Where(hr => hr.SitioId == ((SitioRecepcion)cbSitiosRecepciones.SelectedItem).SitioRecepcionId && !hr.Ocupado.Value).ToList());
 
-            // Se borran los HuecosRecepciones que ya se han añadido (convertidos en HuecosMateriasPrimas)
+            // Se borran los HuecosRecepciones que ya se han añadido (convertidos en HistorialHuecosRecepciones)
             viewModel.HistorialHuecosRecepciones.ToList().ForEach(hhr => viewModel.HuecosRecepcionesDisponibles.Remove(hhr.HuecoRecepcion));
         }
 
@@ -169,7 +171,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             var huecoRecepcion = e.Data.GetData("HuecoRecepcion") as HuecoRecepcion;
             var historialHuecoRecepcion = new HistorialHuecoRecepcion() { HuecoRecepcion = huecoRecepcion };
             viewModel.HistorialHuecosRecepciones.Add(historialHuecoRecepcion);
-            //HuecosMateriasPrimas.Add(huecoRecepcion);
             viewModel.HuecosRecepcionesDisponibles.Remove(huecoRecepcion);
             CalcularCantidades();
         }
@@ -185,7 +186,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 viewModel.HuecosRecepcionesDisponibles.Add(historialHuecoRecepcion.HuecoRecepcion);
             }
             CalcularCantidades();
-
         }
 
         /*  private void tbVolumen_TextChanged(object sender, TextChangedEventArgs e)
