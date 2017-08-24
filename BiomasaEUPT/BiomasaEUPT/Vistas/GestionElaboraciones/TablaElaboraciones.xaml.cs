@@ -29,21 +29,5 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
 
         }
-
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            DependencyObject ucParent = Parent;
-
-            while (!(ucParent is UserControl))
-            {
-                ucParent = LogicalTreeHelper.GetParent(ucParent);
-            }
-
-            TabElaboraciones tabElaboraciones = (TabElaboraciones)ucParent;
-
-            //tabElaboraciones.FiltrarTablaElaboraciones();
-        }
-
-
     }
 }

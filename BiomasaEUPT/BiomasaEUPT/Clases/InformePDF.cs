@@ -162,8 +162,6 @@ namespace BiomasaEUPT.Clases
             return nombrePdf;
         }
 
-
-
         public string GenerarPDFRecepcion(Proveedor proveedor)
         {
             var recepcion = proveedor.Recepciones.First();
@@ -221,6 +219,58 @@ namespace BiomasaEUPT.Clases
                 doc.Add(TablaMateriaPrima(materiaPrima));
 
             }
+
+            doc.Close();
+
+            return nombrePdf;
+        }
+
+
+        public string GenerarPDFProductoTerminado(List<Proveedor> proveedores)
+        {
+            var productoTerminado = proveedores.First().Recepciones.First().MateriasPrimas.First().HistorialHuecosRecepciones.First().ProductosTerminadosComposiciones.First().ProductoTerminado;
+
+            // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
+            fechaCreacion = DateTime.Now;
+            var nombrePdf = ruta + "Producto Terminado #" + productoTerminado.Codigo + " " + fechaCreacion.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+
+            PdfWriter writer = new PdfWriter(nombrePdf);
+
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Producto Terminado #" + productoTerminado.Codigo + " " + fechaCreacion.ToString("dd/MM/yyyy HH:mm:ss"));
+            pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new FinPaginaEventHandler(this));
+
+            //  OrientacionPaginaEventHandler orientacionPaginaEventHandler = new OrientacionPaginaEventHandler();
+            //  pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, orientacionPaginaEventHandler);
+
+            Document doc = new Document(pdfDoc, PageSize.A4.Rotate());
+            //doc.SetMargins(70, 70, 85, 85);          
+
+            doc.Add(Titulo("Producto Terminado"));
+            var tablaCodigo = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+            tablaCodigo.AddCell(CeldaTituloVertical("Tipo").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical(productoTerminado.TipoProductoTerminado.Nombre).SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaTituloVertical("Humedad").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical(productoTerminado.TipoProductoTerminado.Humedad + "%").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaTituloVertical("Tamaño").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical(productoTerminado.TipoProductoTerminado.Tamano).SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaTituloVertical("Cantidad").SetVerticalAlignment(VerticalAlignment.TOP));
+            tablaCodigo.AddCell(CeldaVertical((productoTerminado.TipoProductoTerminado.MedidoEnUnidades == true) ? (productoTerminado.Unidades + " ud.") : (productoTerminado.Volumen + " m³")).SetVerticalAlignment(VerticalAlignment.TOP));
+            var codigoBarras = new Barcode128(pdfDoc);
+            codigoBarras.SetCodeType(Barcode128.CODE128);
+            codigoBarras.SetCode(productoTerminado.Codigo);
+            Rectangle rect = codigoBarras.GetBarcodeSize();
+            Image imagenCodigo = new Image(codigoBarras.CreateFormXObject(pdfDoc)).SetWidth(100);
+            tablaCodigo.AddCell(new Cell().Add(imagenCodigo).AddStyle(estiloCelda).SetPaddingLeft(25));
+            doc.Add(tablaCodigo);
+
+            doc.Add(new Paragraph("\n"));
+
+            doc.Add(TablaProductoTerminado(productoTerminado));
 
             doc.Close();
 
@@ -352,6 +402,109 @@ namespace BiomasaEUPT.Clases
 
             return tablaMP;
         }
+
+        private Table TablaProductoTerminado(ProductoTerminado productoTerminado)
+        {
+            var tablaPT = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
+            tablaPT.AddHeaderCell(CeldaTitulo("Recepción", 1, 4).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+            tablaPT.AddHeaderCell(CeldaTitulo("Elaboración", 1, 5).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+            tablaPT.AddHeaderCell(CeldaTitulo("Sitio"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Hueco"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Capacidad Total"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Almacenada"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Utilizada"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Producto Terminado"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Producida"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Sitio"));
+            tablaPT.AddHeaderCell(CeldaTitulo("Hueco"));
+
+            /* foreach (var sr in materiaPrima.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct().ToList())
+             {
+                 var huecosAlmacenajesSR = materiaPrima.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes);
+                 var filasSR = huecosAlmacenajesSR.Count();
+
+                 // Sitios de recepción
+                 tablaMP.AddCell(Celda(sr.Nombre, filasSR));
+
+                 foreach (var hhr in materiaPrima.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr))
+                 {
+                     var huecosAlmacenajesHHR = hhr.ProductosTerminadosComposiciones.Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).ToList();
+                     var filasHHR = 1;
+                     var filasHRCapacidadTotal = 1;
+                     var filasHRCantidadAlmacenada = 1;
+                     if (huecosAlmacenajesHHR.Count() > 0)
+                     {
+                         filasHHR = huecosAlmacenajesHHR.Count();
+                         filasHRCapacidadTotal = huecosAlmacenajesHHR.Count();
+                         filasHRCantidadAlmacenada = huecosAlmacenajesHHR.Count();
+                     }
+
+                     // Hueco de recepción
+                     tablaPT.AddCell(Celda(hhr.HuecoRecepcion.Nombre, filasHHR));
+
+                     // Capacidad total de cada hueco de recepción                   
+                     tablaPT.AddCell(Celda($"{hhr.HuecoRecepcion.VolumenTotal.ToString()} m³ / {hhr.HuecoRecepcion.UnidadesTotales} ud.", filasHRCapacidadTotal));
+
+                     // Cantidad de materia prima almacenada en cada hueco de recepción
+                     tablaPT.AddCell(Celda((materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (hhr.Unidades + " ud.") : (hhr.Volumen + " m³"), filasHRCantidadAlmacenada));
+
+                     if (huecosAlmacenajesHHR.Count() == 0)
+                     {
+                         // Cantidad de materia prima utilizada de cada hueco de recepción
+                         tablaPT.AddCell(Celda("-"));
+                         // Producto terminado
+                         tablaPT.AddCell(Celda("-"));
+                         // Cantidad de producto terminado producido
+                         tablaPT.AddCell(Celda("-"));
+                         // Sitio de almacenaje
+                         tablaPT.AddCell(Celda("-"));
+                         // Hueco de almacenaje
+                         tablaPT.AddCell(Celda("-"));
+                     }
+                     else
+                     {
+                         foreach (var ptc in hhr.ProductosTerminadosComposiciones)
+                         {
+                             var huecosAlmacenajesPTC = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Select(hha => hha.HuecoAlmacenaje).ToList();
+                             var sitiosAlmacenajesPTC = huecosAlmacenajesPTC.Select(ha => ha.SitioAlmacenaje).Distinct().ToList();
+
+                             var filasHRCantidadUtilizada = huecosAlmacenajesPTC.Count();
+                             var filasPT = huecosAlmacenajesPTC.Count();
+
+                             // Cantidad de materia prima utilizada de cada hueco de recepción
+                             tablaPT.AddCell(Celda((materiaPrima.TipoMateriaPrima.MedidoEnUnidades == true) ? (ptc.Unidades + " ud.") : (ptc.Volumen + " m³"), filasHRCantidadUtilizada));
+
+                             // Producto terminado                        
+                             tablaPT.AddCell(Celda(ptc.ProductoTerminado.TipoProductoTerminado.Nombre, filasPT));
+
+                             // Cantidad producida del producto terminado
+                             tablaPT.AddCell(Celda((ptc.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades == true) ? (ptc.ProductoTerminado.Unidades + " ud.") : (ptc.ProductoTerminado.Volumen + " m³"), filasHRCantidadUtilizada));
+
+                             foreach (var sa in sitiosAlmacenajesPTC)
+                             {
+                                 var historialesHuecosAlmacenajesSA = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Where(hha => hha.HuecoAlmacenaje.SitioAlmacenaje == sa).ToList();
+                                 var filasSA = historialesHuecosAlmacenajesSA.Count();
+
+                                 // Sitio de almacenaje
+                                 tablaPT.AddCell(Celda(sa.Nombre, filasSA));
+
+                                 foreach (var hha in historialesHuecosAlmacenajesSA)
+                                 {
+                                     var filasHA = 1;
+
+                                     // Hueco de almacenaje
+                                     tablaPT.AddCell(Celda(hha.HuecoAlmacenaje.Nombre, filasHA));
+                                 }
+                             }
+                         }
+                     }
+                 }
+
+             }*/
+
+            return tablaPT;
+        }
+
 
         private Paragraph Titulo(string texto)
         {
@@ -571,6 +724,64 @@ namespace BiomasaEUPT.Clases
 
             doc.Close();
             // return memStream;
+            return rutaPDF;
+        }
+
+
+        public string GenerarPDFCodigoProductoTerminado(ProductoTerminado productoTerminado)
+        {
+            var ruta = System.IO.Path.GetTempPath() + "/BiomasaEUPT/";
+            if (!Directory.Exists(ruta))
+                Directory.CreateDirectory(ruta);
+
+            var rutaPDF = ruta + "Código Producto Terminado #" + productoTerminado.Codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+            PdfDocument pdfDoc = new PdfDocument(new PdfWriter(rutaPDF));
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Código Producto Terminado #" + productoTerminado.Codigo + " " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            Document doc = new Document(pdfDoc, new PageSize(60, 140));
+            doc.SetMargins(5, 5, 5, 5);
+
+            PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
+            PdfFont regular = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
+            var primeraPagina = true;
+            foreach (var hha in productoTerminado.HistorialHuecosAlmacenajes.ToList())
+            {
+                if (!primeraPagina)
+                {
+                    doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                }
+                Paragraph p1 = new Paragraph();
+                p1.Add(new Text(hha.HuecoAlmacenaje.Nombre).SetFont(bold).SetFontSize(6));
+                doc.Add(p1);
+
+                /* Paragraph p2 = new Paragraph(productoTerminado.OrdenElaboracion.FechaElaboracion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);
+                 p2.SetTextAlignment(TextAlignment.RIGHT);
+                 doc.Add(p2);*/
+
+                Barcode128 barcode = new Barcode128(pdfDoc);
+                barcode.SetCodeType(Barcode128.CODE128);
+                barcode.SetCode(productoTerminado.Codigo);
+                Rectangle rect = barcode.GetBarcodeSize();
+                PdfFormXObject template = new PdfFormXObject(new Rectangle(rect.GetWidth(), rect.GetHeight() + 10));
+                PdfCanvas templateCanvas = new PdfCanvas(template, pdfDoc);
+                new Canvas(templateCanvas, pdfDoc, new Rectangle(rect.GetWidth(), rect.GetHeight() + 10))
+                        .ShowTextAligned(new Paragraph(productoTerminado.TipoProductoTerminado.Nombre + " (" + productoTerminado.TipoProductoTerminado.Tamano + " " + productoTerminado.TipoProductoTerminado.Humedad + "%)").SetFont(regular).SetFontSize(6), 0, rect.GetHeight() + 2, TextAlignment.LEFT);
+                barcode.PlaceBarcode(templateCanvas, Color.BLACK, Color.BLACK);
+                Image image = new Image(template);
+                image.SetRotationAngle(Math.PI / 2);
+                image.SetAutoScale(true);
+                doc.Add(image);
+
+                // Paragraph p3 = new Paragraph("SMALL").SetFont(regular).SetFontSize(6);
+                // p3.SetTextAlignment(TextAlignment.CENTER);
+                // doc.Add(p3);
+                primeraPagina = false;
+            }
+
+            doc.Close();
             return rutaPDF;
         }
 

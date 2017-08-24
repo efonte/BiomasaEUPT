@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,23 +22,27 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
     /// </summary>
     public partial class TablaProductosTerminados : UserControl
     {
+        private Trazabilidad trazabilidad;
+
         public TablaProductosTerminados()
         {
             InitializeComponent();
+            trazabilidad = new Trazabilidad();
         }
 
-        private void tbBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        private void bPdfProducto_Click(object sender, RoutedEventArgs e)
         {
-            DependencyObject ucParent = Parent;
+            ProductoTerminado productoTerminado = (sender as Button).DataContext as ProductoTerminado;
 
-            while (!(ucParent is UserControl))
-            {
-                ucParent = LogicalTreeHelper.GetParent(ucParent);
-            }
+            InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
+            System.Diagnostics.Process.Start(informe.GenerarPDFProductoTerminado(trazabilidad.ProductoTerminado(productoTerminado.Codigo)));
+        }
 
-            TabElaboraciones tabElaboraciones = (TabElaboraciones)ucParent;
+        private void bCodigo_Click(object sender, RoutedEventArgs e)
+        {
+            ProductoTerminado productoTerminado = (sender as Button).DataContext as ProductoTerminado;
 
-            //tabElaboraciones.FiltrarTablaProductosTerminados();
+            System.Diagnostics.Process.Start(new InformePDF().GenerarPDFCodigoProductoTerminado(productoTerminado));
         }
     }
 }

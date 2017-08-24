@@ -103,6 +103,30 @@
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código" Width="SizeToHeader"
                                                                        Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bCodigo" Padding="0" BorderThickness="0" Height="17" Width="17"
+                                                Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
+                                                ToolTip="Obtener PDF con los códigos" Click="bCodigo_Click">
+                                            <materialDesign:PackIcon Kind="Barcode" Width="17" Height="17"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bPdfMateria" Padding="0" BorderThickness="0" Height="17" Width="17"
+                                                Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
+                                                ToolTip="Generar informe en PDF" Click="bPdfProducto_Click">
+                                            <materialDesign:PackIcon Kind="FilePdf" Width="17" Height="17"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -167,32 +191,35 @@
                                     <DataTemplate>
                                         <materialDesign:Chip Margin="5" Cursor="Arrow">
                                             <materialDesign:Chip.Content>
-                                                <TextBlock FontSize="14" FontStyle="Italic">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Text">
-                                                                <Setter.Value>
-                                                                    <MultiBinding StringFormat="{}{0} de {1} m³" >
-                                                                        <Binding Path="Volumen" />
-                                                                        <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.VolumenTotal" />
-                                                                    </MultiBinding>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
-                                                                    <Setter Property="Text">
-                                                                        <Setter.Value>
-                                                                            <MultiBinding StringFormat="{}{0} de {1} ud." >
-                                                                                <Binding Path="Unidades" />
-                                                                                <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.UnidadesTotales" />
-                                                                            </MultiBinding>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
+                                                <StackPanel>
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima.Nombre}"/>
+                                                    <TextBlock FontSize="14" FontStyle="Italic">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Text">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                            <Binding Path="Volumen" />
+                                                                            <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.VolumenTotal" />
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Volumen}" Value="{x:Null}">
+                                                                        <Setter Property="Text">
+                                                                            <Setter.Value>
+                                                                                <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                                    <Binding Path="Unidades" />
+                                                                                    <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.UnidadesTotales" />
+                                                                                </MultiBinding>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
                                             </materialDesign:Chip.Content>
                                             <materialDesign:Chip.Icon>
                                                 <TextBlock FontSize="15" Text="{Binding HistorialHuecoRecepcion.HuecoRecepcion.Nombre}"></TextBlock>
@@ -298,7 +325,7 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         TextChanged="tbBuscar_TextChanged"/>
+                         Text="{Binding TextoFiltroProductosTerminados, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
