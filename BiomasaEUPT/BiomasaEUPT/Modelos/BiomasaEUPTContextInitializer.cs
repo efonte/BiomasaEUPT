@@ -40,7 +40,7 @@ BEGIN
     IF UPDATE(Contrasena)
     BEGIN
         UPDATE u
-        SET    FechaContrasena = CASE WHEN i.Contrasena != NULL THEN GETDATE() ELSE NULL END
+        SET    FechaContrasena = CASE WHEN i.Contrasena IS NOT NULL THEN GETDATE() ELSE NULL END
         FROM   Usuarios u
         JOIN   inserted i ON u.UsuarioId = i.UsuarioId;
     END
@@ -62,7 +62,13 @@ BEGIN
     UPDATE HuecosRecepciones
     SET    Ocupado = 1
     FROM   inserted i
-    WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId
+    WHERE  HuecosRecepciones.HuecoRecepcionId = i.HuecoRecepcionId;
+
+    UPDATE HistorialHuecosRecepciones
+    SET    VolumenRestante = i.Volumen,
+           UnidadesRestantes = i.Unidades
+    FROM   inserted i
+    WHERE  HistorialHuecosRecepciones.HistorialHuecoRecepcionId = i.HistorialHuecoRecepcionId
 END
 '
 -- ALTER TABLE [dbo].[HistorialHuecosRecepciones] ENABLE TRIGGER [TR_HistorialHuecosRecepciones_I];
@@ -112,7 +118,13 @@ BEGIN
     UPDATE HuecosAlmacenajes
     SET    Ocupado = 1
     FROM   inserted i
-    WHERE  HuecosAlmacenajes.HuecoAlmacenajeId = i.HuecoAlmacenajeId
+    WHERE  HuecosAlmacenajes.HuecoAlmacenajeId = i.HuecoAlmacenajeId;
+
+    UPDATE HistorialHuecosAlmacenajes
+    SET    VolumenRestante = i.Volumen,
+           UnidadesRestantes = i.Unidades
+    FROM   inserted i
+    WHERE  HistorialHuecosAlmacenajes.HistorialHuecoAlmacenajeId = i.HistorialHuecoAlmacenajeId
 END
 '
 
@@ -177,6 +189,42 @@ BEGIN
     JOIN   inserted i ON pt.ProductoTerminadoId = i.ProductoTerminadoId
 END
 '
+
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosTerminadosComposiciones_I]
+    ON [dbo].[ProductosTerminadosComposiciones]
+    AFTER INSERT
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+
+    UPDATE HistorialHuecosRecepciones
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante - i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes - i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  HistorialHuecosRecepciones.HistorialHuecoRecepcionId = i.HistorialHuecoId
+END
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosTerminadosComposiciones_D]
+    ON [dbo].[ProductosTerminadosComposiciones]
+    AFTER DELETE
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE HistorialHuecosRecepciones
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante + i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes + i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  HistorialHuecosRecepciones.HistorialHuecoRecepcionId = i.HistorialHuecoId
+END
+'
+
 
 "
                 );

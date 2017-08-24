@@ -687,7 +687,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 1,
                     Unidades = 30,
-                    UnidadesRestantes = 30,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "A01").HuecoRecepcionId
                 },
@@ -695,7 +694,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 2,
                     Unidades = 5,
-                    UnidadesRestantes = 5,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000001").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B01").HuecoRecepcionId
                 },
@@ -703,7 +701,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 3,
                     Unidades = 25,
-                    UnidadesRestantes = 25,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000002").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "A02").HuecoRecepcionId
                 },
@@ -711,7 +708,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 4,
                     Unidades = 50,
-                    UnidadesRestantes = 50,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000002").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B03").HuecoRecepcionId
                 },
@@ -719,7 +715,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 5,
                     Unidades = 32,
-                    UnidadesRestantes = 32,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000002").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B04").HuecoRecepcionId
                 },
@@ -727,7 +722,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoRecepcionId = 6,
                     Volumen = 48,
-                    VolumenRestante = 48,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000003").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId
                 });
@@ -779,7 +773,7 @@ namespace BiomasaEUPT.Migrations
                 },
                 new TipoProductoTerminado()
                 {
-                    Nombre = "Tablon roble",
+                    Nombre = "Tablón roble",
                     Tamano = "0.80",
                     Humedad = 85,
                     MedidoEnUnidades = true,
@@ -810,7 +804,7 @@ namespace BiomasaEUPT.Migrations
                     ProductoTerminadoId = 1,
                     Unidades = 40,
                     Observaciones = "Baja humedad",
-                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "Tablon roble").TipoProductoTerminadoId,
+                    TipoId = context.TiposProductosTerminados.Local.Single(ti => ti.Nombre == "Tablón roble").TipoProductoTerminadoId,
                     OrdenId = context.OrdenesElaboraciones.Local.Single(oe => oe.OrdenElaboracionId == 1).OrdenElaboracionId
                 },
                 new ProductoTerminado()
@@ -921,7 +915,6 @@ namespace BiomasaEUPT.Migrations
                 {
                     HistorialHuecoAlmacenajeId = 1,
                     Unidades = 25,
-                    UnidadesRestantes = 25,
                     ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000001").ProductoTerminadoId,
                     HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "A02").HuecoAlmacenajeId
                 },
@@ -929,7 +922,6 @@ namespace BiomasaEUPT.Migrations
                  {
                      HistorialHuecoAlmacenajeId = 2,
                      Unidades = 10,
-                     UnidadesRestantes = 10,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000001").ProductoTerminadoId,
                      HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "B01").HuecoAlmacenajeId
                  },
@@ -937,7 +929,6 @@ namespace BiomasaEUPT.Migrations
                  {
                      HistorialHuecoAlmacenajeId = 3,
                      Unidades = 5,
-                     UnidadesRestantes = 5,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000001").ProductoTerminadoId,
                      HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "B02").HuecoAlmacenajeId
                  },
@@ -945,7 +936,6 @@ namespace BiomasaEUPT.Migrations
                  {
                      HistorialHuecoAlmacenajeId = 4,
                      Volumen = 10,
-                     VolumenRestante = 10,
                      ProductoTerminadoId = context.ProductosTerminados.Local.Single(pt => pt.Codigo == "2000000002").ProductoTerminadoId,
                      HuecoAlmacenajeId = context.HuecosAlmacenajes.Local.Single(ha => ha.Nombre == "B03").HuecoAlmacenajeId
                  });

@@ -26,10 +26,12 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int? Unidades { get; set; }
 
         // Unidades y Volumen restantes son para realizar las elaboraciones
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Volumen restante"), Display(Name = "Volumen restante")]
         public double? VolumenRestante { get; set; }
 
         [Range(0, 1000)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
         public int? UnidadesRestantes { get; set; }
 

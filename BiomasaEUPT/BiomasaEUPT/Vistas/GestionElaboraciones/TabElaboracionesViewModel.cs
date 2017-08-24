@@ -343,6 +343,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                     // Los huecos que no se ha añadido ninguna cantidad no se añaden
                     if (ptc.Unidades != 0 && ptc.Volumen != 0)
                     {
+                        // Hay que asegurarse que la cantidad de materia prima escogida es como máximo la disponible en el hueco
+                        if (ptc.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima.MedidoEnUnidades == true)
+                        {
+                            ptc.Unidades = (ptc.Unidades > ptc.HistorialHuecoRecepcion.UnidadesRestantes) ? (ptc.HistorialHuecoRecepcion.UnidadesRestantes) : (ptc.Unidades);
+                        }
+                        else
+                        {
+                            ptc.Volumen = (ptc.Volumen > ptc.HistorialHuecoRecepcion.VolumenRestante) ? (ptc.HistorialHuecoRecepcion.UnidadesRestantes) : (ptc.Volumen);
+                        }
                         ptc.HistorialHuecoRecepcion = null;
                         ptc.HistorialHuecoId = hhrId;
                         ptc.ProductoTerminado = productoTerminado;
@@ -458,6 +467,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                         // Los huecos que no se ha añadido ninguna cantidad no se añaden
                         if (ptc.Unidades != 0 && ptc.Volumen != 0)
                         {
+                            // Hay que asegurarse que la cantidad de materia prima escogida es como máximo la disponible en el hueco
+                            if (ptc.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima.MedidoEnUnidades == true)
+                            {
+                                ptc.Unidades = (ptc.Unidades > ptc.HistorialHuecoRecepcion.UnidadesRestantes) ? (ptc.HistorialHuecoRecepcion.UnidadesRestantes) : (ptc.Unidades);
+                            }
+                            else
+                            {
+                                ptc.Volumen = (ptc.Volumen > ptc.HistorialHuecoRecepcion.VolumenRestante) ? (ptc.HistorialHuecoRecepcion.UnidadesRestantes) : (ptc.Volumen);
+                            }
                             ptc.HistorialHuecoRecepcion = null;
                             ptc.HistorialHuecoId = hhrId;
                             ptc.ProductoTerminado = ProductoTerminadoSeleccionado;
