@@ -14,6 +14,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public TipoProductoTerminado TipoProductoTerminado { get; set; }
         //public ObservableCollection<HuecoRecepcion> HuecosRecepcionesDisponibles { get; set; }
         //public ObservableCollection<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
+        public ObservableCollection<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
         //public int? Unidades { get; set; }
         public float? Volumen { get; set; }
         public string CantidadHint { get; set; }
@@ -40,6 +41,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public FormProductoEnvasadoViewModel()
         {
+            ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>();
             //HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>();
             //HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>();
         }
