@@ -199,21 +199,6 @@
                     <WrapPanel x:Name="wpProductosTerminadosComposiciones" Margin="10"
                                Orientation="Horizontal" HorizontalAlignment="Stretch"                            
                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <!--WrapPanel.Style>
-                            <Style TargetType="{x:Type WrapPanel}">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0,0" StartPoint="8,8" 
-                                                         MappingMode="Absolute" SpreadMethod="Repeat" Opacity="0.25">
-                                            <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0" />
-                                            <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0.1" />
-                                            <GradientStop Color="Transparent" Offset="0.1" />
-                                            <GradientStop Color="Transparent" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </-->
                         <ItemsControl ItemsSource="{Binding ProductosTerminadosComposiciones, UpdateSourceTrigger=PropertyChanged}" Margin="10">
                             <ItemsControl.Style>
                                 <Style TargetType="ItemsControl">

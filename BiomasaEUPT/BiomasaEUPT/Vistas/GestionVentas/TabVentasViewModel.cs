@@ -239,14 +239,11 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
                 //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
             };
-            formPedido.cbEstados.Visibility = Visibility.Visible;
-            formPedido.cbEstados.SelectedValue = PedidoCabeceraSeleccionado.EstadoPedido.EstadoPedidoId;
             formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
             if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
             {
                 PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
                 PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
-                PedidoCabeceraSeleccionado.EstadoId = (formPedido.cbEstados.SelectedItem as EstadoPedido).EstadoPedidoId;
                 context.SaveChanges();
                 PedidosCabecerasView.Refresh();
             }

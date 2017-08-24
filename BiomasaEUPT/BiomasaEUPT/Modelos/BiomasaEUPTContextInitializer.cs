@@ -190,6 +190,21 @@ BEGIN
 END
 '
 
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosEnvasados_I]
+    ON [dbo].[ProductosEnvasados]
+    AFTER INSERT
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE pt
+    SET    Codigo = i.ProductoEnvasadoId + 3000000000
+    FROM   ProductosEnvasados pe
+    JOIN   inserted i ON pe.ProductoEnvasadosId = i.ProductoEnvasadoId
+END
+'
+
 
 EXEC dbo.sp_executesql @statement = N'
 CREATE TRIGGER [dbo].[TR_ProductosTerminadosComposiciones_I]

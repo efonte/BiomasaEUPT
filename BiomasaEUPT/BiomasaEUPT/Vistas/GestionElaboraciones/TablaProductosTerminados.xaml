@@ -64,6 +64,10 @@
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo"
                                                                        Binding="{Binding TipoProductoTerminado.GrupoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="TamanoColumna" Header="Tamaño"
+                                                                       Binding="{Binding TipoProductoTerminado.Tamano, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="HumedadColumna" Header="Humedad"
+                                                                       Binding="{Binding TipoProductoTerminado.Humedad, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
                                 <DataGridTemplateColumn.CellTemplate>
