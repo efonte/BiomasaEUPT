@@ -674,7 +674,7 @@ namespace BiomasaEUPT.Migrations
                 {
                     MateriaPrimaId = 3,
                     TipoId = context.TiposMateriasPrimas.Local.Single(tmp => tmp.Nombre == "Tronco de roble").TipoMateriaPrimaId,
-                    Volumen = 48,
+                    Unidades = 48,
                     Observaciones = "Dura y pesada",
                     RecepcionId = context.Recepciones.Local.Single(r => r.NumeroAlbaran == "A-010VB").RecepcionId,
                     ProcedenciaId = context.Procedencias.Local.Single(p => p.Nombre == "Dehesa del Moncayo").ProcedenciaId,
@@ -721,7 +721,7 @@ namespace BiomasaEUPT.Migrations
                 new HistorialHuecoRecepcion()
                 {
                     HistorialHuecoRecepcionId = 6,
-                    Volumen = 48,
+                    Unidades = 48,
                     MateriaPrimaId = context.MateriasPrimas.Local.Single(mp => mp.Codigo == "1000000003").MateriaPrimaId,
                     HuecoRecepcionId = context.HuecosRecepciones.Local.Single(hr => hr.Nombre == "B02").HuecoRecepcionId
                 });

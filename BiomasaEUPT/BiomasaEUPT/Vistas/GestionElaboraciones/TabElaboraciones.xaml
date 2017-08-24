@@ -22,7 +22,7 @@
             <conv:PaisISOA2NombreCompletoConverter x:Key="PaisISOA2NombreCompletoConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:Transitioner x:Name="transicion" SelectedIndex="0">
+    <materialDesign:Transitioner x:Name="transicion" SelectedIndex="{Binding IndiceMasOpciones, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="400" MinWidth="320" MaxWidth="520"/>
@@ -62,7 +62,7 @@
 
                 <local:MasOpcionesElaboraciones Grid.Column="0" Grid.Row="0" x:Name="ucMasOpcionesElaboraciones"
                                                 DataContext="{Binding MasOpcionesElaboracionesViewModel}" />
-                
+
                 <materialDesign:ColorZone Grid.Column="0" Grid.Row="1" Mode="PrimaryMid" Margin="10 0 10 10"
                                               Height="20" Width="150" CornerRadius="2 10 10 2" HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

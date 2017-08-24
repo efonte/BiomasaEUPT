@@ -238,7 +238,7 @@
                             </ItemsControl.Style>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <materialDesign:Chip IsDeletable="True"  Margin="5" DeleteToolTip="Eliminar hueco"
+                                    <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar hueco"
                                                          CommandParameter="{Binding HuecoRecepcion.HuecoRecepcionId}"
                                                          DeleteClick="cHueco_DeleteClick">
                                         <materialDesign:Chip.Content>
@@ -283,6 +283,7 @@
                         </ItemsControl>
                     </WrapPanel>
                 </materialDesign:ColorZone>
+
                 <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          AcceptsReturn="True" Height="55" MaxLength="{x:Static const:Constantes.LONG_MAX_OBSERVACIONES}">

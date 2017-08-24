@@ -45,13 +45,14 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         private void bMasOpciones_Click(object sender, RoutedEventArgs e)
         {
-            transicion.SelectedIndex = 1;
+            //transicion.SelectedIndex = 1;
+            (DataContext as TabElaboracionesViewModel).IndiceMasOpciones = 1;
             (DataContext as TabElaboracionesViewModel).MasOpcionesElaboracionesViewModel.Inicializar();
         }
 
         private void bVolver_Click(object sender, RoutedEventArgs e)
         {
-            transicion.SelectedIndex = 0;
+            //transicion.SelectedIndex = 0;
             (DataContext as TabElaboracionesViewModel).Inicializar();
         }
     }

@@ -277,7 +277,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Procedencia" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="F. Baja/Caducidad" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="F. Baja/Cad." Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
                                   IsChecked="{Binding TipoMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
                         <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"

@@ -97,7 +97,7 @@
                             </DataGridTemplateColumn>
 
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="Fecha Baja" Width="SizeToHeader"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
                                                                        Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
                                                                                 Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
 
@@ -139,6 +139,148 @@
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
+                            <TextBlock Text="Materias primas" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <WrapPanel x:Name="wpMateriasPrimas" Margin="15 25 0 0"
+                                   Orientation="Horizontal" MinHeight="40" Width="150">
+                            <ItemsControl ItemsSource="{Binding ProductoTerminadoSeleccionado.ProductosTerminadosComposiciones, UpdateSourceTrigger=PropertyChanged}" >
+                                <ItemsControl.Style>
+                                    <Style TargetType="ItemsControl">
+                                        <Style.Triggers>
+                                            <Trigger Property="HasItems" Value="false">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBlock FontSize="14" Text="S/D"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Chip Margin="5" Cursor="Arrow">
+                                            <materialDesign:Chip.Content>
+                                                <TextBlock FontSize="14" FontStyle="Italic">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                        <Binding Path="Volumen" />
+                                                                        <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.VolumenTotal" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                                <Binding Path="Unidades" />
+                                                                                <Binding Path="HistorialHuecoRecepcion.HuecoRecepcion.UnidadesTotales" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </materialDesign:Chip.Content>
+                                            <materialDesign:Chip.Icon>
+                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoRecepcion.HuecoRecepcion.Nombre}"></TextBlock>
+                                            </materialDesign:Chip.Icon>
+                                        </materialDesign:Chip>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </Expander>
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Huecos almacenajes" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <WrapPanel x:Name="wpHuecosAlmacenajes" Margin="15 25 0 0"
+                                   Orientation="Horizontal" MinHeight="40" Width="150">
+                            <ItemsControl ItemsSource="{Binding ProductoTerminadoSeleccionado.HistorialHuecosAlmacenajes, UpdateSourceTrigger=PropertyChanged}" >
+                                <ItemsControl.Style>
+                                    <Style TargetType="ItemsControl">
+                                        <Style.Triggers>
+                                            <Trigger Property="HasItems" Value="false">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBlock FontSize="14" Text="S/D"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Chip Margin="5" Cursor="Arrow">
+                                            <materialDesign:Chip.Content>
+                                                <TextBlock FontSize="14" FontStyle="Italic">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                        <Binding Path="Volumen" />
+                                                                        <Binding Path="HuecoAlmacenaje.VolumenTotal" />
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                                <Binding Path="Unidades" />
+                                                                                <Binding Path="HuecoAlmacenaje.UnidadesTotales" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </materialDesign:Chip.Content>
+                                            <materialDesign:Chip.Icon>
+                                                <TextBlock FontSize="15" Text="{Binding HuecoAlmacenaje.Nombre}"></TextBlock>
+                                            </materialDesign:Chip.Icon>
+                                        </materialDesign:Chip>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </Expander>
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
                             <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
                                 <TextBlock.LayoutTransform>
                                     <RotateTransform Angle="90" />
@@ -146,7 +288,8 @@
                             </TextBlock>
                         </Expander.Header>
 
-                        <TextBlock x:Name="tbObservaciones" Text="{Binding ProductosTerminados.Observaciones, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock x:Name="tbObservaciones" Text="{Binding ProductoTerminadoSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged,
+                                                                           Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"
                                    FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
                                    Foreground="{DynamicResource MaterialDesignBody}"/>
                     </Expander>
@@ -183,7 +326,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Fecha Baja" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="F. Baja/Cad." Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Codigo" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
                                   IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosTerminadosComando}"/>

@@ -31,6 +31,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         public ProductoTerminado ProductoTerminadoSeleccionado { get; set; }
         public bool ObservacionesProductosTerminadosEnEdicion { get; set; }
 
+        public int IndiceMasOpciones { get; set; }
+
         // Checkbox Filtro Elaboraciones
         public bool FechaOrdenElaboracionSeleccionada { get; set; } = true;
         public bool EstadoOrdenElaboracionSeleccionado { get; set; } = false;
@@ -91,11 +93,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         public override void Inicializar()
         {
-            context = new BiomasaEUPTContext();
-            CargarOrdenesElaboraciones();
-            PaginacionViewModel.GetItemsTotales = () => { return context.OrdenesElaboraciones.Count(); };
-            PaginacionViewModel.ActualizarContadores();
-            PaginacionViewModel.CargarItems = CargarOrdenesElaboraciones;
+            using (new CursorEspera())
+            {
+                IndiceMasOpciones = 0;
+                context = new BiomasaEUPTContext();
+                CargarOrdenesElaboraciones();
+                PaginacionViewModel.GetItemsTotales = () => { return context.OrdenesElaboraciones.Count(); };
+                PaginacionViewModel.ActualizarContadores();
+                PaginacionViewModel.CargarItems = CargarOrdenesElaboraciones;
+            }
         }
 
         public void CargarOrdenesElaboraciones(int cantidad = 10, int saltar = 0)
