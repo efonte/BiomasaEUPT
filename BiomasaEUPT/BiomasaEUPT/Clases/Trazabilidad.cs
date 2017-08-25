@@ -61,6 +61,7 @@ namespace BiomasaEUPT.Clases
             var productoTerminado = context.ProductosTerminados
                 .Include("TipoProductoTerminado")
                 .Include("HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
+                //.Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Procedencia")
@@ -68,10 +69,13 @@ namespace BiomasaEUPT.Clases
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.TipoProveedor")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
                 .Single(mp => mp.Codigo == codigo);
-            var productosTerminadosComposiciones = productoTerminado.ProductosTerminadosComposiciones.ToList();
+            var productosTerminadosComposiciones = productoTerminado.ProductosTerminadosComposiciones.Where(ptc => ptc.ProductoTerminado.Codigo == productoTerminado.Codigo).ToList();
             var materiasPrimas = new List<MateriaPrima>();
             foreach (var ptc in productosTerminadosComposiciones)
             {
+                ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = productosTerminadosComposiciones.Where(ptc1 => ptc1.HistorialHuecoId == ptc.HistorialHuecoId).ToList();
+                // ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = new List<ProductoTerminadoComposicion>() { ptc };
+                //ptc.ProductoTerminado = productoTerminado;
                 if (!materiasPrimas.Contains(ptc.HistorialHuecoRecepcion.MateriaPrima))
                 {
                     materiasPrimas.Add(ptc.HistorialHuecoRecepcion.MateriaPrima);

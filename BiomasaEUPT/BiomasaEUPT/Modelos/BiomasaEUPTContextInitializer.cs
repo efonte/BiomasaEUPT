@@ -198,10 +198,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    UPDATE pt
+    UPDATE pe
     SET    Codigo = i.ProductoEnvasadoId + 3000000000
     FROM   ProductosEnvasados pe
-    JOIN   inserted i ON pe.ProductoEnvasadosId = i.ProductoEnvasadoId
+    JOIN   inserted i ON pe.ProductoEnvasadoId = i.ProductoEnvasadoId
 END
 '
 

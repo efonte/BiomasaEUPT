@@ -179,6 +179,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Clases\CursorEspera.cs" />
+    <Compile Include="Clases\IInforme.cs" />
     <Compile Include="Clases\InformePDF.cs" />
     <Compile Include="Clases\Trazabilidad.cs" />
     <Compile Include="Domain\Converters\BooleanConverter.cs" />

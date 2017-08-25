@@ -93,7 +93,7 @@
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoTerminadoComposicion}" ItemsSource="{Binding ProductoTerminado.HistorialHuecosAlmacenajes}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="MapMarker"/>
+                                <materialDesign:PackIcon Kind="PackageVariantClosed"/>
                                 <TextBlock Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>

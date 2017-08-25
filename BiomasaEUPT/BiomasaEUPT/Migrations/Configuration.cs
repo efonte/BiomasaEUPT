@@ -644,7 +644,7 @@ namespace BiomasaEUPT.Migrations
                 {
                     Nombre = "Tronco de roble",
                     Descripcion = "Robles de 5 m altura",
-                    MedidoEnVolumen = true,
+                    MedidoEnUnidades = true,
                     GrupoId = context.GruposMateriasPrimas.Local.Single(gc => gc.Nombre == "Troncos").GrupoMateriaPrimaId
                 });
             context.SaveChanges();
