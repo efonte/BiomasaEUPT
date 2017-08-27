@@ -35,7 +35,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         {
             Recepcion recepcion = (sender as Button).DataContext as Recepcion;
             InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
-            System.Diagnostics.Process.Start(informe.GenerarPDFRecepcion(trazabilidad.Recepcion(recepcion.NumeroAlbaran)));
+            System.Diagnostics.Process.Start(informe.GenerarInformeRecepcion(trazabilidad.Recepcion(recepcion.NumeroAlbaran)));
         }
     }
 }

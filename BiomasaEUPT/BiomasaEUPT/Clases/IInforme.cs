@@ -9,12 +9,12 @@ namespace BiomasaEUPT.Clases
 {
     public interface IInforme
     {
-        string GenerarPDFRecepcion(Proveedor proveedor);
+        string GenerarInformeRecepcion(Proveedor proveedor);
 
-        string GenerarPDFMateriaPrima(Proveedor proveedor);
+        string GenerarInformeMateriaPrima(Proveedor proveedor);
 
-        string GenerarPDFProductoTerminado(List<Proveedor> proveedores);
+        string GenerarInformeProductoTerminado(List<Proveedor> proveedores);
 
-        string GenerarPDFProductoEnvasado(List<Proveedor> proveedores);
+        string GenerarInformeProductoEnvasado(List<Proveedor> proveedores);
     }
 }

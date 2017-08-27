@@ -1,63 +1,66 @@
 ﻿using BiomasaEUPT.Domain;
+using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Input;
 
-namespace BiomasaEUPT.Vistas.Ajustes
+namespace BiomasaEUPT.Vistas.GestionUsuarios
 {
-    public class WinAjustesViewModel : INotifyPropertyChanged, IDataErrorInfo
+    public class FormUsuarioViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        public string FormTitulo { get; set; }
+
+        public ObservableCollection<TipoUsuario> TiposUsuarios { get; set; }
+        public string Nombre { get; set; }
+        public string Email { get; set; }
+        public bool Baneado { get; set; }
         public SecureString Contrasena { get; set; }
         public SecureString ContrasenaConfirmacion { get; set; }
 
-        private string _directorioInformes;
-        public string DirectorioInformes
-        {
-            get => _directorioInformes;
-            set
-            {
-                if (!value.EndsWith("\\"))
-                    value += "\\";
-                _directorioInformes = value;
-                Properties.Settings.Default.DirectorioInformes = DirectorioInformes;
-                Properties.Settings.Default.Save();
-            }
-        }
+        public TipoUsuario TipoUsuarioSeleccionado { get; set; }
 
-        private ICommand _seleccionarDirectorioInformesComando;
+        public BiomasaEUPTContext Context { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinAjustesViewModel()
+
+        public FormUsuarioViewModel()
         {
-            DirectorioInformes = Properties.Settings.Default.DirectorioInformes;
+            FormTitulo = "Nuevo Usuario";
+            Context = new BiomasaEUPTContext();
+            CargarTipos();
         }
 
-        #region Seleccionar directorio informes PDF
-        public ICommand SeleccionarDirectorioInformesComando => _seleccionarDirectorioInformesComando ??
-            (_seleccionarDirectorioInformesComando = new RelayCommand(
-                param => SeleccionarDirectorioInformes()
-            ));
-
-        private void SeleccionarDirectorioInformes()
+        private void CargarTipos()
         {
-            var dialog = new FolderBrowserDialog();
+            // TiposUsuarios = new ObservableCollection<TipoUsuario>(Context.TiposUsuarios.ToList());
+            var usuarioLogeado = Context.Usuarios.Single(u => u.Nombre == Properties.Settings.Default.usuario);
+            var tiposUsuarios = Context.TiposUsuarios.ToList();
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            // Si el usuario no es Super Administrador no puede seleccionar dicho tipo
+            if (usuarioLogeado.TipoId != 1)
             {
-                DirectorioInformes = dialog.SelectedPath;
+                tiposUsuarios = tiposUsuarios.Where(tu => tu.TipoUsuarioId != 1).ToList();
             }
 
-        }
-        #endregion
+            // Si el usuario no tiene la gestión de permisos no puede seleccionar los tipos de usuarios con dicho permiso
+            if (!usuarioLogeado.TipoUsuario.Permisos.Select(p => p.Tab).Contains(Tab.Permisos))
+            {
+                var tiposUsuariosConPermisos = Context.TiposUsuarios.Where(tu => tu.Permisos.Any(p => p.Tab == Tab.Permisos)).ToList();
+                tiposUsuarios = tiposUsuarios.Where(tui => !tiposUsuariosConPermisos.Any(tue => tui.TipoUsuarioId == tue.TipoUsuarioId)).ToList();
 
+            }
+
+            TiposUsuarios = new ObservableCollection<TipoUsuario>(tiposUsuarios);
+            TipoUsuarioSeleccionado = TipoUsuarioSeleccionado ?? TiposUsuarios.First();
+        }
 
         #region Validación Contraseñas
         string IDataErrorInfo.Error { get { return Validate(null); } }

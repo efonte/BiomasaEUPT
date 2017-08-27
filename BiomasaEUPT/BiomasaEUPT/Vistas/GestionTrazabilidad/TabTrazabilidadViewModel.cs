@@ -37,8 +37,6 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             set
             {
                 _itemArbolSeleccionado = value;
-                if (_itemArbolSeleccionado != null)
-                    Console.WriteLine(_itemArbolSeleccionado.GetType());
             }
         }
 
@@ -156,22 +154,22 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             var rutaInforme = "";
             if (context.Recepciones.Any(r => r.NumeroAlbaran == Codigo))
             {
-                rutaInforme = informe.GenerarPDFRecepcion(trazabilidad.Recepcion(Codigo));
+                rutaInforme = informe.GenerarInformeRecepcion(trazabilidad.Recepcion(Codigo));
             }
             else
             {
                 switch (Codigo[0].ToString())
                 {
                     case Constantes.CODIGO_MATERIAS_PRIMAS:
-                        rutaInforme = informe.GenerarPDFMateriaPrima(trazabilidad.MateriaPrima(Codigo));
+                        rutaInforme = informe.GenerarInformeMateriaPrima(trazabilidad.MateriaPrima(Codigo));
                         break;
 
                     case Constantes.CODIGO_ELABORACIONES:
-                        //rutaInforme = informe.GenerarPDFProductoTerminado(trazabilidad.ProductoTerminado(codigo));
+                        rutaInforme = informe.GenerarInformeProductoTerminado(trazabilidad.ProductoTerminado(Codigo));
                         break;
 
                     case Constantes.CODIGO_VENTAS:
-                        //rutaInforme = informe.GenerarPDFProductoEnvasado(trazabilidad.ProductoEnvasado(codigo));
+                        //rutaInforme = informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoEnvasado(Codigo));
                         break;
                 }
             }

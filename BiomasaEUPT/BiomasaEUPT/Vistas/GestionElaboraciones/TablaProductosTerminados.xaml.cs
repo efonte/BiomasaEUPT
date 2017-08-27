@@ -35,7 +35,7 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             ProductoTerminado productoTerminado = (sender as Button).DataContext as ProductoTerminado;
 
             InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
-            System.Diagnostics.Process.Start(informe.GenerarPDFProductoTerminado(trazabilidad.ProductoTerminado(productoTerminado.Codigo)));
+            System.Diagnostics.Process.Start(informe.GenerarInformeProductoTerminado(trazabilidad.ProductoTerminado(productoTerminado.Codigo)));
         }
 
         private void bCodigo_Click(object sender, RoutedEventArgs e)

@@ -13,9 +13,9 @@
     using Z.EntityFramework.Plus;
 
     public class BiomasaEUPTContext : DbContext
-    {     
+    {
         public BiomasaEUPTContext()
-            : base("name=BiomasaEUPTContext")
+        : base("name=BiomasaEUPTContext")
         //: base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
         //: base("metadata=res://*/Modelo.csdl|res://*/;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
         //: base(nameOrConnectionString: ConnectionString())       
@@ -117,20 +117,36 @@
 
         private static string ConnectionString()
         {
-            SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
-            sqlBuilder.DataSource = "155.210.68.124,49170";
-            sqlBuilder.InitialCatalog = "BiomasaEUPT";
-            sqlBuilder.PersistSecurityInfo = true;
-            sqlBuilder.IntegratedSecurity = true;
-            sqlBuilder.MultipleActiveResultSets = true;
-            sqlBuilder.UserID = "usuario";
-            sqlBuilder.Password = "usuario";
-            sqlBuilder.ApplicationName = "EntityFramework";
+            SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = @"(LocalDb)\MSSQLLocalDB",
+                InitialCatalog = "BiomasaEUPT",
+                //PersistSecurityInfo = true,
+                IntegratedSecurity = true,
+                MultipleActiveResultSets = true,
+                ApplicationName = "EntityFramework",
+                ConnectTimeout = 10
+            };
 
-            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
-            entityBuilder.ProviderConnectionString = sqlBuilder.ToString();
-            //entityBuilder.Metadata = "res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl";
-            entityBuilder.Provider = "System.Data.SqlClient";
+            /*SqlConnectionStringBuilder sqlBuilder1 = new SqlConnectionStringBuilder
+            {
+                DataSource = "155.210.68.124,49170",
+                InitialCatalog = "BiomasaEUPT",
+                PersistSecurityInfo = true,
+                IntegratedSecurity = false,
+                MultipleActiveResultSets = true,
+                UserID = "usuario",
+                Password = "usuario",
+                ApplicationName = "EntityFramework",
+                ConnectTimeout = 10
+            };*/
+
+            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder
+            {
+                ProviderConnectionString = sqlBuilder.ToString(),
+                //Metadata = @"res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl",
+                Provider = "System.Data.SqlClient"
+            };
 
             //Console.WriteLine(entityBuilder.ToString());
             return entityBuilder.ToString();
@@ -176,8 +192,6 @@
             // Cambio del nombre por defecto de las tablas de auditoría
             modelBuilder.Entity<AuditEntry>().ToTable("AuditoriaTablas");
             modelBuilder.Entity<AuditEntryProperty>().ToTable("AuditoriaDatosTablas");
-
-
         }
 
         // Tablas

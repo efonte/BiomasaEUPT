@@ -47,7 +47,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             MateriaPrima materiaPrima = (sender as Button).DataContext as MateriaPrima;
 
             InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
-            System.Diagnostics.Process.Start(informe.GenerarPDFMateriaPrima(trazabilidad.MateriaPrima(materiaPrima.Codigo)));
+            System.Diagnostics.Process.Start(informe.GenerarInformeMateriaPrima(trazabilidad.MateriaPrima(materiaPrima.Codigo)));
 
         }
 

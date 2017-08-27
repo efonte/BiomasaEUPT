@@ -392,6 +392,7 @@
     <Compile Include="Vistas\ControlesUsuario\Opciones.xaml.cs">
       <DependentUpon>Opciones.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionUsuarios\FormUsuarioViewModel.cs" />
     <Compile Include="Vistas\GestionUsuarios\TablaUsuarios.xaml.cs">
       <DependentUpon>TablaUsuarios.xaml</DependentUpon>
     </Compile>

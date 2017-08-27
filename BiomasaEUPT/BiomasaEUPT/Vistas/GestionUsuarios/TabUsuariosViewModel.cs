@@ -103,7 +103,7 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     tiposUsuarios = tiposUsuarios.Where(tui => !tiposUsuariosConPermisos.Any(tue => tui.TipoUsuarioId == tue.TipoUsuarioId)).ToList();
 
                 }
-                TiposUsuariosDisponibles = new ObservableCollection<TipoUsuario>(tiposUsuarios);               
+                TiposUsuariosDisponibles = new ObservableCollection<TipoUsuario>(tiposUsuarios);
 
                 ContadorViewModel.Tipos = TiposUsuarios;
                 FiltroTiposViewModel.Items = TiposUsuarios;
@@ -171,7 +171,6 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                     ContentPresenter contentPresenter = e.EditingElement as ContentPresenter;
                     DataTemplate editingTemplate = contentPresenter.ContentTemplate;
                     PasswordBox contrasena = editingTemplate.FindName("pbContrasena", contentPresenter) as PasswordBox;
-                    Console.WriteLine(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(ContrasenaHashing.SecureStringToString(contrasena.SecurePassword));
                     usuarioSeleccionado.Contrasena = hashContrasena;
                 }
@@ -210,15 +209,19 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
 
             if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
             {
-                string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
+                var formUsuarioViewModel = formUsuario.DataContext as FormUsuarioViewModel;
+
+                var hashContrasena = ContrasenaHashing.ObtenerHashSHA256(
+                        ContrasenaHashing.SecureStringToString(formUsuarioViewModel.Contrasena)
+                    );
 
                 context.Usuarios.Add(new Usuario()
                 {
-                    Nombre = formUsuario.Nombre,
-                    Email = formUsuario.Email,
-                    TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId,
+                    Nombre = formUsuarioViewModel.Nombre,
+                    Email = formUsuarioViewModel.Email,
+                    TipoId = formUsuarioViewModel.TipoUsuarioSeleccionado.TipoUsuarioId,
                     Contrasena = hashContrasena,
-                    Baneado = formUsuario.Baneado
+                    Baneado = formUsuarioViewModel.Baneado
                 });
                 context.SaveChanges();
                 CargarUsuarios();
@@ -339,12 +342,16 @@ namespace BiomasaEUPT.Vistas.GestionUsuarios
                 var formUsuario = new FormUsuario(UsuarioSeleccionado);
                 if ((bool)await DialogHost.Show(formUsuario, "RootDialog"))
                 {
-                    string hashContrasena = ContrasenaHashing.ObtenerHashSHA256(formUsuario.Contrasena);
-                    UsuarioSeleccionado.Nombre = formUsuario.Nombre;
-                    UsuarioSeleccionado.Email = formUsuario.Email;
-                    UsuarioSeleccionado.TipoId = (formUsuario.cbTiposUsuarios.SelectedItem as TipoUsuario).TipoUsuarioId;
+                    var formUsuarioViewModel = formUsuario.DataContext as FormUsuarioViewModel;
+
+                    var hashContrasena = ContrasenaHashing.ObtenerHashSHA256(
+                        ContrasenaHashing.SecureStringToString(formUsuarioViewModel.Contrasena)
+                    );
+                    UsuarioSeleccionado.Nombre = formUsuarioViewModel.Nombre;
+                    UsuarioSeleccionado.Email = formUsuarioViewModel.Email;
+                    UsuarioSeleccionado.TipoId = formUsuarioViewModel.TipoUsuarioSeleccionado.TipoUsuarioId;
                     UsuarioSeleccionado.Contrasena = hashContrasena;
-                    UsuarioSeleccionado.Baneado = formUsuario.Baneado;
+                    UsuarioSeleccionado.Baneado = formUsuarioViewModel.Baneado;
                     context.SaveChanges();
                 }
             }

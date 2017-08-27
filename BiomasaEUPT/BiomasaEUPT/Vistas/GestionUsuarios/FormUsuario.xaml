@@ -11,18 +11,17 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="300" Width="420" Loaded="UserControl_Loaded">
+             Height="300" Width="420">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="tiposUsuariosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoUsuario}, CreateList=True}"/>
             <validadores:BindingProxy x:Key="ContrasenaProxy" Data="{Binding Contrasena, Mode=TwoWay}"/>
             <validadores:BindingProxy x:Key="ContrasenaConfirmacionProxy" Data="{Binding ContrasenaConfirmacion, Mode=TwoWay}"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Usuario">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="{Binding FormTitulo}">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -62,9 +61,10 @@
                 </TextBox>
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbTiposUsuarios" materialDesign:HintAssist.Hint="Tipo"
-                      ItemsSource="{Binding Source={StaticResource tiposUsuariosViewSource}}"
-                      DisplayMemberPath="Nombre"
-                      SelectedValuePath="TipoUsuarioId">
+                          SelectedItem="{Binding TipoUsuarioSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          ItemsSource="{Binding TiposUsuarios}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="TipoUsuarioId">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -72,31 +72,31 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
 
-                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbBaneado" Content="Baneado" IsChecked="{Binding Baneado}"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbBaneado" Content="Baneado" IsChecked="{Binding Baneado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-                <PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*" MaxLength="25"
+                <!--PasswordBox Grid.Row="2" Grid.Column="0" Name="pbContrasena" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Contraseña" domain:PasswordHelper.Attach="True">
                     <domain:PasswordHelper.Password>
                         <Binding Path="Contrasena" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="contraseña" ValidatesOnTargetUpdated="True" />
-                                <!--validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
+                                <validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
                                     <validadores:IgualValidationRule.CadenaAComparar>
                                         <validadores:CadenaACompararDependencyObject CadenaAComparar="{Binding ContrasenaConfirmacion, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                                     </validadores:IgualValidationRule.CadenaAComparar>
-                                </-->
+                                </validadores:IgualValidationRule>
                                 <validadores:IgualValidationRule NombreCampo="contraseña" NombreCampoAComparar="confirmar contraseña" ValidatesOnTargetUpdated="True">
                                     <validadores:IgualValidationRule.CadenaAComparar>
                                         <validadores:CadenaACompararDependencyObject CadenaAComparar="{Binding ContrasenaConfirmacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </validadores:IgualValidationRule.CadenaAComparar>
                                 </validadores:IgualValidationRule>
-                                <!--validadores:GreaterThanValidationRule>
+                                <validadores:GreaterThanValidationRule>
                                     <validadores:ComparisonValue Value="{Binding Data, Source={StaticResource ContrasenaConfirmacionProxy}}" BindingToTrigger="{Binding Data, Source={StaticResource ContrasenaProxy}}"/>
-                                </-->
+                                </validadores:GreaterThanValidationRule>
                             </Binding.ValidationRules>
                         </Binding>
                     </domain:PasswordHelper.Password>
-                </PasswordBox>
+                </>
 
                 <PasswordBox Grid.Row="2" Grid.Column="1" Name="pbContrasenaConfirmacion" PasswordChar="*" MaxLength="25"
                              materialDesign:HintAssist.Hint="Confirmar Contraseña" domain:PasswordHelper.Attach="True">
@@ -107,7 +107,17 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </domain:PasswordHelper.Password>
-                </PasswordBox>
+                </PasswordBox-->
+
+                <PasswordBox Grid.Row="2" Grid.Column="0" x:Name="pbContrasena" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Contraseña"
+                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10" Width="180"/>
+
+                <PasswordBox Grid.Row="2" Grid.Column="3" x:Name="pbContrasenaConfirmacion" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Confirmar Contraseña"
+                     domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding ContrasenaConfirmacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10" Width="180"/>
 
                 <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoUsuario" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">

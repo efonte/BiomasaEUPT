@@ -41,8 +41,7 @@
         <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="pbContrasena" HorizontalAlignment="Left"
                      materialDesign:HintAssist.Hint="Contraseña"
                      domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Contrasena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10" Width="180">
-        </PasswordBox>
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10" Width="180"/>
 
         <materialDesign:PackIcon Grid.Row="2" Grid.Column="2" Kind="Key" Margin="0 4 8 0"
                                  Foreground="{Binding BorderBrush, ElementName=pbContrasena}"
@@ -50,8 +49,7 @@
         <PasswordBox Grid.Row="2" Grid.Column="3" x:Name="pbContrasenaConfirmacion" HorizontalAlignment="Left"
                      materialDesign:HintAssist.Hint="Contraseña confirmación"
                      domain:PasswordBoxAttachedProperties.EncryptedPassword="{Binding ContrasenaConfirmacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10 10 20 10" Width="180">
-        </PasswordBox>
+                     PasswordChanged="pbContrasena_PasswordChanged" Margin="10 10 20 10" Width="180"/>
 
         <Button x:Name="bCambiarContrasena" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                 Content="Cambiar contraseña" MaxWidth="180" Margin="10" VerticalAlignment="Bottom" Click="bCambiarContrasena_Click">

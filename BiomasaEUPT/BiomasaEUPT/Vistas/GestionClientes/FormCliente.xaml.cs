@@ -57,10 +57,5 @@ namespace BiomasaEUPT.Vistas.GestionClientes
             viewModel.Calle = cliente.Calle;
             viewModel.Observaciones = cliente.Observaciones;
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

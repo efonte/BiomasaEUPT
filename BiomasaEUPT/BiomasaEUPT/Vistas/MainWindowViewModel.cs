@@ -292,7 +292,6 @@ namespace BiomasaEUPT.Vistas
 
         public void MostrarAjustes()
         {
-            Console.WriteLine(Application.Current.MainWindow);
             WinAjustes ajustes = new WinAjustes()
             {
                 Owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive)
@@ -310,7 +309,6 @@ namespace BiomasaEUPT.Vistas
 
         public void MostrarAcercaDe()
         {
-            Console.WriteLine(LeftVentana + " " + TopVentana);
             AcercaDe acercaDe = new AcercaDe()
             {
                 Owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive)

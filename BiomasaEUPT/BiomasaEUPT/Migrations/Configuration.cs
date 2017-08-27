@@ -836,7 +836,7 @@ namespace BiomasaEUPT.Migrations
                 new ProductoTerminadoComposicion()
                 {
                     ProductoTerminadoComposicionId = 3,
-                    Volumen = 10,
+                    Unidades = 10,
                     HistorialHuecoId = context.HistorialHuecosRecepciones.Local.Single(hh => hh.HistorialHuecoRecepcionId == 6).HistorialHuecoRecepcionId,
                     ProductoId = context.ProductosTerminados.Local.Single(p => p.Codigo == "2000000001").ProductoTerminadoId
                 },

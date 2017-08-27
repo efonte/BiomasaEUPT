@@ -74,7 +74,7 @@ namespace BiomasaEUPT.Clases
                 Directory.CreateDirectory(ruta);
         }
 
-        public string GenerarPDFRecepcion(Proveedor proveedor)
+        public string GenerarInformeRecepcion(Proveedor proveedor)
         {
             var recepcion = proveedor.Recepciones.First();
             // Se guarda en una variable la fecha de creación para que tanto la fecha del nombre del PDF como la que hay dentro del PDF sean las mismas.
@@ -137,7 +137,7 @@ namespace BiomasaEUPT.Clases
             return nombrePdf;
         }
 
-        public string GenerarPDFMateriaPrima(Proveedor proveedor)
+        public string GenerarInformeMateriaPrima(Proveedor proveedor)
         {
             var materiaPrima = proveedor.Recepciones.First().MateriasPrimas.First();
 
@@ -225,7 +225,7 @@ namespace BiomasaEUPT.Clases
             return nombrePdf;
         }
 
-        public string GenerarPDFProductoTerminado(List<Proveedor> proveedores)
+        public string GenerarInformeProductoTerminado(List<Proveedor> proveedores)
         {
             var productoTerminado = proveedores.First().Recepciones.First().MateriasPrimas.First().HistorialHuecosRecepciones.First().ProductosTerminadosComposiciones.First().ProductoTerminado;
 
@@ -276,7 +276,7 @@ namespace BiomasaEUPT.Clases
             return nombrePdf;
         }
 
-        public string GenerarPDFProductoEnvasado(List<Proveedor> proveedores)
+        public string GenerarInformeProductoEnvasado(List<Proveedor> proveedores)
         {
             throw new NotImplementedException();
         }
@@ -325,7 +325,7 @@ namespace BiomasaEUPT.Clases
                 var huecosAlmacenajesSR = materiaPrima.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes);
                 var filasSR = huecosAlmacenajesSR.Count();
 
-                // Sitios de recepción
+                // Sitio de recepción
                 tablaMP.AddCell(Celda(sr.Nombre, filasSR));
 
                 foreach (var hhr in materiaPrima.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr))
@@ -409,105 +409,119 @@ namespace BiomasaEUPT.Clases
 
         private Table TablaProductoTerminado(ProductoTerminado productoTerminado)
         {
-            var tablaPT = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }).SetWidthPercent(100);
-            tablaPT.AddHeaderCell(CeldaTitulo("Recepción", 1, 7).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
-            tablaPT.AddHeaderCell(CeldaTitulo("Elaboración", 1, 5).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+            var tablaPT = new Table(new float[] { 1, 1, 1, 1, 1, 1, 1/*, 1, 1, 1*/}).SetWidthPercent(100);
+            tablaPT.AddHeaderCell(CeldaTitulo("Recepción", 1, 6).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+            tablaPT.AddHeaderCell(CeldaTitulo("Elaboración", 1, /*4*/1).SetBorderBottom(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
             tablaPT.AddHeaderCell(CeldaTitulo("Proveedor"));
             tablaPT.AddHeaderCell(CeldaTitulo("Albarán"));
             tablaPT.AddHeaderCell(CeldaTitulo("Materia Prima"));
             tablaPT.AddHeaderCell(CeldaTitulo("Sitio"));
             tablaPT.AddHeaderCell(CeldaTitulo("Hueco"));
-            tablaPT.AddHeaderCell(CeldaTitulo("Capacidad Total"));
             tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Almacenada"));
             tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Utilizada"));
-            tablaPT.AddHeaderCell(CeldaTitulo("Producto Terminado"));
-            tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Producida"));
+            /*tablaPT.AddHeaderCell(CeldaTitulo("Cantidad Producida"));
             tablaPT.AddHeaderCell(CeldaTitulo("Sitio"));
-            tablaPT.AddHeaderCell(CeldaTitulo("Hueco"));
-            foreach (var mp in productoTerminado.ProductosTerminadosComposiciones.Select(ptc => ptc.HistorialHuecoRecepcion.MateriaPrima).Distinct().ToList())
+            tablaPT.AddHeaderCell(CeldaTitulo("Hueco"));*/
+            foreach (var r in productoTerminado.ProductosTerminadosComposiciones.Select(ptc => ptc.HistorialHuecoRecepcion.MateriaPrima).Distinct().Select(mp => mp.Recepcion).Distinct().ToList())
             {
-                /*foreach (var sr in mp.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct().ToList())
+                //var huecosAlmacenajesR = r.MateriasPrimas.SelectMany(mp => mp.HistorialHuecosRecepciones).SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes);
+                var huecosRecepcionesR = r.MateriasPrimas.SelectMany(mp => mp.HistorialHuecosRecepciones);
+                var filasR = huecosRecepcionesR.Count();
+
+                // Recepción
+                tablaPT.AddCell(Celda(r.Proveedor.RazonSocial, filasR));
+
+                // Proveedor
+                tablaPT.AddCell(Celda(r.NumeroAlbaran, filasR));
+
+                foreach (var mp in r.MateriasPrimas)
                 {
-                    var huecosAlmacenajesSR = mp.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes);
-                    var filasSR = huecosAlmacenajesSR.Count();
+                    //var huecosAlmacenajesMP = mp.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).Distinct();
+                    var huecosRecepcionesMP = mp.HistorialHuecosRecepciones;
+                    var filasMP = huecosRecepcionesMP.Count();
 
-                    // Sitios de recepción
-                    tablaPT.AddCell(Celda(sr.Nombre, filasSR));
+                    // Materia prima
+                    tablaPT.AddCell(Celda(mp.Codigo, filasMP));
 
-                    foreach (var hhr in mp.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr))
+                    foreach (var sr in mp.HistorialHuecosRecepciones.Select(hhr => hhr.HuecoRecepcion.SitioRecepcion).Distinct().ToList())
                     {
-                        var huecosAlmacenajesHHR = hhr.ProductosTerminadosComposiciones.Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).ToList();
-                        var filasHHR = 1;
-                        var filasHRCapacidadTotal = 1;
-                        var filasHRCantidadAlmacenada = 1;
-                        if (huecosAlmacenajesHHR.Count() > 0)
+                        //var huecosAlmacenajesSR = mp.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).Distinct();
+                        var huecosRecepcionesSR = mp.HistorialHuecosRecepciones;
+                        var filasSR = huecosRecepcionesSR.Count();
+
+                        // Sitio de recepción
+                        tablaPT.AddCell(Celda(sr.Nombre, filasSR));
+                        foreach (var hhr in mp.HistorialHuecosRecepciones.Where(hhr => hhr.HuecoRecepcion.SitioRecepcion == sr))
                         {
-                            filasHHR = huecosAlmacenajesHHR.Count();
-                            filasHRCapacidadTotal = huecosAlmacenajesHHR.Count();
-                            filasHRCantidadAlmacenada = huecosAlmacenajesHHR.Count();
-                        }
-
-                        // Hueco de recepción
-                        tablaPT.AddCell(Celda(hhr.HuecoRecepcion.Nombre, filasHHR));
-
-                        // Capacidad total de cada hueco de recepción                   
-                        tablaPT.AddCell(Celda($"{hhr.HuecoRecepcion.VolumenTotal.ToString()} m³ / {hhr.HuecoRecepcion.UnidadesTotales} ud.", filasHRCapacidadTotal));
-
-                        // Cantidad de materia prima almacenada en cada hueco de recepción
-                        tablaPT.AddCell(Celda((mp.TipoMateriaPrima.MedidoEnUnidades == true) ? (hhr.Unidades + " ud.") : (hhr.Volumen + " m³"), filasHRCantidadAlmacenada));
-
-                        if (huecosAlmacenajesHHR.Count() == 0)
-                        {
-                            // Cantidad de materia prima utilizada de cada hueco de recepción
-                            tablaPT.AddCell(Celda("-"));
-                            // Producto terminado
-                            tablaPT.AddCell(Celda("-"));
-                            // Cantidad de producto terminado producido
-                            tablaPT.AddCell(Celda("-"));
-                            // Sitio de almacenaje
-                            tablaPT.AddCell(Celda("-"));
-                            // Hueco de almacenaje
-                            tablaPT.AddCell(Celda("-"));
-                        }
-                        else
-                        {
-                            foreach (var ptc in hhr.ProductosTerminadosComposiciones)
+                            //var huecosAlmacenajesHHR = hhr.ProductosTerminadosComposiciones.Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).ToList().Distinct();
+                            var huecosRecepcionesHHR = 1;
+                            var filasHHR = 1;
+                            var filasHRCapacidadTotal = 1;
+                            var filasHRCantidadAlmacenada = 1;
+                            if (huecosRecepcionesHHR > 0)
                             {
-                                var huecosAlmacenajesPTC = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Select(hha => hha.HuecoAlmacenaje).ToList();
-                                var sitiosAlmacenajesPTC = huecosAlmacenajesPTC.Select(ha => ha.SitioAlmacenaje).Distinct().ToList();
+                                filasHHR = huecosRecepcionesHHR;
+                                filasHRCapacidadTotal = huecosRecepcionesHHR;
+                                filasHRCantidadAlmacenada = huecosRecepcionesHHR;
+                            }
 
-                                var filasHRCantidadUtilizada = huecosAlmacenajesPTC.Count();
-                                var filasPT = huecosAlmacenajesPTC.Count();
+                            // Hueco de recepción
+                            tablaPT.AddCell(Celda(hhr.HuecoRecepcion.Nombre, filasHHR));
 
+                            // Cantidad de materia prima almacenada en cada hueco de recepción
+                            tablaPT.AddCell(Celda((mp.TipoMateriaPrima.MedidoEnUnidades == true) ? (hhr.Unidades + " de " + hhr.HuecoRecepcion.UnidadesTotales + " ud.") : (hhr.Volumen + " de " + hhr.HuecoRecepcion.VolumenTotal.ToString() + " m³"), filasHRCantidadAlmacenada));
+
+
+                            var huecosAlmacenajesHHR = hhr.ProductosTerminadosComposiciones.Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).ToList().Distinct();
+                            if (huecosAlmacenajesHHR.Count() == 0)
+                            {
                                 // Cantidad de materia prima utilizada de cada hueco de recepción
-                                tablaPT.AddCell(Celda((mp.TipoMateriaPrima.MedidoEnUnidades == true) ? (ptc.Unidades + " ud.") : (ptc.Volumen + " m³"), filasHRCantidadUtilizada));
-
-                                // Producto terminado                        
-                                tablaPT.AddCell(Celda(ptc.ProductoTerminado.TipoProductoTerminado.Nombre, filasPT));
-
-                                // Cantidad producida del producto terminado
-                                tablaPT.AddCell(Celda((ptc.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades == true) ? (ptc.ProductoTerminado.Unidades + " ud.") : (ptc.ProductoTerminado.Volumen + " m³"), filasHRCantidadUtilizada));
-
-                                foreach (var sa in sitiosAlmacenajesPTC)
+                                tablaPT.AddCell(Celda("-"));
+                                // Cantidad de producto terminado producido
+                                //tablaPT.AddCell(Celda("-"));
+                                // Sitio de almacenaje
+                                //tablaPT.AddCell(Celda("-"));
+                                // Hueco de almacenaje
+                                //tablaPT.AddCell(Celda("-"));
+                            }
+                            else
+                            {                                
+                                foreach (var ptc in hhr.ProductosTerminadosComposiciones)
                                 {
-                                    var historialesHuecosAlmacenajesSA = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Where(hha => hha.HuecoAlmacenaje.SitioAlmacenaje == sa).ToList();
-                                    var filasSA = historialesHuecosAlmacenajesSA.Count();
+                                    var huecosAlmacenajesPTC = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Select(hha => hha.HuecoAlmacenaje).ToList();
+                                    var sitiosAlmacenajesPTC = huecosAlmacenajesPTC.Select(ha => ha.SitioAlmacenaje).Distinct().ToList();
 
-                                    // Sitio de almacenaje
-                                    tablaPT.AddCell(Celda(sa.Nombre, filasSA));
+                                    // var filasHRCantidadUtilizada = huecosAlmacenajesPTC.Count();
+                                    var filasHRCantidadUtilizada = 1;
+                                    var filasPT = huecosAlmacenajesPTC.Count();
 
-                                    foreach (var hha in historialesHuecosAlmacenajesSA)
+                                    // Cantidad de materia prima utilizada de cada hueco de recepción
+                                    tablaPT.AddCell(Celda((mp.TipoMateriaPrima.MedidoEnUnidades == true) ? (ptc.Unidades + " ud.") : (ptc.Volumen + " m³"), filasHRCantidadUtilizada));
+
+                                    // Cantidad producida del producto terminado
+                                    //tablaPT.AddCell(Celda((ptc.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades == true) ? (ptc.ProductoTerminado.Unidades + " ud.") : (ptc.ProductoTerminado.Volumen + " m³"), filasHRCantidadUtilizada));
+
+                                    foreach (var sa in sitiosAlmacenajesPTC)
                                     {
-                                        var filasHA = 1;
+                                        var historialesHuecosAlmacenajesSA = ptc.ProductoTerminado.HistorialHuecosAlmacenajes.Where(hha => hha.HuecoAlmacenaje.SitioAlmacenaje == sa).ToList();
+                                        var filasSA = historialesHuecosAlmacenajesSA.Count();
 
-                                        // Hueco de almacenaje
-                                        tablaPT.AddCell(Celda(hha.HuecoAlmacenaje.Nombre, filasHA));
+                                        // Sitio de almacenaje
+                                        //tablaPT.AddCell(Celda(sa.Nombre, filasSA));
+
+                                        foreach (var hha in historialesHuecosAlmacenajesSA)
+                                        {
+                                            var filasHA = 1;
+
+                                            // Hueco de almacenaje
+                                            //tablaPT.AddCell(Celda(hha.HuecoAlmacenaje.Nombre, filasHA));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }*/
+                }
             }
 
             return tablaPT;
