@@ -61,12 +61,7 @@
                         <MouseBinding MouseAction="LeftDoubleClick"
                                       Command="{Binding ModificarProcedenciaComando}"/>
                     </ListBox.InputBindings>
-                    <!--i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBProcedencias_SelectionChangedComando}"
-                                                   CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        </i:EventTrigger>
-                    </-->
+                    
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"

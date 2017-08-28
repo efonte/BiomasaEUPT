@@ -74,7 +74,7 @@
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar pedidos"
-                                     Command="{Binding RefrescarPedidosCabcerasComando}">
+                                     Command="{Binding RefrescarPedidosCabecerasComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>

@@ -86,7 +86,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             dpFechaFinalizacion.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
-        private void spProductosTerminadosComposiciones_Drop(object sender, DragEventArgs e)
+        private void spProductosEnvasadosComposiciones_Drop(object sender, DragEventArgs e)
         {
             /* var historialHuecoRecepcion = e.Data.GetData("HistorialHuecoRecepcion") as HistorialHuecoRecepcion;
              var productoTerminadoComposicion = new ProductoTerminadoComposicion() { HistorialHuecoRecepcion = historialHuecoRecepcion };
@@ -94,7 +94,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
              viewModel.HistorialHuecosRecepcionesDisponibles.Remove(historialHuecoRecepcion);*/
         }
 
-        private void cProductoTerminadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
+        private void cProductoEnvasadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
         {
             /*var chip = sender as Chip;
             int historialHuecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
@@ -106,16 +106,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }*/
         }
 
-        private void lbHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            /*var parent = sender as ListBox;
-            var huecoAlmacenaje = GetDataFromListBox(lbHuecosAlmacenajes, e.GetPosition(parent)) as HuecoAlmacenaje;
-            if (huecoAlmacenaje != null)
-            {
-                DataObject dragData = new DataObject("HuecoAlmacenaje", huecoAlmacenaje);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }*/
-        }
 
         /*private object GetDataFromListBox(ListBox source, Point point)
         {
@@ -144,5 +134,11 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 }
             }
         }*/
+
+        private void AnadirPrductoCantidad(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Me cago en la puta de oros");
+
+        }
     }
 }

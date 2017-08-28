@@ -45,7 +45,7 @@
                             <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
                         </DatePicker.BlackoutDates>
                         <DatePicker.Text>
-                            <Binding Path="Fecha" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FechaPedido" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
@@ -58,7 +58,7 @@
                                    IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
                                    Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <materialDesign:TimePicker.Text>
-                            <Binding Path="Hora" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="HoraPedido" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
@@ -76,7 +76,7 @@
                             <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
                         </DatePicker.BlackoutDates>
                         <DatePicker.Text>
-                            <Binding Path="Fecha fin" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="FechaFinalizacion" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
@@ -111,13 +111,22 @@
                           SelectedValuePath="ClienteId" >
                 </ComboBox>
 
+                <Button Grid.Row="1" Grid.Column="1"
+                    x:Name="bAnadirPTerminadoCantidad"
+                    Content="+"
+                    HorizontalAlignment="Left"
+                    Margin="88,26,0,15"
+                    VerticalAlignment="Center"
+                    Width="40"
+                    Click="AnadirPrductoCantidad" />
+
                 <materialDesign:ColorZone Grid.Row="2" Grid.ColumnSpan="2" Mode="Standard"
                                           MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
-                                          AllowDrop="True" Drop="spProductosTerminadosComposiciones_Drop">
-                    <WrapPanel x:Name="wpProductosTerminadosComposiciones" Margin="10"
+                                          AllowDrop="True" Drop="spProductosEnvasadosComposiciones_Drop">
+                    <WrapPanel x:Name="wpProductosEnvasadosComposiciones" Margin="10"
                                Orientation="Horizontal" HorizontalAlignment="Stretch"                            
                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding ProductosTerminadosComposiciones, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                        <ItemsControl ItemsSource="{Binding ProductoEnvasado, UpdateSourceTrigger=PropertyChanged}" Margin="10">
                             <ItemsControl.Style>
                                 <Style TargetType="ItemsControl">
                                     <Style.Triggers>
@@ -137,12 +146,12 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar materia prima"
-                                                     CommandParameter="{Binding HistorialHuecoRecepcion.HistorialHuecoRecepcionId}"
-                                                     DeleteClick="cProductoTerminadoComposicion_DeleteClick" Height="70">
+                                                     CommandParameter="{Binding ProductoTerminado.ProductoTerminadoId}"
+                                                     DeleteClick="cProductoEnvasadoComposicion_DeleteClick" Height="70">
                                         <materialDesign:Chip.Content>
                                             <StackPanel>
                                                 <TextBlock FontSize="14" FontWeight="Bold" Margin="10 10 10 0"
-                                                       Text="{Binding HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima.Nombre}"/>
+                                                       Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}"/>
                                                 <TextBox>
                                                     <TextBox.Style>
                                                         <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
@@ -161,7 +170,7 @@
                                                                 </Setter.Value>
                                                             </Setter>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
                                                                     <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
                                                                     <Setter Property="Text">
                                                                         <Setter.Value>
@@ -175,6 +184,20 @@
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnVolumen}" Value="True">
+                                                                    <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
+                                                                                <Binding.ValidationRules>
+                                                                                    <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
+                                                                                    <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
+                                                                                    <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
+                                                                                </Binding.ValidationRules>
+                                                                            </Binding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </TextBox.Style>
@@ -182,7 +205,7 @@
                                             </StackPanel>
                                         </materialDesign:Chip.Content>
                                         <materialDesign:Chip.Icon>
-                                            <TextBlock FontSize="15" Text="{Binding HistorialHuecoRecepcion.HuecoRecepcion.Nombre}"/>
+                                            <TextBlock FontSize="15" Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}"/>
                                         </materialDesign:Chip.Icon>
                                     </materialDesign:Chip>
                                 </DataTemplate>

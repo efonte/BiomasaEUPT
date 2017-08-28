@@ -85,55 +85,6 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <!--StackPanel Grid.Row="2" Grid.Column="0">
-                    <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6" TextChanged="tbVolumen_TextChanged">
-                        <TextBox.Text>
-                            <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
-                                    <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                    <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Margin" Value="10" />
-                                <Setter Property="FontSize" Value="15" />
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                    <TextBox x:Name="tbUnidades" materialDesign:HintAssist.Hint="Unidades" MaxLength="3" TextChanged="tbUnidades_TextChanged">
-                        <TextBox.Text>
-                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:RequeridoValidationRule NombreCampo="unidades" ValidatesOnTargetUpdated="True" />
-                                    <validadores:LongitudValidationRule NombreCampo="unidades" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
-                                    <validadores:RegexValidationRule NombreCampo="unidades" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <Setter Property="Margin" Value="10" />
-                                <Setter Property="FontSize" Value="15" />
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </-->
-
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"         
                                 materialDesign:HintAssist.Hint="Fecha Cad.">
