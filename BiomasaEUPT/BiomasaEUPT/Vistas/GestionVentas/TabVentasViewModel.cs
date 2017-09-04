@@ -51,11 +51,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
 
         // Checkbox Filtro Productos Envasados
-        public bool FechaBajaProductoEnvasadoSeleccionado { get; set; } = false;
-        public bool TipoProductoTerminadoSeleccionado { get; set; } = true;
-        public bool GrupoProductoTerminadoSeleccionado { get; set; } = true;
         public bool VolumenSeleccionado { get; set; } = false;
         public bool PickingNombreSeleccionado { get; set; } = false;
+        public bool codigoSeleccionado { get; set; } = false;
 
         private string _textoFiltroProductosEnvasados;
         public string TextoFiltroProductosEnvasados
@@ -128,7 +126,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     ProductosEnvasados = new ObservableCollection<ProductoEnvasado>(
                           context.ProductosEnvasados.
                           Where(pe => pe.ProductoEnvasadoId == PedidoCabeceraSeleccionado.EstadoId)
-                          .Include(pe => pe.ProductosEnvasadosComposiciones)
+                          .Include(pe => pe.ProductoEnvasadoComposiciones)
                           .Include(pe => pe.Picking)
                           .ToList());
                     ProductosEnvasadosView = (CollectionView)CollectionViewSource.GetDefaultView(ProductosEnvasados);
@@ -320,21 +318,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     Observaciones = formProductoEnvasadoDataContext.Observaciones,
                     PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
-                    //TipoProductoTerminadoId = (formProductoEnvasado.cbTipoProductoTerminado.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId,
                     Volumen = formProductoEnvasadoDataContext.Volumen,
 
                 };
 
-                /*if (formProductoEnvasadoDataContext.FechaBaja != null)
-                {
-                    productoEnvasado.FechaBaja = new DateTime(
-                        formProductoEnvasadoDataContext.FechaBaja.Value.Year,
-                        formProductoEnvasadoDataContext.FechaBaja.Value.Month,
-                        formProductoEnvasadoDataContext.FechaBaja.Value.Day,
-                        formProductoEnvasadoDataContext.HoraBaja.Value.Hour,
-                        formProductoEnvasadoDataContext.HoraBaja.Value.Minute,
-                        formProductoEnvasadoDataContext.HoraBaja.Value.Second);
-                }*/
                 context.ProductosEnvasados.Add(productoEnvasado);
                 /*var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
                 foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
@@ -417,20 +404,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 ProductoEnvasadoSeleccionado.PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId;
                 ProductoEnvasadoSeleccionado.Volumen = formProductoEnvasadoDataContext.Volumen;
                 ProductoEnvasadoSeleccionado.Observaciones = formProductoEnvasadoDataContext.Observaciones;
-                /*if (formProductoEnvasadoDataContext.FechaBaja != null)
-                {
-                    ProductoEnvasadoSeleccionado.FechaBaja = new DateTime(
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Year,
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Month,
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Day,
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Hour,
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Minute,
-                        ProductoEnvasadoSeleccionado.FechaBaja.Value.Second);
-                }
-                else
-                {
-                    ProductoEnvasadoSeleccionado.FechaBaja = null;
-                }*/
+
                 if (!context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoEnvasado.ProductoEnvasadoId == ProductoEnvasadoSeleccionado.ProductoEnvasadoId))
                 {
                     // Se borran todos los historiales huecos recepciones antiguos y se añaden los nuevos
@@ -487,10 +461,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             //string grupo = productoEnvasado.TipoProductoTerminado.GrupoProductoTerminado.Nombre.ToLower();
             string volumen = productoEnvasado.Volumen.ToString();
             string picking = productoEnvasado.Picking.Nombre.ToLower();
+            string codigo = productoEnvasado.Codigo.ToString();
             //string fechaBaja = productoEnvasado.FechaBaja.ToString();
 
             return (VolumenSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados)) : false)
-                || (PickingNombreSeleccionado == true ? picking.Contains(TextoFiltroProductosEnvasados) : false);
+                || (PickingNombreSeleccionado == true ? picking.Contains(TextoFiltroProductosEnvasados) : false)
+                || (codigoSeleccionado == true ? codigo.Contains(TextoFiltroProductosEnvasados) : false);
 
         }
         #endregion

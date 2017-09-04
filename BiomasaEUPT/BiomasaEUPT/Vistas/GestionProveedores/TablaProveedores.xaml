@@ -84,7 +84,7 @@
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <!--validadores:ProveedorValidationRule ValidationStep="UpdatedValue"/-->
+
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
@@ -106,11 +106,7 @@
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
 
                             </materialDesign:MaterialDataGridTextColumn>
-                            <!--DataGridComboBoxColumn x:Name="tiposProveedoresColumna" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tiposProveedoresViewSource}}"
-                                                SelectedValuePath="TipoProveedorId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
+                            
                             <DataGridTemplateColumn Header="Tipo" x:Name="tipoProveedorColumna" >
                                 <DataGridTemplateColumn.CellEditingTemplate >
                                     <DataTemplate>
@@ -132,28 +128,7 @@
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_CALLE}">
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <!--DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
-                                                    <Binding Path="Municipio.CodigoPostal"/>
-                                                    <Binding Path="Municipio.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ControlesUsuario:FormDireccion />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </-->
+                            
                             <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

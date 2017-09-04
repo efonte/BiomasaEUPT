@@ -12,10 +12,14 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     public class FormProductoEnvasadoViewModel : INotifyPropertyChanged
     {
         public TipoProductoTerminado TipoProductoTerminado { get; set; }
-        //public ObservableCollection<HuecoRecepcion> HuecosRecepcionesDisponibles { get; set; }
-        //public ObservableCollection<HistorialHuecoRecepcion> HistorialHuecosRecepciones { get; set; }
+        public PedidoCabecera PedidoCabecera { get; set; }
+        public PedidoDetalle PedidoDetalle { get; set; }
+        public ProductoEnvasado ProductoEnvasado { get; set; }
+        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajesDisponibles { get; set; }
+        public ObservableCollection<HuecoAlmacenaje> HuecosAlmacenajesDisponibles { get; set; }
+        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
         public ObservableCollection<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
-        //public int? Unidades { get; set; }
+        public int? Unidades { get; set; }
         public float? Volumen { get; set; }
         public string CantidadHint { get; set; }
         public string Nombre { get; set; }
@@ -33,17 +37,18 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
-        public DateTime? FechaBaja { get; set; }
-        public DateTime? HoraBaja { get; set; }
+        //public DateTime? FechaBaja { get; set; }
+        //public DateTime? HoraBaja { get; set; }
         //public bool QuedaCantidadPorAlmacenar { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FormProductoEnvasadoViewModel()
         {
+            HistorialHuecosAlmacenajesDisponibles = new ObservableCollection<HistorialHuecoAlmacenaje>();
             ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>();
-            //HuecosRecepcionesDisponibles = new ObservableCollection<HuecoRecepcion>();
-            //HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>();
+            HuecosAlmacenajesDisponibles = new ObservableCollection<HuecoAlmacenaje>();
+            HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>();
         }
 
     }

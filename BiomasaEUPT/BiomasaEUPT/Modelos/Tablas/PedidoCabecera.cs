@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BiomasaEUPT.Modelos.Tablas
 {
     /// <summary>
-    /// s
+    /// Pedido que realiza un cliente
     /// </summary>
     [Table("PedidosCabeceras")]
     public class PedidoCabecera

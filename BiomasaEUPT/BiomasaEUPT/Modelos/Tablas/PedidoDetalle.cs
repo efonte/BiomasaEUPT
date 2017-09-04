@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace BiomasaEUPT.Modelos.Tablas
 {
-
     /// <summary>
-    /// Información detallada de un pedido
+    /// Información detallada de un pedido realizado por un cliente
     /// </summary>
     [Table("PedidosDetalles")]
     public class PedidoDetalle

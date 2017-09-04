@@ -1,5 +1,6 @@
 ﻿using BiomasaEUPT.Modelos;
 using BiomasaEUPT.Modelos.Tablas;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,22 +51,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             gbTitulo.Header = _titulo;
 
-            //cbGruposProductosTerminados.SelectedValue = pedidoCabecera.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId;
-            //cbTiposProductosTerminados.SelectedValue = pedidoCabecera.TipoProductoTerminado.TipoProductoTerminadoId;
-
-            //viewModel.FechaBaja = pedido.FechaPedido;
-            //viewModel.HoraBaja = pedido.FechaPedido;
-
-            /*if (pedido.TipoProductoTerminado.MedidoEnUnidades == true)
-            {
-                viewModel.Cantidad = pedido.Unidades.Value;
-            }
-            else
-            {
-                viewModel.Cantidad = pedido.Volumen.Value;
-            }*/
-            //viewModel.ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>(context.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoId == pedido.PedidoCabeceraId).ToList());
-            //viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoTerminadoId == productoTerminado.ProductoTerminadoId).ToList());
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -88,56 +73,37 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private void spProductosEnvasadosComposiciones_Drop(object sender, DragEventArgs e)
         {
-            /* var historialHuecoRecepcion = e.Data.GetData("HistorialHuecoRecepcion") as HistorialHuecoRecepcion;
-             var productoTerminadoComposicion = new ProductoTerminadoComposicion() { HistorialHuecoRecepcion = historialHuecoRecepcion };
-             viewModel.ProductosTerminadosComposiciones.Add(productoTerminadoComposicion);
-             viewModel.HistorialHuecosRecepcionesDisponibles.Remove(historialHuecoRecepcion);*/
+             var historialHuecoAlmacenaje= e.Data.GetData("HistorialHuecoAlmaceanje") as HistorialHuecoAlmacenaje;
+             var productoEnvasadoComposicion = new ProductoEnvasadoComposicion() { HistorialHuecoAlmacenaje = historialHuecoAlmacenaje };
+             viewModel.ProductosEnvasadosComposiciones.Add(productoEnvasadoComposicion);
+             viewModel.HistorialHuecosAlmacenajesDisponibles.Remove(historialHuecoAlmacenaje);
         }
 
         private void cProductoEnvasadoComposicion_DeleteClick(object sender, RoutedEventArgs e)
         {
             /*var chip = sender as Chip;
-            int historialHuecoRecepcionId = int.Parse(chip.CommandParameter.ToString());
-            var productoTerminadoComposicion = viewModel.ProductosTerminadosComposiciones.Single(ptc => ptc.HistorialHuecoRecepcion.HistorialHuecoRecepcionId == historialHuecoRecepcionId);
-            viewModel.ProductosTerminadosComposiciones.Remove(productoTerminadoComposicion);
-            if (productoTerminadoComposicion.HistorialHuecoRecepcion.MateriaPrima.TipoId == (cbTiposMateriasPrimas.SelectedItem as TipoMateriaPrima).TipoMateriaPrimaId)
+            int historialHuecoAlmacenajeId = int.Parse(chip.CommandParameter.ToString());
+            var productoEnvasadoComposicion = viewModel.ProductosEnvasadosComposiciones.Single(ptc => ptc.HistorialHuecoAlmacenaje.HistorialHuecoAlmacenajeId == historialHuecoAlmacenajeId);
+            viewModel.ProductosEnvasadosComposiciones.Remove(productoEnvasadoComposicion);
+            if (productoEnvasadoComposicion.HistorialHuecoAlmacenaje.ProductoTerminado.TipoId == (cbTiposProductosTerminados.SelectedItem as TipoProductoTerminado).TipoProductoTerminadoId)
             {
-                viewModel.HistorialHuecosRecepcionesDisponibles.Add(productoTerminadoComposicion.HistorialHuecoRecepcion);
+                viewModel.HistorialHuecosAlmacenajesDisponibles.Add(productoEnvasadoComposicion.HistorialHuecoAlmacenaje);
             }*/
         }
 
 
-        /*private object GetDataFromListBox(ListBox source, Point point)
+        
+        private void AnadirProductoCantidad(object sender, RoutedEventArgs e)
         {
-            UIElement element = source.InputHitTest(point) as UIElement;
-            if (element != null)
-            {
-                object data = DependencyProperty.UnsetValue;
-                while (data == DependencyProperty.UnsetValue)
-                {
-                    data = source.ItemContainerGenerator.ItemFromContainer(element);
+            wpProductosEnvasadosComposiciones.IsEnabled = true;
+            var chip = sender as Chip;
+            //int historialHuecoAlmacenajeId = int.Parse(chip.CommandParameter.ToString());
+            //var productoEnvasadoComposicion = viewModel.ProductosEnvasadosComposiciones.Single(pec => pec.HistorialHuecoAlmacenaje.HistorialHuecoAlmacenajeId == historialHuecoAlmacenajeId);
+            //viewModel.ProductosEnvasadosComposiciones.Remove(productoEnvasadoComposicion);
+            int pedidoDetalleId = int.Parse(chip.CommandParameter.ToString());
+            
 
-                    if (data == DependencyProperty.UnsetValue)
-                    {
-                        element = VisualTreeHelper.GetParent(element) as UIElement;
-                    }
 
-                    if (element == source)
-                    {
-                        return null;
-                    }
-                }
-
-                if (data != DependencyProperty.UnsetValue)
-                {
-                    return data;
-                }
-            }
-        }*/
-
-        private void AnadirPrductoCantidad(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Me cago en la puta de oros");
 
         }
     }

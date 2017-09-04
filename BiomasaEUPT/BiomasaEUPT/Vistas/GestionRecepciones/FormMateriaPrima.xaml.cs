@@ -260,16 +260,5 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             viewModel.HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>(viewModel.HistorialHuecosRecepciones.ToList());
         }
 
-        /*private void GenerarCodigo()
-        {
-            Random r = new Random();
-            int codigo;
-            do
-            {
-                codigo = r.Next(0, 999999999) + 1000000000;
-            } while (context.MateriasPrimas.Any(mp => mp.Codigo == codigo.ToString()));
-            Codigo = codigo.ToString();
-            lCodigo.Content = codigo;
-        }*/
     }
 }

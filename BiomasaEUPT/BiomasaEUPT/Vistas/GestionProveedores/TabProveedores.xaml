@@ -28,10 +28,7 @@
                                        Height="200" VerticalAlignment="Top"
                                        DataContext="{Binding ContadorViewModel}" />
 
-            <!--controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
-                                          Height="250" VerticalAlignment="Bottom"
-                                          MostrarGrupo="False"
-                                          DataContext="{Binding FiltroTablaViejoViewModel}" /-->
+            
             <controlesUsuario:Filtro Grid.Row="1" x:Name="ucFiltroTabla" Margin="10 10 0 10"
                                      Height="250" VerticalAlignment="Bottom"
                                      DataContext="{Binding FiltroTiposViewModel}" />

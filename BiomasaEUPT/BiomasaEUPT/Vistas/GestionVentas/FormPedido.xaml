@@ -98,13 +98,6 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <!--ComboBox Grid.Row="2" Grid.Column="0" x:Name="
-                " materialDesign:HintAssist.Hint="Estado pedido"
-                          ItemsSource="{Binding Source={StaticResource estadosPedidosViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="EstadoPedidoId">
-                </-->
-
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbClientes" materialDesign:HintAssist.Hint="Cliente"
                           ItemsSource="{Binding Source={StaticResource clientesViewSource}}"
                           DisplayMemberPath="RazonSocial"
@@ -118,7 +111,7 @@
                     Margin="88,26,0,15"
                     VerticalAlignment="Center"
                     Width="40"
-                    Click="AnadirPrductoCantidad" />
+                    Click="AnadirProductoCantidad" />
 
                 <materialDesign:ColorZone Grid.Row="2" Grid.ColumnSpan="2" Mode="Standard"
                                           MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
@@ -126,7 +119,7 @@
                     <WrapPanel x:Name="wpProductosEnvasadosComposiciones" Margin="10"
                                Orientation="Horizontal" HorizontalAlignment="Stretch"                            
                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding ProductoEnvasado, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                        <ItemsControl ItemsSource="{Binding ProductosEnvasados, UpdateSourceTrigger=PropertyChanged}" Margin="10">
                             <ItemsControl.Style>
                                 <Style TargetType="ItemsControl">
                                     <Style.Triggers>

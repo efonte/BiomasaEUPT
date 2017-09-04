@@ -321,9 +321,6 @@
     <Compile Include="Vistas\GestionElaboraciones\FormElaboracion.xaml.cs">
       <DependentUpon>FormElaboracion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionElaboraciones\FormOrdenElaboracion.xaml.cs">
-      <DependentUpon>FormOrdenElaboracion.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\GestionElaboraciones\FormProductoTerminado.xaml.cs">
       <DependentUpon>FormProductoTerminado.xaml</DependentUpon>
     </Compile>
@@ -533,10 +530,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionElaboraciones\FormElaboracion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionElaboraciones\FormOrdenElaboracion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

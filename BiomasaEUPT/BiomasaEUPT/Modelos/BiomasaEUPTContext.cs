@@ -183,9 +183,9 @@
             //modelBuilder.Conventions.Add(convention);
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            // HAY QUE SOLUCIONAR EL ERROR--------------
+            // Se evita que se cree la columna HistorialHuecosAlmacenajes_HistorialHuecoId en la tabla ProductoEnvasadoComposicion
             modelBuilder.Entity<ProductoEnvasadoComposicion>()
-                        .HasRequired(c => c.HistorialHuecoAlmacenaje)
+                        .HasRequired(pec => pec.HistorialHuecoAlmacenaje)
                         .WithMany()
                         .WillCascadeOnDelete(false);
 

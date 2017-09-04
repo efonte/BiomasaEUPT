@@ -63,7 +63,6 @@
                             <i:EventTrigger EventName="RowEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGClientes_RowEditEndingComando, Mode=OneWay}"
                                                     PassEventArgsToCommand="True"/>
-                                <!--domain:EventCommandExecuter Command="{Binding DGClientes_RowEditEndingComando}"/-->
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>
@@ -82,17 +81,11 @@
                                                FontWeight="Bold" Foreground="White" 
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Grid>
-                                <!--Label Foreground="Red"
-                                       ToolTip="{Binding RelativeSource={RelativeSource
-                                      FindAncestor, AncestorType={x:Type DataGridRow}},
-                                      Path=(Validation.Errors)[0].ErrorContent}">
-                                    <materialDesign:PackIcon Kind="Exclamation" Height="21" Width="21" />
-                                </-->
+                                
                             </ControlTemplate>
                         </DataGrid.RowValidationErrorTemplate>
 
                         <DataGrid.RowValidationRules>
-                            <!--validadores:ClienteValidationRule ValidationStep="UpdatedValue"/-->
                         </DataGrid.RowValidationRules>
 
                         <DataGrid.Columns>
@@ -100,46 +93,19 @@
                                                                        Binding="{Binding RazonSocial, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_RAZON_SOCIAL}">
-                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="RazonSocial" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validadores:RequeridoValidationRule NombreCampo="razón social" ValidatesOnTargetUpdated="True" />
-                                            <validadores:LongitudValidationRule NombreCampo="razón social" Min="5" Max="100" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,@]+$" Mensaje="El campo razón social no tiene formato válido." ValidatesOnTargetUpdated="True" />
-                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="razon_social"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </materialDesign:MaterialDataGridTextColumn.Binding-->
+                                
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="nifColumna" Header="NIF"
                                                                        Binding="{Binding Nif, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_NIF}">
-                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="Nif" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validadores:RequeridoValidationRule NombreCampo="NIF" ValidatesOnTargetUpdated="True" />
-                                            <validadores:LongitudValidationRule NombreCampo="NIF" Min="9" Max="9" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^([A-Z]-\d{7})|(\d{7}-[A-Z])$" Mensaje="El campo NIF no tiene un formato válido (L-NNNNNNN o NNNNNNN-L)" ValidatesOnTargetUpdated="True" />
-                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="nif"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </materialDesign:MaterialDataGridTextColumn.Binding-->
+
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn x:Name="emailColumna" Header="Email"
                                                                        Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_EMAIL}">
-                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="Email" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validadores:RequeridoValidationRule NombreCampo="email" ValidatesOnTargetUpdated="True" />
-                                            <validadores:LongitudValidationRule NombreCampo="email" Min="10" Max="254" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" Mensaje="El campo email no tiene formato válido." ValidatesOnTargetUpdated="True" />
-                                            <validadores:UnicoValidationRule Coleccion="{StaticResource clientesViewSource}" Tipo="clientes" Atributo="email"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </materialDesign:MaterialDataGridTextColumn.Binding-->
+                                
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <DataGridTemplateColumn Header="Tipo" x:Name="tipoClienteColumna" >
@@ -174,54 +140,16 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <!--DataGridComboBoxColumn x:Name="tiposClientesColumna" Header="Tipo"
-                                                ItemsSource="{Binding Source={StaticResource tiposClientesViewSource}}"
-                                                SelectedValuePath="TipoClienteId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding TipoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" />
-                            <DataGridComboBoxColumn x:Name="gruposClientesColumna" Header="Grupo"
-                                                ItemsSource="{Binding Source={StaticResource gruposClientesViewSource}}"
-                                                SelectedValuePath="GrupoClienteId" 
-                                                DisplayMemberPath="Nombre" SelectedValueBinding="{Binding GrupoId, UpdateSourceTrigger=PropertyChanged}"
-                                                EditingElementStyle="{DynamicResource MaterialDesignComboBox}" /-->
+                            
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="calleColumna" Header="Calle"
                                                                        Binding="{Binding Calle, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                                                                        EditingElementStyle="{DynamicResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                        MaxLength="{x:Static const:Constantes.LONG_MAX_CALLE}">
-                                <!--materialDesign:MaterialDataGridTextColumn.Binding>
-                                    <Binding Path="calle" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validadores:RequeridoValidationRule NombreCampo="calle" ValidatesOnTargetUpdated="True" />
-                                            <validadores:LongitudValidationRule NombreCampo="calle" Min="20" Max="100" ValidatesOnTargetUpdated="True" />
-                                            <validadores:RegexValidationRule ExpReg="^(?!\s)(?!.*\s$)[\p{L}0-9\s'~?!\.,\/]+$" Mensaje="El campo calle no tiene formato válido." ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </materialDesign:MaterialDataGridTextColumn.Binding-->
+                                
                             </materialDesign:MaterialDataGridTextColumn>
 
-                            <!--DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
-                                                    <Binding Path="Municipio.CodigoPostal"/>
-                                                    <Binding Path="Municipio.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ControlesUsuario:FormDireccion x:Name="ucFormDireccion"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </-->
+                            
 
                             <DataGridTemplateColumn x:Name="direccionColumna" Header="Dirección">
                                 <DataGridTemplateColumn.CellTemplate>

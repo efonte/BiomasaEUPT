@@ -28,7 +28,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        public virtual List<OrdenElaboracion> OrdenesElaboraciones { get; set; }
+        public virtual List<PedidoCabecera> PedidosCabeceras { get; set; }
 
     }
 }

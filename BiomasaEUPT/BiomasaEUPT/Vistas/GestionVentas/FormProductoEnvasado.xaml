@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="400" Width="410" Loaded="UserControl_Loaded">
+             Height="260" Width="420" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,24 +30,21 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="40">
+                <!--TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="40">
                     <TextBox.Text>
                         <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
 
                         </Binding>
                     </TextBox.Text>
-                </TextBox>
+                </-->
 
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <!--StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"
                                 SelectedDate="{x:Static system:DateTime.Now}"            
                                 materialDesign:HintAssist.Hint="Fecha baja">
@@ -76,23 +73,23 @@
                             </Binding>
                         </materialDesign:TimePicker.Text>
                     </materialDesign:TimePicker>
-                </StackPanel>
+                </-->
 
                 
 
-                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTipoProductoTerminado" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
+                <!--ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTipoProductoTerminado" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
                           ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="TipoProductoTerminadoId">
-                </ComboBox>
+                </-->
 
-                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
+                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
                           ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
                           DisplayMemberPath="Nombre"
                           SelectedValuePath="PickingId" >
                 </ComboBox>
 
-                <StackPanel Grid.Row="3" Grid.Column="0">
+                <StackPanel Grid.Row="1" Grid.Column="1">
                     <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6">
                         <TextBox.Text>
                             <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
@@ -118,7 +115,7 @@
                     </TextBox>
                 </StackPanel>
 
-                <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
+                <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          AcceptsReturn="True" Height="55" MaxLength="60">
                     <TextBox.Text>
@@ -130,7 +127,7 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoProductoEnvasado" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

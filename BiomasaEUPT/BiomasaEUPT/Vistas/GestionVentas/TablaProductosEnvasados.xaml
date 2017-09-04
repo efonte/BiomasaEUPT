@@ -45,17 +45,9 @@
                               CanUserDeleteRows="False" SelectedItem="{Binding ProductoEnvasadoSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <DataGrid.Columns>
-                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"
-                                                                       Binding="{Binding TipoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo"
-                                                                       Binding="{Binding TipoProductoTerminado.GrupoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="pickingColumna" Header="Picking"
                                                                        Binding="{Binding Picking.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="nombreColumna" Header="Nombre" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
 
                             <DataGridTemplateColumn x:Name="volumenColumn" Header="Volumen" Width="SizeToHeader">
@@ -79,12 +71,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="Fecha Baja"
-                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Codigo" Width="SizeToHeader"
                                                                        Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="pedidoColumna" Header="InfoPedido"
+                                                                       Binding="{Binding PedidoDetalle.TipoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                         </DataGrid.Columns>
 
                     </DataGrid>

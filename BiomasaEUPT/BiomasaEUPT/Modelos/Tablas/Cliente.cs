@@ -64,5 +64,7 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         [ForeignKey("GrupoId")]
         public virtual GrupoCliente GrupoCliente { get; set; }
+
+        public virtual List<PedidoCabecera> PedidosCabeceras { get; set; }
     }
 }
