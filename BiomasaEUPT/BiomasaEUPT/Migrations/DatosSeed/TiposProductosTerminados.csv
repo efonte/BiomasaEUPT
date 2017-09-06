@@ -1,0 +1,5 @@
+﻿TipoProductoTerminadoId;GrupoId;Nombre;Tamano;Humedad;MedidoEnUnidades;MedidoEnVolumen
+1;1;Pellet pino;0.75;75;false;true
+2;2;Tablón pino;0.80;80;true;false
+3;2;Tablón roble;0.80;80;true;false
+4;3;Papel corcho;0.50;40;false;true

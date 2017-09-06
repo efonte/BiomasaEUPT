@@ -1,3 +1,3 @@
 ﻿Nombre;Descripcion
-TipoCliente 1;Este es el TipoCliente 1
-TipoCliente 2;Este es el TipoCliente 2
+Empresa;El cliente es una empresa.
+Particular;El cliente es un particular.

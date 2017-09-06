@@ -16,8 +16,6 @@
     {
         public BiomasaEUPTContext()
         : base("name=BiomasaEUPTContext")
-        //: base("metadata=res://*/Modelo.csdl|res://*/Modelo.ssdl|res://*/Modelo.msl;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
-        //: base("metadata=res://*/Modelo.csdl|res://*/;provider=System.Data.SqlClient;provider connection string='data source=155.210.68.124,49170;initial catalog=BiomasaEUPT;persist security info=True;user id=usuario;password=usuario;MultipleActiveResultSets=True;App=EntityFramework'")
         //: base(nameOrConnectionString: ConnectionString())       
         {
             //Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("********", "usuario");
@@ -29,7 +27,7 @@
 
             // https://github.com/zzzprojects/EntityFramework-Plus/wiki/EF-Audit-%7C-Entity-Framework-Audit-Trail-Context-and-Track-Changes
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
-             // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
+             // añadir "Where(x => x.AuditEntryID == 0)" para permitir múltiples SaveChanges con el mismo Audit
              (context as BiomasaEUPTContext).AuditoriaTablas.AddRange(audit.Entries);
         }
 

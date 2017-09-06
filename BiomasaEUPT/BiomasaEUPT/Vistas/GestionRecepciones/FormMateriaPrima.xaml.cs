@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -62,13 +63,13 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             {
                 viewModel.Cantidad = materiaPrima.Volumen.Value;
             }
-            viewModel.HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId).ToList());
+            viewModel.HistorialHuecosRecepciones = new ObservableCollection<HistorialHuecoRecepcion>(context.HistorialHuecosRecepciones.Where(hhr => hhr.MateriaPrimaId == materiaPrima.MateriaPrimaId).Include(hhr => hhr.HuecoRecepcion).ToList());
             CalcularCantidades();
 
-            // Si ya se han fabricado algún producto terminado con dicha materia prima entonces los controles estarán deshabilitados
+            // Si ya se han fabricado algún producto terminado con dicha materia prima
+            // entonces los controles estarán deshabilitados
             if (context.ProductosTerminadosComposiciones.Any(ptc => ptc.HistorialHuecoRecepcion.MateriaPrimaId == materiaPrima.MateriaPrimaId))
             {
-
                 cbGruposMateriasPrimas.IsEnabled = false;
                 cbTiposMateriasPrimas.IsEnabled = false;
                 cbSitiosRecepciones.IsEnabled = false;
@@ -85,13 +86,16 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             procedenciasViewSource = ((CollectionViewSource)(FindResource("procedenciasViewSource")));
             sitiosRecepcionesViewSource = ((CollectionViewSource)(FindResource("sitiosRecepcionesViewSource")));
 
-            context.GruposMateriasPrimas.Load();
             context.Procedencias.Load();
             context.SitiosRecepciones.Load();
-            gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Local;
+
+            // Sólo se muestran los grupos de materias primas que tienen mínimo un tipo asignado
+            gruposMateriasPrimasViewSource.Source = context.GruposMateriasPrimas.Where(gmp => context.TiposMateriasPrimas.Any(tmp => tmp.GrupoId == gmp.GrupoMateriaPrimaId)).ToList();
+
             procedenciasViewSource.Source = context.Procedencias.Local;
             sitiosRecepcionesViewSource.Source = context.SitiosRecepciones.Local;
-            //GenerarCodigo();
+
+            dpFechaBaja.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
         private void cbGruposMateriasPrimas_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -213,11 +217,6 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
             }
             CalcularCantidades();
         }
-
-        /*private void bCodigo_Click(object sender, RoutedEventArgs e)
-        {
-            GenerarCodigo();
-        }*/
 
         private void CalcularCantidades()
         {

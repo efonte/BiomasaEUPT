@@ -40,7 +40,7 @@ namespace BiomasaEUPT
 
         private void IniciarConfig()
         {
-            // Si el usuario ha borradopor error el fichero de configuración se restaura
+            // Si el usuario ha borrado por error el fichero de configuración se restaura
             if (!File.Exists("BiomasaEUPT.exe.config"))
             {
                 File.WriteAllText(@"BiomasaEUPT.exe.config", Properties.Resources.App);
@@ -103,7 +103,6 @@ namespace BiomasaEUPT
         private void IniciarPrograma()
         {
             // Estado 1 - Actualización
-            //Properties.Settings.Default.ActualizarPrograma = true;
             if (Properties.Settings.Default.ActualizarPrograma)
             {
                 Dispatcher.Invoke(() =>
@@ -140,7 +139,7 @@ namespace BiomasaEUPT
                             viewModel.Progreso = 100;
                         });
 #if (!DEBUG)
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2500);
 #endif
                     }
                 }
@@ -157,7 +156,7 @@ namespace BiomasaEUPT
             // Estado 2 - Conexión BD
             Dispatcher.Invoke(() =>
             {
-                viewModel.MensajeInformacion = "Conectándose a la BD...";
+                viewModel.MensajeInformacion = "Conectándose a la Base de Datos...";
                 viewModel.Progreso = 50;
 
             });
@@ -173,7 +172,7 @@ namespace BiomasaEUPT
                         viewModel.Progreso = 100;
                     });
 #if (!DEBUG)
-                    Thread.Sleep(2000);
+                    Thread.Sleep(3000);
 #endif
                     /// Cierra la aplicación
                     Process.GetCurrentProcess().Kill();

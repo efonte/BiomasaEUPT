@@ -105,6 +105,18 @@ namespace BiomasaEUPT.Migrations
             }
         }
 
+        private sealed class TipoMateriaPrimaMap : CsvClassMap<TipoMateriaPrima>
+        {
+            public TipoMateriaPrimaMap()
+            {
+                Map(tmp => tmp.GrupoId);
+                Map(tmp => tmp.Nombre);
+                Map(tmp => tmp.MedidoEnUnidades);
+                Map(tmp => tmp.MedidoEnVolumen);
+                Map(m => m.Descripcion);
+            }
+        }
+
         public SeedTablas(BiomasaEUPTContext context)
         {
             this.context = context;
@@ -129,7 +141,29 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
 
 
-            //context.TiposUsuarios.Load();
+            resourceName = String.Format(NOMBRE_CSV, "Permisos");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<Permiso>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a PermisoMap
+                        datos.Add(new Permiso()
+                        {
+                            PermisoId = csvReader.GetField<int>("PermisoId"),
+                            Tab = (Tab)Enum.Parse(typeof(Tab), csvReader.GetField<string>("Tab")),
+                            TipoId = csvReader.GetField<int>("TipoId")
+                        });
+                    }
+                    context.Permisos.AddOrUpdate(d => d.PermisoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
             resourceName = String.Format(NOMBRE_CSV, "Usuarios");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -201,7 +235,6 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
 
 
-            //context.Paises.Load();
             resourceName = String.Format(NOMBRE_CSV, "Comunidades");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -222,7 +255,6 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
-            //context.Comunidades.Load();
             resourceName = String.Format(NOMBRE_CSV, "Provincias");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -274,7 +306,7 @@ namespace BiomasaEUPT.Migrations
                         if (d.Observaciones == string.Empty)
                             d.Observaciones = null;
                     }
-                    context.Clientes.AddOrUpdate(p => p.RazonSocial, datos);
+                    context.Clientes.AddOrUpdate(p => p.ClienteId, datos);
                 }
             }
             context.SaveChanges();
@@ -293,7 +325,7 @@ namespace BiomasaEUPT.Migrations
                         if (d.Observaciones == string.Empty)
                             d.Observaciones = null;
                     }
-                    context.Proveedores.AddOrUpdate(p => p.RazonSocial, datos);
+                    context.Proveedores.AddOrUpdate(p => p.ProveedorId, datos);
                 }
             }
             context.SaveChanges();
@@ -337,13 +369,14 @@ namespace BiomasaEUPT.Migrations
                         // Alternativa a HuecoRecepcionMap
                         datos.Add(new HuecoRecepcion()
                         {
+                            HuecoRecepcionId = csvReader.GetField<int>("HuecoRecepcionId"),
                             Nombre = csvReader.GetField<string>("Nombre"),
                             UnidadesTotales = csvReader.GetField<int>("UnidadesTotales"),
                             VolumenTotal = csvReader.GetField<double>("VolumenTotal"),
                             SitioId = csvReader.GetField<int>("SitioId")
                         });
                     }
-                    context.HuecosRecepciones.AddOrUpdate(d => d.Nombre, datos.ToArray());
+                    context.HuecosRecepciones.AddOrUpdate(d => d.HuecoRecepcionId, datos.ToArray());
                 }
             }
             context.SaveChanges();
@@ -356,7 +389,7 @@ namespace BiomasaEUPT.Migrations
                 {
                     CsvReader csvReader = new CsvReader(reader, csvConfig);
                     var datos = csvReader.GetRecords<Procedencia>().ToArray();
-                    context.Procedencias.AddOrUpdate(d => d.Nombre, datos);
+                    context.Procedencias.AddOrUpdate(d => d.ProcedenciaId, datos);
                 }
             }
             context.SaveChanges();
@@ -371,7 +404,7 @@ namespace BiomasaEUPT.Migrations
                     var datos = new List<Recepcion>();
                     while (csvReader.Read())
                     {
-                        // Alternativa a HuecoRecepcionMap
+                        // Alternativa a RecepcionMap
                         datos.Add(new Recepcion()
                         {
                             NumeroAlbaran = csvReader.GetField<string>("NumeroAlbaran"),
@@ -386,66 +419,109 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
 
 
-
-
-
-
-
-
-            /*
-            resourceName = String.Format(NOMBRE_CSV, "TiposClientes");
+            resourceName = String.Format(NOMBRE_CSV, "GruposMateriasPrimas");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     CsvReader csvReader = new CsvReader(reader, csvConfig);
-                    var tiposClientes = csvReader.GetRecords<TipoCliente>().ToArray();
-                    context.TiposClientes.AddOrUpdate(c => c.Nombre, tiposClientes);
-                }
-            }
-
-            resourceName = String.Format(NOMBRE_CSV, "GruposClientes");
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    CsvReader csvReader = new CsvReader(reader, csvConfig);
-                    var gruposClientes = csvReader.GetRecords<GrupoCliente>().ToArray();
-                    context.GruposClientes.AddOrUpdate(c => c.Nombre, gruposClientes);
-                }
-            }
-
-            resourceName = String.Format(NOMBRE_CSV, "Clientes");
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<GrupoMateriaPrima>();
                     while (csvReader.Read())
                     {
-                        var cliente = csvReader.GetRecord<Cliente>();
-                        var tipoCliente = csvReader.GetField<string>("TipoCliente");
-                        cliente.TipoCliente = context.TiposClientes.Local.Single(c => c.Nombre == tipoCliente);
-                        var grupoCliente = csvReader.GetField<string>("GrupoCliente");
-                        cliente.GrupoCliente = context.GruposClientes.Local.Single(c => c.Nombre == grupoCliente);
-                        var municipio = csvReader.GetField<string>("Municipio");
-                        cliente.Municipio = context.Municipios.Local.Single(c => c.CodigoPostal == municipio);
-                        context.Clientes.AddOrUpdate(p => p.RazonSocial, cliente);
+                        // Alternativa a GrupoMateriaPrimaMap
+                        datos.Add(new GrupoMateriaPrima()
+                        {
+                            GrupoMateriaPrimaId = csvReader.GetField<int>("GrupoMateriaPrimaId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Descripcion = csvReader.GetField<string>("Descripcion")
+                        });
                     }
+                    context.GruposMateriasPrimas.AddOrUpdate(d => d.GrupoMateriaPrimaId, datos.ToArray());
                 }
             }
+            context.SaveChanges();
 
 
-            resourceName = String.Format(NOMBRE_CSV, "EstadosRecepciones");
+            resourceName = String.Format(NOMBRE_CSV, "TiposMateriasPrimas");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     CsvReader csvReader = new CsvReader(reader, csvConfig);
-                    var estadosRecepciones = csvReader.GetRecords<EstadoRecepcion>().ToArray();
-                    context.EstadosRecepciones.AddOrUpdate(c => c.Nombre, estadosRecepciones);
+                    var datos = new List<TipoMateriaPrima>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a TipoMateriaPrimaMap
+                        datos.Add(new TipoMateriaPrima()
+                        {
+                            TipoMateriaPrimaId = csvReader.GetField<int>("TipoMateriaPrimaId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Descripcion = csvReader.GetField<string>("Descripcion"),
+                            MedidoEnUnidades = csvReader.GetField<bool>("MedidoEnUnidades"),
+                            MedidoEnVolumen = csvReader.GetField<bool>("MedidoEnVolumen"),
+                            GrupoId = csvReader.GetField<int>("GrupoId")
+                        });
+                    }
+                    context.TiposMateriasPrimas.AddOrUpdate(d => d.TipoMateriaPrimaId, datos.ToArray());
                 }
             }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "MateriasPrimas");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<MateriaPrima>();
+                    while (csvReader.Read())
+                    {
+                        // Campos opcionales
+                        csvReader.TryGetField<string>("Observaciones", out var observaciones);
+                        observaciones = (observaciones == "") ? null : observaciones;
+
+                        datos.Add(new MateriaPrima()
+                        {
+                            MateriaPrimaId = csvReader.GetField<int>("MateriaPrimaId"),
+                            TipoId = csvReader.GetField<int>("TipoId"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            RecepcionId = csvReader.GetField<int>("RecepcionId"),
+                            ProcedenciaId = csvReader.GetField<int>("ProcedenciaId"),
+                            FechaBaja = csvReader.GetField<DateTime?>("FechaBaja"),
+                            Observaciones = observaciones
+                        });
+                    }
+                    context.MateriasPrimas.AddOrUpdate(d => d.MateriaPrimaId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "HistorialHuecosRecepciones");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<HistorialHuecoRecepcion>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a HistorialHuecoRecepcionMap
+                        datos.Add(new HistorialHuecoRecepcion()
+                        {
+                            HistorialHuecoRecepcionId = csvReader.GetField<int>("HistorialHuecoRecepcionId"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            MateriaPrimaId = csvReader.GetField<int>("MateriaPrimaId"),
+                            HuecoRecepcionId = csvReader.GetField<int>("HuecoRecepcionId")
+                        });
+                    }
+                    context.HistorialHuecosRecepciones.AddOrUpdate(d => d.HistorialHuecoRecepcionId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
 
             resourceName = String.Format(NOMBRE_CSV, "EstadosElaboraciones");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -453,11 +529,202 @@ namespace BiomasaEUPT.Migrations
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     CsvReader csvReader = new CsvReader(reader, csvConfig);
-                    var estadosElaboraciones = csvReader.GetRecords<EstadoElaboracion>().ToArray();
-                    context.EstadosElaboraciones.AddOrUpdate(c => c.Nombre, estadosElaboraciones);
+                    var datos = csvReader.GetRecords<EstadoElaboracion>().ToArray();
+                    context.EstadosElaboraciones.AddOrUpdate(d => d.Nombre, datos);
                 }
-            }*/
+            }
+            context.SaveChanges();
 
+
+            resourceName = String.Format(NOMBRE_CSV, "GruposProductosTerminados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<GrupoProductoTerminado>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a GrupoProductoTerminadoMap
+                        datos.Add(new GrupoProductoTerminado()
+                        {
+                            GrupoProductoTerminadoId = csvReader.GetField<int>("GrupoProductoTerminadoId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Descripcion = csvReader.GetField<string>("Descripcion")
+                        });
+                    }
+                    context.GruposProductosTerminados.AddOrUpdate(d => d.GrupoProductoTerminadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "TiposProductosTerminados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<TipoProductoTerminado>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a TipoProductoTerminadoMap
+                        datos.Add(new TipoProductoTerminado()
+                        {
+                            TipoProductoTerminadoId = csvReader.GetField<int>("TipoProductoTerminadoId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Tamano = csvReader.GetField<string>("Tamano"),
+                            Humedad = csvReader.GetField<double>("Humedad"),
+                            MedidoEnUnidades = csvReader.GetField<bool>("MedidoEnUnidades"),
+                            MedidoEnVolumen = csvReader.GetField<bool>("MedidoEnVolumen"),
+                            GrupoId = csvReader.GetField<int>("GrupoId")
+                        });
+                    }
+                    context.TiposProductosTerminados.AddOrUpdate(d => d.TipoProductoTerminadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "OrdenesElaboraciones");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<OrdenElaboracion>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a OrdenElaboracionMap
+                        datos.Add(new OrdenElaboracion()
+                        {
+                            OrdenElaboracionId = csvReader.GetField<int>("OrdenElaboracionId"),
+                            EstadoElaboracionId = csvReader.GetField<int>("EstadoElaboracionId"),
+                            Descripcion = csvReader.GetField<string>("Descripcion")
+                        });
+                    }
+                    context.OrdenesElaboraciones.AddOrUpdate(d => d.OrdenElaboracionId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "SitiosAlmacenajes");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = csvReader.GetRecords<SitioAlmacenaje>().ToArray();
+                    context.SitiosAlmacenajes.AddOrUpdate(d => d.Nombre, datos);
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "HuecosAlmacenajes");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<HuecoAlmacenaje>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a HuecoAlmacenajeMap
+                        datos.Add(new HuecoAlmacenaje()
+                        {
+                            HuecoAlmacenajeId = csvReader.GetField<int>("HuecoAlmacenajeId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            UnidadesTotales = csvReader.GetField<int>("UnidadesTotales"),
+                            VolumenTotal = csvReader.GetField<double>("VolumenTotal"),
+                            SitioId = csvReader.GetField<int>("SitioId")
+                        });
+                    }
+                    context.HuecosAlmacenajes.AddOrUpdate(d => d.HuecoAlmacenajeId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "ProductosTerminados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<ProductoTerminado>();
+                    while (csvReader.Read())
+                    {
+                        // Campos opcionales
+                        csvReader.TryGetField<string>("Observaciones", out var observaciones);
+                        observaciones = (observaciones == "") ? null : observaciones;
+
+                        datos.Add(new ProductoTerminado()
+                        {
+                            ProductoTerminadoId = csvReader.GetField<int>("ProductoTerminadoId"),
+                            TipoId = csvReader.GetField<int>("TipoId"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            OrdenId = csvReader.GetField<int>("OrdenId"),
+                            FechaBaja = csvReader.GetField<DateTime?>("FechaBaja"),
+                            Observaciones = observaciones
+                        });
+                    }
+                    context.ProductosTerminados.AddOrUpdate(d => d.ProductoTerminadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "HistorialHuecosAlmacenajes");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<HistorialHuecoAlmacenaje>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a HistorialHuecoAlmacenajeMap
+                        datos.Add(new HistorialHuecoAlmacenaje()
+                        {
+                            HistorialHuecoAlmacenajeId = csvReader.GetField<int>("HistorialHuecoAlmacenajeId"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            ProductoTerminadoId = csvReader.GetField<int>("ProductoTerminadoId"),
+                            HuecoAlmacenajeId = csvReader.GetField<int>("HuecoAlmacenajeId")
+                        });
+                    }
+                    context.HistorialHuecosAlmacenajes.AddOrUpdate(d => d.HistorialHuecoAlmacenajeId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+
+            resourceName = String.Format(NOMBRE_CSV, "ProductosTerminadosComposiciones");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<ProductoTerminadoComposicion>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a ProductoTerminadoComposicionMap
+                        datos.Add(new ProductoTerminadoComposicion()
+                        {
+                            ProductoTerminadoComposicionId = csvReader.GetField<int>("ProductoTerminadoComposicionId"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            Volumen = csvReader.GetField<int?>("Volumen"),
+                            HistorialHuecoId = csvReader.GetField<int>("HistorialHuecoId"),
+                            ProductoId = csvReader.GetField<int>("ProductoId")
+                        });
+                    }
+                    context.ProductosTerminadosComposiciones.AddOrUpdate(d => d.ProductoTerminadoComposicionId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

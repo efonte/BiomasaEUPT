@@ -129,10 +129,19 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         public void CargarRecepciones(int cantidad = 10, int saltar = 0)
         {
-            Recepciones = new ObservableCollection<Recepcion>(
-                context.Recepciones
-                .Include(r => r.EstadoRecepcion).Include(r => r.Proveedor)
-                .OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList());
+            // Si las recepciones disponibles son menores que la cantidad a coger,
+            // se obtienen todas
+            if (context.Recepciones.Count() < cantidad)
+            {
+                Recepciones = new ObservableCollection<Recepcion>(context.Recepciones.ToList());
+            }
+            else
+            {
+                Recepciones = new ObservableCollection<Recepcion>(
+                    context.Recepciones
+                    .Include(r => r.EstadoRecepcion).Include(r => r.Proveedor)
+                    .OrderBy(r => r.NumeroAlbaran).Skip(saltar).Take(cantidad).ToList());
+            }
             RecepcionesView = (CollectionView)CollectionViewSource.GetDefaultView(Recepciones);
 
             // Por defecto no está seleccionada ninguna fila del datagrid recepciones 
@@ -417,7 +426,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                     }
                 }
                 context.MateriasPrimas.RemoveRange(materiasPrimasABorrar);
-                context.SaveChanges();                
+                context.SaveChanges();
 
                 if (MateriasPrimasSeleccionadas.Count != materiasPrimasABorrar.Count)
                 {
@@ -455,13 +464,18 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 MateriaPrimaSeleccionada.Observaciones = formMateriaPrimaDataContext.Observaciones;
                 if (formMateriaPrimaDataContext.FechaBaja != null)
                 {
+                    var hora = 0; var minutos = 0; var segundos = 0;
+                    if (formMateriaPrimaDataContext.HoraBaja != null)
+                    {
+                        hora = formMateriaPrimaDataContext.HoraBaja.Value.Hour;
+                        minutos = formMateriaPrimaDataContext.HoraBaja.Value.Minute;
+                        segundos = formMateriaPrimaDataContext.HoraBaja.Value.Second;
+                    }
                     MateriaPrimaSeleccionada.FechaBaja = new DateTime(
                         formMateriaPrimaDataContext.FechaBaja.Value.Year,
                         formMateriaPrimaDataContext.FechaBaja.Value.Month,
                         formMateriaPrimaDataContext.FechaBaja.Value.Day,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Hour,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Minute,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Second);
+                        hora, minutos, segundos);
                 }
                 else
                 {

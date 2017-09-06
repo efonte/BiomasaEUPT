@@ -20,6 +20,39 @@ namespace BiomasaEUPT.Migrations
 
         protected override void Seed(Modelos.BiomasaEUPTContext context)
         {
+            try
+            {
+                //InsertarDatos(context);
+
+                new SeedTablas(context);
+
+                //new SeedCodigosPostales(context); 
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("\t{0} fallo de validación:\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("\t\t- {0}: {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                    sb.AppendLine();
+                }
+
+                throw new DbEntityValidationException(
+                    "Validación de la Entidad fallido. Errores:\n" +
+                    sb.ToString(), ex
+                );
+            }
+        }
+
+
+        private void InsertarDatos(Modelos.BiomasaEUPTContext context)
+        {
             context.TiposUsuarios.AddOrUpdate(
                 tu => tu.Nombre,
                  new TipoUsuario()
@@ -769,7 +802,6 @@ namespace BiomasaEUPT.Migrations
                     Humedad = 75,
                     MedidoEnVolumen = true,
                     GrupoId = context.GruposProductosTerminados.Local.Single(gi => gi.Nombre == "Pellets").GrupoProductoTerminadoId
-
                 },
                 new TipoProductoTerminado()
                 {
@@ -959,61 +991,12 @@ namespace BiomasaEUPT.Migrations
                      Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado"
                  });
             context.SaveChanges();
-
-
-
-            /*   var usuarios = Builder<Usuario>.CreateListOfSize(100)
-                  .All()
-                      .With(c => c.Nombre = Faker.Internet.UserName())
-                      .With(c => c.Email = Faker.Internet.Email())
-                      .With(c => c.Contrasena = "1111111111111111111111111111111111111111111111111111111111111111")
-                      .With(c => c.FechaAlta = DateTime.Now.AddDays(-new RandomGenerator().Next(1, 100)))
-                      .With(c => c.TipoUsuario = Pick<TipoUsuario>.RandomItemFrom(context.TiposUsuarios.ToList()))
-                  //.With(c => c.Baneado = new RandomGenerator().Boolean())
-                  //.With(c => c.Baneado == false ? c.FechaBaja = DateTime.Now : c.FechaBaja = null)
-                  .Random(30)
-                      .With(c => c.Baneado = true)
-                      .With(c => c.FechaBaja = DateTime.Now)
-                   .Random(10)
-                      .With(c => c.FechaContrasena = DateTime.Now)
-                  .Build();
-
-               context.Usuarios.AddOrUpdate(c => c.UsuarioId, usuarios.ToArray());*/
-
-            //new SeedCodigosPostales(context); 
-
-
-            try
-            {
-                new SeedTablas(context);
-            }
-            catch (DbEntityValidationException ex)
-            {
-                StringBuilder sb = new StringBuilder();
-
-                foreach (var failure in ex.EntityValidationErrors)
-                {
-                    sb.AppendFormat("\t{0} fallo de validación:\n", failure.Entry.Entity.GetType());
-                    foreach (var error in failure.ValidationErrors)
-                    {
-                        sb.AppendFormat("\t\t- {0}: {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendLine();
-                    }
-                    sb.AppendLine();
-                }
-
-                throw new DbEntityValidationException(
-                    "Validación de la Entidad fallido. Errores:\n" +
-                    sb.ToString(), ex
-                );
-            }
-
         }
 
         /// <summary>
-        /// Wrapper for SaveChanges adding the Validation Messages to the generated exception
+        /// Wrapper para SaveChanges, se imprimen por consola los mensajes de validación de la expcepción DbEntityValidationException
         /// </summary>
-        /// <param name="context">The context.</param>
+        /// <param name="context">El contexto.</param>
         private void SaveChanges(DbContext context)
         {
             try
@@ -1037,7 +1020,7 @@ namespace BiomasaEUPT.Migrations
                 throw new DbEntityValidationException(
                     "Entity Validation Failed - errors follow:\n" +
                     sb.ToString(), ex
-                ); // Add the original exception as the innerException
+                );
             }
         }
     }

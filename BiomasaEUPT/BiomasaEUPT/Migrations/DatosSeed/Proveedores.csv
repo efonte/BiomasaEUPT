@@ -1,3 +1,4 @@
-﻿RazonSocial;Nif;Email;Calle;MunicipioId;TipoId;Observaciones
-Maderas Gami, S.L.;B-37381563;maderasgami@gmail.com;Paseo Santa Ana, 10;12;1;
-J Gorbe, S.L.;B-44122562;info@jgorbe.com;Polígono La Paz, 92;10;2;
+﻿ProveedorId;RazonSocial;Nif;Email;Calle;MunicipioId;TipoId;Observaciones
+1;Maderas Pepe, S.L.;B-36381563;maderaspepe@gmail.com;Paseo Santa Ana, 10;12;1;
+2;A Gorbe, S.L.;B-44122262;info@agorbe.com;Polígono La Paz, 92;10;2;
+3;Forest Teruel, S.L.;C-14222569;contacto@forest_teruel.es;Polígono La Paz, 18;6;2;

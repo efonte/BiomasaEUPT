@@ -1,3 +1,5 @@
-﻿Nombre;Descripcion
-Monte Soria;Lado norte
-Dehesa del Moncayo;Lado sur
+﻿ProcedenciaId;Nombre;Descripcion
+1;Monte Soria;Lado norte
+2;Dehesa del Moncayo;Lado sur
+3;Monte Teruel;Lado norte
+4;Monte Galicia;Gran masa forestal

@@ -172,6 +172,18 @@
     <EmbeddedResource Include="Migrations\DatosSeed\HuecosRecepciones.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\SitiosAlmacenajes.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\Procedencias.csv" />
+	<EmbeddedResource Include="Migrations\DatosSeed\GruposMateriasPrimas.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposMateriasPrimas.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\Permisos.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\HistorialHuecosRecepciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\MateriasPrimas.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposProductosTerminados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\GruposProductosTerminados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\OrdenesElaboraciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\HuecosAlmacenajes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosTerminados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\HistorialHuecosAlmacenajes.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosTerminadosComposiciones.csv" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="Vistas\App.xaml">

@@ -1,4 +1,4 @@
 ﻿Nombre;Descripcion
-Nuevo;El producto va a ser procesado
-Procesado;El producto se está elaborando y/o procesando
-Finalizado;El producto ha sido finalizado
+Nueva;Se ha añadido la cantidad de cada producto terminado a elaborar.
+Procesando;Los productos terminados se están elaborando.
+Finalizada;Los productos terminados se han elaborado.

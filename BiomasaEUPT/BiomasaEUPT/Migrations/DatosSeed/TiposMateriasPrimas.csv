@@ -1,0 +1,12 @@
+﻿TipoMateriaPrimaId;GrupoId;Nombre;MedidoEnUnidades;MedidoEnVolumen;Descripcion
+1;1;Tronco Pino;true;false;Madera de color amarillenta, fácil de trabajar.
+2;1;Tronco Abeto;true;false;Madera de apariencia similar al pino, aunque más ligera y menos resistente.
+3;1;Tronco Cedro;true;false;Madera ligera, de tono rojizo y con buena resistencia.
+4;1;Tronco Álamo;true;false;Madera ligera, poco resistente y de tonalidad clara.
+5;1;Rama de Pino;true;false;Ramas de diferentes tamaños.
+6;2;Tronco Roble;true;false;Madera dura, pesada y de tono claro.
+7;2;Tronco Haya;true;false;Tiene un color muy claro.
+8;2;Tronco Cerezo;true;false;Madera moderadamente dura y resistente, con un ligero tono rojizo.
+9;2;Tronco Nogal;true;false;Tiene una resistencia media.
+10;3;Caucho;false;true;Sustancia elástica e impermeable.
+11;3;Corcho;false;true;Obtenido de la corteza del alcornoque.
