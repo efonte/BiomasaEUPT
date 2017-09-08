@@ -164,12 +164,12 @@
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Fecha baja" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Volumen" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Picking" Margin="8,8,8,8"/>
-                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
-                        <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding GrupoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding FechaBajaProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
+                        <!--CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/-->
+                        <!--CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding GrupoProductoTerminadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/-->
+                        <!--CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaBajaProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/-->
                         <CheckBox x:Name="cbVolumen" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
                                   IsChecked="{Binding VolumenSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
                         <CheckBox x:Name="cbPicking" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"

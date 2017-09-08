@@ -54,12 +54,7 @@
                 <ListBox x:Name="lbGruposProductosTerminados" Margin="0 0 0 0" SelectedIndex="-1"
                                  ItemsSource="{Binding GruposProductosTerminados, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding GrupoProductoTerminadoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBGruposProductosTerminados_SelectionChangedComando}"
-                                                   CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+            
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -105,12 +100,7 @@
                 <ListBox x:Name="lbTiposProductosTerminados" Margin="0 0 0 0" SelectedIndex="-1"
                                  ItemsSource="{Binding TiposProductosTerminados, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding TipoProductoTerminadoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBTiposProductosTerminados_SelectionChangedComando}"
-                                                   CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+           
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -121,7 +111,7 @@
                                 </materialDesign:TransitioningContent.OpeningEffects>
                                 <StackPanel Margin="8 0 0 0">
                                     <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
-                                    <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                    <!--TextBlock Text="{Binding Descripcion}" FontSize="14"/-->
                                     <TextBlock FontSize="14" FontStyle="Italic">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
@@ -150,11 +140,11 @@
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False" Width="25">
                             <StackPanel>
-                                <Button Content="Añadir" Command="{Binding AnadirSitioRecepcionComando}"
+                                <Button Content="Añadir" Command="{Binding AnadirSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Editar" Command="{Binding ModificarSitioRecepcionComando}"
+                                <Button Content="Editar" Command="{Binding ModificarSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Borrar" Command="{Binding BorrarSitioRecepcionComando}"
+                                <Button Content="Borrar" Command="{Binding BorrarSitioAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
@@ -168,12 +158,12 @@
                 <ListBox x:Name="lbSitiosAlmacenajes" Margin="0 0 0 0" SelectedIndex="-1"
                                  ItemsSource="{Binding SitiosAlmacenajes, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding SitioAlmacenajeSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
+                    <!--i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding LBSitiosRecepciones_SelectionChangedComando}"
                                                    CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                         </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    </-->
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -219,12 +209,7 @@
                 <ListBox x:Name="lbPicking" Margin="0 0 0 0" SelectedIndex="-1"
                                  ItemsSource="{Binding Picking, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding PickingSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBPicking_SelectionChangedComando}"
-                                                   CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+             
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
@@ -254,11 +239,11 @@
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False" Width="25">
                             <StackPanel>
-                                <Button Content="Añadir" Command="{Binding AnadirHuecoRecepcionComando}"
+                                <Button Content="Añadir" Command="{Binding AnadirHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Editar" Command="{Binding ModificarHuecoRecepcionComando}"
+                                <Button Content="Editar" Command="{Binding ModificarHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
-                                <Button Content="Borrar" Command="{Binding BorrarHuecoRecepcionComando}"
+                                <Button Content="Borrar" Command="{Binding BorrarHuecoAlmacenajeComando}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
@@ -272,12 +257,7 @@
                 <ListBox x:Name="lbHuecosAlmacenajes" Margin="0 0 0 0" SelectedIndex="-1"
                                  ItemsSource="{Binding HuecosAlmacenajes, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding HuecoAlmacenajeSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LBHuecosRecepciones_SelectionChangedComando}"
-                                                   CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+            
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"

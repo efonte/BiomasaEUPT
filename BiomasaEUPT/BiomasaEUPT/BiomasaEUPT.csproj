@@ -172,7 +172,7 @@
     <EmbeddedResource Include="Migrations\DatosSeed\HuecosRecepciones.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\SitiosAlmacenajes.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\Procedencias.csv" />
-	<EmbeddedResource Include="Migrations\DatosSeed\GruposMateriasPrimas.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\GruposMateriasPrimas.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\TiposMateriasPrimas.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\Permisos.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\HistorialHuecosRecepciones.csv" />
@@ -354,6 +354,7 @@
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuario.xaml.cs">
       <DependentUpon>FormTipoUsuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedidoViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml.cs">
       <DependentUpon>TablaTiposUsuarios.xaml</DependentUpon>
@@ -704,6 +705,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\DatosSeed\Picking.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosCabeceras.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosDetalles.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasadosComposiciones.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

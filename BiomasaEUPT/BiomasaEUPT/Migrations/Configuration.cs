@@ -22,9 +22,9 @@ namespace BiomasaEUPT.Migrations
         {
             try
             {
-                //InsertarDatos(context);
+                InsertarDatos(context);
 
-                new SeedTablas(context);
+                //new SeedTablas(context);
 
                 //new SeedCodigosPostales(context); 
             }
@@ -991,6 +991,21 @@ namespace BiomasaEUPT.Migrations
                      Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado"
                  });
             context.SaveChanges();
+
+            context.Picking.AddOrUpdate(
+                sr => sr.Nombre,
+                new Picking()
+                {
+                    Nombre = "Picking A01",
+                    VolumenTotal = 20,
+                    VolumenRestante = 15
+                },
+                new Picking()
+                {
+                    Nombre = "Picking A02",
+                    VolumenTotal = 45,
+                    VolumenRestante = 10
+                });
         }
 
         /// <summary>

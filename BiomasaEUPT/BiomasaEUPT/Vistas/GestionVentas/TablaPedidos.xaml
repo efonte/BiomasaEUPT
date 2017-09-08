@@ -43,9 +43,6 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaPedidoColumna" Header="Fecha pedido" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding FechaPedido, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaFinalizacionColumna" Header="Fecha finalización" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding FechaFinalizacion, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
                             <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado pedido" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding EstadoPedido.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 

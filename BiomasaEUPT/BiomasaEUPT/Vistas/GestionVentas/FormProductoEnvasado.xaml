@@ -20,6 +20,7 @@
             <CollectionViewSource x:Key="productosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoEnvasado}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoTerminado}, CreateList=True}"/>
             <CollectionViewSource x:Key="pickingViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Picking}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pedidoDetalleViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoDetalle}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Producto Envasado">
@@ -35,53 +36,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-
-                <!--TextBox Grid.Row="0" Grid.Column="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="40">
-                    <TextBox.Text>
-                        <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
-
-                        </Binding>
-                    </TextBox.Text>
-                </-->
-
-                <!--StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                    <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"
-                                SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha baja">
-                        <DatePicker.BlackoutDates>
-                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
-                            <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
-                        </DatePicker.BlackoutDates>
-                        <DatePicker.Text>
-                            <Binding Path="Fecha" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DatePicker.Text>
-                    </DatePicker>
-
-                    <materialDesign:TimePicker x:Name="tpHoraBaja" Grid.Row="1" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
-                                   IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
-                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <materialDesign:TimePicker.Text>
-                            <Binding Path="Hora" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </materialDesign:TimePicker.Text>
-                    </materialDesign:TimePicker>
-                </-->
-
-                
-
-                <!--ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbTipoProductoTerminado" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
-                          ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="TipoProductoTerminadoId">
-                </-->
+               
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
                           ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
@@ -106,7 +61,7 @@
                                 <Setter Property="FontSize" Value="15" />
                                 <Setter Property="Visibility" Value="Visible"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbTiposMateriasPrimas, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -135,11 +90,8 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" Value="True" />
-                                            <Condition Binding="{Binding ElementName=dpFechaBaja, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tpHoraBaja, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=cbPicking, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=tbVolumen, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=cbTipoProductoTerminado, Path=(Validation.HasError)}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>

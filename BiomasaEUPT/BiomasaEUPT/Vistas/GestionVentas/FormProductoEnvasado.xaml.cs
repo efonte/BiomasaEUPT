@@ -32,6 +32,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private CollectionViewSource productosEnvasadosViewSource;
         private CollectionViewSource pickingViewSource;
+        private CollectionViewSource pedidoDetalleViewSource;
         private FormProductoEnvasadoViewModel viewModel;
 
         private BiomasaEUPTContext context;
@@ -39,7 +40,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public FormProductoEnvasado(BiomasaEUPTContext context)
         {
             InitializeComponent();
-            DataContext = this;
+            viewModel = new FormProductoEnvasadoViewModel();
+            DataContext = viewModel;
             this.context = context;
         }
 
@@ -56,7 +58,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 viewModel.Cantidad = productoEnvasado.Volumen.Value;
             }*/
 
-            viewModel.ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>(context.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoId == productoEnvasado.ProductoEnvasadoId).ToList());
+            //viewModel.ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>(context.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoId == productoEnvasado.ProductoEnvasadoId).ToList());
             //viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoTerminadoId == productoTerminado.ProductoTerminadoId).ToList());
         }
 
@@ -64,12 +66,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
             pickingViewSource = ((CollectionViewSource)(FindResource("pickingViewSource")));
+            pedidoDetalleViewSource = ((CollectionViewSource)(FindResource("pedidoDetalleViewSource")));
 
             context.ProductosEnvasados.Load();
             context.Picking.Load();
+            context.PedidosDetalles.Load();
 
             productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
             pickingViewSource.Source = context.Picking.Local;
+            pedidoDetalleViewSource.Source = context.PedidosDetalles.Local;
 
         }
     }

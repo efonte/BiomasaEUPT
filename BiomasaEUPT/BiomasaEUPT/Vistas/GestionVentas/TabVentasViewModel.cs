@@ -107,14 +107,27 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public void CargarPedidosCabeceras(int cantidad = 10, int saltar = 0)
         {
-            PedidosCabeceras = new ObservableCollection<PedidoCabecera>(
+
+            using (new CursorEspera())
+            {
+                // Si los pedidos disponibles son menores que la cantidad a coger,
+                // se obtienen todas
+                if (context.PedidosCabeceras.Count() < cantidad)
+                {
+                    PedidosCabeceras = new ObservableCollection<PedidoCabecera>(context.PedidosCabeceras.ToList());
+                }
+                else
+                {
+                    PedidosCabeceras = new ObservableCollection<PedidoCabecera>(
                 context.PedidosCabeceras
                 .Include(pc => pc.EstadoPedido).Include(pc => pc.Cliente)
                 .OrderBy(pc => pc.EstadoId).Skip(saltar).Take(cantidad).ToList());
-            PedidosCabecerasView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosCabeceras);
+                }
+                PedidosCabecerasView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosCabeceras);
 
-            // Por defecto no está seleccionada ninguna fila del datagrid pedidos
-            PedidoCabeceraSeleccionado = null;
+                // Por defecto no está seleccionada ninguna fila del datagrid pedidos
+                PedidoCabeceraSeleccionado = null;
+            }
         }
 
         public void CargarProductosEnvasados()
@@ -168,13 +181,40 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
             if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
             {
-                context.PedidosCabeceras.Add(new PedidoCabecera()
+                var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
+                var pedidoCabecera = new PedidoCabecera()
                 {
-                    FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.HoraPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second),
-                    FechaFinalizacion = new DateTime(formPedido.FechaFinalizacion.Year, formPedido.FechaFinalizacion.Month, formPedido.FechaFinalizacion.Day, formPedido.HoraFinalizacion.Hour, formPedido.HoraFinalizacion.Minute, formPedido.HoraFinalizacion.Second),
+
+                    FechaPedido = new DateTime(formPedidoDataContext.FechaPedido.Year, formPedidoDataContext.FechaPedido.Month, formPedidoDataContext.FechaPedido.Day, formPedidoDataContext.HoraPedido.Hour, formPedidoDataContext.HoraPedido.Minute, formPedidoDataContext.HoraPedido.Second),
                     ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId,
                     EstadoId = 1
-                });
+                };
+
+                /*if (formPedidoDataContext.FechaPedido != null)
+                {
+                    pedidoCabecera.FechaPedido = new DateTime(
+                        formPedidoDataContext.FechaPedido.Year,
+                        formPedidoDataContext.FechaPedido.Month,
+                        formPedidoDataContext.FechaPedido.Day,
+                        formPedidoDataContext.HoraPedido.Hour,
+                        formPedidoDataContext.HoraPedido.Minute,
+                        formPedidoDataContext.HoraPedido.Second);
+                }*/
+                pedidoCabecera.FechaPedido = new DateTime(2017, 10, 10, 10, 10, 0);
+                context.PedidosCabeceras.Add(pedidoCabecera);
+
+                var pedidosDetalles = new List<PedidoDetalle>();
+                foreach (var pd in formPedidoDataContext.PedidosDetalles)
+                {
+                    if (pd.Unidades != 0 && pd.Volumen != 0)
+                    {
+
+                        pd.PedidoCabecera = pedidoCabecera;
+                        pedidosDetalles.Add(pd);
+                    }
+                }
+                context.PedidosDetalles.AddRange(pedidosDetalles);
+
                 context.SaveChanges();
             }
         }
@@ -238,6 +278,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
             };
             formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
+
             if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
             {
                 PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
@@ -279,12 +320,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             var pedido = item as PedidoCabecera;
             string fechaPedido = pedido.FechaPedido.ToString();
-            string fechaFinalizacion = pedido.FechaFinalizacion.ToString();
             string cliente = pedido.Cliente.RazonSocial.ToLower();
             string estado = pedido.EstadoPedido.Nombre.ToLower();
 
             return (FechaPedidoSeleccionado == true ? fechaPedido.Contains(TextoFiltroPedidos) : false)
-                || (FechaFinalizacionSeleccionado == true ? fechaFinalizacion.Contains(TextoFiltroPedidos) : false)
                 || (ClientePedidoSeleccionado == true ? cliente.Contains(TextoFiltroPedidos) : false)
                 || (EstadoPedidoSeleccionado == true ? estado.Contains(TextoFiltroPedidos) : false);
         }

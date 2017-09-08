@@ -108,10 +108,19 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         {
             using (new CursorEspera())
             {
-                OrdenesElaboraciones = new ObservableCollection<OrdenElaboracion>(
+                // Si las elaboraciones disponibles son menores que la cantidad a coger,
+                // se obtienen todas
+                if (context.OrdenesElaboraciones.Count() < cantidad)
+                {
+                    OrdenesElaboraciones = new ObservableCollection<OrdenElaboracion>(context.OrdenesElaboraciones.ToList());
+                }
+                else
+                {
+                    OrdenesElaboraciones = new ObservableCollection<OrdenElaboracion>(
                     context.OrdenesElaboraciones
                     .Include(oe => oe.EstadoElaboracion).Include(oe => oe.ProductoTerminado)
                     .OrderBy(r => r.EstadoElaboracionId).Skip(saltar).Take(cantidad).ToList());
+                }
                 OrdenesElaboracionesView = (CollectionView)CollectionViewSource.GetDefaultView(OrdenesElaboraciones);
 
                 // Por defecto no está seleccionada ninguna fila del datagrid ordenesElaboraciones

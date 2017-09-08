@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="350" Width="450" Loaded="UserControl_Loaded">
+             Height="450" Width="450" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,12 +21,14 @@
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
             <CollectionViewSource x:Key="estadosPedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoPedido}, CreateList=True}"/>
             <CollectionViewSource x:Key="productosTerminadosComposicionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminadoComposicion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -67,36 +69,7 @@
                     </materialDesign:TimePicker>
                 </StackPanel>
 
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                    <DatePicker x:Name="dpFechaFinalizacion" Width="100" VerticalAlignment="Center"
-                                SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha">
-                        <DatePicker.BlackoutDates>
-                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
-                            <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
-                        </DatePicker.BlackoutDates>
-                        <DatePicker.Text>
-                            <Binding Path="FechaFinalizacion" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DatePicker.Text>
-                    </DatePicker>
-
-                    <materialDesign:TimePicker x:Name="tpHoraFinalizacion" Grid.Row="1" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
-                                   IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
-                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <materialDesign:TimePicker.Text>
-                            <Binding Path="Hora" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </materialDesign:TimePicker.Text>
-                    </materialDesign:TimePicker>
-                </StackPanel>
+                
 
                 <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbClientes" materialDesign:HintAssist.Hint="Cliente"
                           ItemsSource="{Binding Source={StaticResource clientesViewSource}}"
@@ -104,113 +77,104 @@
                           SelectedValuePath="ClienteId" >
                 </ComboBox>
 
-                <Button Grid.Row="1" Grid.Column="1"
-                    x:Name="bAnadirPTerminadoCantidad"
-                    Content="+"
-                    HorizontalAlignment="Left"
-                    Margin="88,26,0,15"
-                    VerticalAlignment="Center"
-                    Width="40"
-                    Click="AnadirProductoCantidad" />
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo" Margin="0 8 8 0"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
+                          SelectionChanged="cbGruposProductosTerminados_SelectionChanged" VerticalAlignment="Top">
+                </ComboBox>
 
-                <materialDesign:ColorZone Grid.Row="2" Grid.ColumnSpan="2" Mode="Standard"
-                                          MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
-                                          AllowDrop="True" Drop="spProductosEnvasadosComposiciones_Drop">
-                    <WrapPanel x:Name="wpProductosEnvasadosComposiciones" Margin="10"
-                               Orientation="Horizontal" HorizontalAlignment="Stretch"                            
-                               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding ProductosEnvasados, UpdateSourceTrigger=PropertyChanged}" Margin="10">
-                            <ItemsControl.Style>
-                                <Style TargetType="ItemsControl">
-                                    <Style.Triggers>
-                                        <Trigger Property="HasItems" Value="false">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
-                                                               Text="Por favor, pulse el botón ⊕ para añadir un producto terminado a envasar"/>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ItemsControl.Style>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar materia prima"
-                                                     CommandParameter="{Binding ProductoTerminado.ProductoTerminadoId}"
-                                                     DeleteClick="cProductoEnvasadoComposicion_DeleteClick" Height="70">
-                                        <materialDesign:Chip.Content>
-                                            <StackPanel>
-                                                <TextBlock FontSize="14" FontWeight="Bold" Margin="10 10 10 0"
-                                                       Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}"/>
-                                                <TextBox>
-                                                    <TextBox.Style>
-                                                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                                            <Setter Property="Margin" Value="10 0 10 10" />
-                                                            <Setter Property="FontSize" Value="15" />
-                                                            <Setter Property="materialDesign:HintAssist.Hint" Value="Volumen"/>
-                                                            <Setter Property="Text">
-                                                                <Setter.Value>
-                                                                    <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
-                                                                        <Binding.ValidationRules>
-                                                                            <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
-                                                                            <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                                                            <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                                                                        </Binding.ValidationRules>
-                                                                    </Binding>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
-                                                                    <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
-                                                                    <Setter Property="Text">
-                                                                        <Setter.Value>
-                                                                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
-                                                                                <Binding.ValidationRules>
-                                                                                    <validadores:RequeridoValidationRule NombreCampo="unidades" ValidatesOnTargetUpdated="True" />
-                                                                                    <validadores:LongitudValidationRule NombreCampo="unidades" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
-                                                                                    <validadores:RegexValidationRule NombreCampo="unidades" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
-                                                                                </Binding.ValidationRules>
-                                                                            </Binding>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding ProductoTerminado.TipoProductoTerminado.MedidoEnVolumen}" Value="True">
-                                                                    <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
-                                                                    <Setter Property="Text">
-                                                                        <Setter.Value>
-                                                                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
-                                                                                <Binding.ValidationRules>
-                                                                                    <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
-                                                                                    <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
-                                                                                    <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
-                                                                                </Binding.ValidationRules>
-                                                                            </Binding>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBox.Style>
-                                                </TextBox>
-                                            </StackPanel>
-                                        </materialDesign:Chip.Content>
-                                        <materialDesign:Chip.Icon>
-                                            <TextBlock FontSize="15" Text="{Binding ProductoTerminado.TipoProductoTerminado.Nombre}"/>
-                                        </materialDesign:Chip.Icon>
-                                    </materialDesign:Chip>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </WrapPanel>
-                </materialDesign:ColorZone>
+                <ListBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch"   x:Name="lbTiposProductosTerminados" Margin="0 8 8 0" Height="100"
+                         ItemsSource="{Binding TiposProductosTerminadosDisponibles, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbTiposProductosTerminados_PreviewMouseLeftButtonDown"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}%">
+                                            <Binding Path="Tamano"/>
+                                            <Binding Path="Humedad"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" x:Name="wpProductosTerminados" Orientation="Horizontal"
+                           AllowDrop="True" Drop="spProductosTerminados_Drop" Margin="0 8 8 0" Width="400"
+                           ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <WrapPanel.Style>
+                        <Style TargetType="{x:Type WrapPanel}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,0" StartPoint="8,8" 
+                                                         MappingMode="Absolute" SpreadMethod="Repeat" Opacity="0.25">
+                                        <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0" />
+                                        <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0.1" />
+                                        <GradientStop Color="Transparent" Offset="0.1" />
+                                        <GradientStop Color="Transparent" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </WrapPanel.Style>
+                    <ItemsControl ItemsSource="{Binding PedidosDetalles, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="false">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                                                               Text="Por favor, arrastre los productos terminados que desee elaborar."/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar Producto Terminado"
+                                                 CommandParameter="{Binding TipoProductoTerminado.TipoProductoTerminadoId}"
+                                                 DeleteClick="cProductoTerminado_DeleteClick" Height="70">
+                                    <materialDesign:Chip.Content>
+                                        <StackPanel>
+                                            <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding TipoProductoTerminado.Nombre}" Margin="0 8 8 0"/>
+                                            <TextBox>
+                                                <TextBox.Style>
+                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                        <Setter Property="Margin" Value="10 0 10 10" />
+                                                        <Setter Property="FontSize" Value="15" />
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Volumen"/>
+                                                        <Setter Property="Text" Value="{Binding Volumen}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                                <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
+                                                                <Setter Property="Text" Value="{Binding Unidades}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBox.Style>
+                                            </TextBox>
+                                        </StackPanel>
+                                    </materialDesign:Chip.Content>
+                                </materialDesign:Chip>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </WrapPanel>
 
                 <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
@@ -222,9 +186,7 @@
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding ElementName=dpFechaPedido, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=tpHoraPedido, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=dpFechaFinalizacion, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=tpHoraFinalizacion, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=cbCliente, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=cbClientes, Path=(Validation.HasError)}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>

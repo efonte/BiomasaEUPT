@@ -21,9 +21,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Fecha pedido"), Display(Name = "Fecha pedido")]
         public DateTime FechaPedido { get; set; }
 
-        [DisplayName("Fecha finalización"), Display(Name = "Fecha finalización")]
-        public DateTime? FechaFinalizacion { get; set; }
-
         public int EstadoId { get; set; }
 
         public int ClienteId { get; set; }
