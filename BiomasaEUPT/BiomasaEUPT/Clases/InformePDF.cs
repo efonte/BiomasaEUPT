@@ -294,6 +294,31 @@ namespace BiomasaEUPT.Clases
                 var huecosAlmacenajesSR = materiaPrima.HistorialHuecosRecepciones.SelectMany(hhr => hhr.ProductosTerminadosComposiciones).Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes);
                 var filasSR = huecosAlmacenajesSR.Count();
 
+                // Si la tabla tiene un SR con varios HR y sólo algunos HR fueron usados
+                // para elaborar PT entonces hay que sumar 1 a las filas de los HR que no tienen PT.
+                // Ejemplo (en vez de ser 2 filas son 3):
+                // |                                                                               A01 |
+                // | Sitio A    A01   20m³/30ud.   30ud.   30ud.   Tablón pino   80ud.   Sitio A   A05 |
+                // |            A02   15m³/25ud.   20ud.     -          -          -        -       -  |
+                if (filasSR != 0)
+                {
+                    var huecosRecepcionesSR = materiaPrima.HistorialHuecosRecepciones;
+                    filasSR = 0;
+                    foreach (var hr in huecosRecepcionesSR)
+                    {
+                        // Si no se ha elaborado productos terminados con dicho HR entonces
+                        if (hr.ProductosTerminadosComposiciones.Count() == 0)
+                        {
+                            filasSR += 1;
+                        }
+                        else
+                        {
+                            filasSR += hr.ProductosTerminadosComposiciones.Select(ptc => ptc.ProductoTerminado).SelectMany(pt => pt.HistorialHuecosAlmacenajes).Count();
+                        }
+                    }
+                }
+
+
                 // Sitio de recepción
                 tablaMP.AddCell(Celda(sr.Nombre, filasSR));
 
@@ -686,11 +711,12 @@ namespace BiomasaEUPT.Clases
                 }
                 Paragraph p1 = new Paragraph();
                 //p1.Add(new Text(hhr.HuecoRecepcion.SitioRecepcion.Nombre).SetFont(bold).SetFontSize(12));
-                p1.Add(new Text(hhr.HuecoRecepcion.Nombre).SetFont(bold).SetFontSize(6));
+                p1.Add(new Text(hhr.HuecoRecepcion.Nombre).SetFont(bold).SetFontSize(12));
+                p1.SetTextAlignment(TextAlignment.CENTER).SetMarginBottom(0);
                 doc.Add(p1);
 
-                Paragraph p2 = new Paragraph(materiaPrima.Recepcion.FechaRecepcion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);
-                p2.SetTextAlignment(TextAlignment.RIGHT);
+                Paragraph p2 = new Paragraph(materiaPrima.Recepcion.FechaRecepcion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(6);
+                p2.SetTextAlignment(TextAlignment.CENTER);
                 doc.Add(p2);
 
                 Barcode128 barcode = new Barcode128(pdfDoc);
@@ -700,7 +726,7 @@ namespace BiomasaEUPT.Clases
                 PdfFormXObject template = new PdfFormXObject(new Rectangle(rect.GetWidth(), rect.GetHeight() + 10));
                 PdfCanvas templateCanvas = new PdfCanvas(template, pdfDoc);
                 new Canvas(templateCanvas, pdfDoc, new Rectangle(rect.GetWidth(), rect.GetHeight() + 10))
-                        .ShowTextAligned(new Paragraph(materiaPrima.TipoMateriaPrima.Nombre).SetFont(regular).SetFontSize(6), 0, rect.GetHeight() + 2, TextAlignment.LEFT);
+                        .ShowTextAligned(new Paragraph(materiaPrima.TipoMateriaPrima.Nombre).SetFont(regular).SetFontSize(8), rect.GetWidth() / 2, rect.GetHeight() + 2, TextAlignment.CENTER);
                 barcode.PlaceBarcode(templateCanvas, Color.BLACK, Color.BLACK);
                 Image image = new Image(template);
                 image.SetRotationAngle(Math.PI / 2);

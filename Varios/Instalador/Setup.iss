@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BiomasaEUPT"
-#define MyAppVersion "0.2.1.0"
+#define MyAppVersion "0.2.2.0"
 #define MyAppExeName "BiomasaEUPT.exe"
 
 [Setup]
@@ -18,7 +18,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=setup_{#MyAppName}_v{#MyAppVersion}
-SetupIconFile=C:\Users\usuario\Documents\GitHub\BiomasaEUPT\BiomasaEUPT\BiomasaEUPT\icono.ico
+SetupIconFile=..\..\BiomasaEUPT\BiomasaEUPT\icono.ico
 Compression=lzma
 SolidCompression=yes
 

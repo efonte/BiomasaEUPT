@@ -22,9 +22,9 @@ namespace BiomasaEUPT.Migrations
         {
             try
             {
-                InsertarDatos(context);
+                //InsertarDatos(context);
 
-                //new SeedTablas(context);
+                new SeedTablas(context);
 
                 //new SeedCodigosPostales(context); 
             }
