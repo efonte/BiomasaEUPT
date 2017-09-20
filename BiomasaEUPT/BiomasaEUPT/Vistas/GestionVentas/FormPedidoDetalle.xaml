@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.FormPedido"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.FormPedidoDetalle"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,13 +18,12 @@
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
-            <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
-            <CollectionViewSource x:Key="estadosPedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoPedido}, CreateList=True}"/>
-            <CollectionViewSource x:Key="productosTerminadosComposicionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminadoComposicion}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pedidosDetallesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoDetalle}, CreateList=True}"/>
+            <!--CollectionViewSource x:Key="productosTerminadosComposicionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminadoComposicion}, CreateList=True}"/-->
             <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Detalle">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -38,45 +37,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                    <DatePicker x:Name="dpFechaPedido" Width="100" VerticalAlignment="Center"
-                                SelectedDate="{x:Static system:DateTime.Now}"            
-                                materialDesign:HintAssist.Hint="Fecha ped">
-                        <DatePicker.BlackoutDates>
-                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
-                            <CalendarDateRange Start="01/01/2019" End="12/31/9999"/>
-                        </DatePicker.BlackoutDates>
-                        <DatePicker.Text>
-                            <Binding Path="Fecha" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DatePicker.Text>
-                    </DatePicker>
-
-                    <materialDesign:TimePicker x:Name="tpHoraPedido" Grid.Row="1" Grid.Column="3" Width="60"
-                                   materialDesign:HintAssist.Hint="Hora"
-                                   IsInvalidTextAllowed="True" SelectedTime="{x:Static system:DateTime.Now}"
-                                   Is24Hours="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <materialDesign:TimePicker.Text>
-                            <Binding Path="HoraPedido" StringFormat="t" ConverterCulture="es-ES" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validadores:FechaValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </materialDesign:TimePicker.Text>
-                    </materialDesign:TimePicker>
-                </StackPanel>
-
                 
-
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbClientes" materialDesign:HintAssist.Hint="Cliente"
-                          ItemsSource="{Binding Source={StaticResource clientesViewSource}}"
-                          DisplayMemberPath="RazonSocial"
-                          SelectedValuePath="ClienteId" >
-                </ComboBox>
-
                 <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo" Margin="0 8 8 0"
                           ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
@@ -184,9 +145,9 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=dpFechaPedido, Path=(Validation.HasError)}" Value="False" />
+                                            <!--Condition Binding="{Binding ElementName=dpFechaPedido, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=tpHoraPedido, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=cbClientes, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=cbClientes, Path=(Validation.HasError)}" Value="False" /-->
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>

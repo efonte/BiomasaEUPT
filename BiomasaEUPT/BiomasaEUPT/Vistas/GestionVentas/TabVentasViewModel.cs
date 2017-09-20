@@ -26,6 +26,11 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public IList<PedidoCabecera> PedidosCabecerasSeleccionados { get; set; }
         public PedidoCabecera PedidoCabeceraSeleccionado { get; set; }
 
+        public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
+        public CollectionView PedidosDetallesView { get; private set; }
+        public IList<PedidoDetalle> PedidosDetallesSeleccionados { get; set; }
+        public PedidoDetalle PedidoDetalleSeleccionado { get; set; }
+
         public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
         public CollectionView ProductosEnvasadosView { get; private set; }
         public IList<ProductoEnvasado> ProductosEnvasadosSeleccionados { get; set; }
@@ -50,8 +55,24 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
+        // Checkbox Filtro Pedidos Detalles
+        public bool VolumenSeleccionado { get; set; } = true;
+        public bool UnidadesSeleccionadas { get; set; } = true;
+        public bool TipoProductoTerminadoSeleccionado { get; set; } = true;
+
+        private string _textoFiltroPedidosDetalles;
+        public string TextoFiltroPedidosDetalles
+        {
+            get => _textoFiltroPedidosDetalles;
+            set
+            {
+                _textoFiltroPedidosDetalles = value.ToLower();
+                FiltrarPedidosDetalles();
+            }
+        }
+
         // Checkbox Filtro Productos Envasados
-        public bool VolumenSeleccionado { get; set; } = false;
+        public bool VolumenSeleccionadoo { get; set; } = false;
         public bool PickingNombreSeleccionado { get; set; } = false;
         public bool codigoSeleccionado { get; set; } = false;
 
@@ -78,6 +99,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private ICommand _borrarProductoEnvasadoComando;
         private ICommand _refrescarProductosEnvasadosComando;
         private ICommand _filtrarProductosEnvasadosComando;
+
+        private ICommand _anadirPedidoDetalleComando;
+        private ICommand _modificarPedidoDetalleComando;
+        private ICommand _borrarPedidoDetalleComando;
+        private ICommand _refrescarPedidosDetallesComando;
+        private ICommand _filtrarPedidosDetallesComando;
 
         private ICommand _masOpcionesComando;
 
@@ -114,7 +141,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 // se obtienen todas
                 if (context.PedidosCabeceras.Count() < cantidad)
                 {
-                    PedidosCabeceras = new ObservableCollection<PedidoCabecera>(context.PedidosCabeceras.ToList());
+                    
+                  PedidosCabeceras  = new ObservableCollection<PedidoCabecera>(context.PedidosCabeceras.ToList());
                 }
                 else
                 {
@@ -127,6 +155,31 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 // Por defecto no está seleccionada ninguna fila del datagrid pedidos
                 PedidoCabeceraSeleccionado = null;
+            }
+        }
+
+        public void CargarPedidosDetalles(int cantidad = 10, int saltar = 0)
+        {
+
+            using (new CursorEspera())
+            {
+                // Si los pedidos disponibles son menores que la cantidad a coger,
+                // se obtienen todas
+                if (context.PedidosDetalles.Count() < cantidad)
+                {
+                    PedidosDetalles = new ObservableCollection<PedidoDetalle>(context.PedidosDetalles.ToList());
+                }
+                else
+                {
+                    PedidosDetalles = new ObservableCollection<PedidoDetalle>(
+                context.PedidosDetalles
+                .Include(pd => pd.PedidoCabeceraId).Include(pd => pd.TipoProductoTerminado)
+                .OrderBy(pd => pd.PedidoCabeceraId).Skip(saltar).Take(cantidad).ToList());
+                }
+                PedidosDetallesView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosDetalles);
+
+                // Por defecto no está seleccionada ninguna fila del datagrid pedidos
+                PedidoDetalleSeleccionado = null;
             }
         }
 
@@ -154,7 +207,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
 
         // Asigna el valor de PedidosCabecerasSeleccinodos ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGPedidosabeceras_SelectionChangedComando => _dgPedidosCabeceras_SelectionChangedComando ??
+        public ICommand DGPedidosCabeceras_SelectionChangedComando => _dgPedidosCabeceras_SelectionChangedComando ??
             (_dgPedidosCabeceras_SelectionChangedComando = new RelayCommandGenerico<IList<object>>(
                 param => DGPedidosabeceras_SelectionChanged(param)
             ));
@@ -162,7 +215,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private void DGPedidosabeceras_SelectionChanged(IList<object> recepcionesSeleccionadas)
         {
             PedidosCabecerasSeleccionados = PedidosCabecerasSeleccionados.Cast<PedidoCabecera>().ToList();
-            CargarProductosEnvasados();
+            CargarPedidosDetalles();
         }
 
         // Asigna el valor de ProducosEnvasadosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -177,34 +230,25 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private async void AnadirPedidoCabecera()
         {
+            
             var formPedido = new FormPedido(context);
+            //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
 
             if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
             {
-                var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
+                
                 var pedidoCabecera = new PedidoCabecera()
                 {
 
-                    FechaPedido = new DateTime(formPedidoDataContext.FechaPedido.Year, formPedidoDataContext.FechaPedido.Month, formPedidoDataContext.FechaPedido.Day, formPedidoDataContext.HoraPedido.Hour, formPedidoDataContext.HoraPedido.Minute, formPedidoDataContext.HoraPedido.Second),
+                    FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.HoraPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second),
                     ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId,
                     EstadoId = 1
                 };
 
-                /*if (formPedidoDataContext.FechaPedido != null)
-                {
-                    pedidoCabecera.FechaPedido = new DateTime(
-                        formPedidoDataContext.FechaPedido.Year,
-                        formPedidoDataContext.FechaPedido.Month,
-                        formPedidoDataContext.FechaPedido.Day,
-                        formPedidoDataContext.HoraPedido.Hour,
-                        formPedidoDataContext.HoraPedido.Minute,
-                        formPedidoDataContext.HoraPedido.Second);
-                }*/
-                pedidoCabecera.FechaPedido = new DateTime(2017, 10, 10, 10, 10, 0);
                 context.PedidosCabeceras.Add(pedidoCabecera);
 
                 var pedidosDetalles = new List<PedidoDetalle>();
-                foreach (var pd in formPedidoDataContext.PedidosDetalles)
+                foreach (var pd in context.PedidosDetalles)
                 {
                     if (pd.Unidades != 0 && pd.Volumen != 0)
                     {
@@ -216,6 +260,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 context.PedidosDetalles.AddRange(pedidosDetalles);
 
                 context.SaveChanges();
+                
+                RefrescarPedidosCabeceras();
+                //CargarPedidosCabeceras();
             }
         }
         #endregion
@@ -358,25 +405,34 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     Observaciones = formProductoEnvasadoDataContext.Observaciones,
                     PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
                     Volumen = formProductoEnvasadoDataContext.Volumen,
+                  //  PedidoDetalleId=PedidoCabeceraSeleccionado.deta
 
                 };
 
+                Console.WriteLine(" Observaciones " + productoEnvasado.Observaciones);
+                Console.WriteLine(" Picking " + productoEnvasado.PickingId);
+                Console.WriteLine(" Volumen " + productoEnvasado.Volumen);
+                Console.WriteLine("Codigo " + productoEnvasado.Codigo);
+                Console.WriteLine("PedidoDetalle " + productoEnvasado.PedidoDetalleId);
+
+                Console.WriteLine("Producto Envasado " + productoEnvasado.ToString());
+
                 context.ProductosEnvasados.Add(productoEnvasado);
-                /*var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
-                foreach (var hmp in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
+                /*var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
+                foreach (var pec in formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones)
                 {
-                    var hrId = hmp.HuecoRecepcion.HuecoRecepcionId;
+                    var hhaId = pec.HistorialHuecoAlmacenaje.HuecoAlmacenajeId;
                     // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                    if (hmp.Unidades != 0 && hmp.Volumen != 0)
+                    if (pec.Unidades != 0 && pec.Volumen != 0)
                     {
-                        hmp.HuecoRecepcion = null;
-                        hmp.HuecoRecepcionId = hrId;
-                        hmp.MateriaPrima = materiaPrima;
-                        huecosMateriasPrimas.Add(hmp);
+                        pec.HistorialHuecoAlmacenaje = null;
+                        pec.HistorialHuecoId = hhaId;
+                        pec.ProductoEnvasado = productoEnvasado;
+                        productosEnvasadosComposiciones.Add(pec);
                     }
-                }
-                context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);
-                context.SaveChanges();*/
+                }*/
+                //context.HistorialHuecosAlmacenajes.AddRange(ProductoEnvasadoSeleccionado);
+                context.SaveChanges();
 
                 CargarProductosEnvasados();
             }
@@ -509,5 +565,117 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         }
         #endregion
+
+
+        
+        #region Borrar Pedido Detalle
+        public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
+            (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
+                param => BorrarPedidoDetalle(),
+                param => PedidoDetalleSeleccionado != null
+            ));
+
+        private async void BorrarPedidoDetalle()
+        {
+            string pregunta = PedidosCabecerasSeleccionados.Count == 1
+                   ? "¿Está seguro de que desea borrar el pedido " + PedidoDetalleSeleccionado.PedidoDetalleId + "?"
+                   : "¿Está seguro de que desea borrar los pedidos detalles seleccionados?";
+
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
+            {
+                var pedidosABorrar = new List<PedidoDetalle>();
+
+                foreach (var pedidoDetalle in PedidosDetallesSeleccionados)
+                {
+                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedidoDetalle.PedidoCabeceraId))
+                    {
+                        pedidosABorrar.Add(pedidoDetalle);
+                    }
+                }
+                context.PedidosDetalles.RemoveRange(pedidosABorrar);
+                context.SaveChanges();
+
+                if (PedidosDetallesSeleccionados.Count != pedidosABorrar.Count)
+                {
+                    string mensaje = PedidosDetallesSeleccionados.Count == 1
+                           ? "No se ha podido borrar el pedido detalle seleccionado."
+                           : "No se han podido borrar todas los pedidos detalles seleccionados.";
+                    mensaje += "\n\nAsegurese de no que no exista ningún pedido detalle asociada a dicho pedido.";
+                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                }
+                PaginacionViewModel.Refrescar();
+            }
+        }
+        #endregion
+
+
+        #region Modificar Pedido Detalle
+        public ICommand ModificarPedidoDetalleComando => _modificarPedidoCabeceraComando ??
+            (_modificarPedidoCabeceraComando = new RelayCommand(
+                param => ModificarPedidoDetalle(),
+                param => PedidoDetalleSeleccionado != null
+             ));
+
+        public async void ModificarPedidoDetalle()
+        {
+
+            var formPedidoDetalle = new FormPedidoDetalle(context, "Editar Pedido")
+            {
+                //FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
+                //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
+            };
+            //formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
+
+            if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
+            {
+                //PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
+                //PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
+                context.SaveChanges();
+                PedidosDetallesView.Refresh();
+            }
+        }
+        #endregion
+
+
+        #region Refrescar Pedidos Detalles
+        public ICommand RefrescarPedidosDetallesComando => _refrescarPedidosCabecerasComando ??
+            (_refrescarPedidosDetallesComando = new RelayCommand(
+                param => RefrescarPedidosDetalles()
+             ));
+
+        public void RefrescarPedidosDetalles()
+        {
+            PaginacionViewModel.Refrescar();
+            PedidoDetalleSeleccionado = null;
+        }
+        #endregion
+
+
+        #region Filtro Pedidos Detalles
+        public ICommand FiltrarPedidosDetallesComando => _filtrarPedidosDetallesComando ??
+           (_filtrarPedidosDetallesComando = new RelayCommand(
+                param => FiltrarPedidosDetalles()
+           ));
+
+        public void FiltrarPedidosDetalles()
+        {
+            PedidosDetallesView.Filter = FiltroPedidosDetalles;
+            PedidosDetallesView.Refresh();
+        }
+
+        private bool FiltroPedidosDetalles(object item)
+        {
+            var pedidoDetalle = item as PedidoDetalle;
+            string volumen = pedidoDetalle.Volumen.ToString();
+            string unidades = pedidoDetalle.Unidades.ToString();
+            string tipoProducto = pedidoDetalle.TipoProductoTerminado.Nombre.ToLower();
+
+            return (FechaPedidoSeleccionado == true ? volumen.Contains(TextoFiltroPedidos) : false)
+                || (ClientePedidoSeleccionado == true ? unidades.Contains(TextoFiltroPedidos) : false)
+                || (TipoProductoTerminadoSeleccionado == true ? tipoProducto.Contains(TextoFiltroPedidos) : false);
+        }
+        #endregion
+
+
     }
 }

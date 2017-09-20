@@ -171,7 +171,7 @@
                         <!--CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
                                   IsChecked="{Binding FechaBajaProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/-->
                         <CheckBox x:Name="cbVolumen" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding VolumenSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
+                                  IsChecked="{Binding VolumenSeleccionadoo}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
                         <CheckBox x:Name="cbPicking" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
                                   IsChecked="{Binding PickingNombreSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
                     </Grid>

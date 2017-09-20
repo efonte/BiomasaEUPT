@@ -354,6 +354,10 @@
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuario.xaml.cs">
       <DependentUpon>FormTipoUsuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedidoDetalle.xaml.cs">
+      <DependentUpon>FormPedidoDetalle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedidoDetalleViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\FormPedidoViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml.cs">
@@ -423,6 +427,9 @@
     <Compile Include="Vistas\GestionVentas\MasOpcionesVentasViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
       <DependentUpon>TablaPedidos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\TablaPedidosDetalles.xaml.cs">
+      <DependentUpon>TablaPedidosDetalles.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml.cs">
       <DependentUpon>TablaProductosEnvasados.xaml</DependentUpon>
@@ -634,6 +641,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionVentas\FormPedidoDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\GestionVentas\FormProductoEnvasado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -645,6 +656,10 @@
     <Page Include="Vistas\GestionVentas\TablaPedidos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\GestionVentas\TablaPedidosDetalles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml">
       <Generator>MSBuild:Compile</Generator>

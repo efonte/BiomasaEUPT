@@ -11,6 +11,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 {
     class FormProductoEnvasadoViewModel : INotifyPropertyChanged
     {
+
+        public ObservableCollection<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
+        public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
         public float? Volumen { get; set; }
 
         private string _observaciones;
@@ -27,6 +30,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FormProductoEnvasadoViewModel() {
+            ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>();
+            ProductosEnvasados= new ObservableCollection<ProductoEnvasado>();
+
         }
     }
 }

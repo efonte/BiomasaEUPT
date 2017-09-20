@@ -1,0 +1,133 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.TablaPedidosDetalles"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
+             xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Pedidos Detalles">
+
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding PedidosDetallesView}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoCabeceraSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="volumenColumna" Header="Volumen" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding Volumen, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="unidadesColumna" Header="Unidades" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding Unidades, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PT" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding TipoProductoTerminado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar pedidos"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <!--Button x:Name="bAnadirPedidoDetalle" ToolTip="Añadir pedido detalle"
+                                    Command="{Binding AnadirPedidoDetalleComando}">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </-->
+                            <Button ToolTip="Borrar el pedido detalle seleccionado"
+                                    Command="{Binding BorrarPedidoDetalleComando}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar el pedido detalle seleccionado"
+                                    Command="{Binding ModificarPedidoDetalleComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar pedidos"
+                                     Command="{Binding RefrescarPedidosDetallesComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="2" Grid.ColumnSpan="2"
+                                             Padding="10 20 10 10"
+                                             DataContext="{Binding RelativeSource={RelativeSource 
+                                                            FindAncestor, AncestorType={x:Type UserControl}},
+                                                            Path=DataContext.PaginacionViewModel}" />
+
+                <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         TextChanged="tbBuscar_TextChanged"/>
+
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Volumen" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Unidades" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Tipo PT" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbVolumen" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding VolumenSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        <CheckBox x:Name="cbUnidades" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding UnidadesSeleccionadas}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                        <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

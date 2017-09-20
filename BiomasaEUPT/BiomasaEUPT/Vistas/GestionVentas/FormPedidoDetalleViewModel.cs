@@ -7,23 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BiomasaEUPT.Vistas.GestionVentas
 {
-    public class FormPedidoViewModel : INotifyPropertyChanged
+    class FormPedidoDetalleViewModel : INotifyPropertyChanged
     {
+
         public ObservableCollection<TipoProductoTerminado> TiposProductosTerminadosDisponibles { get; set; }
         public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
-        public DateTime Fecha { get; set; }
-        public DateTime HoraPedido { get; set; }
+
+        public int? Unidades { get; set; }
+        public double? Volumen { get; set; }
+        public string CantidadHint { get; set; }
+        public double Cantidad { get; set; }
+
+        public bool QuedaCantidadPorAlmacenar { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FormPedidoViewModel()
+        public FormPedidoDetalleViewModel()
         {
             TiposProductosTerminadosDisponibles = new ObservableCollection<TipoProductoTerminado>();
             PedidosDetalles = new ObservableCollection<PedidoDetalle>();
         }
-
     }
 }

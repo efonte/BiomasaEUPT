@@ -121,16 +121,7 @@
                       Header="Información" Style="{DynamicResource MaterialDesignGroupBox}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <ContentPresenter Grid.Column="2" Content="{Binding SelectedItem, ElementName=tvArbol}">
-                        <!--ContentPresenter.Style>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="ContentTemplate" Value="{StaticResource DefaultDataTemplate}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=Items}" Value="{x:Null}">
-                                    <Setter Property="ContentTemplate" Value="{StaticResource NullItemDataTemplate}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </-->
+                        
                         <ContentPresenter.Resources>
                             <Style TargetType="Grid">
                                 <Setter Property="Margin" Value="10" />
