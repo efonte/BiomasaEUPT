@@ -29,9 +29,6 @@
                                        Height="200" VerticalAlignment="Top"
                                        DataContext="{Binding ContadorViewModel}" />
 
-            <!--controlesUsuario:FiltroTabla Grid.Row="1" x:Name="ucFiltroTabla" Margin="5 5 -5 5"
-                                          Height="250" VerticalAlignment="Bottom"
-                                          DataContext="{Binding FiltroTablaViejoViewModel}" /-->
 
             <materialDesign:Transitioner Grid.Row="1" x:Name="transicion" SelectedIndex="0"
                                          Margin="0" Padding="0">

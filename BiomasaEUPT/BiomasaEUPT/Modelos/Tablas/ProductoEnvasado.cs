@@ -19,7 +19,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int ProductoEnvasadoId { get; set; }
 
         [DisplayName("Volumen"), Display(Name = "Volumen")]
-        public float? Volumen { get; set; }
+        public double? Volumen { get; set; }
 
         [StringLength(Constantes.LONG_MAX_OBSERVACIONES, MinimumLength = Constantes.LONG_MIN_OBSERVACIONES)]
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]

@@ -48,7 +48,7 @@
 
             <Border Grid.Column="3" Grid.Row="0"  Margin="0 10 5 0">
                 <GroupBox x:Name="gbInfo" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
-                      Header="Información" Style="{DynamicResource MaterialDesignGroupBox}">
+                      Header="Producto Envasado" Style="{DynamicResource MaterialDesignGroupBox}">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
                         <ContentPresenter Grid.Column="2" Content="{Binding PedidoDetalleSeleccionado}">
@@ -78,7 +78,7 @@
                                                               AncestorType={x:Type ContentPresenter}},
                                                               Path=ActualWidth, UpdateSourceTrigger=PropertyChanged,
                                                               Converter={StaticResource PorcentajeConverter}, ConverterParameter=0.9}"
-                                           Text="Por favor, seleccione un item del árbol para mostrar información detallada."/>
+                                           Text="Por favor, seleccione un item de la tabla de pedidos detalles para mostrar información detallada."/>
                                 </DataTemplate>
 
                                 <DataTemplate DataType="{x:Type tablas:PedidoDetalle}">

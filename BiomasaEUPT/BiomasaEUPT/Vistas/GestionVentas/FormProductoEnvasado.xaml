@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="260" Width="420" Loaded="UserControl_Loaded">
+             Height="500" Width="420" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,20 +31,42 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-               
 
-                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
-                          ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
-                          DisplayMemberPath="Nombre"
-                          SelectedValuePath="PickingId" >
-                </ComboBox>
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <TextBox x:Name="tbVolumenCliente" materialDesign:HintAssist.Hint="Volumen cliente (m³)" MaxLength="6">
+                        <TextBox.Text>
+                            <Binding Path="VolumenCliente" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
+                                    <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                    <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <Setter Property="Margin" Value="10" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="1">
+
+                <StackPanel Grid.Row="0" Grid.Column="1">
                     <TextBox x:Name="tbVolumen" materialDesign:HintAssist.Hint="Volumen (m³)" MaxLength="6">
                         <TextBox.Text>
                             <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
@@ -70,7 +92,110 @@
                     </TextBox>
                 </StackPanel>
 
-                <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
+                <ListBox Grid.Row="1" Grid.Column="0" x:Name="lbHuecosAlmacenajes" Height="100"
+                         ItemsSource="{Binding HuecosAlmacenajesDisponibles, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbHuecosAlmacenajes_PreviewMouseLeftButtonDown">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Hueco {0}">
+                                            <Binding Path="Nombre"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} m³ / {1} ud.">
+                                            <Binding Path="VolumenTotal"/>
+                                            <Binding Path="UnidadesTotales"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <materialDesign:ColorZone Grid.Row="2" Grid.ColumnSpan="2" Mode="Standard"
+                                          MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
+                                          AllowDrop="True" Drop="spHuecosAlmacenajes_Drop">
+                    <WrapPanel x:Name="wpHuecosAlmacenajes" Margin="10"
+                           Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        
+                        <ItemsControl ItemsSource="{Binding HistorialHuecosAlmacenajes, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems" Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                                                               Text="Por favor, arrastre los huecos dispobles para realizar el producto enva"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar hueco"
+                                                     CommandParameter="{Binding HuecoAlmacenaje.HuecoAlmacenajeId}"
+                                                     DeleteClick="cHueco_DeleteClick">
+                                        <materialDesign:Chip.Content>
+                                            <TextBlock FontSize="14" FontStyle="Italic">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                    <Binding Path="Volumen" />
+                                                                    <Binding Path="HuecoAlmacenaje.VolumenTotal" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                                                <Setter Property="Text">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                            <Binding Path="Unidades" />
+                                                                            <Binding Path="HuecoAlmacenaje.UnidadesTotales" />
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </materialDesign:Chip.Content>
+                                        <materialDesign:Chip.Icon>
+                                            <TextBlock FontSize="15" Text="{Binding HuecoAlmacenaje.Nombre}"></TextBlock>
+                                        </materialDesign:Chip.Icon>
+                                    </materialDesign:Chip>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </WrapPanel>
+                </materialDesign:ColorZone>
+
+                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
+                          ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="PickingId" >
+                </ComboBox>
+
+                <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          AcceptsReturn="True" Height="55" MaxLength="60">
                     <TextBox.Text>
@@ -82,7 +207,7 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoProductoEnvasado" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
