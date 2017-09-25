@@ -36,7 +36,7 @@
 
                     <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding PedidosDetallesView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
-                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoCabeceraSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoDetalleSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>

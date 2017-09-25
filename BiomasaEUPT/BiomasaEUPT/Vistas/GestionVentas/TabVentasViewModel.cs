@@ -29,7 +29,17 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
         public CollectionView PedidosDetallesView { get; private set; }
         public IList<PedidoDetalle> PedidosDetallesSeleccionados { get; set; }
-        public PedidoDetalle PedidoDetalleSeleccionado { get; set; }
+
+        private PedidoDetalle _pedidoDetalleSeleccionado;
+        public PedidoDetalle PedidoDetalleSeleccionado
+        {
+            get => _pedidoDetalleSeleccionado;
+            set
+            {
+                _pedidoDetalleSeleccionado = value;
+                ProductoEnvasadoSeleccionado = context.ProductosEnvasados.Single(pe => pe.PedidoDetalleId == PedidoDetalleSeleccionado.PedidoDetalleId);
+            }
+        }
 
         public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
         public CollectionView ProductosEnvasadosView { get; private set; }
@@ -141,8 +151,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 // se obtienen todas
                 if (context.PedidosCabeceras.Count() < cantidad)
                 {
-                    
-                  PedidosCabeceras  = new ObservableCollection<PedidoCabecera>(context.PedidosCabeceras.ToList());
+
+                    PedidosCabeceras = new ObservableCollection<PedidoCabecera>(context.PedidosCabeceras.ToList());
                 }
                 else
                 {
@@ -230,13 +240,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private async void AnadirPedidoCabecera()
         {
-            
+
             var formPedido = new FormPedido(context);
             //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
 
             if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
             {
-                
+
                 var pedidoCabecera = new PedidoCabecera()
                 {
 
@@ -260,7 +270,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 context.PedidosDetalles.AddRange(pedidosDetalles);
 
                 context.SaveChanges();
-                
+
                 RefrescarPedidosCabeceras();
                 //CargarPedidosCabeceras();
             }
@@ -405,7 +415,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     Observaciones = formProductoEnvasadoDataContext.Observaciones,
                     PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
                     Volumen = formProductoEnvasadoDataContext.Volumen,
-                  //  PedidoDetalleId=PedidoCabeceraSeleccionado.deta
+                    //  PedidoDetalleId=PedidoCabeceraSeleccionado.deta
 
                 };
 
@@ -567,7 +577,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #endregion
 
 
-        
+
         #region Borrar Pedido Detalle
         public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
             (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
