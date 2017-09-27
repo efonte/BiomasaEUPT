@@ -18,6 +18,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
         public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajesDisponibles { get; set; }
         public double? Volumen { get; set; }
+        public int? Unidades { get; set; }
         public double? VolumenCliente { get; set; }
         public string CantidadHint { get; set; }
         public float Cantidad { get; set; }

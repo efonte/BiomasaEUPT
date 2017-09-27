@@ -185,6 +185,24 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             if (viewModel.TipoProductoTerminado != null && viewModel.TipoProductoTerminado.MedidoEnVolumen == true)
             {
+                var unidadesRestantes = viewModel.Unidades;
+                foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
+                {
+                    if (hha.HuecoAlmacenaje.UnidadesTotales <= unidadesRestantes)
+                    {
+                        unidadesRestantes -= hha.HuecoAlmacenaje.UnidadesTotales;
+                        hha.Unidades = hha.HuecoAlmacenaje.UnidadesTotales;
+                    }
+                    else
+                    {
+                        hha.Unidades = unidadesRestantes;
+                        unidadesRestantes = 0;
+                    }
+                }
+                viewModel.QuedaCantidadPorAlmacenar = unidadesRestantes > 0 || viewModel.Cantidad == 0;
+            }
+            else
+            {
                 var volumenRestante = viewModel.Volumen;
                 foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
                 {
