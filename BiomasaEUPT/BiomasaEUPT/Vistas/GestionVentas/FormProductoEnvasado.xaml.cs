@@ -33,6 +33,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private CollectionViewSource productosEnvasadosViewSource;
         private CollectionViewSource pickingViewSource;
         private CollectionViewSource pedidoDetalleViewSource;
+        private CollectionViewSource productoTerminadoViewSource;
         private FormProductoEnvasadoViewModel viewModel;
 
         private BiomasaEUPTContext context;
@@ -54,16 +55,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             //viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoId == productoEnvasado.ProductoEnvasadoId).ToList());
             CalcularCantidades();
 
-            // Si ya se han envasado algún producto envasado con dicho producto terminado entonces los controles estarán deshabilitados
-            if (context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoEnvasado.ProductoEnvasadoId == productoEnvasado.ProductoEnvasadoId))
-            {
-                
-                lbHuecosAlmacenajes.IsEnabled = false;
-                //tbCantidad.IsEnabled = false;
-                wpHuecosAlmacenajes.IsEnabled = false;
-                //wpProductosEnvasadosComposiciones.IsEnabled = false;
-            }
-
 
         }
 
@@ -72,46 +63,21 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
             pickingViewSource = ((CollectionViewSource)(FindResource("pickingViewSource")));
             pedidoDetalleViewSource = ((CollectionViewSource)(FindResource("pedidoDetalleViewSource")));
+            productoTerminadoViewSource = ((CollectionViewSource)(FindResource("productoTerminadoViewSource")));
 
             context.ProductosEnvasados.Load();
             context.Picking.Load();
             context.PedidosDetalles.Load();
+            context.ProductosTerminados.Load();
 
             productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
             pickingViewSource.Source = context.Picking.Local;
             pedidoDetalleViewSource.Source = context.PedidosDetalles.Local;
+            productoTerminadoViewSource.Source = context.ProductosTerminados.Local;
 
         }
 
-        /*private void lbHistorialHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var parent = sender as ListBox;
-            var historialHuecoAlmacenaje = GetDataFromListBox(lbHistorialHuecosAlmacenajes, e.GetPosition(parent)) as HistorialHuecoAlmacenaje;
-            if (historialHuecoAlmacenaje != null)
-            {
-                DataObject dragData = new DataObject("HistorialHuecoAlmacenaje", historialHuecoAlmacenaje);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }
-        }*/
 
-        private void spProductosEnvasadosComposiciones_Drop(object sender, DragEventArgs e)
-        {
-            var historialHuecoAlmacenaje = e.Data.GetData("HistorialHuecoAlmacenaje") as HistorialHuecoAlmacenaje;
-            var productoEnvasadoComposicion = new ProductoEnvasadoComposicion() { HistorialHuecoAlmacenaje = historialHuecoAlmacenaje };
-            viewModel.ProductosEnvasadosComposiciones.Add(productoEnvasadoComposicion);
-            viewModel.HistorialHuecosAlmacenajesDisponibles.Remove(historialHuecoAlmacenaje);
-        }
-
-        private void lbHuecosAlmacenajes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var parent = sender as ListBox;
-            var huecoAlmacenaje = GetDataFromListBox(lbHuecosAlmacenajes, e.GetPosition(parent)) as HuecoAlmacenaje;
-            if (huecoAlmacenaje != null)
-            {
-                DataObject dragData = new DataObject("HuecoAlmacenaje", huecoAlmacenaje);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }
-        }
 
         private object GetDataFromListBox(ListBox source, Point point)
         {
@@ -143,16 +109,16 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             return null;
         }
 
-        private void spHuecosAlmacenajes_Drop(object sender, DragEventArgs e)
+        /*private void spHuecosAlmacenajes_Drop(object sender, DragEventArgs e)
         {
             var huecoAlmacenaje = e.Data.GetData("HuecoAlmacenaje") as HuecoAlmacenaje;
             var historialHuecoAlmacenaje = new HistorialHuecoAlmacenaje() { HuecoAlmacenaje = huecoAlmacenaje };
             viewModel.HistorialHuecosAlmacenajes.Add(historialHuecoAlmacenaje);
             viewModel.HuecosAlmacenajesDisponibles.Remove(huecoAlmacenaje);
             CalcularCantidades();
-        }
+        }*/
 
-        private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
+        /*private void cHueco_DeleteClick(object sender, RoutedEventArgs e)
         {
             var chip = sender as Chip;
             int huecoAlmacenajeId = int.Parse(chip.CommandParameter.ToString());
@@ -163,7 +129,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 viewModel.HuecosAlmacenajesDisponibles.Add(historialHuecoAlmacenaje.HuecoAlmacenaje);
             //}
             CalcularCantidades();
-        }
+        }*/
 
         private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
         {

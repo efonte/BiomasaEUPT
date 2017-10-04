@@ -142,6 +142,59 @@
             </ScrollViewer>
         </GroupBox>
 
+        <GroupBox Grid.Row="0" Grid.Column="2" Margin="10 10 0 10"
+                  Style="{DynamicResource MaterialDesignCardGroupBox}">
+            <GroupBox.Header>
+                <materialDesign:ColorZone Mode="PrimaryMid">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges"
+                                                 StaysOpen="False" Width="25">
+                            <StackPanel>
+                                <Button Content="Añadir" Command="{Binding AnadirTipoProductoEnvasadoComando}"
+                                        Style="{DynamicResource MaterialDesignFlatButton}"/>
+                                <Button Content="Editar" Command="{Binding ModificarTipoProductoEnvasadoComando}"
+                                        Style="{DynamicResource MaterialDesignFlatButton}"/>
+                                <Button Content="Borrar" Command="{Binding BorrarTipoProductoEnvasadoComando}"
+                                        Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <TextBlock Text="Tipos P. Envasados" FontFamily="Roboto" HorizontalAlignment="Center"
+                                   Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                   VerticalAlignment="Center" FontWeight="Black"/>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+            </GroupBox.Header>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ListBox x:Name="lbTiposProductosEnvasados" Margin="0 0 0 0" SelectedIndex="-1"
+                                 ItemsSource="{Binding TiposProductosEnvasados, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedItem="{Binding TipoProductoEnvasadoSeleccionado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ListBox.InputBindings>
+                        <KeyBinding Gesture="Delete" Key="Delete"
+                                    Command="{Binding BorrarTipoProductoEnvasadoComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=lbTiposProductosEnvasados, Mode=OneWay}"/>
+                        <MouseBinding MouseAction="LeftDoubleClick"
+                                      Command="{Binding ModificarTipoProductoEnvasadoComando}"/>
+                    </ListBox.InputBindings>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplierExtension 0:0:0.1}"
+                                                                 Opacity="0" RunHint="Loaded">
+                                <materialDesign:TransitioningContent.OpeningEffects>
+                                    <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                                    <materialDesign:TransitionEffect Kind="FadeIn" />
+                                </materialDesign:TransitioningContent.OpeningEffects>
+                                <StackPanel Margin="8 0 0 0">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
+                                    <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                </StackPanel>
+                            </materialDesign:TransitioningContent>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
+
         <GroupBox Grid.Row="1" Grid.Column="0" Margin="10 0 0 10"
                   Style="{DynamicResource MaterialDesignCardGroupBox}">
             <GroupBox.Header>

@@ -48,7 +48,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public int IndiceMasOpciones { get; set; }
 
-        // Checkbox Filtro Pedidos
+        // Checkbox Filtro Pedidos Cabceceras
         public bool FechaPedidoSeleccionado { get; set; } = true;
         public bool FechaFinalizacionSeleccionado { get; set; } = true;
         public bool EstadoPedidoSeleccionado { get; set; } = false;
@@ -116,6 +116,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private ICommand _refrescarPedidosDetallesComando;
         private ICommand _filtrarPedidosDetallesComando;
 
+        private ICommand _anadirPedidoLineaComando;
+        private ICommand _modificarPedidoLineaComando;
+        private ICommand _borrarPedidoLineaComando;
+        private ICommand _refrescarPedidosLineasComando;
+        private ICommand _filtrarPedidosLineasComando;
+
         private ICommand _masOpcionesComando;
 
         private BiomasaEUPTContext context;
@@ -168,6 +174,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
+        
         public void CargarPedidosDetalles(int cantidad = 10, int saltar = 0)
         {
 
@@ -257,7 +264,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 context.PedidosCabeceras.Add(pedidoCabecera);
 
-                var pedidosDetalles = new List<PedidoDetalle>();
+                /*var pedidosDetalles = new List<PedidoDetalle>();
                 foreach (var pd in context.PedidosDetalles)
                 {
                     if (pd.Unidades != 0 && pd.Volumen != 0)
@@ -267,7 +274,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                         pedidosDetalles.Add(pd);
                     }
                 }
-                context.PedidosDetalles.AddRange(pedidosDetalles);
+                context.PedidosDetalles.AddRange(pedidosDetalles);*/
 
                 context.SaveChanges();
 
@@ -386,6 +393,51 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
         #endregion
 
+
+        #region Añadir Pedido Linea
+        public ICommand AnadirPedidoLineaComando => _anadirPedidoLineaComando ??
+            (_anadirPedidoLineaComando = new RelayCommand(
+                param => AnadirPedidoLinea()
+            ));
+
+        private async void AnadirPedidoLinea()
+        {
+
+            var formPedido = new FormPedido(context);
+            //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
+
+            if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
+            {
+
+                var pedidoCabecera = new PedidoCabecera()
+                {
+
+                    FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.HoraPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second),
+                    ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId,
+                    EstadoId = 1
+                };
+
+                context.PedidosCabeceras.Add(pedidoCabecera);
+
+                var pedidosDetalles = new List<PedidoDetalle>();
+                foreach (var pd in context.PedidosDetalles)
+                {
+                    if (pd.Unidades != 0 && pd.Volumen != 0)
+                    {
+
+                        pd.PedidoCabecera = pedidoCabecera;
+                        pedidosDetalles.Add(pd);
+                    }
+                }
+                context.PedidosDetalles.AddRange(pedidosDetalles);
+
+                context.SaveChanges();
+
+                RefrescarPedidosCabeceras();
+                //CargarPedidosCabeceras();
+            }
+        }
+        #endregion  
 
         #region Añadir Producto Envasado
         public ICommand AnadirProductoEnvasadoComando => _anadirProductoEnvasadoComando ??

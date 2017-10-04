@@ -203,6 +203,7 @@
     <Compile Include="Domain\RelayCommand.cs" />
     <Compile Include="Domain\RelayCommandGenerico.cs" />
     <Compile Include="Modelos\Tablas\Permiso.cs" />
+    <Compile Include="Modelos\Tablas\TipoProductoEnvasado.cs" />
     <Compile Include="Modelos\Validadores\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\Converters\PaisISOA2Converter.cs" />
@@ -358,6 +359,9 @@
       <DependentUpon>FormPedidoDetalle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedidoDetalleViewModel.cs" />
+    <Compile Include="Vistas\GestionVentas\FormPedidoLinea.xaml.cs">
+      <DependentUpon>FormPedidoLinea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedidoViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml.cs">
@@ -645,6 +649,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionVentas\FormPedidoLinea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\GestionVentas\FormProductoEnvasado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -725,6 +733,7 @@
     <EmbeddedResource Include="Migrations\DatosSeed\PedidosDetalles.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasados.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasadosComposiciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposProductosEnvasados.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

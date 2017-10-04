@@ -534,7 +534,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     Nombre = formPicking.Nombre,
                     VolumenTotal = formPicking.VolumenTotal,
-                    VolumenRestante = formPicking.VolumenRestante
+                    VolumenRestante = formPicking.VolumenRestante,
+                    UnidadesTotales = formPicking.UnidadesTotales,
+                    UnidadesRestantes = formPicking.UnidadesRestantes
                     
                 });
 
@@ -592,12 +594,16 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             formPicking.Nombre = PickingSeleccionado.Nombre;
             formPicking.VolumenTotal = PickingSeleccionado.VolumenTotal;
             formPicking.VolumenRestante = PickingSeleccionado.VolumenRestante;
+            formPicking.UnidadesTotales = PickingSeleccionado.UnidadesTotales;
+            formPicking.UnidadesRestantes = PickingSeleccionado.UnidadesRestantes;
 
             if ((bool)await DialogHost.Show(formPicking, "RootDialog"))
             {
                 PickingSeleccionado.Nombre = formPicking.Nombre;
-                formPicking.VolumenTotal = formPicking.VolumenTotal;
-                formPicking.VolumenRestante = formPicking.VolumenRestante;
+                PickingSeleccionado.VolumenTotal = formPicking.VolumenTotal;
+                PickingSeleccionado.VolumenRestante = formPicking.VolumenRestante;
+                PickingSeleccionado.UnidadesTotales = formPicking.UnidadesTotales;
+                PickingSeleccionado.UnidadesRestantes = formPicking.UnidadesRestantes;
                 context.SaveChanges();
                 CargarSitiosAlmacenajes();
             }

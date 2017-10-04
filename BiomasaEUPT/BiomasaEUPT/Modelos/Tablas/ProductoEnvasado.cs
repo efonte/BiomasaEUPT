@@ -21,6 +21,9 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Volumen"), Display(Name = "Volumen")]
         public double? Volumen { get; set; }
 
+        [DisplayName("Unidades"), Display(Name = "Unidades")]
+        public double? Unidades { get; set; }
+
         [StringLength(Constantes.LONG_MAX_OBSERVACIONES, MinimumLength = Constantes.LONG_MIN_OBSERVACIONES)]
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
@@ -34,11 +37,16 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         public int PedidoDetalleId { get; set; }
 
+        public int TipoProductoEnvasadoId { get; set; }
+
         [ForeignKey("PickingId")]
         public virtual Picking Picking { get; set; }
 
         [ForeignKey("PedidoDetalleId")]
         public virtual PedidoDetalle PedidoDetalle { get; set; }
+
+        [ForeignKey("TipoProductoEnvasadoId")]
+        public virtual TipoProductoEnvasado TipoProductoEnvasado { get; set; }
 
         public virtual List<ProductoEnvasadoComposicion> ProductoEnvasadoComposiciones { get; set; }
 

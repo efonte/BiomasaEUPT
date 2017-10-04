@@ -1,3 +1,3 @@
-﻿Nombre;Descripcion
-Empresa;El cliente es una empresa.
-Particular;El cliente es un particular.
+﻿TipoClienteId;Nombre;Descripcion
+1;Empresa;El cliente es una empresa.
+2;Particular;El cliente es un particular.

@@ -221,6 +221,7 @@
         public DbSet<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
         public DbSet<ProductoEnvasado> ProductosEnvasados { get; set; }
         public DbSet<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
+        public DbSet<TipoProductoEnvasado> TiposProductosEnvasados { get; set; }
         public DbSet<PedidoCabecera> PedidosCabeceras { get; set; }
         public DbSet<EstadoPedido> EstadosPedidos { get; set; }
         public DbSet<PedidoDetalle> PedidosDetalles { get; set; }

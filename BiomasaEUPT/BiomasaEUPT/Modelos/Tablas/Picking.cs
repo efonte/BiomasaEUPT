@@ -24,12 +24,21 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Nombre"), Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
+        //Volumen total que existe para el picking
         [DisplayName("Volumen total"), Display(Name = "Volumen total")]
         public double? VolumenTotal { get; set; }
 
         // Volumen restantes
         [DisplayName("Volumen restante"), Display(Name = "Volumen restante")]
         public double? VolumenRestante { get; set; }
+
+        //Unidades totales que existen para el picking
+        [DisplayName("Unidades totales"), Display(Name = "Unidades totales")]
+        public double? UnidadesTotales { get; set; }
+
+        // Unidades restantes
+        [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
+        public double? UnidadesRestantes { get; set; }
 
         public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }

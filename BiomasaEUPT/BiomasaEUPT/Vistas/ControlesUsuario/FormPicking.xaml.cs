@@ -43,6 +43,20 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             set { _volumenRestante = value; }
         }
 
+        private double? _unidadesTotales;
+        public double? UnidadesTotales
+        {
+            get { return _unidadesTotales; }
+            set { _unidadesTotales = value; }
+        }
+
+        private double? _unidadesRestantes;
+        public double? UnidadesRestantes
+        {
+            get { return _unidadesRestantes; }
+            set { _unidadesRestantes = value; }
+        }
+
         public FormPicking()
         {
             InitializeComponent();

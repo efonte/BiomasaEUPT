@@ -977,17 +977,22 @@ namespace BiomasaEUPT.Migrations
                  sr => sr.Nombre,
                  new EstadoPedido()
                  {
-                     Nombre = "Pendiente",
+                     Nombre = "Nuevo",
                      Descripcion = "Cuando un pedido nuevo se realiza su estado podría estar pendiente"
                  },
                  new EstadoPedido()
                  {
-                     Nombre = "Procesando",
+                     Nombre = "Preparar",
                      Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a procesando"
                  },
                  new EstadoPedido()
                  {
-                     Nombre = "Completo",
+                     Nombre = "Facturar",
+                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a procesando"
+                 },
+                 new EstadoPedido()
+                 {
+                     Nombre = "Finalizado",
                      Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado"
                  });
             context.SaveChanges();
@@ -1006,6 +1011,26 @@ namespace BiomasaEUPT.Migrations
                     VolumenTotal = 45,
                     VolumenRestante = 10
                 });
+            context.SaveChanges();
+
+            context.TiposProductosEnvasados.AddOrUpdate(
+                tpe => tpe.Nombre,
+                new TipoProductoEnvasado()
+                {
+                    Nombre = "Saco",
+                    Descripcion = "Saco medido en metros cúbicos."
+                },
+                new TipoProductoEnvasado()
+                {
+                    Nombre = "Saca",
+                    Descripcion = "Saca medida en metros cúbicos."
+                },
+                new TipoProductoEnvasado()
+                {
+                    Nombre = "Paquete",
+                    Descripcion = "Paquete medido en unidades."
+                });
+            context.SaveChanges();
         }
 
         /// <summary>

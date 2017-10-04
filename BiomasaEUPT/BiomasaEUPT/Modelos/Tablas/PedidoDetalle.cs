@@ -30,7 +30,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public int TipoProductoTerminadoId { get; set; }
 
         [ForeignKey("PedidoCabeceraId")]
-        public virtual PedidoCabecera PedidoCabecera { get; set; }
+        public virtual PedidoCabecera PedidoCabecera{ get; set; }
 
         [ForeignKey("TipoProductoTerminadoId")]
         public virtual TipoProductoTerminado TipoProductoTerminado { get; set; }

@@ -31,9 +31,15 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             }
         }
 
+        public ObservableCollection<TipoProductoEnvasado> TiposProductosEnvasados { get; set; }
+        public IList<TipoProductoEnvasado> TiposProductosEnvasadosSeleccionados { get; set; }
+        public TipoProductoEnvasado TipoProductoEnvasadoSeleccionado { get; set; }
+
         public ObservableCollection<TipoProductoTerminado> TiposProductosTerminados { get; set; }
         public IList<TipoProductoTerminado> TiposProductosTerminadosSeleccionados { get; set; }
         public TipoProductoTerminado TipoProductoTerminadoSeleccionado { get; set; }
+
+
         public ObservableCollection<SitioAlmacenaje> SitiosAlmacenajes { get; set; }
         public IList<SitioAlmacenaje> SitiosAlmacenajesSeleccionados { get; set; }
 
@@ -62,6 +68,11 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
         private ICommand _modificarTipoProductoTerminadoComando;
         private ICommand _borrarTipoProductoTerminadoComando;
         private ICommand _refrescarTiposProductosTerminadosComando;
+
+        private ICommand _anadirTipoProductoEnvasadoComando;
+        private ICommand _modificarTipoProductoEnvasadoComando;
+        private ICommand _borrarTipoProductoEnvasadoComando;
+        private ICommand _refrescarTiposProductosEnvasadosComando;
 
         private ICommand _anadirSitioAlmacenajeComando;
         private ICommand _modificarSitioAlmacenajeComando;
@@ -106,6 +117,12 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                     .Where(tpt => tpt.GrupoId == GrupoProductoTerminadoSeleccionado.GrupoProductoTerminadoId)
                     .ToList());
             TipoProductoTerminadoSeleccionado = null;
+        }
+
+        private void CargarTiposProductosEnvasados()
+        {
+            TiposProductosEnvasados = new ObservableCollection<TipoProductoEnvasado>(context.TiposProductosEnvasados.ToList());
+            TipoProductoEnvasadoSeleccionado = null;
         }
 
         private void CargarSitiosAlmacenajes()
@@ -321,6 +338,90 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 TipoProductoTerminadoSeleccionado.MedidoEnUnidades = formTipoPT.lbMedido.SelectedIndex == 1;
                 context.SaveChanges();
                 CargarTiposProductosTerminados();
+            }
+        }
+        #endregion
+
+        #region Añadir Tipo Producto Envasado
+        public ICommand AnadirTipoProductoEnvasadoComando => _anadirTipoProductoEnvasadoComando ??
+           (_anadirTipoProductoEnvasadoComando = new RelayCommand(
+               param => AnadirTipoProductoEnvasado()
+           ));
+
+        private async void AnadirTipoProductoEnvasado()
+        {
+            var formTipo = new FormTipo("Nuevo Tipo de Producto Envasado");
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoProductoEnvasado";
+
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                context.TiposProductosEnvasados.Add(new TipoProductoEnvasado()
+                {
+                    Nombre = formTipo.Nombre,
+                    Descripcion = formTipo.Descripcion,
+                });
+
+                context.SaveChanges();
+                CargarTiposProductosEnvasados();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Tipo Producto Envasado
+        public ICommand BorrarTipoProductoEnvasadoComando => _borrarTipoProductoEnvasadoComando ??
+          (_borrarTipoProductoEnvasadoComando = new RelayCommand(
+              param => BorrarTipoProductoEnvasado(),
+              param => TipoProductoEnvasadoSeleccionado != null
+          ));
+
+        private async void BorrarTipoProductoEnvasado()
+        {
+            var mensajeConf = new MensajeConfirmacion()
+            {
+                Mensaje = "¿Está seguro de que desea borrar el tipo de producto envasado " + TipoProductoEnvasadoSeleccionado.Nombre + "?"
+            };
+            if ((bool)await DialogHost.Show(mensajeConf, "RootDialog"))
+            {
+                if (!context.TiposProductosEnvasados.Any(tpe => tpe.TipoProductoEnvasadoId == TipoProductoEnvasadoSeleccionado.TipoProductoEnvasadoId))
+                {
+                    context.TiposProductosEnvasados.Remove(TipoProductoEnvasadoSeleccionado);
+                    context.SaveChanges();
+                    CargarTiposProductosEnvasados();
+                }
+                else
+                {
+                    await DialogHost.Show(new MensajeInformacion("No puede borrar el tipo de producto envasado debido a que está en uso."), "RootDialog");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Modificar Tipo Producto Envasado
+        public ICommand ModificarTipoProductoEnvasadoComando => _modificarTipoProductoEnvasadoComando ??
+          (_modificarTipoProductoEnvasadoComando = new RelayCommand(
+              param => ModificarTipoProductoEnvasado(),
+              param => TipoProductoEnvasadoSeleccionado != null
+          ));
+
+        private async void ModificarTipoProductoEnvasado()
+        {
+            var formTipo = new FormTipo("Editar Tipo de Producto Envasado");
+            formTipo.vNombreUnico.Atributo = "Nombre";
+            formTipo.vNombreUnico.Tipo = "TipoProductoEnvasado";
+            formTipo.vNombreUnico.NombreActual = TipoProductoEnvasadoSeleccionado.Nombre;
+
+            formTipo.Nombre = TipoProductoEnvasadoSeleccionado.Nombre;
+            formTipo.Descripcion = TipoProductoEnvasadoSeleccionado.Descripcion;
+
+            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            {
+                TipoProductoEnvasadoSeleccionado.Nombre = formTipo.Nombre;
+                TipoProductoEnvasadoSeleccionado.Descripcion = formTipo.Descripcion;
+                context.SaveChanges();
+                CargarTiposProductosEnvasados();
             }
         }
         #endregion

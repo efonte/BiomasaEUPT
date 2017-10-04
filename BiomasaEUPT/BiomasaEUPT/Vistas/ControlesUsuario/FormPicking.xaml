@@ -17,13 +17,17 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Picking">
-        <Grid Width="250">
+        <Grid Width="400">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
             <TextBox Grid.Row="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE}">
                 <TextBox.Text>
                     <Binding Path="Nombre" UpdateSourceTrigger="PropertyChanged">
@@ -35,7 +39,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Row="1" x:Name="tbVolumenTotal" materialDesign:HintAssist.Hint="VolumenTotal" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbVolumenTotal" materialDesign:HintAssist.Hint="VolumenTotal" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
                 <TextBox.Text>
                     <Binding Path="VolumenTotal" UpdateSourceTrigger="PropertyChanged">
                         <!--Binding.ValidationRules>
@@ -46,7 +50,7 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBox Grid.Row="2" x:Name="tbVolumenRestante" materialDesign:HintAssist.Hint="VolumenRestante" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbVolumenRestante" materialDesign:HintAssist.Hint="VolumenRestante" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
                 <TextBox.Text>
                     <Binding Path="VolumenTotal" UpdateSourceTrigger="PropertyChanged">
                         <!--Binding.ValidationRules>
@@ -57,7 +61,29 @@
                 </TextBox.Text>
             </TextBox>
 
-            <WrapPanel Grid.Row="3" Margin="0 15 0 0" HorizontalAlignment="Right">
+            <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbUnidadesTotales" materialDesign:HintAssist.Hint="UnidadesTotales" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
+                <TextBox.Text>
+                    <Binding Path="UnidadesTotales" UpdateSourceTrigger="PropertyChanged">
+                        <!--Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
+                        </-->
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbUnidadesRestantes" materialDesign:HintAssist.Hint="UnidadesRestantes" MaxLength="{x:Static const:Constantes.LONG_MAX_VOLUMEN}">
+                <TextBox.Text>
+                    <Binding Path="UnidadesRestantes" UpdateSourceTrigger="PropertyChanged">
+                        <!--Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule x:Name="vDescripcionRequerido" NombreCampo="descripción" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripción" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
+                        </-->
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0, 15, 0, 0" HorizontalAlignment="Right">
                 <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

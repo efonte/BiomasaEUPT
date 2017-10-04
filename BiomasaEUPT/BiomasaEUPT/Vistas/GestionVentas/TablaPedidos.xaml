@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Pedidos">
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Pedidos Cabeceras">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -58,15 +58,15 @@
                                  ToolTip="Gestionar pedidos"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirPedidoCabecera" ToolTip="Añadir pedido envasado"
+                            <Button x:Name="bAnadirPedidoCabecera" ToolTip="Añadir pedido cabecera"
                                     Command="{Binding AnadirPedidoCabeceraComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Borrar el pedido seleccionado"
+                            <Button ToolTip="Borrar el pedido cabecera seleccionado"
                                     Command="{Binding BorrarPedidoCabeceraComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Modificar el pedido seleccionado"
+                            <Button ToolTip="Modificar el pedido cabecera seleccionado"
                                     Command="{Binding ModificarPedidoCabeceraComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>

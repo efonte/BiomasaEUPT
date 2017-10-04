@@ -30,7 +30,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="300" MaxWidth="400"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
 
@@ -43,104 +43,7 @@
 
             <GridSplitter Grid.Column="1" Grid.Row="0"/>
 
-            <local:TablaPedidosDetalles Grid.Column="2" Grid.Row="0" x:Name="ucTablaPedidosDetalles" Margin="0 10 10 10" />
-
-
-            <Border Grid.Column="3" Grid.Row="0"  Margin="0 10 5 0">
-                <GroupBox x:Name="gbInfo" materialDesign:ColorZoneAssist.Mode="PrimaryMid"
-                      Header="Producto Envasado" Style="{DynamicResource MaterialDesignGroupBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-
-                        <ContentPresenter Grid.Column="2" Content="{Binding PedidoDetalleSeleccionado}">
-
-                            <ContentPresenter.Resources>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Margin" Value="10" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                                <Style x:Key="tbValor" TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0 0 10 10" />
-                                </Style>
-                                <Style x:Key="tbTipo" TargetType="TextBlock" BasedOn="{StaticResource tbValor}">
-                                    <Setter Property="FontWeight" Value="Medium"/>
-                                    <Setter Property="HorizontalAlignment" Value="Right"/>
-                                </Style>
-                                <Style x:Key="tbTitulo" TargetType="TextBlock" BasedOn="{StaticResource tbValor}">
-                                    <Setter Property="Margin" Value="0 0 0 20" />
-                                    <Setter Property="Typography.Capitals" Value="SmallCaps"/>
-                                    <Setter Property="FontWeight" Value="Medium"/>
-                                    <Setter Property="FontSize" Value="20"/>
-                                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                                </Style>
-                                <DataTemplate x:Key="PlantillaVacia">
-                                    <TextBlock TextWrapping="Wrap" Margin="10 10 10 10" FontSize="14"
-                                           MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor,
-                                                              AncestorType={x:Type ContentPresenter}},
-                                                              Path=ActualWidth, UpdateSourceTrigger=PropertyChanged,
-                                                              Converter={StaticResource PorcentajeConverter}, ConverterParameter=0.9}"
-                                           Text="Por favor, seleccione un item de la tabla de pedidos detalles para mostrar información detallada."/>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type tablas:PedidoDetalle}">
-                                    <Grid DataContext="{Binding RelativeSource={RelativeSource Self}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Proveedor" Style="{DynamicResource tbTitulo}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Razón Social:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding RazonSocial}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Nif}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Email:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Email}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TipoProveedor.Nombre}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Dirección:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="5">
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
-                                                    <Binding Path="Municipio.CodigoPostal"/>
-                                                    <Binding Path="Municipio.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
-                                                    <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Calle:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding ProductoEnvasadoSeleccionado.Picking}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="7" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding ProductoEnvasadoSeleccionado.Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
-                                    </Grid>
-                                </DataTemplate>
-
-                            
-
-                            </ContentPresenter.Resources>
-                            <ContentPresenter.Style>
-                                <Style TargetType="{x:Type ContentPresenter}">
-                                    <Style.Triggers>
-                                        <DataTrigger Value="{x:Null}" Binding="{Binding PedidoDetalleSeleccionado}">
-                                            <Setter Property="ContentTemplate" Value="{StaticResource PlantillaVacia}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ContentPresenter.Style>
-                        </ContentPresenter>
-                    </ScrollViewer>
-                </GroupBox>
-            </Border>
+           <local:TablaPedidosDetalles Grid.Column="2" Grid.Row="0" x:Name="ucTablaPedidosDetalles" Margin="0 10 10 10" />
 
             <materialDesign:ColorZone Grid.ColumnSpan="4" Grid.Row="1" Mode="PrimaryMid" Margin="10 0 10 10"
                                           Height="20" Width="150" CornerRadius="2 10 10 2" HorizontalAlignment="Right">
