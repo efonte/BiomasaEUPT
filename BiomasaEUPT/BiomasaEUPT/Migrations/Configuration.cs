@@ -1027,8 +1027,13 @@ namespace BiomasaEUPT.Migrations
                 },
                 new TipoProductoEnvasado()
                 {
-                    Nombre = "Paquete",
-                    Descripcion = "Paquete medido en unidades."
+                    Nombre = "Paquete 10",
+                    Descripcion = "Paquete con 10 unidades"
+                },
+                new TipoProductoEnvasado()
+                {
+                    Nombre = "Paquete 10",
+                    Descripcion = "Paquete con 20 unidades."
                 });
             context.SaveChanges();
         }

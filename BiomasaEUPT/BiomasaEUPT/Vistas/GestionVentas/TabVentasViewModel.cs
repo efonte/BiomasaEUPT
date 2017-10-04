@@ -262,6 +262,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     EstadoId = 1
                 };
 
+                Console.WriteLine("Fecha pedido "+pedidoCabecera.FechaPedido);
+                Console.WriteLine("Cliente " + pedidoCabecera.ClienteId);
+                Console.WriteLine("EstadoPedido " + pedidoCabecera.EstadoId);
+
                 context.PedidosCabeceras.Add(pedidoCabecera);
 
                 /*var pedidosDetalles = new List<PedidoDetalle>();
@@ -347,6 +351,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             {
                 PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
                 PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
+                PedidoCabeceraSeleccionado.EstadoId = 1;
                 context.SaveChanges();
                 PedidosCabecerasView.Refresh();
             }
@@ -393,51 +398,154 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
         #endregion
 
-
-        #region Añadir Pedido Linea
-        public ICommand AnadirPedidoLineaComando => _anadirPedidoLineaComando ??
-            (_anadirPedidoLineaComando = new RelayCommand(
-                param => AnadirPedidoLinea()
+        #region Añadir Pedido Detalle
+        public ICommand AnadirPedidoDetalleComando => _anadirPedidoDetalleComando ??
+            (_anadirPedidoDetalleComando = new RelayCommand(
+                param => AnadirPedidoDetalle(),
+                param => CanAnadirPedidoDetalle()
             ));
 
-        private async void AnadirPedidoLinea()
+        private bool CanAnadirPedidoDetalle()
         {
-
-            var formPedido = new FormPedido(context);
-            //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
-
-            if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
+            if (PedidoCabeceraSeleccionado != null)
             {
+                return PedidoCabeceraSeleccionado.EstadoId == 1; // Nuevo 
+            }
+            return false;
+        }
 
-                var pedidoCabecera = new PedidoCabecera()
+        private async void AnadirPedidoDetalle()
+        {
+            var formPedidoDetalle = new FormPedidoDetalle(context);
+
+            if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
+            {
+                var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
+                var pedidoDetalle = new PedidoDetalle()
                 {
-
-                    FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.HoraPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second),
-                    ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId,
-                    EstadoId = 1
+                    PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
+                    Volumen = formPedidoDetalleDataContext.Volumen,
+                    Unidades = formPedidoDetalleDataContext.Unidades
+                    
                 };
 
-                context.PedidosCabeceras.Add(pedidoCabecera);
-
-                var pedidosDetalles = new List<PedidoDetalle>();
-                foreach (var pd in context.PedidosDetalles)
-                {
-                    if (pd.Unidades != 0 && pd.Volumen != 0)
-                    {
-
-                        pd.PedidoCabecera = pedidoCabecera;
-                        pedidosDetalles.Add(pd);
-                    }
-                }
-                context.PedidosDetalles.AddRange(pedidosDetalles);
+                context.PedidosDetalles.Add(pedidoDetalle);
 
                 context.SaveChanges();
 
-                RefrescarPedidosCabeceras();
-                //CargarPedidosCabeceras();
+                CargarPedidosDetalles();
             }
         }
-        #endregion  
+        #endregion
+
+        #region Borrar Pedido Detalle
+        public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
+            (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
+                param => BorrarPedidoDetalle(),
+                param => PedidoDetalleSeleccionado != null
+            ));
+
+        private async void BorrarPedidoDetalle()
+        {
+            string pregunta = PedidosCabecerasSeleccionados.Count == 1
+                   ? "¿Está seguro de que desea borrar el pedido " + PedidoDetalleSeleccionado.PedidoDetalleId + "?"
+                   : "¿Está seguro de que desea borrar los pedidos detalles seleccionados?";
+
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
+            {
+                var pedidosABorrar = new List<PedidoDetalle>();
+
+                foreach (var pedidoDetalle in PedidosDetallesSeleccionados)
+                {
+                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedidoDetalle.PedidoCabeceraId))
+                    {
+                        pedidosABorrar.Add(pedidoDetalle);
+                    }
+                }
+                context.PedidosDetalles.RemoveRange(pedidosABorrar);
+                context.SaveChanges();
+
+                if (PedidosDetallesSeleccionados.Count != pedidosABorrar.Count)
+                {
+                    string mensaje = PedidosDetallesSeleccionados.Count == 1
+                           ? "No se ha podido borrar el pedido detalle seleccionado."
+                           : "No se han podido borrar todas los pedidos detalles seleccionados.";
+                    mensaje += "\n\nAsegurese de no que no exista ningún pedido detalle asociada a dicho pedido.";
+                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                }
+                PaginacionViewModel.Refrescar();
+            }
+        }
+        #endregion
+
+
+        #region Modificar Pedido Detalle
+        public ICommand ModificarPedidoDetalleComando => _modificarPedidoCabeceraComando ??
+            (_modificarPedidoCabeceraComando = new RelayCommand(
+                param => ModificarPedidoDetalle(),
+                param => PedidoDetalleSeleccionado != null
+             ));
+
+        public async void ModificarPedidoDetalle()
+        {
+
+            var formPedidoDetalle = new FormPedidoDetalle(context, "Editar Pedido")
+            {
+                //FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
+                //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
+            };
+            //formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
+
+            if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
+            {
+                //PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
+                //PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
+                context.SaveChanges();
+                PedidosDetallesView.Refresh();
+            }
+        }
+        #endregion
+
+
+        #region Refrescar Pedidos Detalles
+        public ICommand RefrescarPedidosDetallesComando => _refrescarPedidosCabecerasComando ??
+            (_refrescarPedidosDetallesComando = new RelayCommand(
+                param => RefrescarPedidosDetalles()
+             ));
+
+        public void RefrescarPedidosDetalles()
+        {
+            PaginacionViewModel.Refrescar();
+            PedidoDetalleSeleccionado = null;
+        }
+        #endregion
+
+
+        #region Filtro Pedidos Detalles
+        public ICommand FiltrarPedidosDetallesComando => _filtrarPedidosDetallesComando ??
+           (_filtrarPedidosDetallesComando = new RelayCommand(
+                param => FiltrarPedidosDetalles()
+           ));
+
+        public void FiltrarPedidosDetalles()
+        {
+            PedidosDetallesView.Filter = FiltroPedidosDetalles;
+            PedidosDetallesView.Refresh();
+        }
+
+        private bool FiltroPedidosDetalles(object item)
+        {
+            var pedidoDetalle = item as PedidoDetalle;
+            string volumen = pedidoDetalle.Volumen.ToString();
+            string unidades = pedidoDetalle.Unidades.ToString();
+            string tipoProducto = pedidoDetalle.TipoProductoTerminado.Nombre.ToLower();
+
+            return (FechaPedidoSeleccionado == true ? volumen.Contains(TextoFiltroPedidos) : false)
+                || (ClientePedidoSeleccionado == true ? unidades.Contains(TextoFiltroPedidos) : false)
+                || (TipoProductoTerminadoSeleccionado == true ? tipoProducto.Contains(TextoFiltroPedidos) : false);
+        }
+        #endregion
+
 
         #region Añadir Producto Envasado
         public ICommand AnadirProductoEnvasadoComando => _anadirProductoEnvasadoComando ??
@@ -630,113 +738,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
 
 
-        #region Borrar Pedido Detalle
-        public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
-            (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
-                param => BorrarPedidoDetalle(),
-                param => PedidoDetalleSeleccionado != null
-            ));
-
-        private async void BorrarPedidoDetalle()
-        {
-            string pregunta = PedidosCabecerasSeleccionados.Count == 1
-                   ? "¿Está seguro de que desea borrar el pedido " + PedidoDetalleSeleccionado.PedidoDetalleId + "?"
-                   : "¿Está seguro de que desea borrar los pedidos detalles seleccionados?";
-
-            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
-            {
-                var pedidosABorrar = new List<PedidoDetalle>();
-
-                foreach (var pedidoDetalle in PedidosDetallesSeleccionados)
-                {
-                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedidoDetalle.PedidoCabeceraId))
-                    {
-                        pedidosABorrar.Add(pedidoDetalle);
-                    }
-                }
-                context.PedidosDetalles.RemoveRange(pedidosABorrar);
-                context.SaveChanges();
-
-                if (PedidosDetallesSeleccionados.Count != pedidosABorrar.Count)
-                {
-                    string mensaje = PedidosDetallesSeleccionados.Count == 1
-                           ? "No se ha podido borrar el pedido detalle seleccionado."
-                           : "No se han podido borrar todas los pedidos detalles seleccionados.";
-                    mensaje += "\n\nAsegurese de no que no exista ningún pedido detalle asociada a dicho pedido.";
-                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
-                }
-                PaginacionViewModel.Refrescar();
-            }
-        }
-        #endregion
-
-
-        #region Modificar Pedido Detalle
-        public ICommand ModificarPedidoDetalleComando => _modificarPedidoCabeceraComando ??
-            (_modificarPedidoCabeceraComando = new RelayCommand(
-                param => ModificarPedidoDetalle(),
-                param => PedidoDetalleSeleccionado != null
-             ));
-
-        public async void ModificarPedidoDetalle()
-        {
-
-            var formPedidoDetalle = new FormPedidoDetalle(context, "Editar Pedido")
-            {
-                //FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
-                //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
-            };
-            //formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
-
-            if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
-            {
-                //PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
-                //PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
-                context.SaveChanges();
-                PedidosDetallesView.Refresh();
-            }
-        }
-        #endregion
-
-
-        #region Refrescar Pedidos Detalles
-        public ICommand RefrescarPedidosDetallesComando => _refrescarPedidosCabecerasComando ??
-            (_refrescarPedidosDetallesComando = new RelayCommand(
-                param => RefrescarPedidosDetalles()
-             ));
-
-        public void RefrescarPedidosDetalles()
-        {
-            PaginacionViewModel.Refrescar();
-            PedidoDetalleSeleccionado = null;
-        }
-        #endregion
-
-
-        #region Filtro Pedidos Detalles
-        public ICommand FiltrarPedidosDetallesComando => _filtrarPedidosDetallesComando ??
-           (_filtrarPedidosDetallesComando = new RelayCommand(
-                param => FiltrarPedidosDetalles()
-           ));
-
-        public void FiltrarPedidosDetalles()
-        {
-            PedidosDetallesView.Filter = FiltroPedidosDetalles;
-            PedidosDetallesView.Refresh();
-        }
-
-        private bool FiltroPedidosDetalles(object item)
-        {
-            var pedidoDetalle = item as PedidoDetalle;
-            string volumen = pedidoDetalle.Volumen.ToString();
-            string unidades = pedidoDetalle.Unidades.ToString();
-            string tipoProducto = pedidoDetalle.TipoProductoTerminado.Nombre.ToLower();
-
-            return (FechaPedidoSeleccionado == true ? volumen.Contains(TextoFiltroPedidos) : false)
-                || (ClientePedidoSeleccionado == true ? unidades.Contains(TextoFiltroPedidos) : false)
-                || (TipoProductoTerminadoSeleccionado == true ? tipoProducto.Contains(TextoFiltroPedidos) : false);
-        }
-        #endregion
+        
 
 
     }

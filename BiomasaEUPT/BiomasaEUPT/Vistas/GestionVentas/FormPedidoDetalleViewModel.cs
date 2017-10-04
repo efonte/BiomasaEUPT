@@ -14,6 +14,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     {
 
         public ObservableCollection<TipoProductoTerminado> TiposProductosTerminadosDisponibles { get; set; }
+        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
         public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
 
         public int? Unidades { get; set; }
@@ -29,6 +30,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public FormPedidoDetalleViewModel()
         {
             TiposProductosTerminadosDisponibles = new ObservableCollection<TipoProductoTerminado>();
+            HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>();
             PedidosDetalles = new ObservableCollection<PedidoDetalle>();
         }
     }
