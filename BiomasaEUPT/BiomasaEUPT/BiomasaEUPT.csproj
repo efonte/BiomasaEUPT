@@ -727,6 +727,7 @@
     <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasados.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasadosComposiciones.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\TiposProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosPedidos.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

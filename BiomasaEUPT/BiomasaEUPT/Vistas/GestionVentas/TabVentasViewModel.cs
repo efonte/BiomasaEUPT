@@ -262,6 +262,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     EstadoId = 1
                 };
 
+                Console.WriteLine("Id " + pedidoCabecera.PedidoCabeceraId);
                 Console.WriteLine("Fecha pedido "+pedidoCabecera.FechaPedido);
                 Console.WriteLine("Cliente " + pedidoCabecera.ClienteId);
                 Console.WriteLine("EstadoPedido " + pedidoCabecera.EstadoId);
@@ -308,7 +309,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 foreach (var pedido in PedidosCabecerasSeleccionados)
                 {
-                    if (!context.ProductosEnvasados.Any(pe => pe.ProductoEnvasadoId == pedido.PedidoCabeceraId))
+                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedido.PedidoCabeceraId))
                     {
                         pedidosABorrar.Add(pedido);
                     }

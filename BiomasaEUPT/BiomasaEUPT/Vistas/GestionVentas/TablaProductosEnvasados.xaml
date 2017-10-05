@@ -81,7 +81,7 @@
 
                             
                             <materialDesign:MaterialDataGridTextColumn x:Name="pedidoColumna" Header="Tipo P. Envasado"
-                                                                       Binding="{Binding PedidoDetalle.TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding ProductoEnvasado.TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -126,7 +126,7 @@
                         </Expander.Header>
                         <WrapPanel x:Name="wpProductosTerminados" Margin="15 25 0 0"
                                    Orientation="Horizontal" MinHeight="40" Width="150">
-                            <ItemsControl ItemsSource="{Binding ProductoTerminadoSeleccionado.ProductosTerminadosComposiciones, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl ItemsSource="{Binding ProductoEnvasadoSeleccionado.ProductosEnvasadosComposiciones, UpdateSourceTrigger=PropertyChanged}" >
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">
                                         <Style.Triggers>

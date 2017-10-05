@@ -23,6 +23,7 @@
             <CollectionViewSource x:Key="pickingViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Picking}, CreateList=True}"/>
             <CollectionViewSource x:Key="pedidoDetalleViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoDetalle}, CreateList=True}"/>
             <CollectionViewSource x:Key="productosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoEnvasado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Producto Envasado">

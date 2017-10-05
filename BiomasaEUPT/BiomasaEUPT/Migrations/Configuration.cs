@@ -974,26 +974,26 @@ namespace BiomasaEUPT.Migrations
             context.SaveChanges();
 
             context.EstadosPedidos.AddOrUpdate(
-                 sr => sr.Nombre,
+                 ep => ep.Nombre,
                  new EstadoPedido()
                  {
                      Nombre = "Nuevo",
-                     Descripcion = "Cuando un pedido nuevo se realiza su estado podría estar pendiente"
+                     Descripcion = "Cuando un pedido nuevo se realiza su estado podría estar pendiente."
                  },
                  new EstadoPedido()
                  {
                      Nombre = "Preparar",
-                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a procesando"
+                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a preparando."
                  },
                  new EstadoPedido()
                  {
                      Nombre = "Facturar",
-                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a procesando"
+                     Descripcion = "Una vez el pago ha sido confirmado el estado podría ser puesto a facturar."
                  },
                  new EstadoPedido()
                  {
                      Nombre = "Finalizado",
-                     Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado"
+                     Descripcion = "Si el pedido ha llegado a su destino puede ser puesto como completo o terminado."
                  });
             context.SaveChanges();
 
@@ -1001,13 +1001,13 @@ namespace BiomasaEUPT.Migrations
                 sr => sr.Nombre,
                 new Picking()
                 {
-                    Nombre = "Picking A01",
+                    Nombre = "P01",
                     VolumenTotal = 20,
                     VolumenRestante = 15
                 },
                 new Picking()
                 {
-                    Nombre = "Picking A02",
+                    Nombre = "P02",
                     VolumenTotal = 45,
                     VolumenRestante = 10
                 });
@@ -1032,7 +1032,7 @@ namespace BiomasaEUPT.Migrations
                 },
                 new TipoProductoEnvasado()
                 {
-                    Nombre = "Paquete 10",
+                    Nombre = "Paquete 20",
                     Descripcion = "Paquete con 20 unidades."
                 });
             context.SaveChanges();

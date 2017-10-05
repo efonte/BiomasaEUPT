@@ -34,11 +34,11 @@ namespace BiomasaEUPT.Modelos.Tablas
 
         //Unidades totales que existen para el picking
         [DisplayName("Unidades totales"), Display(Name = "Unidades totales")]
-        public double? UnidadesTotales { get; set; }
+        public int? UnidadesTotales { get; set; }
 
         // Unidades restantes
         [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
-        public double? UnidadesRestantes { get; set; }
+        public int? UnidadesRestantes { get; set; }
 
         public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }

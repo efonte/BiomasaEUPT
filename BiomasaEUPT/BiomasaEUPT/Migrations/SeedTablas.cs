@@ -725,6 +725,55 @@ namespace BiomasaEUPT.Migrations
                 }
             }
             context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "EstadosPedidos");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = csvReader.GetRecords<EstadoPedido>().ToArray();
+                    context.EstadosPedidos.AddOrUpdate(d => d.Nombre, datos);
+                }
+            }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "Picking");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<Picking>();
+                    while (csvReader.Read())
+                    {
+                        datos.Add(new Picking()
+                        {
+                            PickingId = csvReader.GetField<int>("PickingId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            VolumenTotal = csvReader.GetField<double>("VolumenTotal"),
+                            VolumenRestante = csvReader.GetField<double>("VolumenRestante"),
+                            UnidadesTotales = csvReader.GetField<int>("UnidadesTotales"),
+                            UnidadesRestantes = csvReader.GetField<int>("UnidadesRestantes"),
+                        });
+
+                    }
+                    context.Picking.AddOrUpdate(d => d.PickingId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "TiposProductosEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = csvReader.GetRecords<TipoProductoEnvasado>().ToArray();
+                    context.TiposProductosEnvasados.AddOrUpdate(d => d.Nombre, datos);
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

@@ -33,7 +33,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private CollectionViewSource productosEnvasadosViewSource;
         private CollectionViewSource pickingViewSource;
         private CollectionViewSource pedidoDetalleViewSource;
-        private CollectionViewSource productoTerminadoViewSource;
+        private CollectionViewSource productosTerminadosViewSource;
+        private CollectionViewSource tiposProductosEnvasadosViewSource;
         private FormProductoEnvasadoViewModel viewModel;
 
         private BiomasaEUPTContext context;
@@ -63,17 +64,20 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
             pickingViewSource = ((CollectionViewSource)(FindResource("pickingViewSource")));
             pedidoDetalleViewSource = ((CollectionViewSource)(FindResource("pedidoDetalleViewSource")));
-            productoTerminadoViewSource = ((CollectionViewSource)(FindResource("productoTerminadoViewSource")));
+            tiposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosEnvasadosViewSource")));
+            productosTerminadosViewSource = ((CollectionViewSource)(FindResource("productoTerminadoViewSource")));
 
             context.ProductosEnvasados.Load();
             context.Picking.Load();
             context.PedidosDetalles.Load();
+            context.TiposProductosEnvasados.Load();
             context.ProductosTerminados.Load();
 
             productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
             pickingViewSource.Source = context.Picking.Local;
             pedidoDetalleViewSource.Source = context.PedidosDetalles.Local;
-            productoTerminadoViewSource.Source = context.ProductosTerminados.Local;
+            tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
+            productosTerminadosViewSource.Source = context.ProductosTerminados.Local;
 
         }
 

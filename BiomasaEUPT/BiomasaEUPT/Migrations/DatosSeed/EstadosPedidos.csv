@@ -1,0 +1,5 @@
+﻿Nombre;Descripcion
+Nuevo;Cuando un pedido nuevo se realiza su estado podría estar pendiente.
+Preparar;Una vez el pago ha sido confirmado el estado podría ser puesto a preparando.
+Facturar;Una vez el pago ha sido confirmado el estado podría ser puesto a facturar.
+Finalizada;Si el pedido ha llegado a su destino puede ser puesto como completo o terminado.
