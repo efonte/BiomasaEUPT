@@ -17,6 +17,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
+            <conv:CadenaSplitConverter x:Key="CadenaSplitConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -226,7 +227,8 @@
                                                 </StackPanel>
                                             </materialDesign:Chip.Content>
                                             <materialDesign:Chip.Icon>
-                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoRecepcion.HuecoRecepcion.Nombre}"></TextBlock>
+                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoRecepcion.HuecoRecepcion.Nombre,UpdateSourceTrigger=PropertyChanged,
+                                                                                Converter={StaticResource CadenaSplitConverter}, ConverterParameter='3|3'}"></TextBlock>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>
                                     </DataTemplate>
@@ -297,7 +299,8 @@
                                                 </TextBlock>
                                             </materialDesign:Chip.Content>
                                             <materialDesign:Chip.Icon>
-                                                <TextBlock FontSize="15" Text="{Binding HuecoAlmacenaje.Nombre}"></TextBlock>
+                                                <TextBlock FontSize="15" Text="{Binding HuecoAlmacenaje.Nombre, UpdateSourceTrigger=PropertyChanged,
+                                                                                Converter={StaticResource CadenaSplitConverter}, ConverterParameter='3|3'}"></TextBlock>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>
                                     </DataTemplate>

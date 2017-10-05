@@ -350,16 +350,18 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         private async void AnadirTipoProductoEnvasado()
         {
-            var formTipo = new FormTipo("Nuevo Tipo de Producto Envasado");
-            formTipo.vNombreUnico.Atributo = "Nombre";
-            formTipo.vNombreUnico.Tipo = "TipoProductoEnvasado";
+            var formTipoPE = new FormTipoProductoEnvasado("Nuevo Tipo de Producto Envasado");
+            formTipoPE.vNombreUnico.Atributo = "Nombre";
+            formTipoPE.vNombreUnico.Tipo = "TipoProductoEnvasado";
 
-            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            if ((bool)await DialogHost.Show(formTipoPE, "RootDialog"))
             {
                 context.TiposProductosEnvasados.Add(new TipoProductoEnvasado()
                 {
-                    Nombre = formTipo.Nombre,
-                    Descripcion = formTipo.Descripcion,
+                    Nombre = formTipoPE.Nombre,
+                    Descripcion = formTipoPE.Descripcion,
+                    MedidoEnVolumen = formTipoPE.lbMedido.SelectedIndex == 0,
+                    MedidoEnUnidades = formTipoPE.lbMedido.SelectedIndex == 1,
                 });
 
                 context.SaveChanges();
@@ -408,18 +410,20 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         private async void ModificarTipoProductoEnvasado()
         {
-            var formTipo = new FormTipo("Editar Tipo de Producto Envasado");
-            formTipo.vNombreUnico.Atributo = "Nombre";
-            formTipo.vNombreUnico.Tipo = "TipoProductoEnvasado";
-            formTipo.vNombreUnico.NombreActual = TipoProductoEnvasadoSeleccionado.Nombre;
+            var formTipoPE = new FormTipoProductoEnvasado("Editar Tipo de Producto Envasado");
+            formTipoPE.vNombreUnico.Atributo = "Nombre";
+            formTipoPE.vNombreUnico.Tipo = "TipoProductoEnvasado";
+            formTipoPE.vNombreUnico.NombreActual = TipoProductoEnvasadoSeleccionado.Nombre;
 
-            formTipo.Nombre = TipoProductoEnvasadoSeleccionado.Nombre;
-            formTipo.Descripcion = TipoProductoEnvasadoSeleccionado.Descripcion;
+            formTipoPE.Nombre = TipoProductoEnvasadoSeleccionado.Nombre;
+            formTipoPE.Descripcion = TipoProductoEnvasadoSeleccionado.Descripcion;
 
-            if ((bool)await DialogHost.Show(formTipo, "RootDialog"))
+            if ((bool)await DialogHost.Show(formTipoPE, "RootDialog"))
             {
-                TipoProductoEnvasadoSeleccionado.Nombre = formTipo.Nombre;
-                TipoProductoEnvasadoSeleccionado.Descripcion = formTipo.Descripcion;
+                TipoProductoEnvasadoSeleccionado.Nombre = formTipoPE.Nombre;
+                TipoProductoEnvasadoSeleccionado.Descripcion = formTipoPE.Descripcion;
+                TipoProductoEnvasadoSeleccionado.MedidoEnVolumen = formTipoPE.lbMedido.SelectedIndex == 0;
+                TipoProductoEnvasadoSeleccionado.MedidoEnUnidades = formTipoPE.lbMedido.SelectedIndex == 1;
                 context.SaveChanges();
                 CargarTiposProductosEnvasados();
             }

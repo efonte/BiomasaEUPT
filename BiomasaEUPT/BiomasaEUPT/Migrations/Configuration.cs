@@ -1018,22 +1018,26 @@ namespace BiomasaEUPT.Migrations
                 new TipoProductoEnvasado()
                 {
                     Nombre = "Saco",
-                    Descripcion = "Saco medido en metros cúbicos."
+                    Descripcion = "Saco medido en metros cúbicos.",
+                    MedidoEnVolumen = true
                 },
                 new TipoProductoEnvasado()
                 {
                     Nombre = "Saca",
-                    Descripcion = "Saca medida en metros cúbicos."
+                    Descripcion = "Saca medida en metros cúbicos.",
+                    MedidoEnVolumen = true
                 },
                 new TipoProductoEnvasado()
                 {
                     Nombre = "Paquete 10",
-                    Descripcion = "Paquete con 10 unidades"
+                    Descripcion = "Paquete con 10 unidades.",
+                    MedidoEnUnidades = true
                 },
                 new TipoProductoEnvasado()
                 {
                     Nombre = "Paquete 20",
-                    Descripcion = "Paquete con 20 unidades."
+                    Descripcion = "Paquete con 20 unidades.",
+                    MedidoEnUnidades = true
                 });
             context.SaveChanges();
         }

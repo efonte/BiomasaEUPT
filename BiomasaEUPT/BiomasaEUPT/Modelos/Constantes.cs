@@ -22,6 +22,7 @@ namespace BiomasaEUPT.Modelos
         public const string REGEX_UNIDADES = @"^\d+$";
         public const string REGEX_VOLUMEN = @"^\d+(\.\d+)?$";
         public const string REGEX_NUMERO_ALBARAN = @"^([A-Z]-[\dA-Z]{1,8})$";
+        public const string REGEX_HUECO = @"^(HA|HR)-[A-Z]\d{2}$";
 
 
         public const int LONG_MIN_RAZON_SOCIAL = 5;
@@ -75,8 +76,8 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MIN_DESCRIPCION_GRUPO = 5;
         public const int LONG_MAX_DESCRIPCION_GRUPO = 80;
 
-        public const int LONG_MIN_NOMBRE_HUECO = 3;
-        public const int LONG_MAX_NOMBRE_HUECO = 3;
+        public const int LONG_MIN_NOMBRE_HUECO = 6;
+        public const int LONG_MAX_NOMBRE_HUECO = 6;
 
         public const int LONG_MIN_OBSERVACIONES = 3;
         public const int LONG_MAX_OBSERVACIONES = 60;

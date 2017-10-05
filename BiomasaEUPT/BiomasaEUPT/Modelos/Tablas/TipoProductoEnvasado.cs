@@ -31,6 +31,12 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Descripción"), Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
+        [DisplayName("Medido en volumen"), Display(Name = "Medido en volumen")]
+        public bool? MedidoEnVolumen { get; set; }
+
+        [DisplayName("Medido en unidades"), Display(Name = "Medido en unidades")]
+        public bool? MedidoEnUnidades { get; set; }
+
         public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }
 }

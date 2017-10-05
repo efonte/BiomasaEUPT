@@ -196,6 +196,7 @@
     <Compile Include="Clases\Trazabilidad.cs" />
     <Compile Include="Domain\Converters\BooleanConverter.cs" />
     <Compile Include="Domain\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Domain\Converters\CadenaSplitConverter.cs" />
     <Compile Include="Domain\Converters\CadenaVaciaConverter.cs" />
     <Compile Include="Domain\ContrasenaHashing.cs" />
     <Compile Include="Domain\Converters\PorcentajeConverter.cs" />
@@ -308,6 +309,9 @@
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\ControlesUsuario\FormTipoProductoEnvasado.xaml.cs">
+      <DependentUpon>FormTipoProductoEnvasado.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipoProductoTerminado.xaml.cs">
       <DependentUpon>FormTipoProductoTerminado.xaml</DependentUpon>
@@ -511,6 +515,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\ControlesUsuario\FormTipoProductoEnvasado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -726,6 +726,7 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
+
             resourceName = String.Format(NOMBRE_CSV, "EstadosPedidos");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -738,6 +739,31 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
+
+            resourceName = String.Format(NOMBRE_CSV, "TiposProductosEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<TipoProductoEnvasado>();
+                    while (csvReader.Read())
+                    {
+                        datos.Add(new TipoProductoEnvasado()
+                        {
+                            TipoProductoEnvasadoId = csvReader.GetField<int>("TipoProductoEnvasadoId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Descripcion = csvReader.GetField<string>("Descripcion"),
+                            MedidoEnVolumen = csvReader.GetField<bool>("MedidoEnVolumen"),
+                            MedidoEnUnidades = csvReader.GetField<bool>("MedidoEnUnidades")
+                        });
+                    }
+                    context.TiposProductosEnvasados.AddOrUpdate(d => d.TipoProductoEnvasadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+           
             resourceName = String.Format(NOMBRE_CSV, "Picking");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -752,9 +778,7 @@ namespace BiomasaEUPT.Migrations
                             PickingId = csvReader.GetField<int>("PickingId"),
                             Nombre = csvReader.GetField<string>("Nombre"),
                             VolumenTotal = csvReader.GetField<double>("VolumenTotal"),
-                            VolumenRestante = csvReader.GetField<double>("VolumenRestante"),
-                            UnidadesTotales = csvReader.GetField<int>("UnidadesTotales"),
-                            UnidadesRestantes = csvReader.GetField<int>("UnidadesRestantes"),
+                            UnidadesTotales = csvReader.GetField<int>("UnidadesTotales")
                         });
 
                     }
@@ -762,18 +786,7 @@ namespace BiomasaEUPT.Migrations
                 }
             }
             context.SaveChanges();
-
-            resourceName = String.Format(NOMBRE_CSV, "TiposProductosEnvasados");
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    CsvReader csvReader = new CsvReader(reader, csvConfig);
-                    var datos = csvReader.GetRecords<TipoProductoEnvasado>().ToArray();
-                    context.TiposProductosEnvasados.AddOrUpdate(d => d.Nombre, datos);
-                }
-            }
-            context.SaveChanges();
+            
         }
     }
 }
