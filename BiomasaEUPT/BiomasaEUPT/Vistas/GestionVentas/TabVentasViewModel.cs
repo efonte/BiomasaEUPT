@@ -268,19 +268,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 Console.WriteLine("EstadoPedido " + pedidoCabecera.EstadoId);
 
                 context.PedidosCabeceras.Add(pedidoCabecera);
-
-                /*var pedidosDetalles = new List<PedidoDetalle>();
-                foreach (var pd in context.PedidosDetalles)
-                {
-                    if (pd.Unidades != 0 && pd.Volumen != 0)
-                    {
-
-                        pd.PedidoCabecera = pedidoCabecera;
-                        pedidosDetalles.Add(pd);
-                    }
-                }
-                context.PedidosDetalles.AddRange(pedidosDetalles);*/
-
                 context.SaveChanges();
 
                 RefrescarPedidosCabeceras();
@@ -428,7 +415,19 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
                     
+                    
                 };
+
+                var pedidosDetalles = new List<PedidoDetalle>();
+                foreach (var pd in context.PedidosDetalles)
+                {
+                    if (pd.Unidades != 0 && pd.Volumen != 0)
+                    {
+
+                        pd.PedidoCabecera = PedidoCabeceraSeleccionado;
+                        pedidosDetalles.Add(pd);
+                    }
+                }
 
                 context.PedidosDetalles.Add(pedidoDetalle);
 
@@ -559,7 +558,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             if (PedidoCabeceraSeleccionado != null)
             {
-                return PedidoCabeceraSeleccionado.EstadoId == 1; // Procesando
+                return PedidoCabeceraSeleccionado.EstadoId == 2; // Procesando
             }
             return false;
         }
@@ -573,23 +572,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formProductoEnvasadoDataContext = formProductoEnvasado.DataContext as FormProductoEnvasadoViewModel;
                 var productoEnvasado = new ProductoEnvasado()
                 {
+                    TipoProductoEnvasadoId=(formProductoEnvasado.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
                     Observaciones = formProductoEnvasadoDataContext.Observaciones,
                     PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
-                    Volumen = formProductoEnvasadoDataContext.Volumen,
-                    //  PedidoDetalleId=PedidoCabeceraSeleccionado.deta
+                    Volumen = formProductoEnvasadoDataContext.Volumen
 
                 };
-
-                Console.WriteLine(" Observaciones " + productoEnvasado.Observaciones);
-                Console.WriteLine(" Picking " + productoEnvasado.PickingId);
-                Console.WriteLine(" Volumen " + productoEnvasado.Volumen);
-                Console.WriteLine("Codigo " + productoEnvasado.Codigo);
-                Console.WriteLine("PedidoDetalle " + productoEnvasado.PedidoDetalleId);
-
-                Console.WriteLine("Producto Envasado " + productoEnvasado.ToString());
-
                 context.ProductosEnvasados.Add(productoEnvasado);
-                /*var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
+
+                var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
                 foreach (var pec in formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones)
                 {
                     var hhaId = pec.HistorialHuecoAlmacenaje.HuecoAlmacenajeId;
@@ -601,8 +592,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                         pec.ProductoEnvasado = productoEnvasado;
                         productosEnvasadosComposiciones.Add(pec);
                     }
-                }*/
-                //context.HistorialHuecosAlmacenajes.AddRange(ProductoEnvasadoSeleccionado);
+                }
+                //context.ProductosEnvasados.AddRange(ProductoEnvasadoSeleccionado);
                 context.SaveChanges();
 
                 CargarProductosEnvasados();

@@ -29,7 +29,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private CollectionViewSource pedidosViewSource;
         private CollectionViewSource pedidosDetallesViewSource;
-        private CollectionViewSource tiposProductosTerminadosViewSource;
         private CollectionViewSource gruposProductosTerminadosViewSource;
 
         private FormPedidoDetalleViewModel viewModel;
@@ -51,6 +50,20 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             gbTitulo.Header = _titulo;
 
+        }
+
+        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoDetalle pedidoDetalle)
+        {
+            gbTitulo.Header = "Editar Producto Envasado";
+
+            if (pedidoDetalle.TipoProductoTerminado.MedidoEnUnidades == true)
+            {
+                viewModel.Cantidad = pedidoDetalle.Unidades.Value;
+            }
+            else
+            {
+                viewModel.Cantidad = pedidoDetalle.Volumen.Value;
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

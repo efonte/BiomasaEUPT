@@ -52,9 +52,27 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             gbTitulo.Header = "Editar Producto Envasado";
 
             viewModel.Observaciones = productoEnvasado.Observaciones;
+
+            if (productoEnvasado.TipoProductoEnvasado.MedidoEnUnidades == true)
+            {
+                viewModel.Cantidad = productoEnvasado.Unidades.Value;
+            }
+            else
+            {
+                viewModel.Cantidad = productoEnvasado.Volumen.Value;
+            }
+
             viewModel.ProductosEnvasadosComposiciones = new ObservableCollection<ProductoEnvasadoComposicion>(context.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoId == productoEnvasado.ProductoEnvasadoId).ToList());
-            //viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(context.HistorialHuecosAlmacenajes.Where(hha => hha.ProductoId == productoEnvasado.ProductoEnvasadoId).ToList());
+            viewModel.HistorialPicking = new ObservableCollection<Picking>(context.Picking.Where(p => p.PickingId == productoEnvasado.PickingId).ToList());
             CalcularCantidades();
+
+            // Si ya se han envasado algún producto envasado con dicho producto terminado entonces los controles estarán deshabilitados
+            if (context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoEnvasado.ProductoEnvasadoId == productoEnvasado.ProductoEnvasadoId))
+            {
+                cbTiposProductosEnvasados.IsEnabled = false;
+                tbCantidad.IsEnabled = false;
+                cbPicking.IsEnabled = false;
+            }
 
 
         }
@@ -153,19 +171,19 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private void CalcularCantidades()
         {
-            if (viewModel.TipoProductoTerminado != null && viewModel.TipoProductoTerminado.MedidoEnVolumen == true)
+            if (viewModel.TipoProductoEnvasado != null && viewModel.TipoProductoEnvasado.MedidoEnVolumen == true)
             {
                 var unidadesRestantes = viewModel.Unidades;
-                foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
+                foreach (var p in viewModel.HistorialPicking)
                 {
-                    if (hha.HuecoAlmacenaje.UnidadesTotales <= unidadesRestantes)
+                    if (p.UnidadesTotales <= unidadesRestantes)
                     {
-                        unidadesRestantes -= hha.HuecoAlmacenaje.UnidadesTotales;
-                        hha.Unidades = hha.HuecoAlmacenaje.UnidadesTotales;
+                        unidadesRestantes -= p.UnidadesTotales;
+                        p.UnidadesTotales = p.UnidadesTotales;
                     }
                     else
                     {
-                        hha.Unidades = unidadesRestantes;
+                        p.UnidadesRestantes = unidadesRestantes;
                         unidadesRestantes = 0;
                     }
                 }
@@ -174,23 +192,23 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             else
             {
                 var volumenRestante = viewModel.Volumen;
-                foreach (var hha in viewModel.HistorialHuecosAlmacenajes)
+                foreach (var p in viewModel.HistorialPicking)
                 {
-                    if (hha.HuecoAlmacenaje.VolumenTotal <= volumenRestante)
+                    if (p.VolumenTotal <= volumenRestante)
                     {
-                        volumenRestante -= hha.HuecoAlmacenaje.VolumenTotal;
-                        hha.Volumen = hha.HuecoAlmacenaje.VolumenTotal;
+                        volumenRestante -= p.VolumenTotal;
+                        p.VolumenTotal = p.VolumenTotal;
                     }
                     else
                     {
-                        hha.Volumen = volumenRestante;
+                        p.VolumenRestante = volumenRestante;
                         volumenRestante = 0;
                     }
                 }
                 viewModel.QuedaCantidadPorAlmacenar = volumenRestante > 0 || viewModel.Cantidad == 0;
             }
 
-            viewModel.HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>(viewModel.HistorialHuecosAlmacenajes.ToList());
+            viewModel.HistorialPicking = new ObservableCollection<Picking>(viewModel.HistorialPicking.ToList());
         }
     }
 }

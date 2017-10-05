@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="450" Width="450" Loaded="UserControl_Loaded">
+             Height="350" Width="450" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,7 +19,6 @@
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
             <CollectionViewSource x:Key="pedidosDetallesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoDetalle}, CreateList=True}"/>
-            <!--CollectionViewSource x:Key="productosTerminadosComposicionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminadoComposicion}, CreateList=True}"/-->
             <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -38,7 +37,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo" Margin="0 8 8 0"
+                <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo Producto Terminado" Margin="0 8 8 0"
                           ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
                           SelectionChanged="cbGruposProductosTerminados_SelectionChanged" VerticalAlignment="Top">

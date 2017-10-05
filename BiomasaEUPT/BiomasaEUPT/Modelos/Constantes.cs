@@ -126,5 +126,8 @@ namespace BiomasaEUPT.Modelos
 
         public const int LONG_MIN_VOLUMEN = 1;
         public const int LONG_MAX_VOLUMEN = 6;
+
+        public const int LONG_MIN_CANTIDAD_ENVASADO = 2;
+        public const int LONG_MAX_CANTIDAD_ENVASADO = 6;
     }
 }
