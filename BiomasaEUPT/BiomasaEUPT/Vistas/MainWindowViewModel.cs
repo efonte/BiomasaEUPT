@@ -3,6 +3,7 @@ using BiomasaEUPT.Modelos.Tablas;
 using BiomasaEUPT.Vistas.Ajustes;
 using BiomasaEUPT.Vistas.GestionClientes;
 using BiomasaEUPT.Vistas.GestionElaboraciones;
+using BiomasaEUPT.Vistas.GestionEnvasados;
 using BiomasaEUPT.Vistas.GestionPermisos;
 using BiomasaEUPT.Vistas.GestionProveedores;
 using BiomasaEUPT.Vistas.GestionRecepciones;
@@ -115,6 +116,17 @@ namespace BiomasaEUPT.Vistas
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabElaboracionesViewModel).
                                RefrescarProductosTerminadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
                     }
+                    else if (TabSeleccionada is TabEnvasadosViewModel)
+                    {
+                        /*ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
+                               AnadirProductoEnvasadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
+                               ModificarProductoEnvasadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
+                               BorrarProductoEnvasadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
+                               RefrescarProductosEnvasadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));*/
+                    }
                     else if (TabSeleccionada is TabVentasViewModel)
                     {
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
@@ -168,6 +180,7 @@ namespace BiomasaEUPT.Vistas
                 { Tab.Proveedores, new TabProveedoresViewModel() },
                 { Tab.Recepciones, new TabRecepcionesViewModel() },
                 { Tab.Elaboraciones, new TabElaboracionesViewModel() },
+                { Tab.Envasados, new TabEnvasadosViewModel() },
                 { Tab.Ventas, new TabVentasViewModel() },
                 { Tab.Trazabilidad, new TabTrazabilidadViewModel() },
             };

@@ -219,9 +219,12 @@
         public DbSet<SitioAlmacenaje> SitiosAlmacenajes { get; set; }
         public DbSet<HuecoAlmacenaje> HuecosAlmacenajes { get; set; }
         public DbSet<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
+        public DbSet<EstadoEnvasado> EstadosEnvasados{ get; set; }
+        public DbSet<OrdenEnvasado> OrdenesEnvasados { get; set; }
         public DbSet<ProductoEnvasado> ProductosEnvasados { get; set; }
         public DbSet<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
         public DbSet<TipoProductoEnvasado> TiposProductosEnvasados { get; set; }
+        public DbSet<GrupoProductoEnvasado> GruposProductosEnvasados { get; set; }
         public DbSet<PedidoCabecera> PedidosCabeceras { get; set; }
         public DbSet<EstadoPedido> EstadosPedidos { get; set; }
         public DbSet<PedidoDetalle> PedidosDetalles { get; set; }

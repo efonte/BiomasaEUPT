@@ -1,13 +1,5 @@
-﻿using BiomasaEUPT.Clases;
-using BiomasaEUPT.Domain;
-using BiomasaEUPT.Modelos;
-using BiomasaEUPT.Modelos.Tablas;
-using BiomasaEUPT.Vistas.ControlesUsuario;
-using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionVentas
+namespace BiomasaEUPT.Vistas.GestionEnvasados
 {
     /// <summary>
-    /// Lógica de interacción para TabVentas.xaml
+    /// Lógica de interacción para TabEnvasados.xaml
     /// </summary>
-    public partial class TabVentas : UserControl
+    public partial class TabEnvasados : UserControl
     {
-        public TabVentas()
+        public TabEnvasados()
         {
             InitializeComponent();
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(MyControl_IsVisibleChanged);
@@ -43,5 +35,17 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             Keyboard.Focus(this);
         }
 
+        private void bMasOpciones_Click(object sender, RoutedEventArgs e)
+        {
+            //transicion.SelectedIndex = 1;
+            (DataContext as TabEnvasadosViewModel).IndiceMasOpciones = 1;
+            (DataContext as TabEnvasadosViewModel).MasOpcionesEnvasadosViewModel.Inicializar();
+        }
+
+        private void bVolver_Click(object sender, RoutedEventArgs e)
+        {
+            //transicion.SelectedIndex = 0;
+            (DataContext as TabEnvasadosViewModel).Inicializar();
+        }
     }
 }

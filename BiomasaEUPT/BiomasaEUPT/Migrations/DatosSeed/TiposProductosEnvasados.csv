@@ -1,5 +1,5 @@
-﻿TipoProductoEnvasadoId;Nombre;Descripcion;MedidoEnVolumen;MedidoEnUnidades
-1;Saco;Saco medido en metros cúbicos.;false;true
-2;Saca;Saca medida en metros cúbicos.;false;true
-3;Paquete 10;Paquete con 10 unidades.;true;false
-4;Paquete 20;Paquete con 20 unidades.;true;false
+﻿TipoProductoEnvasadoId;GrupoId;Nombre;Descripcion;MedidoEnVolumen;MedidoEnUnidades
+1;Saco;1;Saco medido en metros cúbicos.;;false;true
+2;Saca;2;Saca medida en metros cúbicos.;;false;true
+3;Paquete 10;2;Paquete con 10 unidades.;;true;false
+4;Paquete 20;2;Paquete con 20 unidades.;;true;false

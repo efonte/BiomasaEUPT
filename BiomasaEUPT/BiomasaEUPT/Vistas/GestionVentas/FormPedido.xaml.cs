@@ -32,7 +32,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private CollectionViewSource tiposProductosTerminadosViewSource;
         private CollectionViewSource gruposProductosTerminadosViewSource;
         private CollectionViewSource clientesViewSource;
-      
+
         private FormPedidoViewModel viewModel;
 
         public DateTime FechaPedido { get; set; }
@@ -77,7 +77,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             dpFechaPedido.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
-                private object GetDataFromListBox(ListBox source, Point point)
+        private object GetDataFromListBox(ListBox source, Point point)
         {
             UIElement element = source.InputHitTest(point) as UIElement;
             if (element != null)

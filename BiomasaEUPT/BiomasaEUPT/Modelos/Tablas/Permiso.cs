@@ -17,6 +17,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         Proveedores,
         Recepciones,
         Elaboraciones,
+        Envasados,
         Ventas,
         Trazabilidad
     }

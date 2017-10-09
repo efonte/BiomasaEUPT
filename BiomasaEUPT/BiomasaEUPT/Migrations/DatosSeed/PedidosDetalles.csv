@@ -1,4 +1,4 @@
-﻿PedidoDetalleId;Volumen;Unidades;PedidoCabeceraId;TipoProductoTerminadoId
+﻿PedidoDetalleId;Volumen;Unidades;PedidoCabeceraId;TipoProductoEnvasadoId
 1;20;;1;1
 2;35;;2;2
 3;12;;3;1

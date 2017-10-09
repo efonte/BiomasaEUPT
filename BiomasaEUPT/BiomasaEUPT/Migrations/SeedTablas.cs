@@ -739,6 +739,40 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
+            resourceName = String.Format(NOMBRE_CSV, "EstadosEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = csvReader.GetRecords<EstadoEnvasado>().ToArray();
+                    context.EstadosEnvasados.AddOrUpdate(d => d.Nombre, datos);
+                }
+            }
+            context.SaveChanges();
+
+            /*resourceName = String.Format(NOMBRE_CSV, "GruposProductosEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<GrupoProductoEnvasado>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a GrupoProductoEnvasadoMap
+                        datos.Add(new GrupoProductoEnvasado()
+                        {
+                            GrupoProductoEnvasadoId = csvReader.GetField<int>("GrupoProductoEnvasadoId"),
+                            Nombre = csvReader.GetField<string>("Nombre"),
+                            Descripcion = csvReader.GetField<string>("Descripcion")
+                        });
+                    }
+                    context.GruposProductosEnvasados.AddOrUpdate(d => d.GrupoProductoEnvasadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
 
             resourceName = String.Format(NOMBRE_CSV, "TiposProductosEnvasados");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -752,6 +786,7 @@ namespace BiomasaEUPT.Migrations
                         datos.Add(new TipoProductoEnvasado()
                         {
                             TipoProductoEnvasadoId = csvReader.GetField<int>("TipoProductoEnvasadoId"),
+                            GrupoId = csvReader.GetField<int>("GrupoId"),
                             Nombre = csvReader.GetField<string>("Nombre"),
                             Descripcion = csvReader.GetField<string>("Descripcion"),
                             MedidoEnVolumen = csvReader.GetField<bool>("MedidoEnVolumen"),
@@ -761,7 +796,7 @@ namespace BiomasaEUPT.Migrations
                     context.TiposProductosEnvasados.AddOrUpdate(d => d.TipoProductoEnvasadoId, datos.ToArray());
                 }
             }
-            context.SaveChanges();
+            context.SaveChanges();*/
 
            
             resourceName = String.Format(NOMBRE_CSV, "Picking");

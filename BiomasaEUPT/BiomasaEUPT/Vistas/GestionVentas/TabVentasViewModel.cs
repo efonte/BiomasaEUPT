@@ -30,17 +30,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public CollectionView PedidosDetallesView { get; private set; }
         public IList<PedidoDetalle> PedidosDetallesSeleccionados { get; set; }
 
-        private PedidoDetalle _pedidoDetalleSeleccionado;
-        public PedidoDetalle PedidoDetalleSeleccionado
-        {
-            get => _pedidoDetalleSeleccionado;
-            set
-            {
-                _pedidoDetalleSeleccionado = value;
-                ProductoEnvasadoSeleccionado = context.ProductosEnvasados.Single(pe => pe.PedidoDetalleId == PedidoDetalleSeleccionado.PedidoDetalleId);
-            }
-        }
-
         public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
         public CollectionView ProductosEnvasadosView { get; private set; }
         public IList<ProductoEnvasado> ProductosEnvasadosSeleccionados { get; set; }
@@ -126,12 +115,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private BiomasaEUPTContext context;
         public PaginacionViewModel PaginacionViewModel { get; set; }
-        public MasOpcionesVentasViewModel MasOpcionesVentasViewModel { get; set; }
 
         public TabVentasViewModel()
         {
             PaginacionViewModel = new PaginacionViewModel();
-            MasOpcionesVentasViewModel = new MasOpcionesVentasViewModel();
             // MasOpcionesActivado = false;
         }
 
@@ -190,13 +177,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     PedidosDetalles = new ObservableCollection<PedidoDetalle>(
                 context.PedidosDetalles
-                .Include(pd => pd.PedidoCabeceraId).Include(pd => pd.TipoProductoTerminado)
+                .Include(pd => pd.PedidoCabeceraId).Include(pd => pd.TipoProductoEnvasado)
                 .OrderBy(pd => pd.PedidoCabeceraId).Skip(saltar).Take(cantidad).ToList());
                 }
                 PedidosDetallesView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosDetalles);
 
                 // Por defecto no está seleccionada ninguna fila del datagrid pedidos
-                PedidoDetalleSeleccionado = null;
+                //PedidoDetalleSeleccionado = null;
             }
         }
 
@@ -261,11 +248,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId,
                     EstadoId = 1
                 };
-
-                Console.WriteLine("Id " + pedidoCabecera.PedidoCabeceraId);
-                Console.WriteLine("Fecha pedido "+pedidoCabecera.FechaPedido);
-                Console.WriteLine("Cliente " + pedidoCabecera.ClienteId);
-                Console.WriteLine("EstadoPedido " + pedidoCabecera.EstadoId);
 
                 context.PedidosCabeceras.Add(pedidoCabecera);
                 context.SaveChanges();
@@ -441,17 +423,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Borrar Pedido Detalle
         public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
             (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
-                param => BorrarPedidoDetalle(),
-                param => PedidoDetalleSeleccionado != null
+                param => BorrarPedidoDetalle()
+                //param => PedidoDetalleSeleccionado != null
             ));
 
         private async void BorrarPedidoDetalle()
         {
-            string pregunta = PedidosCabecerasSeleccionados.Count == 1
-                   ? "¿Está seguro de que desea borrar el pedido " + PedidoDetalleSeleccionado.PedidoDetalleId + "?"
-                   : "¿Está seguro de que desea borrar los pedidos detalles seleccionados?";
+           
 
-            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(), "RootDialog"))
             {
                 var pedidosABorrar = new List<PedidoDetalle>();
 
@@ -482,8 +462,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Modificar Pedido Detalle
         public ICommand ModificarPedidoDetalleComando => _modificarPedidoCabeceraComando ??
             (_modificarPedidoCabeceraComando = new RelayCommand(
-                param => ModificarPedidoDetalle(),
-                param => PedidoDetalleSeleccionado != null
+                param => ModificarPedidoDetalle()
+                //param => PedidoDetalleSeleccionado != null
              ));
 
         public async void ModificarPedidoDetalle()
@@ -516,7 +496,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public void RefrescarPedidosDetalles()
         {
             PaginacionViewModel.Refrescar();
-            PedidoDetalleSeleccionado = null;
+            //PedidoDetalleSeleccionado = null;
         }
         #endregion
 
@@ -538,7 +518,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             var pedidoDetalle = item as PedidoDetalle;
             string volumen = pedidoDetalle.Volumen.ToString();
             string unidades = pedidoDetalle.Unidades.ToString();
-            string tipoProducto = pedidoDetalle.TipoProductoTerminado.Nombre.ToLower();
+            string tipoProducto = pedidoDetalle.TipoProductoEnvasado.Nombre.ToLower();
 
             return (FechaPedidoSeleccionado == true ? volumen.Contains(TextoFiltroPedidos) : false)
                 || (ClientePedidoSeleccionado == true ? unidades.Contains(TextoFiltroPedidos) : false)

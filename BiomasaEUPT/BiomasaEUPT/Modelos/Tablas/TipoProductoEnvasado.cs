@@ -37,6 +37,11 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Medido en unidades"), Display(Name = "Medido en unidades")]
         public bool? MedidoEnUnidades { get; set; }
 
+        public int GrupoId { get; set; }
+
+        [ForeignKey("GrupoId")]
+        public virtual GrupoProductoEnvasado GrupoProductoEnvasado { get; set; }
+
         public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }
 }

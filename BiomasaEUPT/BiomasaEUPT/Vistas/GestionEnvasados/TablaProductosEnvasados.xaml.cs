@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BiomasaEUPT.Vistas.GestionVentas
+namespace BiomasaEUPT.Vistas.GestionEnvasados
 {
     /// <summary>
-    /// Lógica de interacción para MasOpcionesVentas.xaml
+    /// Lógica de interacción para TablaProductosEnvasados.xaml
     /// </summary>
-    public partial class MasOpcionesVentas : UserControl
+    public partial class TablaProductosEnvasados : UserControl
     {
-        public MasOpcionesVentas()
+        public TablaProductosEnvasados()
         {
             InitializeComponent();
         }

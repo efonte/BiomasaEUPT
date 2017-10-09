@@ -36,6 +36,9 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         private BiomasaEUPTContext context;
         private FormMateriaPrimaViewModel viewModel;
 
+        public DateTime FechaBaja { get; set; }
+        public DateTime HoraBaja { get; set; }
+
 
         public FormMateriaPrima(BiomasaEUPTContext context)
         {

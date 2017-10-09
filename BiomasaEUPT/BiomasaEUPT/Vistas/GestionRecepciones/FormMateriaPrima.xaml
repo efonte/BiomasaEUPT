@@ -88,10 +88,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <DatePicker x:Name="dpFechaBaja" Width="100" VerticalAlignment="Center"         
                                 materialDesign:HintAssist.Hint="Fecha Cad.">
-                        <!--DatePicker.BlackoutDates>
-                            <CalendarDateRange Start="01/01/0001" End="01/01/2016"/>
-                            <CalendarDateRange Start="01/01/2025" End="12/31/9999"/>
-                        </DatePicker.BlackoutDates-->
+
                         <DatePicker.SelectedDate>
                             <Binding Path="FechaBaja" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>

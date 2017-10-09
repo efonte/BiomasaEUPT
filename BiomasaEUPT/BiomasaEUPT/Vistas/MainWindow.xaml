@@ -13,6 +13,7 @@
         xmlns:GestionProveedores="clr-namespace:BiomasaEUPT.Vistas.GestionProveedores"
         xmlns:GestionRecepciones="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
         xmlns:GestionElaboraciones="clr-namespace:BiomasaEUPT.Vistas.GestionElaboraciones"
+        xmlns:GestionEnvasados="clr-namespace:BiomasaEUPT.Vistas.GestionEnvasados"
         xmlns:GestionVentas="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
         xmlns:GestionTrazabilidad="clr-namespace:BiomasaEUPT.Vistas.GestionTrazabilidad"
         xmlns:materialDesignColors="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
@@ -159,6 +160,17 @@
                                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                                      Height="20" Width="20"/>
                                             <TextBlock Text="Elaboraciones" Margin="5,0,0,0"
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Typography.Capitals="SmallCaps"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionEnvasados:TabEnvasadosViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="PackageVariant" Foreground="White"
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                     Height="20" Width="20"/>
+                                            <TextBlock Text="Envasados" Margin="5,0,0,0"
                                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                                        Foreground="White" Typography.Capitals="SmallCaps"/>
                                         </StackPanel>

@@ -70,6 +70,12 @@ namespace BiomasaEUPT.Modelos
         public const int LONG_MIN_DESCRIPCION_ESTADO_RECEPCION = 5;
         public const int LONG_MAX_DESCRIPCION_ESTADO_RECEPCION = 80;
 
+        public const int LONG_MIN_NOMBRE_ESTADO_ENVASADO = 3;
+        public const int LONG_MAX_NOMBRE_ESTADO_ENVASADO = 20;
+
+        public const int LONG_MIN_DESCRIPCION_ESTADO_ENVASADO = 5;
+        public const int LONG_MAX_DESCRIPCION_ESTADO_ENVASADO = 80;
+
         public const int LONG_MIN_NOMBRE_GRUPO = 3;
         public const int LONG_MAX_NOMBRE_GRUPO = 25;
 

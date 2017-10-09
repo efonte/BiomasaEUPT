@@ -1,0 +1,161 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEnvasados.TablaEnvasados"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEnvasados"
+             xmlns:controlesUsuario="clr-namespace:BiomasaEUPT.Vistas.ControlesUsuario"
+             xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Órdenes de Envasado">
+
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgEnvasados"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding OrdenesEnvasadosView}"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding OrdenEnvasadoSeleccionada, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DGOrdenesEnvasados_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgEnvasados}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Gesture="Delete" Key="Delete"
+                                        Command="{Binding BorrarOrdenEnvasadoComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgEnvasados, Mode=OneWay}"/>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding ModificarOrdenEnvasadoComando}"/>
+                        </DataGrid.InputBindings>
+                        <DataGrid.Columns>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaEnvasadoColumna" Header="Fecha Envasado" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding FechaEnvasado, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
+                                                                                 Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding EstadoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar envasados"
+                                 Margin="15 15 15 30" Width="40" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="bAnadirEnvasado" ToolTip="Añadir envasado"
+                                    Command="{Binding AnadirOrdenEnvasadoComando}">
+                                <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Borrar la orden de envasado seleccionada"
+                                    Command="{Binding BorrarOrdenEnvasadoComando}">
+                                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                            </Button>
+                            <Button ToolTip="Modificar la orden de envasado seleccionada"
+                                    Command="{Binding ModificarOrdenEnvasadoComando}">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar órdenes de envasado"
+                                     Command="{Binding RefrescarOrdenesEnvasadosComando}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+
+                <StackPanel Grid.Column="1" 
+                            HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Stretch"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Expander ExpandDirection="Left">
+                        <Expander.Header>
+                            <TextBlock Text="Descripción" RenderTransformOrigin=".5,.5" FontSize="16">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+
+                        <TextBlock x:Name="tbDescripcion" Text="{Binding OrdenEnvasadoSeleccionada.Descripcion, UpdateSourceTrigger=PropertyChanged}"
+                                   FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource MaterialDesignBody}"/>
+                    </Expander>
+                </StackPanel>
+
+                <controlesUsuario:Paginacion x:Name="ucPaginacion" Grid.Row="1" Grid.ColumnSpan="2"
+                                             Padding="10 20 10 10"
+                                             DataContext="{Binding RelativeSource={RelativeSource 
+                                                            FindAncestor, AncestorType={x:Type UserControl}},
+                                                            Path=DataContext.PaginacionViewModel}" />
+
+                <TextBox x:Name="tbBuscar" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
+                         materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
+                         TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                         Text="{Binding TextoFiltroOrdenesElaboraciones, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                <materialDesign:PopupBox Grid.Row="2" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" />
+                    </materialDesign:PopupBox.ToggleContent>
+                    <Grid Width="150" Margin="8,8,8,8">
+                        <Grid.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Setter Property="Margin" Value="8,8,10,8"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="8,8,8,16">Ajustes filtro</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha" Margin="8,8,8,8"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado" Margin="8,8,8,8"/>
+                        <CheckBox x:Name="cbFechaEnvasado" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding FechaOrdenEnvasadoSeleccionada}" Command="{Binding FiltrarOrdenesEnvasadosComando}"/>
+                        <CheckBox x:Name="cbEstadoElaboracion" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding EstadoOrdenEnvasadoSeleccionado}" Command="{Binding FiltrarOrdenesEnvasadosComando}"/>
+                    </Grid>
+
+                </materialDesign:PopupBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

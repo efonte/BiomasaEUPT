@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionRecepciones.TablaMateriasPrimas"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEnvasados.TablaProductosEnvasados"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionRecepciones"
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEnvasados"
              xmlns:raiz="clr-namespace:BiomasaEUPT.Vistas"
              xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
@@ -13,7 +13,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700" Name="UCTablaMateriasPrimas">
+             d:DesignHeight="300" d:DesignWidth="700" >
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:CadenaVaciaConverter x:Key="CadenaVaciaConverter"/>
@@ -22,7 +22,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Materias Primas">
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Productos Envasados">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -41,32 +41,32 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgMateriasPrimas"
-                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding MateriasPrimasView}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgProductosEnvasados"
+                              AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding ProductosEnvasadosView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
-                              CanUserDeleteRows="False" SelectedItem="{Binding MateriaPrimaSeleccionada, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding ProductoEnvasadoSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding DGMateriasPrimas_SelectionChangedComando}"
-                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgMateriasPrimas}"/>
+                                <i:InvokeCommandAction Command="{Binding DGProductosEnvasados_SelectionChangedComando}"
+                                    CommandParameter="{Binding Path=SelectedItems, ElementName=dgProductosEnvasados}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>
                             <KeyBinding Gesture="Delete" Key="Delete"
-                                        Command="{Binding BorrarMateriaPrimaComando}"
-                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgMateriasPrimas, Mode=OneWay}"/>
+                                        Command="{Binding BorrarProductoEnvasadoComando}"
+                                        CommandParameter="{Binding Path=SelectedItems, ElementName=dgProductosEnvasados, Mode=OneWay}"/>
                             <MouseBinding MouseAction="LeftDoubleClick"
-                                          Command="{Binding ModificarMateriaPrimaComando}"/>
+                                          Command="{Binding ModificarProductoEnvasadoComando}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo"
-                                                                       Binding="{Binding TipoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo"
-                                                                       Binding="{Binding TipoMateriaPrima.GrupoMateriaPrima.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding TipoProductoEnvasado.GrupoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <DataGridTemplateColumn x:Name="volumenUnidadesColumna" Header="Volumen/Unidades">
+                            <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -80,7 +80,7 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding TipoMateriaPrima.MedidoEnUnidades}" Value="True">
+                                                        <DataTrigger Binding="{Binding TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
                                                             <Setter Property="Text">
                                                                 <Setter.Value>
                                                                     <MultiBinding StringFormat="{}{0} ud." >
@@ -97,13 +97,14 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="procedenciaColumna" Header="Procedencia" Width="SizeToHeader"
-                                                                       Binding="{Binding Procedencia.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
-                                                                       Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
-                                                                                Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
-                            <DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código" Width="SizeToHeader"
+                                                                       Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="pickingColumna" Header="Tipo"
+                                                                       Binding="{Binding Picking.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <!--DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="bCodigo" Padding="0" BorderThickness="0" Height="17" Width="17"
@@ -113,44 +114,44 @@
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </>
 
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="bPdfMateria" Padding="0" BorderThickness="0" Height="17" Width="17"
                                                 Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
-                                                ToolTip="Generar informe en PDF" Click="bPdfMateria_Click">
+                                                ToolTip="Generar informe en PDF" Click="bPdfProducto_Click">
                                             <materialDesign:PackIcon Kind="FilePdf" Width="17" Height="17"/>
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn-->
                         </DataGrid.Columns>
 
                     </DataGrid>
 
                     <materialDesign:PopupBox Grid.Row="1" Style="{DynamicResource MaterialDesignMultiFloatingActionPopupBox}"
-                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                             PlacementMode="RightAndAlignMiddles"
-                                             UnfurlOrientation="Horizontal"
-                                             ToolTip="Gestionar materias primas"
-                                             Margin="15 15 15 30" Width="40" Height="40">
+                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                 PlacementMode="RightAndAlignMiddles"
+                                 UnfurlOrientation="Horizontal"
+                                 ToolTip="Gestionar productos envasados"
+                                 Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirMateriaPrima" ToolTip="Añadir materia prima"
-                                    Command="{Binding AnadirMateriaPrimaComando}">
+                            <Button x:Name="bAnadirProductoEnvasado" ToolTip="Añadir producto envasado"
+                                    Command="{Binding AnadirProductoEnvasadoComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bBorrarMateriaPrima" ToolTip="Borrar la materia prima seleccionada"
-                                    Command="{Binding BorrarMateriaPrimaComando}">
+                            <Button ToolTip="Borrar el producto envasado seleccionado"
+                                    Command="{Binding BorrarProductoEnvasadoComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
-                            <Button ToolTip="Modificar la materia prima seleccionada"
-                                    Command="{Binding ModificarMateriaPrimaComando}">
+                            <Button ToolTip="Modificar el producto envasado seleccionado"
+                                    Command="{Binding ModificarProductoEnvasadoComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
-                            <Button x:Name="bRefrescar" ToolTip="Refrescar materias primas"
-                                     Command="{Binding RefrescarMateriasPrimasComando}">
+                            <Button x:Name="bRefrescar" ToolTip="Refrescar productos envasados"
+                                     Command="{Binding RefrescarProductosEnvasadosComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
@@ -162,15 +163,15 @@
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
-                            <TextBlock Text="Huecos recepciones" RenderTransformOrigin=".5,.5" FontSize="16">
+                            <TextBlock Text="Productos Terminados" RenderTransformOrigin=".5,.5" FontSize="16">
                                 <TextBlock.LayoutTransform>
                                     <RotateTransform Angle="90" />
                                 </TextBlock.LayoutTransform>
                             </TextBlock>
                         </Expander.Header>
-                        <WrapPanel x:Name="wpHuecosRecepciones" Margin="15 25 0 0"
+                        <WrapPanel x:Name="wpProductosTerminados" Margin="15 25 0 0"
                                    Orientation="Horizontal" MinHeight="40" Width="150">
-                            <ItemsControl ItemsSource="{Binding MateriaPrimaSeleccionada.HistorialHuecosRecepciones, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl ItemsSource="{Binding ProductoEnvasadoSeleccionado.ProductosEnvasadosComposiciones, UpdateSourceTrigger=PropertyChanged}" >
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">
                                         <Style.Triggers>
@@ -190,35 +191,38 @@
                                     <DataTemplate>
                                         <materialDesign:Chip Margin="5" Cursor="Arrow">
                                             <materialDesign:Chip.Content>
-                                                <TextBlock FontSize="14" FontStyle="Italic">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Text">
-                                                                <Setter.Value>
-                                                                    <MultiBinding StringFormat="{}{0} de {1} m³" >
-                                                                        <Binding Path="Volumen" />
-                                                                        <Binding Path="HuecoRecepcion.VolumenTotal" />
-                                                                    </MultiBinding>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding MateriaPrima.TipoMateriaPrima.MedidoEnUnidades}" Value="True">
-                                                                    <Setter Property="Text">
-                                                                        <Setter.Value>
-                                                                            <MultiBinding StringFormat="{}{0} de {1} ud." >
-                                                                                <Binding Path="Unidades" />
-                                                                                <Binding Path="HuecoRecepcion.UnidadesTotales" />
-                                                                            </MultiBinding>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
+                                                <StackPanel>
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding HistorialHuecoAlmacenaje.MateriaPrima.TipoMateriaPrima.Nombre}"/>
+                                                    <TextBlock FontSize="14" FontStyle="Italic">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Text">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                                            <Binding Path="Volumen" />
+                                                                            <Binding Path="HistorialHuecoAlmacenaje.HuecoAlmacenaje.VolumenTotal" />
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Volumen}" Value="{x:Null}">
+                                                                        <Setter Property="Text">
+                                                                            <Setter.Value>
+                                                                                <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                                    <Binding Path="Unidades" />
+                                                                                    <Binding Path="HistorialHuecoAlmacenaje.HuecoAlmacenaje.UnidadesTotales" />
+                                                                                </MultiBinding>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
                                             </materialDesign:Chip.Content>
                                             <materialDesign:Chip.Icon>
-                                                <TextBlock FontSize="15" Text="{Binding HuecoRecepcion.Nombre, UpdateSourceTrigger=PropertyChanged,
+                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoAlmacenaje.HuecoAlmcenaje.Nombre,UpdateSourceTrigger=PropertyChanged,
                                                                                 Converter={StaticResource CadenaSplitConverter}, ConverterParameter='3|3'}"></TextBlock>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>
@@ -232,6 +236,7 @@
                             </ItemsControl>
                         </WrapPanel>
                     </Expander>
+                    
                     <Expander ExpandDirection="Left">
                         <Expander.Header>
                             <TextBlock Text="Observaciones" RenderTransformOrigin=".5,.5" FontSize="16">
@@ -240,7 +245,8 @@
                                 </TextBlock.LayoutTransform>
                             </TextBlock>
                         </Expander.Header>
-                        <TextBlock x:Name="tbObservaciones" Text="{Binding MateriaPrimaSeleccionada.Observaciones, UpdateSourceTrigger=PropertyChanged,
+
+                        <TextBlock x:Name="tbObservaciones" Text="{Binding ProductoEnvasadoSeleccionado.Observaciones, UpdateSourceTrigger=PropertyChanged,
                                                                            Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"
                                    FontSize="16" Width="150" Margin="15 25 0 0" MaxHeight="350" TextWrapping="Wrap"
                                    Foreground="{DynamicResource MaterialDesignBody}"/>
@@ -250,7 +256,7 @@
                 <TextBox x:Name="tbBuscar" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Roboto" FontSize="12"
                          materialDesign:HintAssist.Hint=" Buscar..." Background="{DynamicResource MaterialDesignPaper}"
                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                         Text="{Binding TextoFiltroMateriasPrimas, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding TextoFiltroProductosEnvasados, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" StaysOpen="True" HorizontalAlignment="Right">
                     <materialDesign:PopupBox.ToggleContent>
@@ -278,18 +284,12 @@
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Vol./Unidades" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Procedencia" Margin="8,8,8,8"/>
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="F. Baja/Cad." Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding TipoMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                                  IsChecked="{Binding TipoProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
                         <CheckBox x:Name="cbGrupo" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding GrupoMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
-                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding VolUniMateriaPrimaSeleccionado}" Command="{Binding FiltrarMateriasPrimasComando}"/>
-                        <CheckBox x:Name="cbProcedencia" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding ProcedenciaMateriaPrimaSeleccionada}" Command="{Binding FiltrarMateriasPrimasComando}"/>
-                        <CheckBox x:Name="cbFechaBaja" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding FechaBajaMateriaPrimaSeleccionada}" Command="{Binding FiltrarMateriasPrimasComando}"/>
+                                  IsChecked="{Binding GrupoProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
+                        <CheckBox x:Name="cbVolUni" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom"
+                                  IsChecked="{Binding VolUniProductoEnvasadoSeleccionado}" Command="{Binding FiltrarProductosEnvasadosComando}"/>
                     </Grid>
 
                 </materialDesign:PopupBox>

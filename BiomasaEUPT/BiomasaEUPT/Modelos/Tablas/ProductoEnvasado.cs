@@ -31,22 +31,22 @@ namespace BiomasaEUPT.Modelos.Tablas
         [Required]
         [StringLength(Constantes.LONG_MAX_CODIGO, MinimumLength = Constantes.LONG_MIN_CODIGO)]
         [DisplayName("Código"), Display(Name = "Código")]
-        public string Codigo { get; set; }       
-
-        public int PickingId { get; set; }
-
-        public int PedidoDetalleId { get; set; }
+        public string Codigo { get; set; }
 
         public int TipoProductoEnvasadoId { get; set; }
 
-        [ForeignKey("PickingId")]
-        public virtual Picking Picking { get; set; }
+        public int OrdenId { get; set; }
 
-        [ForeignKey("PedidoDetalleId")]
-        public virtual PedidoDetalle PedidoDetalle { get; set; }
+        public int PickingId { get; set; }
 
         [ForeignKey("TipoProductoEnvasadoId")]
         public virtual TipoProductoEnvasado TipoProductoEnvasado { get; set; }
+
+        [ForeignKey("OrdenId")]
+        public virtual OrdenEnvasado OrdenEnvasado { get; set; }
+
+        [ForeignKey("PickingId")]
+        public virtual Picking Picking { get; set; }
 
         public virtual List<ProductoEnvasadoComposicion> ProductoEnvasadoComposiciones { get; set; }
 

@@ -370,12 +370,12 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
                 if (formMateriaPrimaDataContext.FechaBaja != null)
                 {
                     materiaPrima.FechaBaja = new DateTime(
-                        formMateriaPrimaDataContext.FechaBaja.Value.Year,
-                        formMateriaPrimaDataContext.FechaBaja.Value.Month,
-                        formMateriaPrimaDataContext.FechaBaja.Value.Day,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Hour,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Minute,
-                        formMateriaPrimaDataContext.HoraBaja.Value.Second);
+                        formMateriaPrima.FechaBaja.Year,
+                        formMateriaPrima.FechaBaja.Month,
+                        formMateriaPrima.FechaBaja.Day,
+                        formMateriaPrima.HoraBaja.Hour,
+                        formMateriaPrima.HoraBaja.Minute,
+                        formMateriaPrima.HoraBaja.Second);
                 }
                 context.MateriasPrimas.Add(materiaPrima);
                 var historialHuecosRecepciones = new List<HistorialHuecoRecepcion>();

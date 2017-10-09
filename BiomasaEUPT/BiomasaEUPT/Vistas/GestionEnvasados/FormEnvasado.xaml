@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionEnvasados.FormEnvasado"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEnvasados"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Height="410" Width="500" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="ordenesEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:OrdenEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="estadosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoEnvasado}, CreateList=True}"/>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nueva Orden de Envasado">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbEstadoEnvasado" materialDesign:HintAssist.Hint="Estado envasado" Margin="0 0 10 0"
+                          ItemsSource="{Binding Source={StaticResource estadosEnvasadosViewSource}}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="EstadoEnvasadoId" Visibility="Collapsed">
+                </ComboBox>
+
+                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbGruposProductosEnvasados" materialDesign:HintAssist.Hint="Grupo" Margin="0 8 8 0"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosEnvasadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoEnvasadoId"
+                          SelectionChanged="cbGruposProductosEnvasados_SelectionChanged" VerticalAlignment="Top">
+                </ComboBox>
+
+                <ListBox Grid.Row="1" Grid.Column="1" x:Name="lbTiposProductosEnvasados" Margin="0 8 8 0" Height="100"
+                         ItemsSource="{Binding TiposProductosEnvasadosDisponibles, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewMouseLeftButtonDown="lbTiposProductosEnvasados_PreviewMouseLeftButtonDown"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
+                                <!--TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}%">
+                                            <Binding Path="Tamano"/>
+                                            <Binding Path="Humedad"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" x:Name="wpProductosEnvasados" Orientation="Horizontal"
+                           AllowDrop="True" Drop="spProductosEnvasados_Drop" Margin="0 8 8 0" Width="400"
+                           ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <WrapPanel.Style>
+                        <Style TargetType="{x:Type WrapPanel}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,0" StartPoint="8,8" 
+                                                         MappingMode="Absolute" SpreadMethod="Repeat" Opacity="0.25">
+                                        <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0" />
+                                        <GradientStop Color="{Binding Source={StaticResource  MaterialDesignBody}, Path=Color}" Offset="0.1" />
+                                        <GradientStop Color="Transparent" Offset="0.1" />
+                                        <GradientStop Color="Transparent" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </WrapPanel.Style>
+                    <ItemsControl ItemsSource="{Binding ProductosEnvasados, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="false">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                                                               Text="Por favor, arrastre los productos terminados que desee envasar."/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar Producto Envasado"
+                                                 CommandParameter="{Binding TipoProductoEnvasado.TipoProductoEnvasadoId}"
+                                                 DeleteClick="cProductoEnvasado_DeleteClick" Height="70">
+                                    <materialDesign:Chip.Content>
+                                        <StackPanel>
+                                            <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding TipoProductoEnvasado.Nombre}" Margin="0 8 8 0"/>
+                                            <TextBox>
+                                                <TextBox.Style>
+                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                        <Setter Property="Margin" Value="10 0 10 10" />
+                                                        <Setter Property="FontSize" Value="15" />
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Volumen"/>
+                                                        <Setter Property="Text" Value="{Binding Volumen}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
+                                                                <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
+                                                                <Setter Property="Text" Value="{Binding Unidades}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBox.Style>
+                                            </TextBox>
+                                        </StackPanel>
+                                    </materialDesign:Chip.Content>
+                                </materialDesign:Chip>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </WrapPanel>
+
+
+                <TextBox Grid.Row="3" Grid.ColumnSpan="2"  x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                         AcceptsReturn="True" Height="55" MaxLength="60">
+                    <TextBox.Text>
+                        <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:LongitudValidationRule NombreCampo="Descripcion" Max="60" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button x:Name="bNuevaOrdenEnvasado" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.CommandParameter>
+                            <system:Boolean>True</system:Boolean>
+                        </Button.CommandParameter>
+                        _ACEPTAR
+                    </Button>
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                    IsCancel="True" Margin="0 8 8 0"
+                    Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <system:Boolean>False</system:Boolean>
+                        </Button.CommandParameter>
+                        _CANCELAR
+                    </Button>
+                </WrapPanel>
+            </Grid>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>
