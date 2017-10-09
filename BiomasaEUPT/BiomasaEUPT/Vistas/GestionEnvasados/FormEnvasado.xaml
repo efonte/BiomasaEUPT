@@ -57,14 +57,14 @@
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
-                                <!--TextBlock FontSize="14" FontStyle="Italic">
+                                <TextBlock FontSize="14" FontStyle="Italic">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}%">
                                             <Binding Path="Tamano"/>
                                             <Binding Path="Humedad"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
-                                </-->
+                                </TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

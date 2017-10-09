@@ -751,7 +751,7 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
-            /*resourceName = String.Format(NOMBRE_CSV, "GruposProductosEnvasados");
+            resourceName = String.Format(NOMBRE_CSV, "GruposProductosEnvasados");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
                 using (StreamReader reader = new StreamReader(stream))
@@ -796,7 +796,7 @@ namespace BiomasaEUPT.Migrations
                     context.TiposProductosEnvasados.AddOrUpdate(d => d.TipoProductoEnvasadoId, datos.ToArray());
                 }
             }
-            context.SaveChanges();*/
+            context.SaveChanges();
 
            
             resourceName = String.Format(NOMBRE_CSV, "Picking");

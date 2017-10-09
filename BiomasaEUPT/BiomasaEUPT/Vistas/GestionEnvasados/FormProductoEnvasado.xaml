@@ -4,9 +4,299 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionEnvasados"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:conv="clr-namespace:BiomasaEUPT.Domain.Converters"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="productosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoTerminado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pickingViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Picking}, CreateList=True}"/>
+            <conv:PorcentajeConverter x:Key="PorcentajeConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Producto Envasado"
+        MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor,
+                                  AncestorType={x:Type Window}},
+                                  Path=ActualHeight, UpdateSourceTrigger=PropertyChanged,
+                                  Converter={StaticResource PorcentajeConverter}, ConverterParameter=0.9}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbGruposProductosEnvasados" materialDesign:HintAssist.Hint="Grupo Producto Envasado"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosEnvasadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoEnvasadoId"
+                          SelectionChanged="cbGruposProductosEnvasados_SelectionChanged">
+                </ComboBox>
+
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbTiposProductosEnvasados" materialDesign:HintAssist.Hint="Tipo Producto Envasado"
+                          ItemsSource="{Binding Source={StaticResource tiposProductosEnvasadosViewSource}}"
+                        SelectedValuePath="TipoProductoEnvasadoId"
+                          SelectionChanged="cbTiposProductosEnvasados_SelectionChanged"
+                          SelectedItem="{Binding TipoProductoEnvasado, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}"/>
+                                <TextBlock FontStyle="Italic" FontSize="10">
+                                    <!--TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Humedad: {0}%, Tamaño: {1}">
+                                            <Binding Path="Humedad"/>
+                                            <Binding Path="Tamano"/>
+                                        </MultiBinding>
+                                    </-->
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbGruposProductosTerminados" materialDesign:HintAssist.Hint="Grupo Producto Terminado"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosTerminadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoTerminadoId"
+                          SelectionChanged="cbGruposProductosTerminados_SelectionChanged">
+                </ComboBox>
+
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
+                          ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="TipoProductoTerminadoId"
+                          SelectedItem="{Binding TipoProductoTerminado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          SelectionChanged="cbTiposProductosTerminados_SelectionChanged">
+                </ComboBox>
+
+                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosAlmacenajes" Height="100"
+                         ItemsSource="{Binding HistorialHuecosAlmacenajesDisponibles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         PreviewMouseLeftButtonDown="lbHistorialHuecosAlmacenajes_PreviewMouseLeftButtonDown">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" FontWeight="Bold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Hueco {0}">
+                                            <Binding Path="HuecoAlmacenaje.Nombre"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}F. recepción: {0:dd/MM/yyyy HH:mm}">
+                                            <Binding Path="ProductoTerminado.Almacenaje.FechaElaboracion"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}F. baja MP: {0:dd/MM/yyyy HH:mm}">
+                                            <Binding Path="ProductoTerminado.FechaBaja" TargetNullValue="S/D"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="14" FontStyle="Italic">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text">
+                                                <Setter.Value>
+                                                    <MultiBinding StringFormat="{}{0} de {1} m³">
+                                                        <Binding Path="VolumenRestante"/>
+                                                        <Binding Path="Volumen"/>
+                                                    </MultiBinding>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=cbTiposProductosTerminados, Path=SelectedItem.MedidoEnUnidades}" Value="True">
+                                                    <Setter Property="Text">
+                                                        <Setter.Value>
+                                                            <MultiBinding StringFormat="{}{0} de {1} ud.">
+                                                                <Binding Path="UnidadesRestantes"/>
+                                                                <Binding Path="Unidades"/>
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <materialDesign:ColorZone Grid.Row="4" Grid.ColumnSpan="2" Mode="Standard"
+                                          MinHeight="40" Width="380" Margin="10 10 10 0" CornerRadius="10"
+                                          AllowDrop="True" Drop="spProductosEnvasadosComposiciones_Drop">
+                    <WrapPanel x:Name="wpProductosEnvasadosComposiciones" Margin="10"
+                               Orientation="Horizontal" HorizontalAlignment="Stretch"                            
+                               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding ProductosEnvasadosComposiciones, UpdateSourceTrigger=PropertyChanged}" Margin="10">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems" Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock TextWrapping="Wrap" FontStyle="Italic" FontSize="14"
+                                                               Text="Por favor, arrastre las productos terminados que desee envasar para fabricar los productos envasados."/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar producto terminado"
+                                                     CommandParameter="{Binding HistorialHuecoRecepcion.HistorialHuecoRecepcionId}"
+                                                     DeleteClick="cProductosEnvasadosComposiciones_DeleteClick" Height="70">
+                                        <materialDesign:Chip.Content>
+                                            <StackPanel>
+                                                <TextBlock FontSize="14" FontWeight="Bold" Margin="10 10 10 0"
+                                                       Text="{Binding HistorialHuecoRecepcion.ProductoTerminado.TipoProductoTerminado.Nombre}"/>
+                                                <TextBox>
+                                                    <TextBox.Style>
+                                                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                            <Setter Property="Margin" Value="10 0 10 10" />
+                                                            <Setter Property="FontSize" Value="15" />
+                                                            <Setter Property="materialDesign:HintAssist.Hint" Value="Volumen"/>
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <Binding Path="Volumen" UpdateSourceTrigger="PropertyChanged">
+                                                                        <Binding.ValidationRules>
+                                                                            <validadores:RequeridoValidationRule NombreCampo="volumen" ValidatesOnTargetUpdated="True" />
+                                                                            <validadores:LongitudValidationRule NombreCampo="volumen" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                                                            <validadores:RegexValidationRule NombreCampo="volumen" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                                                                        </Binding.ValidationRules>
+                                                                    </Binding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                                    <Setter Property="materialDesign:HintAssist.Hint" Value="Unidades"/>
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="Unidades" UpdateSourceTrigger="PropertyChanged">
+                                                                                <Binding.ValidationRules>
+                                                                                    <validadores:RequeridoValidationRule NombreCampo="unidades" ValidatesOnTargetUpdated="True" />
+                                                                                    <validadores:LongitudValidationRule NombreCampo="unidades" Min="1" Max="3" ValidatesOnTargetUpdated="True" />
+                                                                                    <validadores:RegexValidationRule NombreCampo="unidades" ExpReg="^\d+$" ValidatesOnTargetUpdated="True" />
+                                                                                </Binding.ValidationRules>
+                                                                            </Binding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
+                                            </StackPanel>
+                                        </materialDesign:Chip.Content>
+                                        <materialDesign:Chip.Icon>
+                                            <TextBlock FontSize="15" Text="{Binding HistorialHuecoAlmacenaje.HuecoAlmacenaje.Nombre}"/>
+                                        </materialDesign:Chip.Icon>
+                                    </materialDesign:Chip>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </WrapPanel>
+                </materialDesign:ColorZone>
+
+                <ComboBox Grid.Row="5" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
+                          ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="SitioAlmacenajeId"
+                          SelectionChanged="cbPicking_SelectionChanged"
+                          VerticalAlignment="Top">
+                </ComboBox>
+
+                <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                         AcceptsReturn="True" Height="55" MaxLength="60">
+                    <TextBox.Text>
+                        <Binding Path="Observaciones" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:LongitudValidationRule NombreCampo="observaciones" Max="60" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <WrapPanel Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button x:Name="bNuevoProductoEnvasado" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding QuedaCantidadPorAlmacenar}" Value="False"/>
+                                            <Condition Binding="{Binding ElementName=tbCantidad, Path=(Validation.HasError)}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.CommandParameter>
+                            <system:Boolean>True</system:Boolean>
+                        </Button.CommandParameter>
+                        _ACEPTAR
+                    </Button>
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                    IsCancel="True" Margin="0 8 8 0"
+                    Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <system:Boolean>False</system:Boolean>
+                        </Button.CommandParameter>
+                        _CANCELAR
+                    </Button>
+                </WrapPanel>
+            </Grid>
+        </ScrollViewer>
+    </GroupBox>
 </UserControl>

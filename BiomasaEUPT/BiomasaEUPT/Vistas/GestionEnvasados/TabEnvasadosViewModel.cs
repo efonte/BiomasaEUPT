@@ -305,8 +305,176 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         }
         #endregion
 
+        #region Añadir Producto Envasado
+        public ICommand AnadirProductoEnvasadoComando => _anadirProductoEnvasadoComando ??
+            (_anadirProductoEnvasadoComando = new RelayCommand(
+                param => AnadirProductoEnvasado(),
+                param => CanAnadirProductoEnvasado()
+            ));
 
-        
+        private bool CanAnadirProductoEnvasado()
+        {
+            if (OrdenEnvasadoSeleccionada != null)
+            {
+                return OrdenEnvasadoSeleccionada.EstadoEnvasadoId == 2; // Procesando
+            }
+            return false;
+        }
+
+        private async void AnadirProductoEnvasado()
+        {
+            var formProductoEnvasado = new FormProductoEnvasado(context);
+
+            if ((bool)await DialogHost.Show(formProductoEnvasado, "RootDialog"))
+            {
+                var formProductoEnvasadoDataContext = formProductoEnvasado.DataContext as FormProductoEnvasadoViewModel;
+                var productoEnvasado = new ProductoEnvasado()
+                {
+                    OrdenId = OrdenEnvasadoSeleccionada.OrdenEnvasadoId,
+                    TipoProductoEnvasadoId = (formProductoEnvasado.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
+                    Volumen = formProductoEnvasadoDataContext.Volumen,
+                    Unidades = formProductoEnvasadoDataContext.Unidades,
+                    Observaciones = formProductoEnvasadoDataContext.Observaciones
+                };
+
+                
+                context.ProductosEnvasados.Add(productoEnvasado);
+
+                var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
+                foreach (var pec in formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones)
+                {
+                    var hhaId = pec.HistorialHuecoAlmacenaje.HistorialHuecoAlmacenajeId;
+                    // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                    if (pec.Unidades != 0 && pec.Volumen != 0)
+                    {
+                        // Hay que asegurarse que la cantidad de materia prima escogida es como máximo la disponible en el hueco
+                        if (pec.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades == true)
+                        {
+                            pec.Unidades = (pec.Unidades > pec.HistorialHuecoAlmacenaje.UnidadesRestantes) ? (pec.HistorialHuecoAlmacenaje.UnidadesRestantes) : (pec.Unidades);
+                        }
+                        else
+                        {
+                            pec.Volumen = (pec.Volumen > pec.HistorialHuecoAlmacenaje.VolumenRestante) ? (pec.HistorialHuecoAlmacenaje.UnidadesRestantes) : (pec.Volumen);
+                        }
+                        pec.HistorialHuecoAlmacenaje = null;
+                        pec.HistorialHuecoId = hhaId;
+                        pec.ProductoEnvasado = productoEnvasado;
+                        productosEnvasadosComposiciones.Add(pec);
+                    }
+                }
+                context.ProductosEnvasadosComposiciones.AddRange(productosEnvasadosComposiciones);
+                context.SaveChanges();
+
+                CargarProductosEnvasados();
+            }
+        }
+        #endregion
+
+
+        #region Borrar Producto Envasado    
+        public ICommand BorrarProductoEnvasadoComando => _borrarProductoEnvasadoComando ??
+            (_borrarProductoEnvasadoComando = new RelayCommandGenerico<IList<object>>(
+                param => BorrarProductoEnvasado(),
+                param => ProductoEnvasadoSeleccionado != null
+            ));
+
+        private async void BorrarProductoEnvasado()
+        {
+            string pregunta = ProductosEnvasadosSeleccionados.Count == 1
+                ? "¿Está seguro de que desea borrar el producto envasado con código " + ProductoEnvasadoSeleccionado.Codigo + "?"
+                : "¿Está seguro de que desea borrar los productos envasados seleccionados?";
+
+            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
+            {
+                List<ProductoEnvasado> productosEnvasadosABorrar = new List<ProductoEnvasado>();
+
+                foreach (var pe in ProductosEnvasadosSeleccionados)
+                {
+                    if (!context.ProductosEnvasadosComposiciones.Any(ptc => ptc.ProductoEnvasado.ProductoEnvasadoId == pe.ProductoEnvasadoId))
+                    {
+                        ProductosEnvasadosSeleccionados.Add(pe);
+                    }
+                }
+                context.ProductosEnvasados.RemoveRange(productosEnvasadosABorrar);
+                context.SaveChanges();
+
+                if (ProductosEnvasadosSeleccionados.Count != ProductosEnvasadosSeleccionados.Count)
+                {
+                    string mensaje = ProductosEnvasadosSeleccionados.Count == 1
+                           ? "No se ha podido borrar el producto envasado seleccionado."
+                           : "No se han podido borrar todas los productos envasados seleccionados.";
+                    mensaje += "\n\nAsegurese de no que no exista ningún producto envasado elaborado con dicho producto terminado.";
+                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
+                }
+                CargarProductosEnvasados();
+            }
+        }
+        #endregion
+
+
+        #region Modificar Producto Envasado 
+        public ICommand ModificarProductoEnvasadoComando => _modificarProductoEnvasadoComando ??
+            (_modificarProductoEnvasadoComando = new RelayCommand(
+                param => ModificarProductoEnvasado(),
+                param => ProductoEnvasadoSeleccionado != null
+             ));
+
+        public async void ModificarProductoEnvasado()
+        {
+            var formProductoEnvasado = new FormProductoEnvasado(context, ProductoEnvasadoSeleccionado);
+            var formProductoEnvasadoDataContext = formProductoEnvasado.DataContext as FormProductoEnvasadoViewModel;
+            var productosEnvasadosComposicionesIniciales = formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones.ToList();
+            if ((bool)await DialogHost.Show(formProductoEnvasado, "RootDialog"))
+            {
+                ProductoEnvasadoSeleccionado.TipoProductoEnvasadoId = formProductoEnvasadoDataContext.TipoProductoEnvasado.TipoProductoEnvasadoId;
+                ProductoEnvasadoSeleccionado.Unidades = formProductoEnvasadoDataContext.Unidades;
+                ProductoEnvasadoSeleccionado.Volumen = formProductoEnvasadoDataContext.Volumen;
+                ProductoEnvasadoSeleccionado.Observaciones = formProductoEnvasadoDataContext.Observaciones;
+                
+                if (!context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoId == ProductoEnvasadoSeleccionado.ProductoEnvasadoId))
+                {
+                    // Se borran todos los productos envasados composiciones antiguos y se añaden los nuevos
+                    context.ProductosEnvasadosComposiciones.RemoveRange(productosEnvasadosComposicionesIniciales);
+                    var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
+                    foreach (var pec in formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones)
+                    {
+                        var hhaId = pec.HistorialHuecoAlmacenaje.HistorialHuecoAlmacenajeId;
+                        // Los huecos que no se ha añadido ninguna cantidad no se añaden
+                        if (pec.Unidades != 0 && pec.Volumen != 0)
+                        {
+                            // Hay que asegurarse que la cantidad de materia prima escogida es como máximo la disponible en el hueco
+                            if (pec.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado.MedidoEnUnidades == true)
+                            {
+                                pec.Unidades = (pec.Unidades > pec.HistorialHuecoAlmacenaje.UnidadesRestantes) ? (pec.HistorialHuecoAlmacenaje.UnidadesRestantes) : (pec.Unidades);
+                            }
+                            else
+                            {
+                                pec.Volumen = (pec.Volumen > pec.HistorialHuecoAlmacenaje.VolumenRestante) ? (pec.HistorialHuecoAlmacenaje.UnidadesRestantes) : (pec.Volumen);
+                            }
+                            pec.HistorialHuecoAlmacenaje = null;
+                            pec.HistorialHuecoId = hhaId;
+                            pec.ProductoEnvasado = ProductoEnvasadoSeleccionado;
+                            productosEnvasadosComposiciones.Add(pec);
+                        }
+                    }
+                    context.ProductosEnvasadosComposiciones.AddRange(productosEnvasadosComposiciones);
+
+                }
+
+                context.SaveChanges();
+                ProductosEnvasadosView.Refresh();
+            }
+        }
+        #endregion
+
+
+        #region Refrescar Productos Envasados
+        public ICommand RefrescarProductosEnvasadosComando => _refrescarProductosEnvasadoComando ??
+            (_refrescarProductosEnvasadoComando = new RelayCommand(
+                param => CargarProductosEnvasados(),
+                param => OrdenEnvasadoSeleccionada != null
+             ));
+        #endregion
 
 
         #region Filtro Productos Envasados
@@ -329,11 +497,12 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             string volumen = productoEnvasado.Volumen.ToString();
             string unidades = productoEnvasado.Unidades.ToString();
 
-            return (TipoProductoEnvasadoSeleccionado == true ? tipo.Contains(TextoFiltroProductosEnvasados) : false)
-                || (GrupoProductoEnvasadoSeleccionado == true ? grupo.Contains(TextoFiltroProductosEnvasados) : false)
-                || (VolUniProductoEnvasadoSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados) || unidades.Contains(TextoFiltroProductosEnvasados)) : false);
+            return (VolUniProductoEnvasadoSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados) || unidades.Contains(TextoFiltroProductosEnvasados)) : false)
+                || (TipoProductoEnvasadoSeleccionado == true ? tipo.Contains(TextoFiltroProductosEnvasados) : false)
+                || (GrupoProductoEnvasadoSeleccionado == true ? grupo.Contains(TextoFiltroProductosEnvasados) : false);
 
         }
         #endregion
+
     }
 }

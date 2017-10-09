@@ -167,7 +167,7 @@
 
                                     <DataTemplate DataType="{x:Type GestionEnvasados:TabEnvasadosViewModel}">
                                         <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="PackageVariant" Foreground="White"
+                                            <materialDesign:PackIcon Kind="Package" Foreground="White"
                                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                                      Height="20" Width="20"/>
                                             <TextBlock Text="Envasados" Margin="5,0,0,0"
@@ -228,6 +228,10 @@
 
                                     <DataTemplate DataType="{x:Type GestionElaboraciones:TabElaboracionesViewModel}">
                                         <GestionElaboraciones:TabElaboraciones x:Name="ucTabElaboraciones" />
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type GestionEnvasados:TabEnvasadosViewModel}">
+                                        <GestionEnvasados:TabEnvasados x:Name="ucTabEnvasados" />
                                     </DataTemplate>
 
                                     <DataTemplate DataType="{x:Type GestionVentas:TabVentasViewModel}">

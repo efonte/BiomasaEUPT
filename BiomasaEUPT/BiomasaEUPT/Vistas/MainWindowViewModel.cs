@@ -118,14 +118,14 @@ namespace BiomasaEUPT.Vistas
                     }
                     else if (TabSeleccionada is TabEnvasadosViewModel)
                     {
-                        /*ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
+                        ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
                                AnadirProductoEnvasadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
                                ModificarProductoEnvasadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
                                BorrarProductoEnvasadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabEnvasadosViewModel).
-                               RefrescarProductosEnvasadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));*/
+                               RefrescarProductosEnvasadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
                     }
                     else if (TabSeleccionada is TabVentasViewModel)
                     {
