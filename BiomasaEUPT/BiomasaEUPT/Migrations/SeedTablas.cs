@@ -772,7 +772,7 @@ namespace BiomasaEUPT.Migrations
                 }
             }
             context.SaveChanges();
-
+            
 
             resourceName = String.Format(NOMBRE_CSV, "TiposProductosEnvasados");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -786,11 +786,11 @@ namespace BiomasaEUPT.Migrations
                         datos.Add(new TipoProductoEnvasado()
                         {
                             TipoProductoEnvasadoId = csvReader.GetField<int>("TipoProductoEnvasadoId"),
-                            GrupoId = csvReader.GetField<int>("GrupoId"),
                             Nombre = csvReader.GetField<string>("Nombre"),
                             Descripcion = csvReader.GetField<string>("Descripcion"),
                             MedidoEnVolumen = csvReader.GetField<bool>("MedidoEnVolumen"),
-                            MedidoEnUnidades = csvReader.GetField<bool>("MedidoEnUnidades")
+                            MedidoEnUnidades = csvReader.GetField<bool>("MedidoEnUnidades"),
+                            GrupoId = csvReader.GetField<int>("GrupoId")
                         });
                     }
                     context.TiposProductosEnvasados.AddOrUpdate(d => d.TipoProductoEnvasadoId, datos.ToArray());
@@ -798,7 +798,7 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
-           
+          
             resourceName = String.Format(NOMBRE_CSV, "Picking");
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -821,7 +821,30 @@ namespace BiomasaEUPT.Migrations
                 }
             }
             context.SaveChanges();
-            
+
+
+            resourceName = String.Format(NOMBRE_CSV, "OrdenesEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<OrdenEnvasado>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a OrdenEnvasadoMap
+                        datos.Add(new OrdenEnvasado()
+                        {
+                            OrdenEnvasadoId = csvReader.GetField<int>("OrdenEnvasadoId"),
+                            EstadoEnvasadoId = csvReader.GetField<int>("EstadoEnvasadoId"),
+                            Descripcion = csvReader.GetField<string>("Descripcion")
+                        });
+                    }
+                    context.OrdenesEnvasados.AddOrUpdate(d => d.OrdenEnvasadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
         }
     }
 }

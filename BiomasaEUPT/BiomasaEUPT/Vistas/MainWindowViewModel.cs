@@ -130,13 +130,13 @@ namespace BiomasaEUPT.Vistas
                     else if (TabSeleccionada is TabVentasViewModel)
                     {
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
-                               AnadirProductoEnvasadoComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
+                               AnadirPedidoDetalleComando, new KeyGesture(Key.A, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
-                               ModificarProductoEnvasadoComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
+                               ModificarPedidoDetalleComando, new KeyGesture(Key.M, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
-                               BorrarProductoEnvasadoComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
+                               BorrarPedidoDetalleComando, new KeyGesture(Key.B, (ModifierKeys.Control | ModifierKeys.Shift))));
                         ventana.InputBindings.Add(new KeyBinding((TabSeleccionada as TabVentasViewModel).
-                               RefrescarProductosEnvasadosComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
+                               RefrescarPedidosDetallesComando, new KeyGesture(Key.R, (ModifierKeys.Control | ModifierKeys.Shift))));
                     }
                 }
                 TabSeleccionada.Inicializar();

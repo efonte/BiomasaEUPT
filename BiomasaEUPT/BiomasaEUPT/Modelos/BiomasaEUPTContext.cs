@@ -228,6 +228,7 @@
         public DbSet<PedidoCabecera> PedidosCabeceras { get; set; }
         public DbSet<EstadoPedido> EstadosPedidos { get; set; }
         public DbSet<PedidoDetalle> PedidosDetalles { get; set; }
+        public DbSet<PedidoLinea> PedidosLineas { get; set; }
         public DbSet<Picking> Picking { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Comunidad> Comunidades { get; set; }

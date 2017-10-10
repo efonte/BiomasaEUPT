@@ -240,6 +240,93 @@ BEGIN
 END
 '
 
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosEnvasadosComposiciones_I]
+    ON [dbo].[ProductosEnvasadosComposiciones]
+    AFTER INSERT
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+
+    UPDATE HistorialHuecosAlmacenajes
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante - i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes - i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  HistorialHuecosAlmacenajes.HistorialHuecoAlmacenajeId = i.HistorialHuecoId
+END
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosEnvasadosComposiciones_D]
+    ON [dbo].[ProductosEnvasadosComposiciones]
+    AFTER DELETE
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE HistorialHuecosAlmacenajes
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante + i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes + i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  HistorialHuecosAlmacenajes.HistorialHuecoAlmacenajeId = i.HistorialHuecoId
+END
+'
+
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_Picking_I]
+    ON [dbo].[Picking]
+    AFTER INSERT
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON; 
+
+    UPDATE Picking
+    SET    VolumenRestante = i.VolumenTotal,
+           UnidadesRestantes = i.UnidadesTotales
+    FROM   inserted i
+    WHERE  Picking.PickingId = i.PickingId
+END
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosEnvasados_Cantidades_I]
+    ON [dbo].[ProductosEnvasados]
+    AFTER INSERT
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+
+    UPDATE Picking
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante - i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes - i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  Picking.PickingId = i.PickingId
+END
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_ProductosEnvasados_Cantidades_D]
+    ON [dbo].[ProductosEnvasados]
+    AFTER DELETE
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Picking
+    SET    VolumenRestante = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenRestante + i.Volumen) ELSE VolumenRestante END,
+           UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes + i.Unidades) ELSE UnidadesRestantes END
+    FROM   inserted i
+    WHERE  Picking.PickingId = i.PickingId
+END
+'
+
 
 "
                 );

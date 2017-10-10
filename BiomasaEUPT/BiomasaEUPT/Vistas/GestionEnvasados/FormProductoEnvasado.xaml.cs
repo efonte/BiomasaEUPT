@@ -35,7 +35,6 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         private CollectionViewSource gruposProductosTerminadosViewSource;
         private CollectionViewSource tiposProductosEnvasadosViewSource;
         private CollectionViewSource gruposProductosEnvasadosViewSource;
-        private CollectionViewSource pickingViewSource;
         public TipoProductoEnvasado TipoProductoEnvasado { get; set; }
         private FormProductoEnvasadoViewModel viewModel;
 
@@ -87,9 +86,9 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
             tiposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosEnvasadosViewSource")));
             gruposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosEnvasadosViewSource")));
-            pickingViewSource = ((CollectionViewSource)(FindResource("pickingViewSource")));
             tiposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosTerminadosViewSource")));
             gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
+
 
             context.ProductosEnvasados.Load();
             context.TiposProductosEnvasados.Load();
@@ -101,11 +100,10 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
             tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
             gruposProductosEnvasadosViewSource.Source = context.GruposProductosEnvasados.Local;
-            pickingViewSource.Source = context.Picking.Local;
             tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
             gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
 
-
+            viewModel.PickingDisponible = new ObservableCollection<Picking>(context.Picking.ToList());
         }
 
         private void cbGruposProductosEnvasados_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -214,16 +212,21 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         
         private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (viewModel.TipoProductoTerminado != null)
+            if (viewModel.TipoProductoEnvasado != null)
             {
-                if (viewModel.TipoProductoTerminado.MedidoEnUnidades == true)
+                if (viewModel.TipoProductoEnvasado.MedidoEnUnidades == true)
                 {
                     viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
+                    viewModel.PickingDisponible = new ObservableCollection<Picking>(context.Picking.Where(p => p.UnidadesRestantes >= viewModel.Unidades).ToList());
+
                 }
                 else
                 {
                     viewModel.Volumen = viewModel.Cantidad;
+                    viewModel.PickingDisponible = new ObservableCollection<Picking>(context.Picking.Where(p => p.VolumenRestante >= viewModel.Volumen).ToList());
+
                 }
+                cbPicking.SelectedIndex = 0;
             }
             CalcularCantidades();
         }

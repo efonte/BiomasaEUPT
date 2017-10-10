@@ -30,11 +30,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public CollectionView PedidosDetallesView { get; private set; }
         public IList<PedidoDetalle> PedidosDetallesSeleccionados { get; set; }
 
-        public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
-        public CollectionView ProductosEnvasadosView { get; private set; }
-        public IList<ProductoEnvasado> ProductosEnvasadosSeleccionados { get; set; }
-        public ProductoEnvasado ProductoEnvasadoSeleccionado { get; set; }
-
+        
         public int IndiceMasOpciones { get; set; }
 
         // Checkbox Filtro Pedidos Cabceceras
@@ -70,21 +66,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
-        // Checkbox Filtro Productos Envasados
-        public bool VolumenSeleccionadoo { get; set; } = false;
-        public bool PickingNombreSeleccionado { get; set; } = false;
-        public bool codigoSeleccionado { get; set; } = false;
-
-        private string _textoFiltroProductosEnvasados;
-        public string TextoFiltroProductosEnvasados
-        {
-            get => _textoFiltroProductosEnvasados;
-            set
-            {
-                _textoFiltroProductosEnvasados = value.ToLower();
-                FiltrarProductosEnvasados();
-            }
-        }
 
         private ICommand _anadirPedidoCabeceraComando;
         private ICommand _modificarPedidoCabeceraComando;
@@ -104,12 +85,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private ICommand _borrarPedidoDetalleComando;
         private ICommand _refrescarPedidosDetallesComando;
         private ICommand _filtrarPedidosDetallesComando;
-
-        private ICommand _anadirPedidoLineaComando;
-        private ICommand _modificarPedidoLineaComando;
-        private ICommand _borrarPedidoLineaComando;
-        private ICommand _refrescarPedidosLineasComando;
-        private ICommand _filtrarPedidosLineasComando;
 
         private ICommand _masOpcionesComando;
 
@@ -187,28 +162,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
-        public void CargarProductosEnvasados()
-        {
-            if (PedidoCabeceraSeleccionado != null)
-            {
-                using (new CursorEspera())
-                {
-                    ProductosEnvasados = new ObservableCollection<ProductoEnvasado>(
-                          context.ProductosEnvasados.
-                          Where(pe => pe.ProductoEnvasadoId == PedidoCabeceraSeleccionado.EstadoId)
-                          .Include(pe => pe.ProductoEnvasadoComposiciones)
-                          .Include(pe => pe.Picking)
-                          .ToList());
-                    ProductosEnvasadosView = (CollectionView)CollectionViewSource.GetDefaultView(ProductosEnvasados);
-
-                    ProductoEnvasadoSeleccionado = null;
-                }
-            }
-            else
-            {
-                ProductosEnvasados = null;
-            }
-        }
 
         // Asigna el valor de PedidosCabecerasSeleccinodos ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGPedidosCabeceras_SelectionChangedComando => _dgPedidosCabeceras_SelectionChangedComando ??
@@ -223,7 +176,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
 
         // Asigna el valor de ProducosEnvasadosSeleccionados ya que no se puede crear un Binding de SelectedItems desde el XAML
-        public ICommand DGProductosEnvasados_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ProductosEnvasadosSeleccionados = param.Cast<ProductoEnvasado>().ToList());
+        //public ICommand DGProductosEnvasados_SelectionChangedComando => new RelayCommandGenerico<IList<object>>(param => ProductosEnvasadosSeleccionados = param.Cast<ProductoEnvasado>().ToList());
 
 
         #region Añadir Pedido Cabecera
@@ -525,193 +478,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 || (TipoProductoTerminadoSeleccionado == true ? tipoProducto.Contains(TextoFiltroPedidos) : false);
         }
         #endregion
-
-
-        #region Añadir Producto Envasado
-        public ICommand AnadirProductoEnvasadoComando => _anadirProductoEnvasadoComando ??
-            (_anadirProductoEnvasadoComando = new RelayCommand(
-                param => AnadirProductoEnvasado(),
-                param => CanAnadirProductoEnvasado()
-            ));
-
-        private bool CanAnadirProductoEnvasado()
-        {
-            if (PedidoCabeceraSeleccionado != null)
-            {
-                return PedidoCabeceraSeleccionado.EstadoId == 2; // Procesando
-            }
-            return false;
-        }
-
-        private async void AnadirProductoEnvasado()
-        {
-            var formProductoEnvasado = new FormProductoEnvasado(context);
-
-            if ((bool)await DialogHost.Show(formProductoEnvasado, "RootDialog"))
-            {
-                var formProductoEnvasadoDataContext = formProductoEnvasado.DataContext as FormProductoEnvasadoViewModel;
-                var productoEnvasado = new ProductoEnvasado()
-                {
-                    TipoProductoEnvasadoId=(formProductoEnvasado.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
-                    Observaciones = formProductoEnvasadoDataContext.Observaciones,
-                    PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
-                    Volumen = formProductoEnvasadoDataContext.Volumen
-
-                };
-                context.ProductosEnvasados.Add(productoEnvasado);
-
-                var productosEnvasadosComposiciones = new List<ProductoEnvasadoComposicion>();
-                foreach (var pec in formProductoEnvasadoDataContext.ProductosEnvasadosComposiciones)
-                {
-                    var hhaId = pec.HistorialHuecoAlmacenaje.HuecoAlmacenajeId;
-                    // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                    if (pec.Unidades != 0 && pec.Volumen != 0)
-                    {
-                        pec.HistorialHuecoAlmacenaje = null;
-                        pec.HistorialHuecoId = hhaId;
-                        pec.ProductoEnvasado = productoEnvasado;
-                        productosEnvasadosComposiciones.Add(pec);
-                    }
-                }
-                //context.ProductosEnvasados.AddRange(ProductoEnvasadoSeleccionado);
-                context.SaveChanges();
-
-                CargarProductosEnvasados();
-            }
-        }
-        #endregion
-
-
-        #region Borrar Producto Envasado    
-        public ICommand BorrarProductoEnvasadoComando => _borrarProductoEnvasadoComando ??
-            (_borrarProductoEnvasadoComando = new RelayCommandGenerico<IList<object>>(
-                param => BorrarProductoEnvasado(),
-                param => ProductoEnvasadoSeleccionado != null
-            ));
-
-        private async void BorrarProductoEnvasado()
-        {
-            string pregunta = ProductosEnvasadosSeleccionados.Count == 1
-                ? "¿Está seguro de que desea borrar el producto envasado con código " + ProductoEnvasadoSeleccionado.Codigo + "?"
-                : "¿Está seguro de que desea borrar los productos envasados seleccionados?";
-
-            if ((bool)await DialogHost.Show(new MensajeConfirmacion(pregunta), "RootDialog"))
-            {
-                List<ProductoEnvasado> productosEnvasadosABorrar = new List<ProductoEnvasado>();
-
-                foreach (var pe in ProductosEnvasadosSeleccionados)
-                {
-                    if (!context.ProductosEnvasadosComposiciones.Any(ptc => ptc.ProductoEnvasado.ProductoEnvasadoId == pe.ProductoEnvasadoId))
-                    {
-                        ProductosEnvasadosSeleccionados.Add(pe);
-                    }
-                }
-                context.ProductosEnvasados.RemoveRange(productosEnvasadosABorrar);
-                context.SaveChanges();
-
-                if (ProductosEnvasadosSeleccionados.Count != ProductosEnvasadosSeleccionados.Count)
-                {
-                    string mensaje = ProductosEnvasadosSeleccionados.Count == 1
-                           ? "No se ha podido borrar el producto envasado seleccionado."
-                           : "No se han podido borrar todas los productos envasados seleccionados.";
-                    mensaje += "\n\nAsegurese de no que no exista ningún producto envasado elaborado con dicho producto terminado.";
-                    await DialogHost.Show(new MensajeInformacion(mensaje) { Width = 380 }, "RootDialog");
-                }
-                CargarProductosEnvasados();
-            }
-        }
-        #endregion
-
-
-        #region Modificar Producto Envasado 
-        public ICommand ModificarProductoEnvasadoComando => _modificarProductoEnvasadoComando ??
-            (_modificarProductoEnvasadoComando = new RelayCommand(
-                param => ModificarProductoEnvasado(),
-                param => ProductoEnvasadoSeleccionado != null
-             ));
-
-        public async void ModificarProductoEnvasado()
-        {
-            var formProductoEnvasado = new FormProductoEnvasado(context, ProductoEnvasadoSeleccionado);
-            var formProductoEnvasadoDataContext = formProductoEnvasado.DataContext as FormProductoEnvasadoViewModel;
-            //var historialHuecosRecepionesIniciales = formProductoEnvasadoDataContext.HistorialHuecosRecepciones.ToList();
-            if ((bool)await DialogHost.Show(formProductoEnvasado, "RootDialog"))
-            {
-                //ProductoEnvasadoSeleccionado.TipoProductoTerminadoId = formProductoEnvasadoDataContext.TipoProductoTerminado.TipoProductoTerminadoId;
-                ProductoEnvasadoSeleccionado.PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId;
-                ProductoEnvasadoSeleccionado.Volumen = formProductoEnvasadoDataContext.Volumen;
-                ProductoEnvasadoSeleccionado.Observaciones = formProductoEnvasadoDataContext.Observaciones;
-
-                if (!context.ProductosEnvasadosComposiciones.Any(pec => pec.ProductoEnvasado.ProductoEnvasadoId == ProductoEnvasadoSeleccionado.ProductoEnvasadoId))
-                {
-                    // Se borran todos los historiales huecos recepciones antiguos y se añaden los nuevos
-                    /*context.HistorialHuecosRecepciones.RemoveRange(historialHuecosRecepionesIniciales);
-                    var huecosMateriasPrimas = new List<HistorialHuecoRecepcion>();
-                    foreach (var hhr in formMateriaPrimaDataContext.HistorialHuecosRecepciones)
-                    {
-                        var hrId = hhr.HuecoRecepcion.HuecoRecepcionId;
-                        // Los huecos que no se ha añadido ninguna cantidad no se añaden
-                        if (hhr.Unidades != 0 && hhr.Volumen != 0)
-                        {
-                            hhr.HuecoRecepcion = null;
-                            hhr.HuecoRecepcionId = hrId;
-                            hhr.MateriaPrima = MateriaPrimaSeleccionada;
-                            huecosMateriasPrimas.Add(hhr);
-                        }
-                    }
-                    context.HistorialHuecosRecepciones.AddRange(huecosMateriasPrimas);*/
-                }
-
-                context.SaveChanges();
-                ProductosEnvasadosView.Refresh();
-                // CargarMateriasPrimas();
-            }
-        }
-        #endregion
-
-
-        #region Refrescar Productos Envasados
-        public ICommand RefrescarProductosEnvasadosComando => _refrescarProductosEnvasadosComando ??
-            (_refrescarProductosEnvasadosComando = new RelayCommand(
-                param => CargarProductosEnvasados(),
-                param => PedidoCabeceraSeleccionado != null
-             ));
-        #endregion
-
-
-        #region Filtro Productos Envasados
-        public ICommand FiltrarProductosEnvasadosComando => _filtrarProductosEnvasadosComando ??
-           (_filtrarProductosEnvasadosComando = new RelayCommand(
-                param => FiltrarProductosEnvasados()
-           ));
-
-        public void FiltrarProductosEnvasados()
-        {
-            ProductosEnvasadosView.Filter = FiltroProductosEnvasados;
-            ProductosEnvasadosView.Refresh();
-        }
-
-        private bool FiltroProductosEnvasados(object item)
-        {
-            var productoEnvasado = item as ProductoEnvasado;
-            //string tipo = productoEnvasado.TipoProductoTerminado.Nombre.ToLower();
-            //string grupo = productoEnvasado.TipoProductoTerminado.GrupoProductoTerminado.Nombre.ToLower();
-            string volumen = productoEnvasado.Volumen.ToString();
-            string picking = productoEnvasado.Picking.Nombre.ToLower();
-            string codigo = productoEnvasado.Codigo.ToString();
-            //string fechaBaja = productoEnvasado.FechaBaja.ToString();
-
-            return (VolumenSeleccionado == true ? (volumen.Contains(TextoFiltroProductosEnvasados)) : false)
-                || (PickingNombreSeleccionado == true ? picking.Contains(TextoFiltroProductosEnvasados) : false)
-                || (codigoSeleccionado == true ? codigo.Contains(TextoFiltroProductosEnvasados) : false);
-
-        }
-        #endregion
-
-
-
-        
-
 
     }
 }

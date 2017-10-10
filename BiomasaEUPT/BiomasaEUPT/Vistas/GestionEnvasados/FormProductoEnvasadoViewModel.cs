@@ -20,7 +20,8 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         public int? Unidades { get; set; }
         public double? Volumen { get; set; }
         public string CantidadHint { get; set; }
-        public double Cantidad { get; set; }
+        
+        public double Cantidad        { get; set; }
         private string _observaciones;
         public string Observaciones
         {

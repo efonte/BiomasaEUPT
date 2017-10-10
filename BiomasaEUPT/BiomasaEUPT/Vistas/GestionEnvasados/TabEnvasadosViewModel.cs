@@ -151,15 +151,15 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             }
         }
 
-        // Asigna el valor de OrdenesElaboracionesSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
+        // Asigna el valor de OrdenesEnvasadosSeleccinodas ya que no se puede crear un Binding de SelectedItems desde el XAML
         public ICommand DGOrdenesEnvasados_SelectionChangedComando => _dgOrdenesEnvasados_SelectionChangedComando ??
             (_dgOrdenesEnvasados_SelectionChangedComando = new RelayCommandGenerico<IList<object>>(
                 param => DGOrdenesEnvasados_SelectionChanged(param)
             ));
 
-        private void DGOrdenesEnvasados_SelectionChanged(IList<object> ordenesElaboracionesSeleccionadas)
+        private void DGOrdenesEnvasados_SelectionChanged(IList<object> ordenesEnvasadosSeleccionadas)
         {
-            OrdenesEnvasadosSeleccionadas = OrdenesEnvasadosSeleccionadas.Cast<OrdenEnvasado>().ToList();
+            OrdenesEnvasadosSeleccionadas = ordenesEnvasadosSeleccionadas.Cast<OrdenEnvasado>().ToList();
             CargarProductosEnvasados();
         }
 

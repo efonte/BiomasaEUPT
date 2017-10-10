@@ -8,6 +8,7 @@
              xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
@@ -150,6 +151,7 @@
                         <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:LongitudValidationRule NombreCampo="Descripcion" Max="60" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripcion" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

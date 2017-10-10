@@ -23,7 +23,6 @@
             <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoEnvasado}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoEnvasado}, CreateList=True}"/>
-            <CollectionViewSource x:Key="pickingViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Picking}, CreateList=True}"/>
             <conv:PorcentajeConverter x:Key="PorcentajeConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -97,14 +96,14 @@
                           SelectionChanged="cbGruposProductosTerminados_SelectionChanged">
                 </ComboBox>
 
-                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
+                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbTiposProductosTerminados" materialDesign:HintAssist.Hint="Tipo Producto Terminado"
                           ItemsSource="{Binding Source={StaticResource tiposProductosTerminadosViewSource}}"
                           DisplayMemberPath="Nombre" SelectedValuePath="TipoProductoTerminadoId"
                           SelectedItem="{Binding TipoProductoTerminado, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           SelectionChanged="cbTiposProductosTerminados_SelectionChanged">
                 </ComboBox>
 
-                <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lbHistorialHuecosAlmacenajes" Height="100"
+                <ListBox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" x:Name="lbHistorialHuecosAlmacenajes" Height="100"
                          ItemsSource="{Binding HistorialHuecosAlmacenajesDisponibles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          PreviewMouseLeftButtonDown="lbHistorialHuecosAlmacenajes_PreviewMouseLeftButtonDown">
                     <ItemsControl.ItemTemplate>
@@ -248,10 +247,9 @@
                 </materialDesign:ColorZone>
 
                 <ComboBox Grid.Row="5" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
-                          ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
-                          DisplayMemberPath="Nombre" SelectedValuePath="SitioAlmacenajeId"
-                          SelectionChanged="cbPicking_SelectionChanged"
-                          VerticalAlignment="Top">
+                          ItemsSource="{Binding PickingDisponible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="PickingId"
+                          SelectionChanged="cbPicking_SelectionChanged" SelectedIndex="0">
                 </ComboBox>
 
                 <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"

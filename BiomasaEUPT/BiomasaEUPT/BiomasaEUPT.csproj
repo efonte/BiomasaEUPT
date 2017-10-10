@@ -205,6 +205,7 @@
     <Compile Include="Domain\RelayCommandGenerico.cs" />
     <Compile Include="Modelos\Tablas\EstadoEnvasado.cs" />
     <Compile Include="Modelos\Tablas\GrupoProductoEnvasado.cs" />
+    <Compile Include="Modelos\Tablas\PedidoLinea.cs" />
     <Compile Include="Modelos\Tablas\Permiso.cs" />
     <Compile Include="Modelos\Tablas\TipoProductoEnvasado.cs" />
     <Compile Include="Modelos\Validadores\NotEmptyValidationRule.cs" />
@@ -445,18 +446,11 @@
     <Compile Include="Vistas\GestionVentas\FormPedido.xaml.cs">
       <DependentUpon>FormPedido.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\GestionVentas\FormProductoEnvasado.xaml.cs">
-      <DependentUpon>FormProductoEnvasado.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionVentas\FormProductoEnvasadoViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\TablaPedidos.xaml.cs">
       <DependentUpon>TablaPedidos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\TablaPedidosDetalles.xaml.cs">
       <DependentUpon>TablaPedidosDetalles.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml.cs">
-      <DependentUpon>TablaProductosEnvasados.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\TabVentas.xaml.cs">
       <DependentUpon>TabVentas.xaml</DependentUpon>
@@ -697,10 +691,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\GestionVentas\FormProductoEnvasado.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Vistas\GestionVentas\TablaPedidos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -708,10 +698,6 @@
     <Page Include="Vistas\GestionVentas\TablaPedidosDetalles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\GestionVentas\TablaProductosEnvasados.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\GestionVentas\TabVentas.xaml">
       <SubType>Designer</SubType>
@@ -777,6 +763,7 @@
     <EmbeddedResource Include="Migrations\DatosSeed\EstadosPedidos.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\EstadosEnvasados.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\GruposProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\OrdenesEnvasados.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

@@ -9,6 +9,7 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:const="clr-namespace:BiomasaEUPT.Modelos"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Height="410" Width="500" Loaded="UserControl_Loaded">
@@ -56,15 +57,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Nombre}"/>
-                                <TextBlock FontSize="14" FontStyle="Italic">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}Tamaño: {0}, Humedad:{1}%">
-                                            <Binding Path="Tamano"/>
-                                            <Binding Path="Humedad"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock FontSize="14" Text="{Binding Nombre}"/>                                
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -150,6 +143,7 @@
                         <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validadores:LongitudValidationRule NombreCampo="Descripcion" Max="60" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule x:Name="vDescripcionLongitud" NombreCampo="descripcion" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
