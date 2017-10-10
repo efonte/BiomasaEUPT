@@ -17,13 +17,6 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
 {
    public class MasOpcionesEnvasadosViewModel : ViewModelBase
     {
-        public override void Inicializar()
-        {
-            throw new NotImplementedException();
-        }
-
-        public class MasOpcionesElaboracionesViewModel : ViewModelBase
-        {
             public ObservableCollection<GrupoProductoEnvasado> GruposProductosEnvasados { get; set; }
             public IList<GrupoProductoEnvasado> GruposProductosEnvasadosSeleccionados { get; set; }
 
@@ -65,7 +58,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
 
             private BiomasaEUPTContext context;
 
-            public MasOpcionesElaboracionesViewModel()
+            public MasOpcionesEnvasadosViewModel()
             {
 
             }
@@ -398,6 +391,5 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             }
             #endregion
 
-        }
     }
 }
