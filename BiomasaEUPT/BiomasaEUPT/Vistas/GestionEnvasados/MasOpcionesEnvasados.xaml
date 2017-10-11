@@ -140,7 +140,7 @@
             </ScrollViewer>
         </GroupBox>
 
-        <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="0,10,20,10"
+        <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="0,10,10,10"
                   Style="{DynamicResource MaterialDesignCardGroupBox}">
             <GroupBox.Header>
                 <materialDesign:ColorZone Mode="PrimaryMid">
