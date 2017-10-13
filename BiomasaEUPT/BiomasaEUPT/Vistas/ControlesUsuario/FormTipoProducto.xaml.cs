@@ -18,9 +18,9 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.ControlesUsuario
 {
     /// <summary>
-    /// Lógica de interacción para FormTipoProductoEnvasado.xaml
+    /// Lógica de interacción para FormTipoProducto.xaml
     /// </summary>
-    public partial class FormTipoProductoEnvasado : UserControl
+    public partial class FormTipoProducto : UserControl
     {
 
         private string _nombre;
@@ -37,13 +37,14 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             set { _descripcion = value; }
         }
 
-        public FormTipoProductoEnvasado()
+
+        public FormTipoProducto()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        public FormTipoProductoEnvasado(string _titulo) : this()
+        public FormTipoProducto(string _titulo) : this()
         {
             gbTitulo.Header = _titulo;
         }

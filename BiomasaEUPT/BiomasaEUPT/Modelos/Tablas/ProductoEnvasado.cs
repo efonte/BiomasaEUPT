@@ -28,7 +28,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Observaciones"), Display(Name = "Observaciones")]
         public string Observaciones { get; set; }
 
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [StringLength(Constantes.LONG_MAX_CODIGO, MinimumLength = Constantes.LONG_MIN_CODIGO)]
         [DisplayName("Código"), Display(Name = "Código")]
         public string Codigo { get; set; }

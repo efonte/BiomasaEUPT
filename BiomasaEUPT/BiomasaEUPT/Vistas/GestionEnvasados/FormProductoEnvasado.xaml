@@ -64,14 +64,6 @@
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock Text="{Binding Nombre}"/>
-                                <TextBlock FontStyle="Italic" FontSize="10">
-                                    <!--TextBlock.Text>
-                                        <MultiBinding StringFormat="{}Humedad: {0}%, Tamaño: {1}">
-                                            <Binding Path="Humedad"/>
-                                            <Binding Path="Tamano"/>
-                                        </MultiBinding>
-                                    </-->
-                                </TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

@@ -134,8 +134,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             context.Dispose();
             context = new BiomasaEUPTContext();
         }
-        
-        
+
+
         #region Añadir Grupo Producto Terminado
         public ICommand AnadirGrupoProductoTerminadoComando => _anadirGrupoProductoTerminadoComando ??
            (_anadirGrupoProductoTerminadoComando = new RelayCommand(

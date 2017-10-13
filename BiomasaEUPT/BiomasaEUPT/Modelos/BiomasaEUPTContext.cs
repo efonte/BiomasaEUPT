@@ -187,6 +187,11 @@
                         .WithMany()
                         .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<PedidoDetalle>()
+                    .HasRequired(pd => pd.ProductoEnvasado)
+                    .WithMany()
+                    .WillCascadeOnDelete(false);
+
             // Cambio del nombre por defecto de las tablas de auditoría
             modelBuilder.Entity<AuditEntry>().ToTable("AuditoriaTablas");
             modelBuilder.Entity<AuditEntryProperty>().ToTable("AuditoriaDatosTablas");

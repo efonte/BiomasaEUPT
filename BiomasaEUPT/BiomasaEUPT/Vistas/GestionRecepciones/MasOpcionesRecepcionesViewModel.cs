@@ -231,6 +231,7 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
         }
         #endregion
 
+
         #region Añadir Grupo Materia Prima
         public ICommand AnadirGrupoMateriaPrimaComando => _anadirGrupoMateriaPrimaComando ??
            (_anadirGrupoMateriaPrimaComando = new RelayCommand(
@@ -333,18 +334,18 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private async void AnadirTipoMateriaPrima()
         {
-            var formTipoMP = new FormTipoMateriaPrima();
-            formTipoMP.vNombreUnico.Atributo = "Nombre";
-            formTipoMP.vNombreUnico.Tipo = "TipoMateriaPrima";
+            var formTipoProducto = new FormTipoProducto();
+            formTipoProducto.vNombreUnico.Atributo = "Nombre";
+            formTipoProducto.vNombreUnico.Tipo = "TipoMateriaPrima";
 
-            if ((bool)await DialogHost.Show(formTipoMP, "RootDialog"))
+            if ((bool)await DialogHost.Show(formTipoProducto, "RootDialog"))
             {
                 context.TiposMateriasPrimas.Add(new TipoMateriaPrima()
                 {
-                    Nombre = formTipoMP.Nombre,
-                    Descripcion = formTipoMP.Descripcion,
-                    MedidoEnVolumen = formTipoMP.lbMedido.SelectedIndex == 0,
-                    MedidoEnUnidades = formTipoMP.lbMedido.SelectedIndex == 1,
+                    Nombre = formTipoProducto.Nombre,
+                    Descripcion = formTipoProducto.Descripcion,
+                    MedidoEnVolumen = formTipoProducto.lbMedido.SelectedIndex == 0,
+                    MedidoEnUnidades = formTipoProducto.lbMedido.SelectedIndex == 1,
                     GrupoId = GrupoMateriaPrimaSeleccionada.GrupoMateriaPrimaId
                 });
 
@@ -394,24 +395,24 @@ namespace BiomasaEUPT.Vistas.GestionRecepciones
 
         private async void ModificarTipoMateriaPrima()
         {
-            var formTipoMP = new FormTipoMateriaPrima("Editar Tipo M. Prima");
-            formTipoMP.vNombreUnico.Atributo = "Nombre";
-            formTipoMP.vNombreUnico.Tipo = "TipoMateriaPrima";
-            formTipoMP.vNombreUnico.NombreActual = TipoMateriaPrimaSeleccionada.Nombre;
+            var formTipoProducto = new FormTipoProducto("Editar Tipo M. Prima");
+            formTipoProducto.vNombreUnico.Atributo = "Nombre";
+            formTipoProducto.vNombreUnico.Tipo = "TipoMateriaPrima";
+            formTipoProducto.vNombreUnico.NombreActual = TipoMateriaPrimaSeleccionada.Nombre;
 
-            formTipoMP.Nombre = TipoMateriaPrimaSeleccionada.Nombre;
-            formTipoMP.Descripcion = TipoMateriaPrimaSeleccionada.Descripcion;
+            formTipoProducto.Nombre = TipoMateriaPrimaSeleccionada.Nombre;
+            formTipoProducto.Descripcion = TipoMateriaPrimaSeleccionada.Descripcion;
             if (TipoMateriaPrimaSeleccionada.MedidoEnVolumen == true)
-                formTipoMP.lbMedido.SelectedIndex = 0;
+                formTipoProducto.lbMedido.SelectedIndex = 0;
             else
-                formTipoMP.lbMedido.SelectedIndex = 1;
+                formTipoProducto.lbMedido.SelectedIndex = 1;
 
-            if ((bool)await DialogHost.Show(formTipoMP, "RootDialog"))
+            if ((bool)await DialogHost.Show(formTipoProducto, "RootDialog"))
             {
-                TipoMateriaPrimaSeleccionada.Nombre = formTipoMP.Nombre;
-                TipoMateriaPrimaSeleccionada.Descripcion = formTipoMP.Descripcion;
-                TipoMateriaPrimaSeleccionada.MedidoEnVolumen = formTipoMP.lbMedido.SelectedIndex == 0;
-                TipoMateriaPrimaSeleccionada.MedidoEnUnidades = formTipoMP.lbMedido.SelectedIndex == 1;
+                TipoMateriaPrimaSeleccionada.Nombre = formTipoProducto.Nombre;
+                TipoMateriaPrimaSeleccionada.Descripcion = formTipoProducto.Descripcion;
+                TipoMateriaPrimaSeleccionada.MedidoEnVolumen = formTipoProducto.lbMedido.SelectedIndex == 0;
+                TipoMateriaPrimaSeleccionada.MedidoEnUnidades = formTipoProducto.lbMedido.SelectedIndex == 1;
                 context.SaveChanges();
                 CargarTiposMateriasPrimas();
             }

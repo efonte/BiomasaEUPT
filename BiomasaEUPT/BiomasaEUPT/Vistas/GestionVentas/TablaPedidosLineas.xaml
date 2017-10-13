@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.TablaPedidosDetalles"
+﻿<UserControl x:Class="BiomasaEUPT.Vistas.GestionVentas.TablaPedidosLineas"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Pedidos Detalles">
+        <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Pedidos Líneas">
 
             <Grid Margin="0 0 0 0">
                 <Grid.RowDefinitions>
@@ -40,6 +40,10 @@
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PE" Width="auto" IsReadOnly="True"
+                                                                       Binding="{Binding TipoProductoEnvasasdo.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
                             <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -71,11 +75,6 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PE" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding TipoProductoEnvasasdo.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-
-                            <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Lote" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding ProductoEnvasado.Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

@@ -140,7 +140,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         public void CargarPedidosDetalles(int cantidad = 10, int saltar = 0)
         {
 
-            using (new CursorEspera())
+            /*using (new CursorEspera())
             {
                 // Si los pedidos disponibles son menores que la cantidad a coger,
                 // se obtienen todas
@@ -159,7 +159,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 // Por defecto no está seleccionada ninguna fila del datagrid pedidos
                 //PedidoDetalleSeleccionado = null;
-            }
+            }*/
         }
 
 
@@ -231,10 +231,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 foreach (var pedido in PedidosCabecerasSeleccionados)
                 {
-                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedido.PedidoCabeceraId))
+                    /*if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedido.PedidoCabeceraId))
                     {
                         pedidosABorrar.Add(pedido);
-                    }
+                    }*/
                 }
                 context.PedidosCabeceras.RemoveRange(pedidosABorrar);
                 context.SaveChanges();
@@ -346,7 +346,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
-                    PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
+                    //PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
                     
@@ -359,7 +359,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     if (pd.Unidades != 0 && pd.Volumen != 0)
                     {
 
-                        pd.PedidoCabecera = PedidoCabeceraSeleccionado;
+                        //pd.PedidoCabecera = PedidoCabeceraSeleccionado;
                         pedidosDetalles.Add(pd);
                     }
                 }
@@ -390,7 +390,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 foreach (var pedidoDetalle in PedidosDetallesSeleccionados)
                 {
-                    if (!context.PedidosDetalles.Any(pd => pd.PedidoCabeceraId == pedidoDetalle.PedidoCabeceraId))
+                    if (!context.PedidosDetalles.Any(pd => pd.PedidoLineaId == pedidoDetalle.PedidoLineaId))
                     {
                         pedidosABorrar.Add(pedidoDetalle);
                     }
@@ -471,7 +471,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             var pedidoDetalle = item as PedidoDetalle;
             string volumen = pedidoDetalle.Volumen.ToString();
             string unidades = pedidoDetalle.Unidades.ToString();
-            string tipoProducto = pedidoDetalle.TipoProductoEnvasado.Nombre.ToLower();
+            string tipoProducto = pedidoDetalle.ProductoEnvasado.TipoProductoEnvasado.Nombre.ToLower();
 
             return (FechaPedidoSeleccionado == true ? volumen.Contains(TextoFiltroPedidos) : false)
                 || (ClientePedidoSeleccionado == true ? unidades.Contains(TextoFiltroPedidos) : false)

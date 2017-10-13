@@ -31,6 +31,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("ClienteId")]
         public virtual Cliente Cliente { get; set; }
 
-        public virtual List<PedidoDetalle> PedidoDetalles { get; set; }
+        public virtual List<PedidoLinea> PedidoLineas { get; set; }
     }
 }

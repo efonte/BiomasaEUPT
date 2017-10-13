@@ -307,14 +307,11 @@
     <Compile Include="Vistas\ControlesUsuario\FormPicking.xaml.cs">
       <DependentUpon>FormPicking.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml.cs">
-      <DependentUpon>FormTipoMateriaPrima.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipo.xaml.cs">
       <DependentUpon>FormTipo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\ControlesUsuario\FormTipoProductoEnvasado.xaml.cs">
-      <DependentUpon>FormTipoProductoEnvasado.xaml</DependentUpon>
+    <Compile Include="Vistas\ControlesUsuario\FormTipoProducto.xaml.cs">
+      <DependentUpon>FormTipoProducto.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\FormTipoProductoTerminado.xaml.cs">
       <DependentUpon>FormTipoProductoTerminado.xaml</DependentUpon>
@@ -324,9 +321,6 @@
       <DependentUpon>Paginacion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\ControlesUsuario\PaginacionViewModel.cs" />
-    <Compile Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml.cs">
-      <DependentUpon>VisorPDFCodigos.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\GestionClientes\FormCliente.xaml.cs">
       <DependentUpon>FormCliente.xaml</DependentUpon>
     </Compile>
@@ -387,6 +381,7 @@
       <DependentUpon>FormPedidoDetalle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedidoDetalleViewModel.cs" />
+    <Compile Include="Vistas\GestionVentas\FormPedidoLineaViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\FormPedidoViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\TablaTiposUsuarios.xaml.cs">
@@ -451,6 +446,9 @@
     </Compile>
     <Compile Include="Vistas\GestionVentas\TablaPedidosDetalles.xaml.cs">
       <DependentUpon>TablaPedidosDetalles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\TablaPedidosLineas.xaml.cs">
+      <DependentUpon>TablaPedidosLineas.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\TabVentas.xaml.cs">
       <DependentUpon>TabVentas.xaml</DependentUpon>
@@ -523,15 +521,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\ControlesUsuario\FormTipoMateriaPrima.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Vistas\ControlesUsuario\FormTipo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\ControlesUsuario\FormTipoProductoEnvasado.xaml">
+    <Page Include="Vistas\ControlesUsuario\FormTipoProducto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -540,10 +534,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\ControlesUsuario\Paginacion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Vistas\ControlesUsuario\VisorPDFCodigos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -699,6 +689,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\GestionVentas\TablaPedidosLineas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\GestionVentas\TabVentas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -764,6 +758,7 @@
     <EmbeddedResource Include="Migrations\DatosSeed\EstadosEnvasados.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\GruposProductosEnvasados.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\OrdenesEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosLineas.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">

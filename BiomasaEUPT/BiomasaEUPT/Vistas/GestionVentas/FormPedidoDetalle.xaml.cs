@@ -56,7 +56,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             gbTitulo.Header = "Editar Producto Envasado";
 
-            if (pedidoDetalle.TipoProductoEnvasado.MedidoEnUnidades == true)
+            if (pedidoDetalle.ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades == true)
             {
                 viewModel.Cantidad = pedidoDetalle.Unidades.Value;
             }

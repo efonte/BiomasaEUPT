@@ -186,6 +186,8 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
                 });
                 context.SaveChanges();
             }
+
+            CargarOrdenesEnvasados();
         }
         #endregion
 
@@ -334,6 +336,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
                     TipoProductoEnvasadoId = (formProductoEnvasado.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
                     Volumen = formProductoEnvasadoDataContext.Volumen,
                     Unidades = formProductoEnvasadoDataContext.Unidades,
+                    PickingId = (formProductoEnvasado.cbPicking.SelectedItem as Picking).PickingId,
                     Observaciones = formProductoEnvasadoDataContext.Observaciones
                 };
 
