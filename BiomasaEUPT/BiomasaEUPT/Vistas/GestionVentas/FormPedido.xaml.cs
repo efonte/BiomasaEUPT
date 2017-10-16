@@ -29,8 +29,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private CollectionViewSource pedidosViewSource;
         private CollectionViewSource estadosPedidosViewSource;
-        private CollectionViewSource tiposProductosTerminadosViewSource;
-        private CollectionViewSource gruposProductosTerminadosViewSource;
         private CollectionViewSource clientesViewSource;
 
         private FormPedidoViewModel viewModel;
@@ -61,18 +59,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             pedidosViewSource = ((CollectionViewSource)(FindResource("pedidosViewSource")));
             estadosPedidosViewSource = ((CollectionViewSource)(FindResource("estadosPedidosViewSource")));
             clientesViewSource = ((CollectionViewSource)(FindResource("clientesViewSource")));
-            gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
 
 
             context.PedidosCabeceras.Load();
             context.EstadosPedidos.Load();
             context.Clientes.Load();
-            context.GruposProductosTerminados.Load();
 
             pedidosViewSource.Source = context.PedidosCabeceras.Local;
             estadosPedidosViewSource.Source = context.EstadosPedidos.Local;
             clientesViewSource.Source = context.Clientes.Local;
-            gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
 
             dpFechaPedido.Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name);
         }

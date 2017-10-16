@@ -11,7 +11,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="250" Width="250" Loaded="UserControl_Loaded">
+             Height="270" Width="250" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,14 +20,13 @@
             <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
             <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Cliente}, CreateList=True}"/>
             <CollectionViewSource x:Key="estadosPedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:EstadoPedido}, CreateList=True}"/>
-            <CollectionViewSource x:Key="productosTerminadosComposicionesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoTerminadoComposicion}, CreateList=True}"/>
-            <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Cabecera">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -77,7 +76,13 @@
                           SelectedValuePath="ClienteId" >
                 </ComboBox>
 
-                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbEstadosPedidos" materialDesign:HintAssist.Hint="Estado"
+                          ItemsSource="{Binding Source={StaticResource estadosPedidosViewSource}}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="EstadoPedidoId" Visibility="Collapsed">
+                </ComboBox>
+
+                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
