@@ -381,6 +381,9 @@
       <DependentUpon>FormPedidoDetalle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedidoDetalleViewModel.cs" />
+    <Compile Include="Vistas\GestionVentas\FormPedidoLinea.xaml.cs">
+      <DependentUpon>FormPedidoLinea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\GestionVentas\FormPedidoLineaViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\FormPedidoViewModel.cs" />
     <Compile Include="Vistas\GestionPermisos\FormTipoUsuarioViewModel.cs" />
@@ -678,6 +681,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionVentas\FormPedidoDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\FormPedidoLinea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

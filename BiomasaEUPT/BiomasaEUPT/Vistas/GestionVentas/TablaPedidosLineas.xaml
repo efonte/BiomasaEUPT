@@ -86,19 +86,19 @@
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="bAnadirPedidoDetalle" ToolTip="Añadir pedido detalle"
-                                    Command="{Binding AnadirPedidoDetalleComando}">
+                                    Command="{Binding AnadirPedidoLineaComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Borrar el pedido detalle seleccionado"
-                                    Command="{Binding BorrarPedidoDetalleComando}">
+                                    Command="{Binding BorrarPedidoLineaComando}">
                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Modificar el pedido detalle seleccionado"
-                                    Command="{Binding ModificarPedidoDetalleComando}">
+                                    Command="{Binding ModificarPedidoLineaComando}">
                                 <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20" />
                             </Button>
                             <Button x:Name="bRefrescar" ToolTip="Refrescar pedidos"
-                                     Command="{Binding RefrescarPedidosDetallesComando}">
+                                     Command="{Binding RefrescarPedidosLineasComando}">
                                 <materialDesign:PackIcon Kind="Refresh" Height="20" Width="20" />
                             </Button>
                         </StackPanel>
@@ -144,11 +144,11 @@
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Unidades" Margin="8,8,8,8"/>
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Tipo PT" Margin="8,8,8,8"/>
                         <CheckBox x:Name="cbVolumen" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding VolumenSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                                  IsChecked="{Binding LineaVolumenSeleccionado}" Command="{Binding FiltrarPedidosLineasComando}"/>
                         <CheckBox x:Name="cbUnidades" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding UnidadesSeleccionadas}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                                  IsChecked="{Binding LineaUnidadesSeleccionadas}" Command="{Binding FiltrarPedidosLineasComando}"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                                  IsChecked="{Binding LineaTipoProductoEnvasadoSeleccionado}" Command="{Binding FiltrarPedidosLineasComando}"/>
 
                     </Grid>
 

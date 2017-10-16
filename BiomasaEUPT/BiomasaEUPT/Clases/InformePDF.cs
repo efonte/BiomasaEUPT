@@ -801,5 +801,62 @@ namespace BiomasaEUPT.Clases
             doc.Close();
             return rutaPDF;
         }
+
+        public string GenerarPDFCodigoProductoEnvasado(ProductoEnvasado productoEnvasado)
+        {
+            var ruta = System.IO.Path.GetTempPath() + "/BiomasaEUPT/";
+            if (!Directory.Exists(ruta))
+                Directory.CreateDirectory(ruta);
+
+            var rutaPDF = ruta + "Código Producto Envasado #" + productoEnvasado.Codigo + " " + DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss") + ".pdf";
+            PdfDocument pdfDoc = new PdfDocument(new PdfWriter(rutaPDF));
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+            info.AddCreationDate();
+            info.SetAuthor("BiomasaEUPT");
+            info.SetCreator("BiomasaEUPT");
+            info.SetTitle("Código Producto Envasado #" + productoEnvasado.Codigo + " " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            Document doc = new Document(pdfDoc, new PageSize(60, 140));
+            doc.SetMargins(5, 5, 5, 5);
+
+            PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
+            PdfFont regular = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
+            var primeraPagina = true;
+            foreach (var p in productoEnvasado.Pickings.ToList())
+            {
+                if (!primeraPagina)
+                {
+                    doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                }
+                Paragraph p1 = new Paragraph();
+                p1.Add(new Text(p.Nombre).SetFont(bold).SetFontSize(6));
+                doc.Add(p1);
+
+                /* Paragraph p2 = new Paragraph(productoTerminado.OrdenElaboracion.FechaElaboracion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);
+                 p2.SetTextAlignment(TextAlignment.RIGHT);
+                 doc.Add(p2);*/
+
+                Barcode128 barcode = new Barcode128(pdfDoc);
+                barcode.SetCodeType(Barcode128.CODE128);
+                barcode.SetCode(productoEnvasado.Codigo);
+                Rectangle rect = barcode.GetBarcodeSize();
+                PdfFormXObject template = new PdfFormXObject(new Rectangle(rect.GetWidth(), rect.GetHeight() + 10));
+                PdfCanvas templateCanvas = new PdfCanvas(template, pdfDoc);
+                new Canvas(templateCanvas, pdfDoc, new Rectangle(rect.GetWidth(), rect.GetHeight() + 10))
+                        .ShowTextAligned(new Paragraph(productoEnvasado.TipoProductoEnvasado.Nombre).SetFont(regular).SetFontSize(6), 0, rect.GetHeight() + 2, TextAlignment.LEFT);
+                barcode.PlaceBarcode(templateCanvas, Color.BLACK, Color.BLACK);
+                Image image = new Image(template);
+                image.SetRotationAngle(Math.PI / 2);
+                image.SetAutoScale(true);
+                doc.Add(image);
+
+                // Paragraph p3 = new Paragraph("SMALL").SetFont(regular).SetFontSize(6);
+                // p3.SetTextAlignment(TextAlignment.CENTER);
+                // doc.Add(p3);
+                primeraPagina = false;
+            }
+
+            doc.Close();
+            return rutaPDF;
+        }
     }
 }

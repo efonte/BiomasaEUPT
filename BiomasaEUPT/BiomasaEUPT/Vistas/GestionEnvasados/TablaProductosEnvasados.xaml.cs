@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BiomasaEUPT.Clases;
+using BiomasaEUPT.Modelos.Tablas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,28 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
     /// </summary>
     public partial class TablaProductosEnvasados : UserControl
     {
+
+        private Trazabilidad trazabilidad;
+
         public TablaProductosEnvasados()
         {
             InitializeComponent();
+            trazabilidad = new Trazabilidad();
+        }
+
+        private void bPdfProducto_Click(object sender, RoutedEventArgs e)
+        {
+            ProductoEnvasado productoEnvasado = (sender as Button).DataContext as ProductoEnvasado;
+
+            InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
+            System.Diagnostics.Process.Start(informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoTerminado(productoEnvasado.Codigo)));
+        }
+
+        private void bCodigo_Click(object sender, RoutedEventArgs e)
+        {
+            ProductoEnvasado productoEnvasado = (sender as Button).DataContext as ProductoEnvasado;
+
+            System.Diagnostics.Process.Start(new InformePDF().GenerarPDFCodigoProductoEnvasado(productoEnvasado));
         }
     }
 }

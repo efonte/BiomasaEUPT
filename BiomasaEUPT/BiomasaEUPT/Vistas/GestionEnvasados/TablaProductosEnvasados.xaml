@@ -104,7 +104,7 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="pickingColumna" Header="Tipo"
                                                                        Binding="{Binding Picking.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <!--DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="bCodigo" Padding="0" BorderThickness="0" Height="17" Width="17"
@@ -114,7 +114,7 @@
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </>
+                            </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -126,7 +126,7 @@
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn-->
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                     </DataGrid>
