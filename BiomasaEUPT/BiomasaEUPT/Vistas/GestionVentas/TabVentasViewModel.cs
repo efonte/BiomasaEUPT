@@ -381,7 +381,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #endregion
 
 
-
         #region Añadir Pedido Linea
         public ICommand AnadirPedidoLineaComando => _anadirPedidoLineaComando ??
             (_anadirPedidoLineaComando = new RelayCommand(
@@ -391,23 +390,23 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private async void AnadirLineaCabecera()
         {
 
-            var formPedido = new FormPedido(context);
+            var formPedidoLinea = new FormPedidoLinea(context);
             //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
 
-            if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
+            if ((bool)await DialogHost.Show(formPedidoLinea, "RootDialog"))
             {
-
+                var formPedidoLineaDataContext = formPedidoLinea.DataContext as FormPedidoLineaViewModel;
                 var pedidoLinea = new PedidoLinea()
                 {
-
-
+                    TipoProductoEnvasadoId = (formPedidoLinea.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
+                    Volumen = formPedidoLineaDataContext.Volumen,
+                    Unidades = formPedidoLineaDataContext.Unidades
                 };
 
                 context.PedidosLineas.Add(pedidoLinea);
                 context.SaveChanges();
 
-                RefrescarPedidosLineas();
-                //CargarPedidosCabeceras();
+                CargarPedidosLineas();
             }
         }
         #endregion
@@ -463,22 +462,17 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public async void ModificarPedidoLinea()
         {
-
-            var formPedido = new FormPedido(context, "Editar Pedido")
+            var formPedidoLinea = new FormPedidoLinea(context, PedidoLineaSeleccionado);
+            var formPedidoLineaDataContext = formPedidoLinea.DataContext as FormPedidoLineaViewModel;
+            if ((bool)await DialogHost.Show(formPedidoLinea, "RootDialog"))
             {
-                FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
-                //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
-            };
-            formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
-
-            if ((bool)await DialogHost.Show(formPedido, "RootDialog"))
-            {
-                PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
-                PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
-                PedidoCabeceraSeleccionado.EstadoId = 1;
-                context.SaveChanges();
-                PedidosCabecerasView.Refresh();
+                PedidoLineaSeleccionado.TipoProductoEnvasadoId = formPedidoLineaDataContext.TipoProductoEnvasado.TipoProductoEnvasadoId;
+                PedidoLineaSeleccionado.Unidades = formPedidoLineaDataContext.Unidades;
+                PedidoLineaSeleccionado.Volumen = formPedidoLineaDataContext.Volumen;
             }
+
+            context.SaveChanges();
+            PedidosLineasView.Refresh();
         }
         #endregion
 
@@ -495,6 +489,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             PedidoLineaSeleccionado = null;
         }
         #endregion
+
 
         #region Filtro Pedidos Lineas
         public ICommand FiltrarPedidosLineasComando => _filtrarPedidosLineasComando ??
@@ -520,7 +515,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 || (LineaTipoProductoEnvasadoSeleccionado == true ? tipoProducto.Contains(TextoFiltroPedidos) : false);
         }
         #endregion
-
 
 
         #region Añadir Pedido Detalle
@@ -571,6 +565,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
         #endregion
+
 
         #region Borrar Pedido Detalle
         public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??

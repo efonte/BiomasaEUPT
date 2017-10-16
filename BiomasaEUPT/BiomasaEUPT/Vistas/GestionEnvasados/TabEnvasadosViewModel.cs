@@ -243,25 +243,17 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         public async void ModificarOrdenEnvasado()
         {
 
-            var formEnvasado = new FormEnvasado(context, "Editar Envasado")
+            var formEnvasado = new FormEnvasado(context, "Editar Orden de Envasado")
             {
 
-                /*Descripcion= formElaboracion.Descripcion,
-                NumeroAlbaran = RecepcionSeleccionada.NumeroAlbaran,
-                FechaElaboracion = RecepcionSeleccionada.FechaRecepcion,
-                Hora = RecepcionSeleccionada.FechaRecepcion*/
+                Descripcion= OrdenEnvasadoSeleccionada.Descripcion
             };
-            /*formElaboracion.cbEstadosElaboraciones.Visibility = Visibility.Visible;
-            var albaranViejo = formRecepcion.NumeroAlbaran;
-            formRecepcion.vAlbaranUnico.NombreActual = RecepcionSeleccionada.NumeroAlbaran;
-            formRecepcion.cbEstadosRecepciones.SelectedValue = RecepcionSeleccionada.EstadoRecepcion.EstadoRecepcionId;
-            formRecepcion.cbProveedores.SelectedValue = RecepcionSeleccionada.Proveedor.ProveedorId;*/
+            formEnvasado.cbEstadosEnvasados.Visibility = Visibility.Visible;
+            formEnvasado.cbEstadosEnvasados.SelectedValue = OrdenEnvasadoSeleccionada.EstadoEnvasado.EstadoEnvasadoId;
             if ((bool)await DialogHost.Show(formEnvasado, "RootDialog"))
             {
-                /*RecepcionSeleccionada.NumeroAlbaran = formRecepcion.NumeroAlbaran;
-                RecepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
-                RecepcionSeleccionada.ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId;
-                RecepcionSeleccionada.EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId;*/
+                //RecepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
+                OrdenEnvasadoSeleccionada.EstadoEnvasadoId = (formEnvasado.cbEstadosEnvasados.SelectedItem as EstadoEnvasado).EstadoEnvasadoId;
                 context.SaveChanges();
                 OrdenesEnvasadosView.Refresh();
             }

@@ -241,26 +241,16 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
 
         public async void ModificarOrdenElaboracion()
         {
-
-            var formElaboracion = new FormElaboracion(context, "Editar Elaboración")
+            var formElaboracion = new FormElaboracion(context, "Editar Orden de Elaboración")
             {
-
-                /*Descripcion= formElaboracion.Descripcion,
-                NumeroAlbaran = RecepcionSeleccionada.NumeroAlbaran,
-                FechaElaboracion = RecepcionSeleccionada.FechaRecepcion,
-                Hora = RecepcionSeleccionada.FechaRecepcion*/
+                Descripcion= OrdenElaboracionSeleccionada.Descripcion
             };
-            /*formElaboracion.cbEstadosElaboraciones.Visibility = Visibility.Visible;
-            var albaranViejo = formRecepcion.NumeroAlbaran;
-            formRecepcion.vAlbaranUnico.NombreActual = RecepcionSeleccionada.NumeroAlbaran;
-            formRecepcion.cbEstadosRecepciones.SelectedValue = RecepcionSeleccionada.EstadoRecepcion.EstadoRecepcionId;
-            formRecepcion.cbProveedores.SelectedValue = RecepcionSeleccionada.Proveedor.ProveedorId;*/
+            formElaboracion.cbEstadosElaboraciones.Visibility = Visibility.Visible;
+            formElaboracion.cbEstadosElaboraciones.SelectedValue = OrdenElaboracionSeleccionada.EstadoElaboracion.EstadoElaboracionId;
             if ((bool)await DialogHost.Show(formElaboracion, "RootDialog"))
             {
-                /*RecepcionSeleccionada.NumeroAlbaran = formRecepcion.NumeroAlbaran;
-                RecepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
-                RecepcionSeleccionada.ProveedorId = (formRecepcion.cbProveedores.SelectedItem as Proveedor).ProveedorId;
-                RecepcionSeleccionada.EstadoId = (formRecepcion.cbEstadosRecepciones.SelectedItem as EstadoRecepcion).EstadoRecepcionId;*/
+                //RecepcionSeleccionada.FechaRecepcion = new DateTime(formRecepcion.Fecha.Year, formRecepcion.Fecha.Month, formRecepcion.Fecha.Day, formRecepcion.Hora.Hour, formRecepcion.Hora.Minute, formRecepcion.Hora.Second);
+                OrdenElaboracionSeleccionada.EstadoElaboracionId = (formElaboracion.cbEstadosElaboraciones.SelectedItem as EstadoElaboracion).EstadoElaboracionId;
                 context.SaveChanges();
                 OrdenesElaboracionesView.Refresh();
             }

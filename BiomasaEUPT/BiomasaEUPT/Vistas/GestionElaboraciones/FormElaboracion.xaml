@@ -33,6 +33,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -143,8 +144,14 @@
                     </ItemsControl>
                 </WrapPanel>
 
+                <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbEstadosElaboraciones" materialDesign:HintAssist.Hint="Estado"
+                          ItemsSource="{Binding Source={StaticResource estadosElaboracionesViewSource}}"
+                          DisplayMemberPath="Nombre"
+                          SelectedValuePath="EstadoElaboracionId" Visibility="Collapsed">
+                </ComboBox>
 
-                <TextBox Grid.Row="3" Grid.ColumnSpan="2"  x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
+
+                <TextBox Grid.Row="4" Grid.ColumnSpan="2"  x:Name="tbDescripcion" materialDesign:HintAssist.Hint="Descripción"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                          AcceptsReturn="True" Height="55" MaxLength="60">
                     <TextBox.Text>
@@ -157,7 +164,7 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevaOrdenElaboracion" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

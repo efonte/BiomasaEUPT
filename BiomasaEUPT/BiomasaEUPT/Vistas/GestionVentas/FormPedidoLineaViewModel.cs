@@ -11,6 +11,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     public class FormPedidoLineaViewModel : INotifyPropertyChanged
     {
 
+        public TipoProductoEnvasado TipoProductoEnvasado;
+
+        public int? Unidades { get; set; }
+        public double? Volumen { get; set; }
+        public string CantidadHint { get; set; }
+        public double Cantidad { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FormPedidoLineaViewModel()

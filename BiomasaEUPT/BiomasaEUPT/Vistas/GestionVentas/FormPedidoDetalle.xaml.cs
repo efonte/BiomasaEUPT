@@ -84,27 +84,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         }
 
-        private void cbGruposProductosTerminados_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.TiposProductosTerminadosDisponibles.Clear();
-
-            // Se añaden todos los TiposProductosTerminados del GrupoProductoTerminado seleccionado
-            context.TiposProductosTerminados.Where(tpt => tpt.GrupoId == ((GrupoProductoTerminado)cbGruposProductosTerminados.SelectedItem).GrupoProductoTerminadoId).ToList().ForEach(viewModel.TiposProductosTerminadosDisponibles.Add);
-
-            // Se borran los TiposProductosTerminados que ya se han añadido
-            //viewModel.PedidosDetalles.ToList().ForEach(pt => viewModel.TiposProductosTerminadosDisponibles.Remove(pt.TipoProductoEnvasado));
-        }
-
-        private void lbTiposProductosTerminados_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var parent = sender as ListBox;
-            var tipoProductoTerminado = GetDataFromListBox(lbTiposProductosTerminados, e.GetPosition(parent)) as TipoProductoTerminado;
-            if (tipoProductoTerminado != null)
-            {
-                DataObject dragData = new DataObject("TipoProductoTerminado", tipoProductoTerminado);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }
-        }
 
         private object GetDataFromListBox(ListBox source, Point point)
         {
@@ -136,24 +115,5 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             return null;
         }
 
-        private void spProductosTerminados_Drop(object sender, DragEventArgs e)
-        {
-            /*var tipoProductoTerminado = e.Data.GetData("TipoProductoTerminado") as TipoProductoTerminado;
-            var pedidoDetalle = new PedidoDetalle() { TipoProductoEnvasadoId = tipoProductoTerminado.TipoProductoTerminadoId, TipoProductoTerminado = tipoProductoTerminado };
-            viewModel.PedidosDetalles.Add(pedidoDetalle);
-            viewModel.TiposProductosTerminadosDisponibles.Remove(tipoProductoTerminado);*/
-        }
-
-        private void cProductoTerminado_DeleteClick(object sender, RoutedEventArgs e)
-        {
-            /*var chip = sender as Chip;
-            int tipoProductoTerminadoId = int.Parse(chip.CommandParameter.ToString());
-            PedidoDetalle pedidoDetalle = viewModel.PedidosDetalles.Single(pt => pt.TipoProductoTerminado.TipoProductoTerminadoId == tipoProductoTerminadoId);
-            viewModel.PedidosDetalles.Remove(pedidoDetalle);
-            if (pedidoDetalle.TipoProductoTerminado.GrupoProductoTerminado.GrupoProductoTerminadoId == (cbGruposProductosTerminados.SelectedItem as GrupoProductoTerminado).GrupoProductoTerminadoId)
-            {
-                viewModel.TiposProductosTerminadosDisponibles.Add(pedidoDetalle.TipoProductoTerminado);
-            }*/
-        }
     }
 }

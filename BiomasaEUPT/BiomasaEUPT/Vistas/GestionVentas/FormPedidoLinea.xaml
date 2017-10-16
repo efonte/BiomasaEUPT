@@ -4,9 +4,102 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BiomasaEUPT.Vistas.GestionVentas"
+             xmlns:BiomasaEUPT="clr-namespace:BiomasaEUPT"
+             xmlns:Tablas="clr-namespace:BiomasaEUPT.Modelos.Tablas"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validadores="clr-namespace:BiomasaEUPT.Modelos.Validadores"
+             xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             Height="300" Width="250" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="pedidosLineasViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoLinea}, CreateList=True}"/>
+            <CollectionViewSource x:Key="tiposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="gruposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoEnvasado}, CreateList=True}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Línea">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Row="0" Grid.Column="0" x:Name="cbGruposProductosEnvasados" materialDesign:HintAssist.Hint="Grupo Producto Envasado"
+                          ItemsSource="{Binding Source={StaticResource gruposProductosEnvasadosViewSource}}"
+                          DisplayMemberPath="Nombre" SelectedValuePath="GrupoProductoEnvasadoId"
+                          SelectionChanged="cbGruposProductosEnvasados_SelectionChanged">
+                </ComboBox>
+
+                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbTiposProductosEnvasados" materialDesign:HintAssist.Hint="Tipo Producto Envasado"
+                          ItemsSource="{Binding Source={StaticResource tiposProductosEnvasadosViewSource}}"
+                        SelectedValuePath="TipoProductoEnvasadoId"
+                          SelectionChanged="cbTiposProductosEnvasados_SelectionChanged"
+                          SelectedItem="{Binding TipoProductoEnvasado, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+
+                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=cbTiposProductosEnvasados, Path=(Validation.HasError)}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.CommandParameter>
+                            <system:Boolean>True</system:Boolean>
+                        </Button.CommandParameter>
+                        _ACEPTAR
+                    </Button>
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                    IsCancel="True" Margin="0 8 8 0"
+                    Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <system:Boolean>False</system:Boolean>
+                        </Button.CommandParameter>
+                        _CANCELAR
+                    </Button>
+                </WrapPanel>
+            </Grid>
+        </ScrollViewer>
+    </GroupBox>
 </UserControl>

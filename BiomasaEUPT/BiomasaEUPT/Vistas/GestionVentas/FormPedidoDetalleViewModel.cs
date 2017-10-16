@@ -12,10 +12,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 {
     class FormPedidoDetalleViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<TipoProductoTerminado> TipoProductoTerminado { get; set; }
-        public ObservableCollection<TipoProductoTerminado> TiposProductosTerminadosDisponibles { get; set; }
-        public ObservableCollection<HistorialHuecoAlmacenaje> HistorialHuecosAlmacenajes { get; set; }
+        public ObservableCollection<TipoProductoEnvasado> TipoProductoEnvasado { get; set; }
+        public ObservableCollection<TipoProductoEnvasado> TiposProductosEnvasadosDisponibles { get; set; }
         public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
+        public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
 
         public int? Unidades { get; set; }
         public double? Volumen { get; set; }
@@ -29,10 +29,10 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public FormPedidoDetalleViewModel()
         {
-            TipoProductoTerminado = new ObservableCollection<TipoProductoTerminado>();
-            TiposProductosTerminadosDisponibles = new ObservableCollection<TipoProductoTerminado>();
-            HistorialHuecosAlmacenajes = new ObservableCollection<HistorialHuecoAlmacenaje>();
+            TipoProductoEnvasado = new ObservableCollection<TipoProductoEnvasado>();
+            TiposProductosEnvasadosDisponibles = new ObservableCollection<TipoProductoEnvasado>();
             PedidosDetalles = new ObservableCollection<PedidoDetalle>();
+            ProductosEnvasados = new ObservableCollection<ProductoEnvasado>();
         }
     }
 }
