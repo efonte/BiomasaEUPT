@@ -101,12 +101,48 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <!--DataTemplate DataType="{x:Type tablas:HistorialHuecoRecepcion}">
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenElaboracion}" ItemsSource="{Binding ProductoTerminado}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Truck"/>
+                                <TextBlock Text="{Binding EstadoElaboracion.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoTerminado}" ItemsSource="{Binding HistorialHuecosAlmacenajes}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Truck"/>
+                                <TextBlock Text="{Binding TipoProductoTerminado.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:HistorialHuecoAlmacenaje}" ItemsSource="{Binding ProductosTerminadosComposiciones}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="MapMarker"/>
-                                <TextBlock Text="{Binding HuecoRecepcion.Nombre}" Margin="8 0 0 0"/>
+                                <TextBlock Text="{Binding HuecoAlmacenaje.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
-                        </-->
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasadoComposicion}" ItemsSource="{Binding ProductoEnvasado.Picking}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PackageVariantClosed"/>
+                                <TextBlock Text="{Binding ProductoEnvasado.TipoProductoEnvasado.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenEnvasado}" ItemsSource="{Binding ProductoEnvasado}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Truck"/>
+                                <TextBlock Text="{Binding EstadoEnvasado.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasado}" ItemsSource="{Binding Picking}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Tree"/>
+                                <TextBlock Text="{Binding TipoProductoEnvasado.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
                     </TreeView.Resources>
                 </TreeView>
             </GroupBox>
@@ -400,6 +436,298 @@
                                                                 <MultiBinding StringFormat="{}{0} de {1} ud." >
                                                                     <Binding Path="Unidades" />
                                                                     <Binding Path="HuecoAlmacenaje.UnidadesTotales" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:Cliente}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Cliente" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Razón Social:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding RazonSocial}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="NIF:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Nif}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Email:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Email}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TipoCliente.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Grupo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding GrupoCliente.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Dirección:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1} ({2}), {3} - {4}">
+                                                <Binding Path="Municipio.CodigoPostal"/>
+                                                <Binding Path="Municipio.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Comunidad.Nombre"/>
+                                                <Binding Path="Municipio.Provincia.Comunidad.Pais.Codigo" Converter="{StaticResource PaisISOA2NombreCompletoConverter}"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="7" Text="Calle:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Calle}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="8" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:OrdenElaboracion}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Orden Elaboración" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding FechaElaboracion}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding EstadoElaboracion.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Descripción:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Descripcion, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:ProductoTerminado}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Producto Terminado" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TipoProductoTerminado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding GrupoProductoTerminado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} m³" >
+                                                            <Binding Path="Volumen" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Código:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Codigo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Fecha Baja:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding FechaBaja, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:ProductoEnvasadoComposicion}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Producto Envasado" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding ProductoEnvasado.TipoProductoEnvasado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} m³" >
+                                                            <Binding Path="ProductoEnvasado.Volumen" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <Binding Path="ProductoEnvasado.Unidades" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Código:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding ProductoEnvasado.Codigo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding ProductoEnvasado.Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:OrdenEnvasado}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Orden Envasado" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Fecha:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding FechaEnvasado}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Estado:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding EstadoEnvasado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Descripción:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Descripcion, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:ProductoEnvasado}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Producto Envasado" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Tipo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TipoProductoEnvasado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Grupo:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding GrupoProductoEnvasado.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} m³" >
+                                                            <Binding Path="Volumen" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Código:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Codigo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Picking:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Picking.Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Observaciones:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Observaciones, Converter={StaticResource CadenaVaciaConverter}, ConverterParameter='S/D'}"/>
+                                </Grid>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type tablas:Picking}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Picking" Style="{DynamicResource tbTitulo}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Nombre:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Nombre}"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Cantidad:" Style="{DynamicResource tbTipo}"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="3">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} de {1} m³" >
+                                                            <Binding Path="Volumen" />
+                                                            <Binding Path="Picking.VolumenTotal" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} de {1} ud." >
+                                                                    <Binding Path="Unidades" />
+                                                                    <Binding Path="Picking.UnidadesTotales" />
                                                                 </MultiBinding>
                                                             </Setter.Value>
                                                         </Setter>

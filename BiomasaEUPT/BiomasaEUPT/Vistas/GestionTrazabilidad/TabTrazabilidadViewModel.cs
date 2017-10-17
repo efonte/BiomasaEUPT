@@ -40,20 +40,6 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             }
         }
 
-        /*private bool _isSelectedItemArbol;
-        public bool IsSelectedItemArbol
-        {
-            get { return _isSelectedItemArbol; }
-            set
-            {
-                _isSelectedItemArbol = value;
-                if (_isSelectedItemArbol)
-                {
-                    ItemArbolSeleccionado = this;
-                }
-            }
-        }*/
-
         private ICommand _generarPDFComando;
 
         private BiomasaEUPTContext context;
@@ -134,6 +120,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         {
                             MostrarGenerarPDF = true;
                             TextoTrazabilidad = "Trazabilidad Producto Envasado";
+                            Arbol = new ObservableCollection<Proveedor>(trazabilidad.ProductoEnvasado(Codigo));
                             //var proveedores = trazabilidad.ProductoTerminado(codigo);
                             //proveedores.ForEach(ucTrazabilidadCodigos.ArbolRecepcion.Add);
                         }
@@ -169,7 +156,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         break;
 
                     case Constantes.CODIGO_VENTAS:
-                        //rutaInforme = informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoEnvasado(Codigo));
+                        rutaInforme = informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoEnvasado(Codigo));
                         break;
                 }
             }

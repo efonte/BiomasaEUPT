@@ -99,5 +99,10 @@ namespace BiomasaEUPT.Clases
             }
             return proveedores;
         }
+
+        public List<Proveedor> ProductoEnvasado(string codigo)
+        {
+            return null;
+        }
     }
 }

@@ -400,6 +400,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoLineaDataContext = formPedidoLinea.DataContext as FormPedidoLineaViewModel;
                 var pedidoLinea = new PedidoLinea()
                 {
+                    PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
                     TipoProductoEnvasadoId = (formPedidoLinea.cbTiposProductosEnvasados.SelectedItem as TipoProductoEnvasado).TipoProductoEnvasadoId,
                     Volumen = formPedidoLineaDataContext.Volumen,
                     Unidades = formPedidoLineaDataContext.Unidades
