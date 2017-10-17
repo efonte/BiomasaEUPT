@@ -38,6 +38,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             InitializeComponent();
             viewModel = new FormPedidoLineaViewModel();
+            Console.WriteLine("ViewModel vale " + viewModel);
             DataContext = viewModel;
             this.context = context;
         }
@@ -69,17 +70,18 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             pedidosLineasViewSource = ((CollectionViewSource)(FindResource("pedidosLineasViewSource")));
-            tiposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosEnvasadosViewSource")));
             gruposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosEnvasadosViewSource")));
-
-
+            tiposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosEnvasadosViewSource")));
+            
             context.PedidosLineas.Load();
-            context.TiposProductosEnvasados.Load();
             context.GruposProductosEnvasados.Load();
-
+            context.TiposProductosEnvasados.Load();
+            
             pedidosLineasViewSource.Source = context.PedidosLineas.Local;
-            tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
             gruposProductosEnvasadosViewSource.Source = context.GruposProductosEnvasados.Local;
+            tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
+            Console.WriteLine("Tipo PE " + tiposProductosEnvasadosViewSource);
+            
 
         }
 

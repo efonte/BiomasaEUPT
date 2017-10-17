@@ -72,7 +72,7 @@
                             </DataGridTemplateColumn>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PE" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding TipoProductoEnvasasdo.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding PedidoLinea.TipoProductoEnvasasdo.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Lote" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding ProductoEnvasado.Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
@@ -149,7 +149,7 @@
                         <CheckBox x:Name="cbUnidades" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
                                   IsChecked="{Binding UnidadesSeleccionadas}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
                         <CheckBox x:Name="cbTipo" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
-                                  IsChecked="{Binding TipoProductoTerminadoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
+                                  IsChecked="{Binding TipoProductoEnvasadoSeleccionado}" Command="{Binding FiltrarPedidosCabecerasComando}"/>
 
                     </Grid>
 

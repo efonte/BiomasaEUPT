@@ -29,7 +29,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private CollectionViewSource pedidosViewSource;
         private CollectionViewSource pedidosDetallesViewSource;
-        private CollectionViewSource gruposProductosTerminadosViewSource;
+        private CollectionViewSource productosEnvasadosViewSource;
 
         private FormPedidoDetalleViewModel viewModel;
 
@@ -70,17 +70,16 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             pedidosViewSource = ((CollectionViewSource)(FindResource("pedidosViewSource")));
             pedidosDetallesViewSource = ((CollectionViewSource)(FindResource("pedidosDetallesViewSource")));
-            gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
+            productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
 
             context.PedidosCabeceras.Load();
             context.PedidosDetalles.Load();
             context.EstadosPedidos.Load();
-            context.GruposProductosTerminados.Load();
+            context.ProductosEnvasados.Load();
 
             pedidosViewSource.Source = context.PedidosCabeceras.Local;
             pedidosDetallesViewSource.Source = context.PedidosDetalles.Local;
-            pedidosDetallesViewSource.Source = context.PedidosDetalles.Local;
-            gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
+            productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
 
         }
 
@@ -115,5 +114,21 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             return null;
         }
 
+        private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (viewModel.TipoProductoEnvasado != null)
+            {
+                if (viewModel.TipoProductoEnvasado.MedidoEnUnidades == true)
+                {
+                    viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
+                }
+                else
+                {
+                    viewModel.Volumen = viewModel.Cantidad;
+
+                }
+                //cbPicking.SelectedIndex = 0;
+            }
+        }
     }
 }

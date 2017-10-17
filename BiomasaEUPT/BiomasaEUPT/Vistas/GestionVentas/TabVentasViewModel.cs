@@ -203,7 +203,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     PedidosDetalles = new ObservableCollection<PedidoDetalle>(
                 context.PedidosDetalles
                 .Include(pd => pd.PedidoDetalleId).Include(pd => pd.ProductoEnvasado)
-                .OrderBy(pd => pd.PedidoDetalleId).Skip(saltar).Take(cantidad).ToList());
+                .OrderBy(pd => pd.PedidoLineaId).Skip(saltar).Take(cantidad).ToList());
                 }
                 PedidosDetallesView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosDetalles);
 
@@ -222,7 +222,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private void DGPedidosCabeceras_SelectionChanged(IList<object> recepcionesSeleccionadas)
         {
             PedidosCabecerasSeleccionados = PedidosCabecerasSeleccionados.Cast<PedidoCabecera>().ToList();
-            CargarPedidosDetalles();
+            CargarPedidosLineas();
         }
 
         // Asigna el valor de PedidosLineasSeleccinodos ya que no se puede crear un Binding de SelectedItems desde el XAML
@@ -522,18 +522,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Añadir Pedido Detalle
         public ICommand AnadirPedidoDetalleComando => _anadirPedidoDetalleComando ??
             (_anadirPedidoDetalleComando = new RelayCommand(
-                param => AnadirPedidoDetalle(),
-                param => CanAnadirPedidoDetalle()
+                param => AnadirPedidoDetalle()
             ));
 
-        private bool CanAnadirPedidoDetalle()
-        {
-            if (PedidoCabeceraSeleccionado != null)
-            {
-                return PedidoCabeceraSeleccionado.EstadoId == 1; // Nuevo 
-            }
-            return false;
-        }
 
         private async void AnadirPedidoDetalle()
         {
@@ -544,23 +535,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
-                    //PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
+                    
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
 
 
                 };
-
-                var pedidosDetalles = new List<PedidoDetalle>();
-                foreach (var pd in context.PedidosDetalles)
-                {
-                    if (pd.Unidades != 0 && pd.Volumen != 0)
-                    {
-
-                        //pd.PedidoCabecera = PedidoCabeceraSeleccionado;
-                        pedidosDetalles.Add(pd);
-                    }
-                }
                 context.PedidosDetalles.Add(pedidoDetalle);
                 context.SaveChanges();
                 CargarPedidosDetalles();
@@ -616,16 +596,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public async void ModificarPedidoDetalle()
         {
+            var formPedidoDetalle = new FormPedidoDetalle(context, PedidoDetalleSeleccionado);
+            var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
 
-            var formPedidoDetalle = new FormPedidoDetalle(context, "Editar Pedido")
-            {
-                //FechaPedido = PedidoCabeceraSeleccionado.FechaPedido,
-                //HoraPedido = PedidoCabeceraSeleccionado.HoraPedido
-            };
             //formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;
 
             if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
             {
+                PedidoDetalleSeleccionado.Unidades = formPedidoDetalleDataContext.Unidades;
+                PedidoDetalleSeleccionado.Volumen = formPedidoDetalleDataContext.Volumen;
                 //PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);
                 //PedidoCabeceraSeleccionado.ClienteId = (formPedido.cbClientes.SelectedItem as Cliente).ClienteId;
                 context.SaveChanges();

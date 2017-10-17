@@ -11,10 +11,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900" Name="UCTabVentas">
     <UserControl.InputBindings>
-        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding AnadirProductoEnvasadoComando}" />
-        <KeyBinding Gesture="Ctrl+Shift+M" Command="{Binding ModificarProductoEnvasadoComando}" />
-        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding BorrarProductoEnvasadoComando}" />
-        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding RefrescarProductosEnvasadosComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding AnadirPedidoCabeceraComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+M" Command="{Binding ModificarPedidoCabeceraComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding BorrarPedidoCabeceraComando}" />
+        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding RefrescarPedidosCabecerasComando}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary>
