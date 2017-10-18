@@ -176,7 +176,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     PedidosLineas = new ObservableCollection<PedidoLinea>(
                 context.PedidosLineas
-                .Include(pl => pl.TipoProductoEnvasado).Include(pl => pl.PedidoCabecera)
+                .Include(pl => pl.TipoProductoEnvasado).Include(pl => pl.TipoProductoEnvasadoId)
                 .OrderBy(pl => pl.PedidoLineaId).Skip(saltar).Take(cantidad).ToList());
                 }
                 PedidosLineasView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosLineas);
@@ -386,18 +386,18 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Añadir Pedido Linea
         public ICommand AnadirPedidoLineaComando => _anadirPedidoLineaComando ??
             (_anadirPedidoLineaComando = new RelayCommand(
-                param => AnadirLineaCabecera()
+                param => AnadirPedidoLinea()
             ));
 
-        private async void AnadirLineaCabecera()
+        private async void AnadirPedidoLinea()
         {
 
             var formPedidoLinea = new FormPedidoLinea(context);
-            //var formPedidoDataContext = formPedido.DataContext as FormPedidoViewModel;
 
             if ((bool)await DialogHost.Show(formPedidoLinea, "RootDialog"))
             {
                 var formPedidoLineaDataContext = formPedidoLinea.DataContext as FormPedidoLineaViewModel;
+
                 var pedidoLinea = new PedidoLinea()
                 {
                     PedidoCabeceraId = PedidoCabeceraSeleccionado.PedidoCabeceraId,
@@ -536,7 +536,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
-                    
+                    PedidoLineaId = PedidoLineaSeleccionado.PedidoLineaId,
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
 

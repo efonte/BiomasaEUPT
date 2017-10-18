@@ -103,14 +103,14 @@
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenElaboracion}" ItemsSource="{Binding ProductoTerminado}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Truck"/>
+                                <materialDesign:PackIcon Kind="DebugStepOver"/>
                                 <TextBlock Text="{Binding EstadoElaboracion.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoTerminado}" ItemsSource="{Binding HistorialHuecosAlmacenajes}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Truck"/>
+                                <materialDesign:PackIcon Kind="BoxCutter"/>
                                 <TextBlock Text="{Binding TipoProductoTerminado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
@@ -131,14 +131,14 @@
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenEnvasado}" ItemsSource="{Binding ProductoEnvasado}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Truck"/>
+                                <materialDesign:PackIcon Kind="Package"/>
                                 <TextBlock Text="{Binding EstadoEnvasado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasado}" ItemsSource="{Binding Picking}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Tree"/>
+                                <materialDesign:PackIcon Kind="Sale"/>
                                 <TextBlock Text="{Binding TipoProductoEnvasado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>

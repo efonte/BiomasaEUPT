@@ -34,15 +34,18 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding PedidosDetallesView}"
+                    <DataGrid Grid.Row="0" Grid.RowSpan="2" x:Name="dgPedidos" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding PedidosLineasView}"
                               RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True"
-                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoDetalleSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                              CanUserDeleteRows="False" SelectedItem="{Binding PedidoLineaSeleccionado, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
                               ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader}">
 
                         <DataGrid.Columns>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PE" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding TipoProductoEnvasasdo.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                            <materialDesign:MaterialDataGridTextColumn x:Name="tipoColumna" Header="Tipo PE"
+                                                                       Binding="{Binding TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
+                            <materialDesign:MaterialDataGridTextColumn x:Name="grupoColumna" Header="Grupo PE"
+                                                                       Binding="{Binding TipoProductoEnvasado.GrupoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <DataGridTemplateColumn x:Name="volumenUnidadesColumn" Header="Volumen/Unidades">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -58,7 +61,7 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding TipoProductoTerminado.MedidoEnUnidades}" Value="True">
+                                                        <DataTrigger Binding="{Binding TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
                                                             <Setter Property="Text">
                                                                 <Setter.Value>
                                                                     <MultiBinding StringFormat="{}{0} ud." >

@@ -101,7 +101,7 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código" Width="SizeToHeader"
                                                                        Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
-                            <materialDesign:MaterialDataGridTextColumn x:Name="pickingColumna" Header="Tipo"
+                            <materialDesign:MaterialDataGridTextColumn x:Name="pickingColumna" Header="Picking"
                                                                        Binding="{Binding Picking.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <DataGridTemplateColumn>
