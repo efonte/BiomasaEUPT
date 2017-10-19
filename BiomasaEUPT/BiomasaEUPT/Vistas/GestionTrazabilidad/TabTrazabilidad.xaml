@@ -115,13 +115,6 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate DataType="{x:Type tablas:HistorialHuecoAlmacenaje}" ItemsSource="{Binding ProductosTerminadosComposiciones}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="MapMarker"/>
-                                <TextBlock Text="{Binding HuecoAlmacenaje.Nombre}" Margin="8 0 0 0"/>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasadoComposicion}" ItemsSource="{Binding ProductoEnvasado.Picking}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PackageVariantClosed"/>
@@ -738,6 +731,7 @@
                                     </TextBlock>
                                 </Grid>
                             </DataTemplate>
+
 
                         </ContentPresenter.Resources>
                         <ContentPresenter.Style>

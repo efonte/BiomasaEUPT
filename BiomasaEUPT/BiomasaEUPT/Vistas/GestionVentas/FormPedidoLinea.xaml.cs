@@ -38,7 +38,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             InitializeComponent();
             viewModel = new FormPedidoLineaViewModel();
-            Console.WriteLine("ViewModel vale " + viewModel);
             DataContext = viewModel;
             this.context = context;
         }
@@ -80,7 +79,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             pedidosLineasViewSource.Source = context.PedidosLineas.Local;
             gruposProductosEnvasadosViewSource.Source = context.GruposProductosEnvasados.Local;
             tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
-            Console.WriteLine("Tipo PE " + tiposProductosEnvasadosViewSource);
             
 
         }

@@ -55,7 +55,7 @@
                                  HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                  PlacementMode="RightAndAlignMiddles"
                                  UnfurlOrientation="Horizontal"
-                                 ToolTip="Gestionar pedidos"
+                                 ToolTip="Gestionar pedidos cabeceras"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="bAnadirPedidoCabecera" ToolTip="Añadir pedido cabecera"

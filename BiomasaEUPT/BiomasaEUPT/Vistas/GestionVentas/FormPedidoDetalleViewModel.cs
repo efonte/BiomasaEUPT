@@ -12,7 +12,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 {
     class FormPedidoDetalleViewModel : INotifyPropertyChanged
     {
-        public TipoProductoEnvasado TipoProductoEnvasado;
+        public TipoProductoEnvasado TipoProductoEnvasado { get; set; }
+        public ProductoEnvasado ProductoEnvasado { get; set; }
         public ObservableCollection<TipoProductoEnvasado> TiposProductosEnvasadosDisponibles { get; set; }
         public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
         public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }

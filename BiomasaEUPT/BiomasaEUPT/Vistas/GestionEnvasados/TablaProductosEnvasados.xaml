@@ -171,7 +171,7 @@
                         </Expander.Header>
                         <WrapPanel x:Name="wpProductosTerminados" Margin="15 25 0 0"
                                    Orientation="Horizontal" MinHeight="40" Width="150">
-                            <ItemsControl ItemsSource="{Binding ProductoEnvasadoSeleccionado.ProductosEnvasadosComposiciones, UpdateSourceTrigger=PropertyChanged}" >
+                            <ItemsControl ItemsSource="{Binding ProductoEnvasadoSeleccionado.ProductoEnvasadoComposiciones, UpdateSourceTrigger=PropertyChanged}" >
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">
                                         <Style.Triggers>
@@ -192,7 +192,7 @@
                                         <materialDesign:Chip Margin="5" Cursor="Arrow">
                                             <materialDesign:Chip.Content>
                                                 <StackPanel>
-                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding HistorialHuecoAlmacenaje.MateriaPrima.TipoMateriaPrima.Nombre}"/>
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado.Nombre}"/>
                                                     <TextBlock FontSize="14" FontStyle="Italic">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
@@ -222,7 +222,7 @@
                                                 </StackPanel>
                                             </materialDesign:Chip.Content>
                                             <materialDesign:Chip.Icon>
-                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoAlmacenaje.HuecoAlmcenaje.Nombre,UpdateSourceTrigger=PropertyChanged,
+                                                <TextBlock FontSize="15" Text="{Binding HistorialHuecoAlmacenaje.HuecoAlmacenaje.Nombre,UpdateSourceTrigger=PropertyChanged,
                                                                                 Converter={StaticResource CadenaSplitConverter}, ConverterParameter='3|3'}"></TextBlock>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>

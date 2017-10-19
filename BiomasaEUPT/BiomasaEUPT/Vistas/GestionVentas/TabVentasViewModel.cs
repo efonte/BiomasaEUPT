@@ -124,12 +124,19 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         {
             using (new CursorEspera())
             {
-                IndiceMasOpciones = 0;
                 context = new BiomasaEUPTContext();
                 CargarPedidosCabeceras();
-                PaginacionViewModel.GetItemsTotales = () => { return context.Recepciones.Count(); };
+                PaginacionViewModel.GetItemsTotales = () => { return context.PedidosCabeceras.Count(); };
                 PaginacionViewModel.ActualizarContadores();
                 PaginacionViewModel.CargarItems = CargarPedidosCabeceras;
+                CargarPedidosLineas();
+                PaginacionViewModel.GetItemsTotales = () => { return context.PedidosLineas.Count(); };
+                PaginacionViewModel.ActualizarContadores();
+                PaginacionViewModel.CargarItems = CargarPedidosLineas;
+                CargarPedidosDetalles();
+                PaginacionViewModel.GetItemsTotales = () => { return context.PedidosDetalles.Count(); };
+                PaginacionViewModel.ActualizarContadores();
+                PaginacionViewModel.CargarItems = CargarPedidosDetalles;
             }
         }
 
@@ -176,7 +183,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     PedidosLineas = new ObservableCollection<PedidoLinea>(
                 context.PedidosLineas
-                .Include(pl => pl.TipoProductoEnvasado).Include(pl => pl.TipoProductoEnvasadoId)
+                .Include(pl => pl.TipoProductoEnvasado).Include(pl => pl.PedidoCabecera)
                 .OrderBy(pl => pl.PedidoLineaId).Skip(saltar).Take(cantidad).ToList());
                 }
                 PedidosLineasView = (CollectionView)CollectionViewSource.GetDefaultView(PedidosLineas);
@@ -410,6 +417,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 context.SaveChanges();
 
                 CargarPedidosLineas();
+                PedidosLineasView.Refresh();
             }
         }
         #endregion
@@ -536,12 +544,16 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
+                    ProductoEnvasadoId = formPedidoDetalleDataContext.ProductoEnvasado.ProductoEnvasadoId,
                     PedidoLineaId = PedidoLineaSeleccionado.PedidoLineaId,
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
 
-
                 };
+                Console.WriteLine("Producto Envasado Id " + pedidoDetalle.ProductoEnvasadoId);
+                Console.WriteLine("Pedido Linea Id " + pedidoDetalle.PedidoLineaId);
+                Console.WriteLine("Unidades " + pedidoDetalle.Unidades);
+                Console.WriteLine("Volumen " + pedidoDetalle.Volumen);
                 context.PedidosDetalles.Add(pedidoDetalle);
                 context.SaveChanges();
                 CargarPedidosDetalles();
@@ -604,6 +616,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
             if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
             {
+                PedidoDetalleSeleccionado.ProductoEnvasadoId = formPedidoDetalleDataContext.ProductoEnvasado.ProductoEnvasadoId;
                 PedidoDetalleSeleccionado.Unidades = formPedidoDetalleDataContext.Unidades;
                 PedidoDetalleSeleccionado.Volumen = formPedidoDetalleDataContext.Volumen;
                 //PedidoCabeceraSeleccionado.FechaPedido = new DateTime(formPedido.FechaPedido.Year, formPedido.FechaPedido.Month, formPedido.FechaPedido.Day, formPedido.FechaPedido.Hour, formPedido.HoraPedido.Minute, formPedido.HoraPedido.Second);

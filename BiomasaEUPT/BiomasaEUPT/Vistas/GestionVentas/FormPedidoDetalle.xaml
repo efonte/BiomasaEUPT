@@ -62,8 +62,8 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=tbCantidad, Path=(Validation.HasError)}" Value="False" />
-                                            <Condition Binding="{Binding ElementName=cbProductosEnvasados, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=tbCantidad, Path=(Validation.HasError)}" Value="false" />
+                                            <Condition Binding="{Binding ElementName=cbProductoEnvasado, Path=(Validation.HasError)}" Value="false" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
