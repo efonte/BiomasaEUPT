@@ -23,6 +23,7 @@ namespace BiomasaEUPT.Modelos
         public const string REGEX_VOLUMEN = @"^\d+(\.\d+)?$";
         public const string REGEX_NUMERO_ALBARAN = @"^([A-Z]-[\dA-Z]{1,8})$";
         public const string REGEX_HUECO = @"^(HA|HR)-[A-Z]\d{2}$";
+        public const string REGEX_CODIGO = @"^[3][0-9]{1,9}$";
 
 
         public const int LONG_MIN_RAZON_SOCIAL = 5;

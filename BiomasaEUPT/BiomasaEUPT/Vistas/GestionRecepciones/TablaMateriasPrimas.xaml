@@ -100,6 +100,9 @@
                             <materialDesign:MaterialDataGridTextColumn x:Name="procedenciaColumna" Header="Procedencia" Width="SizeToHeader"
                                                                        Binding="{Binding Procedencia.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
+                            <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Código"
+                                                                       Binding="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaBajaColumna" Header="F. Baja/Caducidad" Width="SizeToHeader"
                                                                        Binding="{Binding FechaBaja, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
                                                                                 Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>

@@ -104,6 +104,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         private ICommand _dgPedidosLineas_SelectionChangedComando;
 
         private ICommand _anadirPedidoDetalleComando;
+        private ICommand _anadirPedidoDetalleLectorComando;
         private ICommand _modificarPedidoDetalleComando;
         private ICommand _borrarPedidoDetalleComando;
         private ICommand _refrescarPedidosDetallesComando;
@@ -536,6 +537,39 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
 
         private async void AnadirPedidoDetalle()
+        {
+            var formPedidoDetalle = new FormPedidoDetalle(context);
+
+            if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
+            {
+                var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
+                var pedidoDetalle = new PedidoDetalle()
+                {
+                    ProductoEnvasadoId = formPedidoDetalleDataContext.ProductoEnvasado.ProductoEnvasadoId,
+                    PedidoLineaId = PedidoLineaSeleccionado.PedidoLineaId,
+                    Volumen = formPedidoDetalleDataContext.Volumen,
+                    Unidades = formPedidoDetalleDataContext.Unidades
+
+                };
+                Console.WriteLine("Producto Envasado Id " + pedidoDetalle.ProductoEnvasadoId);
+                Console.WriteLine("Pedido Linea Id " + pedidoDetalle.PedidoLineaId);
+                Console.WriteLine("Unidades " + pedidoDetalle.Unidades);
+                Console.WriteLine("Volumen " + pedidoDetalle.Volumen);
+                context.PedidosDetalles.Add(pedidoDetalle);
+                context.SaveChanges();
+                CargarPedidosDetalles();
+            }
+        }
+        #endregion
+
+        #region Añadir Pedido Detalle
+        public ICommand AnadirPedidoDetalleLectorComando => _anadirPedidoDetalleComando ??
+            (_anadirPedidoDetalleComando = new RelayCommand(
+                param => AnadirPedidoDetalleLector()
+            ));
+
+
+        private async void AnadirPedidoDetalleLector()
         {
             var formPedidoDetalle = new FormPedidoDetalle(context);
 

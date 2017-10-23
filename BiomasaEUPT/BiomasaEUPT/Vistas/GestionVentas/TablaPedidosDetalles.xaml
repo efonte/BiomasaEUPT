@@ -86,9 +86,13 @@
                                  ToolTip="Gestionar pedidos detalles"
                                  Margin="15 15 15 30" Width="40" Height="40">
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="bAnadirPedidoDetalle" ToolTip="Añadir pedido detalle"
+                            <Button x:Name="bAnadirPedidoDetalle" ToolTip="Añadir pedido detalle manual"
                                     Command="{Binding AnadirPedidoDetalleComando}">
                                 <materialDesign:PackIcon Kind="AccountPlus" Height="20" Width="20" />
+                            </Button>
+                            <Button x:Name="bAnadirPedidoDetalleLector" ToolTip="Añadir pedido detalle automático"
+                                    Command="{Binding AnadirPedidoDetalleLectorComando}">
+                                <materialDesign:PackIcon Kind="Barcode" Height="20" Width="20" />
                             </Button>
                             <Button ToolTip="Borrar el pedido detalle seleccionado"
                                     Command="{Binding BorrarPedidoDetalleComando}">

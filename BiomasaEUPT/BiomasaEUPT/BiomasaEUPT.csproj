@@ -208,6 +208,7 @@
     <Compile Include="Modelos\Tablas\PedidoLinea.cs" />
     <Compile Include="Modelos\Tablas\Permiso.cs" />
     <Compile Include="Modelos\Tablas\TipoProductoEnvasado.cs" />
+    <Compile Include="Modelos\Validadores\CodigoValidationRule.cs" />
     <Compile Include="Modelos\Validadores\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\Converters\PaisISOA2Converter.cs" />
@@ -380,6 +381,10 @@
     <Compile Include="Vistas\GestionVentas\FormPedidoDetalle.xaml.cs">
       <DependentUpon>FormPedidoDetalle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedidoDetalleLector.xaml.cs">
+      <DependentUpon>FormPedidoDetalleLector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\GestionVentas\FormPedidoDetalleLectorViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\FormPedidoDetalleViewModel.cs" />
     <Compile Include="Vistas\GestionVentas\FormPedidoLinea.xaml.cs">
       <DependentUpon>FormPedidoLinea.xaml</DependentUpon>
@@ -681,6 +686,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\GestionVentas\FormPedidoDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\GestionVentas\FormPedidoDetalleLector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

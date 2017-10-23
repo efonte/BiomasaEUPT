@@ -22,9 +22,9 @@ using System.Windows.Shapes;
 namespace BiomasaEUPT.Vistas.GestionVentas
 {
     /// <summary>
-    /// Lógica de interacción para FormPedidoDetalle.xaml
+    /// Lógica de interacción para FormPedidoDetalleLector.xaml
     /// </summary>
-    public partial class FormPedidoDetalle : UserControl
+    public partial class FormPedidoDetalleLector : UserControl
     {
 
         private CollectionViewSource pedidosViewSource;
@@ -35,25 +35,23 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private BiomasaEUPTContext context;
 
-
-        public FormPedidoDetalle(BiomasaEUPTContext context)
+        public FormPedidoDetalleLector(BiomasaEUPTContext context)
         {
             InitializeComponent();
             viewModel = new FormPedidoDetalleViewModel();
             DataContext = viewModel;
             this.context = context;
-
         }
 
-        public FormPedidoDetalle(BiomasaEUPTContext context, string _titulo) : this(context)
+        public FormPedidoDetalleLector(BiomasaEUPTContext context, string _titulo) : this(context)
         {
             gbTitulo.Header = _titulo;
 
         }
 
-        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoDetalle pedidoDetalle)
+        public FormPedidoDetalleLector(BiomasaEUPTContext context, PedidoDetalle pedidoDetalle)
         {
-            gbTitulo.Header = "Editar Producto Envasado Manual";
+            gbTitulo.Header = "Editar Producto Envasado Automárico";
 
             if (pedidoDetalle.ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades == true)
             {
