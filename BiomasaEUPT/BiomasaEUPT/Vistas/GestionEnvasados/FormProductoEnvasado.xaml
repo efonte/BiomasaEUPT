@@ -110,8 +110,8 @@
                                 </TextBlock>
                                 <TextBlock FontSize="14" FontStyle="Italic">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}F. recepción: {0:dd/MM/yyyy HH:mm}">
-                                            <Binding Path="ProductoTerminado.Almacenaje.FechaElaboracion"/>
+                                        <MultiBinding StringFormat="{}F. elaboración: {0:dd/MM/yyyy HH:mm}">
+                                            <Binding Path="ProductoTerminado.OrdenElaboracion.FechaElaboracion"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
@@ -179,7 +179,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <materialDesign:Chip IsDeletable="True" Margin="5" DeleteToolTip="Eliminar producto terminado"
-                                                     CommandParameter="{Binding HistorialHuecoRecepcion.HistorialHuecoRecepcionId}"
+                                                     CommandParameter="{Binding HistorialHuecoAlmacenaje.HistorialHuecoAlmacenajeId}"
                                                      DeleteClick="cProductosEnvasadosComposiciones_DeleteClick" Height="70">
                                         <materialDesign:Chip.Content>
                                             <StackPanel>

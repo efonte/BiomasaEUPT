@@ -36,19 +36,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
-                    <TextBox.Text>
-                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCodigo" materialDesign:HintAssist.Hint="Código" MaxLength="{x:Static const:Constantes.LONG_MAX_CODIGO}">
+                <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbCodigo" materialDesign:HintAssist.Hint="Código" MaxLength="{x:Static const:Constantes.LONG_MAX_CODIGO}">
                     <TextBox.Text>
                         <Binding Path="Codigo" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -60,6 +48,17 @@
                     </TextBox.Text>
                 </TextBox>
 
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
+                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">

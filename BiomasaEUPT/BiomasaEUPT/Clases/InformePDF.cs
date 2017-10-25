@@ -936,6 +936,7 @@ namespace BiomasaEUPT.Clases
                 }
                 Paragraph p1 = new Paragraph();
                 p1.Add(new Text(hha.HuecoAlmacenaje.Nombre).SetFont(bold).SetFontSize(6));
+                p1.SetTextAlignment(TextAlignment.CENTER).SetMarginBottom(0);
                 doc.Add(p1);
 
                 /* Paragraph p2 = new Paragraph(productoTerminado.OrdenElaboracion.FechaElaboracion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);

@@ -22,7 +22,7 @@ namespace BiomasaEUPT.Modelos.Tablas
         public double? Volumen { get; set; }
 
         [Range(0, 1000)]
-        [DisplayName("Unidades"), Display(Name = "Unidades")]
+        [DisplayName("Unidades"), Display(Name = "Unidades Restante")]
         public int? Unidades { get; set; }
 
         public int PedidoLineaId { get; set; }

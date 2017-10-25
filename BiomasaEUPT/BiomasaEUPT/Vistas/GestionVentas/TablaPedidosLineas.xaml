@@ -55,7 +55,8 @@
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Text">
                                                         <Setter.Value>
-                                                            <MultiBinding StringFormat="{}{0} m³" >
+                                                            <MultiBinding StringFormat="{}{0} m³ de {1} m³" >
+                                                                <Binding Path="VolumenPreparado" />
                                                                 <Binding Path="Volumen" />
                                                             </MultiBinding>
                                                         </Setter.Value>
@@ -64,7 +65,8 @@
                                                         <DataTrigger Binding="{Binding TipoProductoEnvasado.MedidoEnUnidades}" Value="True">
                                                             <Setter Property="Text">
                                                                 <Setter.Value>
-                                                                    <MultiBinding StringFormat="{}{0} ud." >
+                                                                    <MultiBinding StringFormat="{}{0} ud. de {1} ud." >
+                                                                        <Binding Path="UnidadesPreparadas" />
                                                                         <Binding Path="Unidades" />
                                                                     </MultiBinding>
                                                                 </Setter.Value>

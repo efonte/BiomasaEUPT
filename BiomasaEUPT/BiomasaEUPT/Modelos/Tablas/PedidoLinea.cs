@@ -27,6 +27,13 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades"), Display(Name = "Unidades")]
         public int? Unidades { get; set; }
 
+        [DisplayName("Volumen Preparado"), Display(Name = "Volumen Preparado")]
+        public double? VolumenPreparado { get; set; }
+
+        [Range(0, 1000)]
+        [DisplayName("Unidades Preparadas"), Display(Name = "Unidades Preparadas")]
+        public int? UnidadesPreparadas { get; set; }
+
         public int PedidoCabeceraId { get; set; }
 
         public int TipoProductoEnvasadoId { get; set; }

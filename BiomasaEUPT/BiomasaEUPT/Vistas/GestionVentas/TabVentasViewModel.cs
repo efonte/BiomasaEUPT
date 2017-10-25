@@ -273,7 +273,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 context.SaveChanges();
 
                 RefrescarPedidosCabeceras();
-                //CargarPedidosCabeceras();
+                CargarPedidosCabeceras();
             }
         }
         #endregion
@@ -394,8 +394,18 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Añadir Pedido Linea
         public ICommand AnadirPedidoLineaComando => _anadirPedidoLineaComando ??
             (_anadirPedidoLineaComando = new RelayCommand(
-                param => AnadirPedidoLinea()
+                param => AnadirPedidoLinea(),
+                param => CanAnadirPedidoLinea()
             ));
+
+        private bool CanAnadirPedidoLinea()
+        {
+            if (PedidoCabeceraSeleccionado != null)
+            {
+                return PedidoCabeceraSeleccionado.EstadoId == 2; // Preparar
+            }
+            return false;
+        }
 
         private async void AnadirPedidoLinea()
         {
@@ -545,16 +555,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
-                    ProductoEnvasadoId = formPedidoDetalleDataContext.ProductoEnvasado.ProductoEnvasadoId,
+                    ProductoEnvasadoId =context.ProductosEnvasados.Single(pe=>pe.Codigo== formPedidoDetalleDataContext.Codigo).ProductoEnvasadoId,
                     PedidoLineaId = PedidoLineaSeleccionado.PedidoLineaId,
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
 
                 };
-                Console.WriteLine("Producto Envasado Id " + pedidoDetalle.ProductoEnvasadoId);
-                Console.WriteLine("Pedido Linea Id " + pedidoDetalle.PedidoLineaId);
-                Console.WriteLine("Unidades " + pedidoDetalle.Unidades);
-                Console.WriteLine("Volumen " + pedidoDetalle.Volumen);
+
                 context.PedidosDetalles.Add(pedidoDetalle);
                 context.SaveChanges();
                 CargarPedidosDetalles();
@@ -562,7 +569,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         }
         #endregion
 
-        #region Añadir Pedido Detalle
+
+        #region Añadir Pedido Detalle Lector
         public ICommand AnadirPedidoDetalleLectorComando => _anadirPedidoDetalleComando ??
             (_anadirPedidoDetalleComando = new RelayCommand(
                 param => AnadirPedidoDetalleLector()
@@ -578,16 +586,12 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
                 var pedidoDetalle = new PedidoDetalle()
                 {
-                    ProductoEnvasadoId = formPedidoDetalleDataContext.ProductoEnvasado.ProductoEnvasadoId,
+                    ProductoEnvasadoId = context.ProductosEnvasados.Single(pe => pe.Codigo == formPedidoDetalleDataContext.Codigo).ProductoEnvasadoId,
                     PedidoLineaId = PedidoLineaSeleccionado.PedidoLineaId,
                     Volumen = formPedidoDetalleDataContext.Volumen,
                     Unidades = formPedidoDetalleDataContext.Unidades
 
                 };
-                Console.WriteLine("Producto Envasado Id " + pedidoDetalle.ProductoEnvasadoId);
-                Console.WriteLine("Pedido Linea Id " + pedidoDetalle.PedidoLineaId);
-                Console.WriteLine("Unidades " + pedidoDetalle.Unidades);
-                Console.WriteLine("Volumen " + pedidoDetalle.Volumen);
                 context.PedidosDetalles.Add(pedidoDetalle);
                 context.SaveChanges();
                 CargarPedidosDetalles();
