@@ -345,6 +345,24 @@ BEGIN
     WHERE  PedidosLineas.PedidoLineaId = i.PedidoLineaId
 END
 '
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_PedidoDetalle_D]
+    ON [dbo].[PedidosDetalles]
+    AFTER INSERT
+AS 
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON;
+
+    UPDATE PedidosLineas
+    SET    VolumenPreparado = CASE WHEN i.Volumen IS NOT NULL THEN (VolumenPreparado - i.Volumen) ELSE VolumenPreparado END,
+           UnidadesPreparadas = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesPreparadas - i.Unidades) ELSE UnidadesPreparadas END
+    FROM   inserted i
+    WHERE  PedidosLineas.PedidoLineaId = i.PedidoLineaId
+END
+'
 "
                 );
             base.Seed(context);

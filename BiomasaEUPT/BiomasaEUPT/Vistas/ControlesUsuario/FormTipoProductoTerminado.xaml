@@ -23,6 +23,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <TextBox Grid.Row="0" x:Name="tbNombre" materialDesign:HintAssist.Hint="Nombre" MaxLength="{x:Static const:Constantes.LONG_MAX_NOMBRE}">
                 <TextBox.Text>
@@ -46,7 +47,18 @@
                 </TextBox.Text>
             </TextBox>
 
-            <Grid Grid.Row="2" Margin="10">
+            <TextBox Grid.Row="2" x:Name="tbTamano" materialDesign:HintAssist.Hint="Tamaño" MaxLength="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}">
+                <TextBox.Text>
+                    <Binding Path="Tamano" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validadores:RequeridoValidationRule x:Name="vTamanoRequerido" NombreCampo="tamano" ValidatesOnTargetUpdated="True" />
+                            <validadores:LongitudValidationRule x:Name="vTamanoLongitud" NombreCampo="tamano" Min="{x:Static const:Constantes.LONG_MIN_DESCRIPCION}" Max="{x:Static const:Constantes.LONG_MAX_DESCRIPCION}" ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <Grid Grid.Row="3" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
@@ -69,7 +81,7 @@
                 </ListBox>
             </Grid>
 
-            <WrapPanel Grid.Row="3" Margin="0 15 0 0" HorizontalAlignment="Right">
+            <WrapPanel Grid.Row="4" Margin="0 15 0 0" HorizontalAlignment="Right">
                 <Button x:Name="bNuevoTipo" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
@@ -78,7 +90,8 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=tbNombre, Path=(Validation.HasError)}" Value="False" />
-                                        <Condition Binding="{Binding ElementName=tbDescripcion, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbHumedad, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=tbTamano, Path=(Validation.HasError)}" Value="False" />
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True" />
                                 </MultiDataTrigger>

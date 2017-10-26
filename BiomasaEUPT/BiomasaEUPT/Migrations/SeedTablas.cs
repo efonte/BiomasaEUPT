@@ -845,6 +845,81 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
+            resourceName = String.Format(NOMBRE_CSV, "ProductosEnvasados");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<ProductoEnvasado>();
+                    while (csvReader.Read())
+                    {
+                        // Campos opcionales
+                        csvReader.TryGetField<string>("Observaciones", out var observaciones);
+                        observaciones = (observaciones == "") ? null : observaciones;
+
+                        datos.Add(new ProductoEnvasado()
+                        {
+                            ProductoEnvasadoId = csvReader.GetField<int>("ProductoEnvasadoId"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            TipoProductoEnvasadoId = csvReader.GetField<int>("TipoProductoEnvasadoId"),
+                            OrdenId = csvReader.GetField<int>("OrdenId"),
+                            PickingId = csvReader.GetField<int>("PickingId"),
+                            Observaciones = observaciones
+                        });
+                    }
+                    context.ProductosEnvasados.AddOrUpdate(d => d.ProductoEnvasadoId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "ProductosEnvasadosComposiciones");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<ProductoEnvasadoComposicion>();
+                    while (csvReader.Read())
+                    {
+                        // Alternativa a ProductoTerminadoComposicionMap
+                        datos.Add(new ProductoEnvasadoComposicion()
+                        {
+                            ProductoEnvasadoComposicionId = csvReader.GetField<int>("ProductoEnvasadoComposicionId"),
+                            Volumen = csvReader.GetField<int?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            HistorialHuecoId = csvReader.GetField<int>("HistorialHuecoId"),
+                            ProductoId = csvReader.GetField<int>("ProductoId")
+                        });
+                    }
+                    context.ProductosEnvasadosComposiciones.AddOrUpdate(d => d.ProductoEnvasadoComposicionId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "PedidosCabeceras");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<PedidoCabecera>();
+                    while (csvReader.Read())
+                    {
+                        datos.Add(new PedidoCabecera()
+                        {
+                            PedidoCabeceraId = csvReader.GetField<int>("PedidoCabeceraId"),
+                            FechaPedido = csvReader.GetField<DateTime>("FechaPedido"),
+                            EstadoId = csvReader.GetField<int>("EstadoId"),
+                            ClienteId = csvReader.GetField<int>("ClienteId")
+                        });
+                    }
+                    context.PedidosCabeceras.AddOrUpdate(d => d.PedidoCabeceraId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
         }
     }
 }

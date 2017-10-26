@@ -247,9 +247,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
                 context.TiposProductosTerminados.Add(new TipoProductoTerminado()
                 {
                     Nombre = formTipoPT.Nombre,
-                    //Descripcion = formTipoPT.Descripcion,
-                    //Humedad = formTipoPT.Humedad,
-                    //Tamano = formTipoPT.Tamano,
+                    Humedad = formTipoPT.Humedad,
+                    Tamano = formTipoPT.Tamano,
                     MedidoEnVolumen = formTipoPT.lbMedido.SelectedIndex == 0,
                     MedidoEnUnidades = formTipoPT.lbMedido.SelectedIndex == 1,
                     GrupoId = GrupoProductoTerminadoSeleccionado.GrupoProductoTerminadoId
@@ -316,9 +315,8 @@ namespace BiomasaEUPT.Vistas.GestionElaboraciones
             if ((bool)await DialogHost.Show(formTipoPT, "RootDialog"))
             {
                 TipoProductoTerminadoSeleccionado.Nombre = formTipoPT.Nombre;
-                //TipoProductoTerminadoSeleccionado.Descripcion = formTipoPT.Descripcion;
-                //TipoProductoTerminadoSeleccionado.Humedad = formTipoPT.Humedad;
-                //TipoProductoTerminadoSeleccionado.Tamano = formTipoPT.Tamano;
+                TipoProductoTerminadoSeleccionado.Humedad = formTipoPT.Humedad;
+                TipoProductoTerminadoSeleccionado.Tamano = formTipoPT.Tamano;
                 TipoProductoTerminadoSeleccionado.MedidoEnVolumen = formTipoPT.lbMedido.SelectedIndex == 0;
                 TipoProductoTerminadoSeleccionado.MedidoEnUnidades = formTipoPT.lbMedido.SelectedIndex == 1;
                 context.SaveChanges();

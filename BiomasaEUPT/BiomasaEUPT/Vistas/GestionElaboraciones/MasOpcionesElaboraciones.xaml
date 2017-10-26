@@ -119,7 +119,8 @@
                                 </materialDesign:TransitioningContent.OpeningEffects>
                                 <StackPanel Margin="8 0 0 0">
                                     <TextBlock FontWeight="Bold" Text="{Binding Nombre}" FontSize="14"/>
-                                    <TextBlock Text="{Binding Descripcion}" FontSize="14"/>
+                                    <TextBlock Text="{Binding Humedad}" FontSize="14"/>
+                                    <TextBlock Text="{Binding Tamano}" FontSize="14"/>
                                     <TextBlock FontSize="14" FontStyle="Italic">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">

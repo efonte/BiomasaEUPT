@@ -29,11 +29,18 @@ namespace BiomasaEUPT.Vistas.ControlesUsuario
             set { _nombre = value; }
         }
 
-        private string _descripcion;
-        public string Descripcion
+        private string _tamano;
+        public string Tamano
         {
-            get { return _descripcion; }
-            set { _descripcion = value; }
+            get { return _tamano; }
+            set { _tamano = value; }
+        }
+
+        private double _humedad;
+        public double Humedad
+        {
+            get { return _humedad; }
+            set { _humedad = value; }
         }
 
         public FormTipoProductoTerminado()
