@@ -40,6 +40,6 @@ namespace BiomasaEUPT.Modelos.Tablas
         [DisplayName("Unidades restantes"), Display(Name = "Unidades restantes")]
         public int? UnidadesRestantes { get; set; }
 
-        public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
+       public virtual List<ProductoEnvasado> ProductosEnvasados { get; set; }
     }
 }

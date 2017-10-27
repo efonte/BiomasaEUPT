@@ -1,4 +1,5 @@
-﻿using BiomasaEUPT.Modelos.Tablas;
+﻿using BiomasaEUPT.Modelos;
+using BiomasaEUPT.Modelos.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,28 +14,40 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 {
     public class FormPedidoDetalleViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
-        public TipoProductoEnvasado TipoProductoEnvasado { get; set; }
         public ProductoEnvasado ProductoEnvasado { get; set; }
-        public ObservableCollection<TipoProductoEnvasado> TiposProductosEnvasadosDisponibles { get; set; }
-        public ObservableCollection<PedidoDetalle> PedidosDetalles { get; set; }
-        public ObservableCollection<ProductoEnvasado> ProductosEnvasados { get; set; }
 
         public int? Unidades { get; set; }
         public double? Volumen { get; set; }
+
         public string CantidadHint { get; set; }
-        public double Cantidad { get; set; }
+        private double _cantidad;
+        public double Cantidad
+        {
+            get { return _cantidad; }
+            set
+            {
+                _cantidad = value;
+                if (ProductoEnvasado != null && ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades == true)
+                {
+                    Unidades = Convert.ToInt32(Cantidad);
+                }
+                else
+                {
+                    Volumen = Cantidad;
+
+                }
+            }
+        }
         public string Codigo { get; set; }
 
-        public bool QuedaCantidadPorAlmacenar { get; set; }
+        private BiomasaEUPTContext context;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FormPedidoDetalleViewModel()
         {
-            TiposProductosEnvasadosDisponibles = new ObservableCollection<TipoProductoEnvasado>();
-            PedidosDetalles = new ObservableCollection<PedidoDetalle>();
-            ProductosEnvasados = new ObservableCollection<ProductoEnvasado>();
+            context = new BiomasaEUPTContext();
         }
 
         #region Validación Códigos
@@ -52,24 +65,29 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 {
                     error = "El campo código es obligatorio.";
                 }
-                else if (Codigo != null)
+                else if ((ProductoEnvasado = context.ProductosEnvasados.FirstOrDefault(pe => pe.Codigo == Codigo)) == null)
                 {
-                    error = "El campo contraseña y contraseña confirmación no son iguales.";
+                    error = "El código no existe.";
+                }/*else if (ProductoEnvasado.TipoProductoEnvasado==aaa.TipoProductoEnvasado) {
+
+                }*/
+                else {
+                    OnPropertyChanged("Cantidad");
                 }
             }
-
-            /*if (memberName == "ContrasenaConfirmacion" || memberName == null)
+         /*   else if (memberName == "Cantidad" || memberName == null)
             {
-                if (ContrasenaConfirmacion == null || ContrasenaConfirmacion.Length == 0)
+            if (ProductoEnvasado.)
                 {
-                    error = "El campo contraseña confirmación es obligatorio.";
+                    error = "El campo código no existe.";
                 }
                 else
                 {
-                    // Fuerza a comprobar la validación de la propiedad Contraseña para saber si son iguales
-                    OnPropertyChanged("Contrasena");
+                    OnPropertyChanged("Cantidad");
                 }
-            }*/
+            }
+            */
+
 
             return error;
         }

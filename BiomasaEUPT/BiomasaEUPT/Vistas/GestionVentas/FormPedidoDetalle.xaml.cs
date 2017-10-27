@@ -25,15 +25,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     /// Lógica de interacción para FormPedidoDetalle.xaml
     /// </summary>
     public partial class FormPedidoDetalle : UserControl
-    {
-
-        private CollectionViewSource pedidosViewSource;
-        private CollectionViewSource pedidosDetallesViewSource;
-        private CollectionViewSource productosEnvasadosViewSource;
-
+    {     
         private FormPedidoDetalleViewModel viewModel;
-
-        private BiomasaEUPTContext context;
 
 
         public FormPedidoDetalle(BiomasaEUPTContext context)
@@ -41,8 +34,13 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             InitializeComponent();
             viewModel = new FormPedidoDetalleViewModel();
             DataContext = viewModel;
-            this.context = context;
+        }
 
+        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoLinea pedidoLinea)
+        {
+            InitializeComponent();
+            viewModel = new FormPedidoDetalleViewModel();
+            DataContext = viewModel;
         }
 
         public FormPedidoDetalle(BiomasaEUPTContext context, string _titulo) : this(context)
@@ -65,69 +63,6 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            pedidosViewSource = ((CollectionViewSource)(FindResource("pedidosViewSource")));
-            pedidosDetallesViewSource = ((CollectionViewSource)(FindResource("pedidosDetallesViewSource")));
-            productosEnvasadosViewSource = ((CollectionViewSource)(FindResource("productosEnvasadosViewSource")));
-
-            context.PedidosCabeceras.Load();
-            context.PedidosDetalles.Load();
-            context.EstadosPedidos.Load();
-            context.ProductosEnvasados.Load();
-
-            pedidosViewSource.Source = context.PedidosCabeceras.Local;
-            pedidosDetallesViewSource.Source = context.PedidosDetalles.Local;
-            productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
-
-        }
-
-
-        private object GetDataFromListBox(ListBox source, Point point)
-        {
-            UIElement element = source.InputHitTest(point) as UIElement;
-            if (element != null)
-            {
-                object data = DependencyProperty.UnsetValue;
-                while (data == DependencyProperty.UnsetValue)
-                {
-                    data = source.ItemContainerGenerator.ItemFromContainer(element);
-
-                    if (data == DependencyProperty.UnsetValue)
-                    {
-                        element = VisualTreeHelper.GetParent(element) as UIElement;
-                    }
-
-                    if (element == source)
-                    {
-                        return null;
-                    }
-                }
-
-                if (data != DependencyProperty.UnsetValue)
-                {
-                    return data;
-                }
-            }
-
-            return null;
-        }
-
-        private void tbCantidad_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (viewModel.TipoProductoEnvasado != null)
-            {
-                if (viewModel.TipoProductoEnvasado.MedidoEnUnidades == true)
-                {
-                    viewModel.Unidades = Convert.ToInt32(viewModel.Cantidad);
-                }
-                else
-                {
-                    viewModel.Volumen = viewModel.Cantidad;
-
-                }
-                //cbPicking.SelectedIndex = 0;
-            }
-        }
+    
     }
 }

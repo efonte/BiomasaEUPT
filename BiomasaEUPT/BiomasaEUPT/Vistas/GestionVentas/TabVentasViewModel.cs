@@ -548,7 +548,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private async void AnadirPedidoDetalle()
         {
-            var formPedidoDetalle = new FormPedidoDetalle(context);
+            var formPedidoDetalle = new FormPedidoDetalle(context, PedidoLineaSeleccionado);
 
             if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
             {

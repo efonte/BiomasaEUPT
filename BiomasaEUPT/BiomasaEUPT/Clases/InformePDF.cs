@@ -986,7 +986,7 @@ namespace BiomasaEUPT.Clases
             PdfFont bold = PdfFontFactory.CreateFont(FontConstants.HELVETICA_BOLD);
             PdfFont regular = PdfFontFactory.CreateFont(FontConstants.HELVETICA);
             var primeraPagina = true;
-            foreach (var p in productoEnvasado.Pickings.ToList())
+            /*foreach (var p in productoEnvasado.Picking.ToList())
             {
                 if (!primeraPagina)
                 {
@@ -994,13 +994,13 @@ namespace BiomasaEUPT.Clases
                 }
                 Paragraph p1 = new Paragraph();
                 p1.Add(new Text(p.Nombre).SetFont(bold).SetFontSize(6));
-                doc.Add(p1);
+                doc.Add(p1);*/
 
                 /* Paragraph p2 = new Paragraph(productoTerminado.OrdenElaboracion.FechaElaboracion.ToString("dd/MM/yyyy HH:mm")).SetFont(regular).SetFontSize(4);
                  p2.SetTextAlignment(TextAlignment.RIGHT);
                  doc.Add(p2);*/
 
-                Barcode128 barcode = new Barcode128(pdfDoc);
+                /*Barcode128 barcode = new Barcode128(pdfDoc);
                 barcode.SetCodeType(Barcode128.CODE128);
                 barcode.SetCode(productoEnvasado.Codigo);
                 Rectangle rect = barcode.GetBarcodeSize();
@@ -1018,7 +1018,7 @@ namespace BiomasaEUPT.Clases
                 // p3.SetTextAlignment(TextAlignment.CENTER);
                 // doc.Add(p3);
                 primeraPagina = false;
-            }
+            }*/
 
             doc.Close();
             return rutaPDF;

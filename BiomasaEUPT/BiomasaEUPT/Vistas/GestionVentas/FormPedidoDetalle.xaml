@@ -12,15 +12,13 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="200" Width="450" Loaded="UserControl_Loaded">
+             Height="200" Width="450">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Diccionarios/DiccionarioForm.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="pedidosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoCabecera}, CreateList=True}"/>
-            <CollectionViewSource x:Key="pedidosDetallesViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:PedidoDetalle}, CreateList=True}"/>
-            <CollectionViewSource x:Key="productosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:ProductoEnvasado}, CreateList=True}"/>
+           
         </ResourceDictionary>
     </UserControl.Resources>
     <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Detalle Manual">
@@ -38,7 +36,7 @@
 
                 <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbCodigo" materialDesign:HintAssist.Hint="Código" MaxLength="{x:Static const:Constantes.LONG_MAX_CODIGO}">
                     <TextBox.Text>
-                        <Binding Path="Codigo" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Codigo" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="codigo" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="codigo" Min="{x:Static const:Constantes.LONG_MIN_CODIGO}" Max="{x:Static const:Constantes.LONG_MAX_CODIGO}" ValidatesOnTargetUpdated="True" />
@@ -48,7 +46,37 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6" TextChanged="tbCantidad_TextChanged">
+                <!--TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" FontSize="20" Text="{Binding ProductoEnvasado.Volumen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    
+                </-->
+
+                <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" FontStyle="Italic">
+                    <TextBlock.Style >
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text">
+                                <Setter.Value>
+                                    <MultiBinding StringFormat="{}{0} m³">
+                                        <Binding Path="Volumen"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ProductoEnvasado, Path=SelectedItem.Unidades}" Value="True">
+                                    <Setter Property="Text">
+                                        <Setter.Value>
+                                            <MultiBinding StringFormat="{}{0} ud.">
+                                                <Binding Path="Unidades"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+
+                </TextBlock>
+
+                <!--TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6">
                     <TextBox.Text>
                         <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,7 +86,7 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>
+                </-->
 
                 <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
