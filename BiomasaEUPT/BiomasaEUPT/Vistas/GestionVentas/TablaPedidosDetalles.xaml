@@ -72,7 +72,7 @@
                             </DataGridTemplateColumn>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="tipoProductoColumna" Header="Tipo PE" Width="auto" IsReadOnly="True"
-                                                                       Binding="{Binding ProductoEnvasado.TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+                                                                       Binding="{Binding PedidoLinea.TipoProductoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="codigoColumna" Header="Lote" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding ProductoEnvasado.Codigo, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>

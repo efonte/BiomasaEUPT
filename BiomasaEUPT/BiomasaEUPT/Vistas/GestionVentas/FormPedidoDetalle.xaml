@@ -40,41 +40,16 @@
                             <Binding.ValidationRules>
                                 <validadores:RequeridoValidationRule NombreCampo="codigo" ValidatesOnTargetUpdated="True" />
                                 <validadores:LongitudValidationRule NombreCampo="codigo" Min="{x:Static const:Constantes.LONG_MIN_CODIGO}" Max="{x:Static const:Constantes.LONG_MAX_CODIGO}" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="codigo" ExpReg="{x:Static const:Constantes.REGEX_CODIGO}" MensajeFormato=" (Ej: 2000000001, 2000000012)" ValidatesOnTargetUpdated="True" />
+                                <validadores:RegexValidationRule NombreCampo="codigo" ExpReg="{x:Static const:Constantes.REGEX_CODIGO}" MensajeFormato=" (Ej: 3000000001, 3000000012)" ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
 
-                <!--TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" FontSize="20" Text="{Binding ProductoEnvasado.Volumen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" FontSize="20" Text="{Binding ProductoEnvasado.Volumen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     
-                </-->
-
-                <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" FontStyle="Italic">
-                    <TextBlock.Style >
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Text">
-                                <Setter.Value>
-                                    <MultiBinding StringFormat="{}{0} m³">
-                                        <Binding Path="Volumen"/>
-                                    </MultiBinding>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=ProductoEnvasado, Path=SelectedItem.Unidades}" Value="True">
-                                    <Setter Property="Text">
-                                        <Setter.Value>
-                                            <MultiBinding StringFormat="{}{0} ud.">
-                                                <Binding Path="Unidades"/>
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-
                 </TextBlock>
+
 
                 <!--TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6">
                     <TextBox.Text>
