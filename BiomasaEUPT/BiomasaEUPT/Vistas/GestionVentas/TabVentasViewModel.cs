@@ -579,7 +579,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         private async void AnadirPedidoDetalleLector()
         {
-            var formPedidoDetalle = new FormPedidoDetalle(context);
+            var formPedidoDetalle = new FormPedidoDetalle(context,PedidoLineaSeleccionado);
 
             if ((bool)await DialogHost.Show(formPedidoDetalle, "RootDialog"))
             {
@@ -647,7 +647,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
         public async void ModificarPedidoDetalle()
         {
-            var formPedidoDetalle = new FormPedidoDetalle(context, PedidoDetalleSeleccionado);
+            var formPedidoDetalle = new FormPedidoDetalle(context,PedidoLineaSeleccionado, PedidoDetalleSeleccionado);
             var formPedidoDetalleDataContext = formPedidoDetalle.DataContext as FormPedidoDetalleViewModel;
 
             //formPedido.cbClientes.SelectedValue = PedidoCabeceraSeleccionado.Cliente.ClienteId;

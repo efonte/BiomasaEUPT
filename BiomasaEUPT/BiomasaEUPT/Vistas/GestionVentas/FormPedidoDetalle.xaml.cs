@@ -28,30 +28,22 @@ namespace BiomasaEUPT.Vistas.GestionVentas
     {     
         private FormPedidoDetalleViewModel viewModel;
 
-
-        public FormPedidoDetalle(BiomasaEUPTContext context)
-        {
-            InitializeComponent();
-            viewModel = new FormPedidoDetalleViewModel();
-            DataContext = viewModel;
-        }
-
         public FormPedidoDetalle(BiomasaEUPTContext context, PedidoLinea pedidoLinea)
         {
             InitializeComponent();
-            viewModel = new FormPedidoDetalleViewModel();
+            viewModel = new FormPedidoDetalleViewModel() { PedidoLinea = pedidoLinea};
             DataContext = viewModel;
         }
 
-        public FormPedidoDetalle(BiomasaEUPTContext context, string _titulo) : this(context)
+        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoLinea pedidoLinea, string _titulo) : this(context, pedidoLinea)
         {
             gbTitulo.Header = _titulo;
 
         }
 
-        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoDetalle pedidoDetalle)
+        public FormPedidoDetalle(BiomasaEUPTContext context, PedidoLinea pedidoLinea, PedidoDetalle pedidoDetalle) : this(context, pedidoLinea)
         {
-            gbTitulo.Header = "Editar Producto Envasado Manual";
+            gbTitulo.Header = "Editar Pedido Detalle Manual";
 
             if (pedidoDetalle.ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades == true)
             {

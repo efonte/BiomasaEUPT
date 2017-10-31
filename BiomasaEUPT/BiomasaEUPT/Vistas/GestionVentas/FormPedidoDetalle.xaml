@@ -12,7 +12,7 @@
              xmlns:domain="clr-namespace:BiomasaEUPT.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="200" Width="450">
+             Height="200" Width="250">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,7 +21,7 @@
            
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Detalle Manual">
+    <GroupBox x:Name="gbTitulo" materialDesign:ColorZoneAssist.Mode="PrimaryMid" Header="Nuevo Pedido Detalle">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -29,10 +29,6 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Row="0" Grid.Column="0" x:Name="tbCodigo" materialDesign:HintAssist.Hint="Código" MaxLength="{x:Static const:Constantes.LONG_MAX_CODIGO}">
                     <TextBox.Text>
@@ -44,26 +40,34 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>
+                </TextBox>              
 
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" FontSize="20" Text="{Binding ProductoEnvasado.Volumen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    
+                <TextBlock Grid.Row="1" Grid.Column="0" x:Name="tbCantidad" FontStyle="Italic" Margin="10 8 0 0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text">
+                                <Setter.Value>
+                                    <MultiBinding StringFormat="{}Hay {0} m³ disponibles en stock" >
+                                        <Binding Path="ProductoEnvasado.Volumen" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ProductoEnvasado.TipoProductoEnvasado.MedidoEnUnidades, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Value="True">
+                                    <Setter Property="Text">
+                                        <Setter.Value>
+                                            <MultiBinding StringFormat="{}Hay {0} ud. disponibles en stock" >
+                                                <Binding Path="ProductoEnvasado.Unidades" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
 
-
-                <!--TextBox Grid.Row="0" Grid.Column="1" x:Name="tbCantidad" materialDesign:HintAssist.Hint="{Binding CantidadHint}" MaxLength="6">
-                    <TextBox.Text>
-                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validadores:RequeridoValidationRule NombreCampo="cantidad" ValidatesOnTargetUpdated="True" />
-                                <validadores:LongitudValidationRule NombreCampo="cantidad" Min="1" Max="6" ValidatesOnTargetUpdated="True" />
-                                <validadores:RegexValidationRule NombreCampo="cantidad" ExpReg="^\d+(\.\d+)?$" ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </-->
-
-                <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,15,0,0">
                     <Button x:Name="bNuevoPedido" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">

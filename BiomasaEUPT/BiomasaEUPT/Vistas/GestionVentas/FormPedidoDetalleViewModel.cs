@@ -39,6 +39,7 @@ namespace BiomasaEUPT.Vistas.GestionVentas
             }
         }
         public string Codigo { get; set; }
+        public PedidoLinea PedidoLinea { get; set; }
 
         private BiomasaEUPTContext context;
 
@@ -68,9 +69,9 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                 else if ((ProductoEnvasado = context.ProductosEnvasados.FirstOrDefault(pe => pe.Codigo == Codigo)) == null)
                 {
                     error = "El código no existe.";
-                }/*else if (ProductoEnvasado.TipoProductoEnvasado==aaa.TipoProductoEnvasado) {
-
-                }*/
+                }else if (ProductoEnvasado.TipoProductoEnvasado!= PedidoLinea.TipoProductoEnvasado) {
+                    error = "El código corresponde a un PE de otro tipo.";
+                }
                 else {
                     OnPropertyChanged("Cantidad");
                 }

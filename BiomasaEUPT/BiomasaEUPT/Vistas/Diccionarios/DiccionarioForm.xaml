@@ -28,4 +28,10 @@
         <Setter Property="Margin" Value="10" />
         <Setter Property="FontSize" Value="15" />
     </Style>
+
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
 </ResourceDictionary>
