@@ -23,6 +23,7 @@
             <CollectionViewSource x:Key="gruposProductosTerminadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoTerminado}, CreateList=True}"/>
             <CollectionViewSource x:Key="tiposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:TipoProductoEnvasado}, CreateList=True}"/>
             <CollectionViewSource x:Key="gruposProductosEnvasadosViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:GrupoProductoEnvasado}, CreateList=True}"/>
+            <CollectionViewSource x:Key="pickingViewSource" d:DesignSource="{d:DesignInstance {x:Type Tablas:Picking}, CreateList=True}"/>
             <conv:PorcentajeConverter x:Key="PorcentajeConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -239,9 +240,25 @@
                 </materialDesign:ColorZone>
 
                 <ComboBox Grid.Row="5" Grid.Column="0" x:Name="cbPicking" materialDesign:HintAssist.Hint="Picking"
-                          ItemsSource="{Binding PickingDisponible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                          DisplayMemberPath="Nombre" SelectedValuePath="PickingId"
-                          SelectionChanged="cbPicking_SelectionChanged" SelectedIndex="0">
+                          ItemsSource="{Binding Source={StaticResource pickingViewSource}}"
+                        SelectedValuePath="PickingId"
+                          SelectionChanged="cbPicking_SelectionChanged"
+                          SelectedItem="{Binding Picking, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}"/>
+                                <TextBlock FontStyle="Italic" FontSize="10">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}V. total: {0} m³ / Uds totales: {1} uds.">
+                                            <Binding Path="VolumenTotal"/>
+                                            <Binding Path="UnidadesTotales"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
 
                 <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbObservaciones" materialDesign:HintAssist.Hint="Observaciones"

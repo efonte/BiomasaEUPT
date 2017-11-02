@@ -35,6 +35,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
         private CollectionViewSource gruposProductosTerminadosViewSource;
         private CollectionViewSource tiposProductosEnvasadosViewSource;
         private CollectionViewSource gruposProductosEnvasadosViewSource;
+        private CollectionViewSource pickingViewSource;
         public TipoProductoEnvasado TipoProductoEnvasado { get; set; }
         private FormProductoEnvasadoViewModel viewModel;
 
@@ -88,6 +89,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             gruposProductosEnvasadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosEnvasadosViewSource")));
             tiposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("tiposProductosTerminadosViewSource")));
             gruposProductosTerminadosViewSource = ((CollectionViewSource)(FindResource("gruposProductosTerminadosViewSource")));
+            pickingViewSource = ((CollectionViewSource)(FindResource("pickingViewSource")));
 
 
             context.ProductosEnvasados.Load();
@@ -96,12 +98,14 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             context.Picking.Load();
             context.TiposProductosTerminados.Load();
             context.GruposProductosTerminados.Load();
+            context.Picking.Load();
 
             productosEnvasadosViewSource.Source = context.ProductosEnvasados.Local;
             tiposProductosEnvasadosViewSource.Source = context.TiposProductosEnvasados.Local;
             gruposProductosEnvasadosViewSource.Source = context.GruposProductosEnvasados.Local;
             tiposProductosTerminadosViewSource.Source = context.TiposProductosTerminados.Local;
             gruposProductosTerminadosViewSource.Source = context.GruposProductosTerminados.Local;
+            pickingViewSource.Source = context.Picking.Local;
 
             viewModel.PickingDisponible = new ObservableCollection<Picking>(context.Picking.ToList());
         }

@@ -100,9 +100,70 @@ namespace BiomasaEUPT.Clases
             return proveedores;
         }
 
+
         public List<Proveedor> ProductoEnvasado(string codigo)
         {
-            return null;
+            var productoEnvasado= context.ProductosEnvasados
+               .Include("TipoProductoTerminado")
+               .Include("TipoProductoEnvasado")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.HuecoAlmacenaje.SitioAlmacenaje")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion.EstadoElaboracion")
+               .Include("HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Procedencia")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.EstadoRecepcion")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.TipoProveedor")
+               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
+               .Single(mp => mp.Codigo == codigo);
+            var productosEnvasadosComposiciones = productoEnvasado.ProductoEnvasadoComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
+            var materiasPrimas = new List<MateriaPrima>();
+            var productosTerminados = new List<ProductoTerminado>();
+            var productosEnvasados = new List<ProductoEnvasado>();
+            /*foreach (var pec in productosEnvasadosComposiciones)
+            {
+                pec.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones = productosTerminadosComposiciones.Where(ptc1 => ptc1.HistorialHuecoId == ptc.HistorialHuecoId).ToList();
+                // ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = new List<ProductoTerminadoComposicion>() { ptc };
+                //ptc.ProductoTerminado = productoTerminado;
+                if (!materiasPrimas.Contains(pec.HistorialHuecoRecepcion.MateriaPrima))
+                {
+                    materiasPrimas.Add(pec.HistorialHuecoRecepcion.MateriaPrima);
+                }
+            }*/
+            var envasados = new List<OrdenEnvasado>();
+            foreach (var pe in productosEnvasados)
+            {
+                if (!envasados.Contains(pe.OrdenEnvasado))
+                {
+                    envasados.Add(pe.OrdenEnvasado);
+                }
+            }
+            var elaboraciones = new List<OrdenElaboracion>();
+            foreach (var pt in productosTerminados)
+            {
+                if (!elaboraciones.Contains(pt.OrdenElaboracion))
+                {
+                    elaboraciones.Add(pt.OrdenElaboracion);
+                }
+            }
+            var recepciones = new List<Recepcion>();
+            foreach (var mp in materiasPrimas)
+            {
+                if (!recepciones.Contains(mp.Recepcion))
+                {
+                    recepciones.Add(mp.Recepcion);
+                }
+            }
+            var proveedores = new List<Proveedor>();
+            foreach (var r in recepciones)
+            {
+                if (!proveedores.Contains(r.Proveedor))
+                {
+                    proveedores.Add(r.Proveedor);
+                }
+            }
+            return proveedores;
         }
     }
 }
