@@ -920,6 +920,54 @@ namespace BiomasaEUPT.Migrations
             }
             context.SaveChanges();
 
+            resourceName = String.Format(NOMBRE_CSV, "PedidosLineas");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<PedidoLinea>();
+                    while (csvReader.Read())
+                    {
+                        datos.Add(new PedidoLinea()
+                        {
+                            PedidoLineaId = csvReader.GetField<int>("PedidoLineaId"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            VolumenPreparado = csvReader.GetField<double?>("VolumenPreparado"),
+                            UnidadesPreparadas = csvReader.GetField<int?>("UnidadesPreparadas"),
+                            PedidoCabeceraId = csvReader.GetField<int>("PedidoCabeceraId"),
+                            TipoProductoEnvasadoId = csvReader.GetField<int>("TipoProductoEnvasadoId")
+                        });
+                    }
+                    context.PedidosLineas.AddOrUpdate(d => d.PedidoLineaId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
+            resourceName = String.Format(NOMBRE_CSV, "PedidosDetalles");
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    CsvReader csvReader = new CsvReader(reader, csvConfig);
+                    var datos = new List<PedidoDetalle>();
+                    while (csvReader.Read())
+                    {
+                        datos.Add(new PedidoDetalle()
+                        {
+                            PedidoDetalleId = csvReader.GetField<int>("PedidoDetalleId"),
+                            Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
+                            PedidoLineaId = csvReader.GetField<int>("PedidoLineaId"),
+                            ProductoEnvasadoId = csvReader.GetField<int>("ProductoEnvasadoId")
+                        });
+                    }
+                    context.PedidosDetalles.AddOrUpdate(d => d.PedidoDetalleId, datos.ToArray());
+                }
+            }
+            context.SaveChanges();
+
         }
     }
 }

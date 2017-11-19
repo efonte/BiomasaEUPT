@@ -424,6 +424,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
                     Unidades = formPedidoLineaDataContext.Unidades
                 };
 
+                if (pedidoLinea.TipoProductoEnvasado.MedidoEnUnidades == true)
+                {
+                    pedidoLinea.UnidadesPreparadas = 0;
+                }
+                else
+                {
+                    pedidoLinea.VolumenPreparado = 0;
+                }
+
                 context.PedidosLineas.Add(pedidoLinea);
                 context.SaveChanges();
 
@@ -562,6 +571,15 @@ namespace BiomasaEUPT.Vistas.GestionVentas
 
                 };
 
+                if(pedidoDetalle.Unidades != null)
+                {
+                    PedidoLineaSeleccionado.UnidadesPreparadas = pedidoDetalle.Unidades + formPedidoDetalleDataContext.Unidades;
+                }
+                else
+                {
+                    PedidoLineaSeleccionado.Volumen = pedidoDetalle.Unidades + formPedidoDetalleDataContext.Volumen;
+                }
+
                 context.PedidosDetalles.Add(pedidoDetalle);
                 context.SaveChanges();
                 CargarPedidosDetalles();
@@ -603,8 +621,8 @@ namespace BiomasaEUPT.Vistas.GestionVentas
         #region Borrar Pedido Detalle
         public ICommand BorrarPedidoDetalleComando => _borrarPedidoCabeceraComando ??
             (_borrarPedidoCabeceraComando = new RelayCommandGenerico<IList<object>>(
-                param => BorrarPedidoDetalle()
-                //param => PedidoDetalleSeleccionado != null
+                param => BorrarPedidoDetalle(),
+                param => PedidoDetalleSeleccionado != null
             ));
 
         private async void BorrarPedidoDetalle()
