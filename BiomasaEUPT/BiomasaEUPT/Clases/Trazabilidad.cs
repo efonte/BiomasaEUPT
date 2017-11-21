@@ -104,18 +104,10 @@ namespace BiomasaEUPT.Clases
         public List<Proveedor> ProductoEnvasado(string codigo)
         {
             var productoEnvasado= context.ProductosEnvasados
-               .Include("TipoProductoTerminado")
                .Include("TipoProductoEnvasado")
-               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.HuecoAlmacenaje.SitioAlmacenaje")
-               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
-               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion.EstadoElaboracion")
-               .Include("HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Procedencia")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.EstadoRecepcion")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.TipoProveedor")
-               .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
+               .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.HuecoAlmacenaje.SitioAlmacenaje")
+               .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
+               .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion.EstadoElaboracion")
                .Single(mp => mp.Codigo == codigo);
             var productosEnvasadosComposiciones = productoEnvasado.ProductoEnvasadoComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
             var materiasPrimas = new List<MateriaPrima>();

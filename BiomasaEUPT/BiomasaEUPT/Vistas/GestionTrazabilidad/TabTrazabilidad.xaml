@@ -38,22 +38,15 @@
                     ToolTip="Generar informe en PDF"
                     Visibility="{Binding MostrarGenerarPDF, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Command="{Binding GenerarPDFComando}">
-                <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>
+                <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25" RenderTransformOrigin="-0.4,0.36"/>
             </Button>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,175,0">
-            <TextBox x:Name="tbCodigoCliente" FontFamily="Roboto" FontSize="15"
-                     materialDesign:HintAssist.Hint=" Buscar Código..." MaxLength="10" Width="120" FontWeight="Bold"
-                     Foreground="{DynamicResource MaterialDesignBody}" Text="{Binding Codigo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            <Button x:Name="bPdfCliente" Margin="15 0 0 0" Padding="0" BorderThickness="0" Height="25" Width="25"
-                    Background="Transparent" Foreground="{DynamicResource MaterialDesignBody}"
-                    ToolTip="Generar informe en PDF"
-                    Visibility="{Binding MostrarGenerarPDF, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    Command="{Binding GenerarPDFComando}">
-                <materialDesign:PackIcon Kind="FilePdf" Width="25" Height="25"/>
-            </Button>
-        </StackPanel>
+        <CheckBox x:Name="cbTrazabilidadCliente" Grid.Row="0" Grid.Column="0" Content="Trazabilidad desde el Cliente"
+                      HorizontalAlignment="Right" Margin="0,0,174,0"
+                      IsChecked="{Binding TrazabilidadCliente, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="3"/>
+
+
 
         <Border Grid.Column="0" Grid.Row="1" Margin="0 10 0 0">
             <GroupBox x:Name="gbArbol" materialDesign:ColorZoneAssist.Mode="PrimaryMid"

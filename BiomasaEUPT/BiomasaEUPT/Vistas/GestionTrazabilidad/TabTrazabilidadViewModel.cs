@@ -26,6 +26,8 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             }
         }
 
+        public bool TrazabilidadCliente { get; set; }
+
         public bool MostrarGenerarPDF { get; set; } = false;
         public string TextoTrazabilidad { get; set; } = "Trazabilidad";
 
