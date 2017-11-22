@@ -1,3 +1,5 @@
 ﻿TipoClienteId;Nombre;Descripcion
 1;Empresa;El cliente es una empresa.
 2;Particular;El cliente es un particular.
+3;Cooperativa;El cliente es una cooperativa.
+4;Autónomo;El cliente es un autónomo.

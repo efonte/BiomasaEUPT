@@ -1,3 +1,7 @@
 ﻿Nombre;Descripcion
 Pago efectivo;Clientes que pagan en efectivo.
 Pago tarjeta;Clientes que pagan con tarjeta.
+Pago cheque;Clientes que pagan con cheque.
+Pago 30 días;Clientes que pagan a 30 días.
+Pago 60 días;Clientes que pagan a 60 días.
+Pago 90 días;Clientes que pagan a 90 días.

@@ -61,7 +61,6 @@ namespace BiomasaEUPT.Clases
             var productoTerminado = context.ProductosTerminados
                 .Include("TipoProductoTerminado")
                 .Include("HistorialHuecosAlmacenajes.HuecoAlmacenaje.SitioAlmacenaje")
-                //.Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.ProductoTerminado.TipoProductoTerminado")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
                 .Include("ProductosTerminadosComposiciones.HistorialHuecoRecepcion.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Procedencia")
@@ -103,6 +102,7 @@ namespace BiomasaEUPT.Clases
         {
             var productoEnvasado= context.ProductosEnvasados
                .Include("TipoProductoEnvasado")
+               .Include("Picking")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.HuecoAlmacenaje.SitioAlmacenaje")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion")
@@ -124,14 +124,14 @@ namespace BiomasaEUPT.Clases
             }
             Console.WriteLine("Entro aqui2");
             var envasados = new List<OrdenEnvasado>();
-            foreach (var pe in productosEnvasados)
+            /*foreach (var pe in productosEnvasados)
             {
                 Console.WriteLine("OrdenEnvasado " + pe.OrdenEnvasado.Descripcion);
                 if (!envasados.Contains(pe.OrdenEnvasado))
                 {
                     envasados.Add(pe.OrdenEnvasado);
                 }
-            }
+            }*/
             Console.WriteLine("Entro aqui3");
             var elaboraciones = new List<OrdenElaboracion>();
             foreach (var pt in productosTerminados)
