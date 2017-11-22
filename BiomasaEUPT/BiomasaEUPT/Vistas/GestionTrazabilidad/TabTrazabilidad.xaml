@@ -100,40 +100,68 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate DataType="{x:Type tablas:HistorialHuecoAlmacenaje}">
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:HistorialHuecoAlmacenaje}" ItemsSource="{Binding ProductosEnvasadosComposiciones}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="MapMarker"/>
                                 <TextBlock Text="{Binding HuecoAlmacenaje.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenElaboracion}" ItemsSource="{Binding ProductoTerminado}">
+                        <!--HierarchicalDataTemplate DataType="{x:Type tablas:OrdenElaboracion}" ItemsSource="{Binding ProductoTerminado}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="DebugStepOver"/>
                                 <TextBlock Text="{Binding EstadoElaboracion.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
-                        </HierarchicalDataTemplate>
+                        </>
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoTerminado}" ItemsSource="{Binding HistorialHuecosAlmacenajes}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="BoxCutter"/>
                                 <TextBlock Text="{Binding TipoProductoTerminado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
-                        </HierarchicalDataTemplate>
+                        </HierarchicalDataTemplate-->
 
-                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasadoComposicion}" ItemsSource="{Binding ProductoEnvasado.Picking}">
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasadoComposicion}" ItemsSource="{Binding ProductoEnvasado}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PackageVariantClosed"/>
                                 <TextBlock Text="{Binding ProductoEnvasado.TipoProductoEnvasado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate DataType="{x:Type tablas:OrdenEnvasado}" ItemsSource="{Binding ProductoEnvasado}">
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasado}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PackageVariantClosed"/>
+                                <TextBlock Text="{Binding Picking.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:PedidoDetalle}" ItemsSource="{Binding PedidoLinea}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Package"/>
+                                <TextBlock Text="{Binding ProductoEnvasado.OrdenEnvasado}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:PedidoLinea}" ItemsSource="{Binding PedidoCabecera}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Package"/>
+                                <TextBlock Text="{Binding TipoProductoEnvasado.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:PedidoCabecera}" ItemsSource="{Binding Cliente}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Package"/>
+                                <TextBlock Text="{Binding Cliente.RazonSocial}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <!--HierarchicalDataTemplate DataType="{x:Type tablas:OrdenEnvasado}" ItemsSource="{Binding ProductoEnvasado}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Package"/>
                                 <TextBlock Text="{Binding EstadoEnvasado.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
-                        </HierarchicalDataTemplate>
+                        </>
 
                         <HierarchicalDataTemplate DataType="{x:Type tablas:ProductoEnvasado}" ItemsSource="{Binding Picking}">
                             <StackPanel Orientation="Horizontal">
@@ -147,7 +175,7 @@
                                 <materialDesign:PackIcon Kind="MapMarker"/>
                                 <TextBlock Text="{Binding HuecoRecepcion.Nombre}" Margin="8 0 0 0"/>
                             </StackPanel>
-                        </HierarchicalDataTemplate>
+                        </HierarchicalDataTemplate-->
 
                     </TreeView.Resources>
                 </TreeView>

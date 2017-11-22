@@ -126,6 +126,7 @@ namespace BiomasaEUPT.Clases
             var envasados = new List<OrdenEnvasado>();
             foreach (var pe in productosEnvasados)
             {
+                Console.WriteLine("OrdenEnvasado " + pe.OrdenEnvasado.Descripcion);
                 if (!envasados.Contains(pe.OrdenEnvasado))
                 {
                     envasados.Add(pe.OrdenEnvasado);
@@ -135,6 +136,7 @@ namespace BiomasaEUPT.Clases
             var elaboraciones = new List<OrdenElaboracion>();
             foreach (var pt in productosTerminados)
             {
+                Console.WriteLine("OrdenElaboracion " + pt.OrdenElaboracion.Descripcion);
                 if (!elaboraciones.Contains(pt.OrdenElaboracion))
                 {
                     elaboraciones.Add(pt.OrdenElaboracion);
@@ -144,6 +146,7 @@ namespace BiomasaEUPT.Clases
             var recepciones = new List<Recepcion>();
             foreach (var mp in materiasPrimas)
             {
+                Console.WriteLine("Recepcion " + mp.Recepcion.NumeroAlbaran);
                 if (!recepciones.Contains(mp.Recepcion))
                 {
                     recepciones.Add(mp.Recepcion);
@@ -153,6 +156,7 @@ namespace BiomasaEUPT.Clases
             var proveedores = new List<Proveedor>();
             foreach (var r in recepciones)
             {
+                Console.WriteLine("Proveedor " + r.Proveedor.RazonSocial);
                 if (!proveedores.Contains(r.Proveedor))
                 {
                     proveedores.Add(r.Proveedor);
