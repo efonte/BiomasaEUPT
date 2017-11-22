@@ -45,6 +45,8 @@ namespace BiomasaEUPT.Modelos.Tablas
         [ForeignKey("HuecoAlmacenajeId")]
         public virtual HuecoAlmacenaje HuecoAlmacenaje { get; set; }
 
+        public virtual List<ProductoEnvasadoComposicion> ProductosEnvasadosComposiciones { get; set; }
+
 
     }
 }

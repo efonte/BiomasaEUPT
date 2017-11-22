@@ -142,6 +142,13 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
+                        <HierarchicalDataTemplate DataType="{x:Type tablas:Picking}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="MapMarker"/>
+                                <TextBlock Text="{Binding HuecoRecepcion.Nombre}" Margin="8 0 0 0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
                     </TreeView.Resources>
                 </TreeView>
             </GroupBox>

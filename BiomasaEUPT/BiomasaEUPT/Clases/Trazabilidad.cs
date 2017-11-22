@@ -74,8 +74,6 @@ namespace BiomasaEUPT.Clases
             foreach (var ptc in productosTerminadosComposiciones)
             {
                 ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = productosTerminadosComposiciones.Where(ptc1 => ptc1.HistorialHuecoId == ptc.HistorialHuecoId).ToList();
-                // ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = new List<ProductoTerminadoComposicion>() { ptc };
-                //ptc.ProductoTerminado = productoTerminado;
                 if (!materiasPrimas.Contains(ptc.HistorialHuecoRecepcion.MateriaPrima))
                 {
                     materiasPrimas.Add(ptc.HistorialHuecoRecepcion.MateriaPrima);
@@ -107,22 +105,24 @@ namespace BiomasaEUPT.Clases
                .Include("TipoProductoEnvasado")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.HuecoAlmacenaje.SitioAlmacenaje")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
+               .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion")
                .Include("ProductoEnvasadoComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion.EstadoElaboracion")
                .Single(mp => mp.Codigo == codigo);
+            Console.WriteLine("Entro aqui");
             var productosEnvasadosComposiciones = productoEnvasado.ProductoEnvasadoComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
             var materiasPrimas = new List<MateriaPrima>();
             var productosTerminados = new List<ProductoTerminado>();
             var productosEnvasados = new List<ProductoEnvasado>();
-            /*foreach (var pec in productosEnvasadosComposiciones)
+            Console.WriteLine("Entro aqui1");
+            foreach (var pec in productosEnvasadosComposiciones)
             {
-                pec.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones = productosTerminadosComposiciones.Where(ptc1 => ptc1.HistorialHuecoId == ptc.HistorialHuecoId).ToList();
-                // ptc.HistorialHuecoRecepcion.ProductosTerminadosComposiciones = new List<ProductoTerminadoComposicion>() { ptc };
-                //ptc.ProductoTerminado = productoTerminado;
-                if (!materiasPrimas.Contains(pec.HistorialHuecoRecepcion.MateriaPrima))
+                pec.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones = productosEnvasadosComposiciones.Where(pec1 => pec1.HistorialHuecoId == pec.HistorialHuecoId).ToList();
+                if (!productosTerminados.Contains(pec.HistorialHuecoAlmacenaje.ProductoTerminado))
                 {
-                    materiasPrimas.Add(pec.HistorialHuecoRecepcion.MateriaPrima);
+                    productosTerminados.Add(pec.HistorialHuecoAlmacenaje.ProductoTerminado);
                 }
-            }*/
+            }
+            Console.WriteLine("Entro aqui2");
             var envasados = new List<OrdenEnvasado>();
             foreach (var pe in productosEnvasados)
             {
@@ -131,6 +131,7 @@ namespace BiomasaEUPT.Clases
                     envasados.Add(pe.OrdenEnvasado);
                 }
             }
+            Console.WriteLine("Entro aqui3");
             var elaboraciones = new List<OrdenElaboracion>();
             foreach (var pt in productosTerminados)
             {
@@ -139,6 +140,7 @@ namespace BiomasaEUPT.Clases
                     elaboraciones.Add(pt.OrdenElaboracion);
                 }
             }
+            Console.WriteLine("Entro aqui4");
             var recepciones = new List<Recepcion>();
             foreach (var mp in materiasPrimas)
             {
@@ -147,6 +149,7 @@ namespace BiomasaEUPT.Clases
                     recepciones.Add(mp.Recepcion);
                 }
             }
+            Console.WriteLine("Entro aqui5");
             var proveedores = new List<Proveedor>();
             foreach (var r in recepciones)
             {
