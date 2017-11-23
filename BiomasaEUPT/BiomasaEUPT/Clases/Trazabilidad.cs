@@ -134,7 +134,6 @@ namespace BiomasaEUPT.Clases
                 }
             }
 
-            Console.WriteLine("Entro aqui2");
             var envasados = new List<OrdenEnvasado>();
             foreach (var pe in productosEnvasados)
             {
@@ -145,7 +144,6 @@ namespace BiomasaEUPT.Clases
                     envasados.Add(pe.OrdenEnvasado);
                 }
             }
-            Console.WriteLine("Entro aqui3");
 
             var elaboraciones = new List<OrdenElaboracion>();
             foreach (var pt in productosTerminados)
@@ -157,7 +155,6 @@ namespace BiomasaEUPT.Clases
                     elaboraciones.Add(pt.OrdenElaboracion);
                 }
             }
-            Console.WriteLine("Entro aqui4");
 
             var recepciones = new List<Recepcion>();
             foreach (var mp in materiasPrimas)
@@ -169,7 +166,6 @@ namespace BiomasaEUPT.Clases
                     recepciones.Add(mp.Recepcion);
                 }
             }
-            Console.WriteLine("Entro aqui5");
 
             var proveedores = new List<Proveedor>();
             foreach (var r in recepciones)

@@ -664,8 +664,8 @@ namespace BiomasaEUPT.Migrations
                         {
                             ProductoTerminadoId = csvReader.GetField<int>("ProductoTerminadoId"),
                             TipoId = csvReader.GetField<int>("TipoId"),
-                            Unidades = csvReader.GetField<int?>("Unidades"),
                             Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
                             OrdenId = csvReader.GetField<int>("OrdenId"),
                             FechaBaja = csvReader.GetField<DateTime?>("FechaBaja"),
                             Observaciones = observaciones
@@ -715,8 +715,8 @@ namespace BiomasaEUPT.Migrations
                         datos.Add(new ProductoTerminadoComposicion()
                         {
                             ProductoTerminadoComposicionId = csvReader.GetField<int>("ProductoTerminadoComposicionId"),
-                            Unidades = csvReader.GetField<int?>("Unidades"),
                             Volumen = csvReader.GetField<int?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
                             HistorialHuecoId = csvReader.GetField<int>("HistorialHuecoId"),
                             ProductoId = csvReader.GetField<int>("ProductoId")
                         });

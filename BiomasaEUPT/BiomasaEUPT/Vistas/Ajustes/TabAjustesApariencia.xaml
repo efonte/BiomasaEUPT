@@ -40,7 +40,6 @@
                                         CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Primario" />
-                                        <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
                                     </StackPanel>
                                 </Button>
                             </Border>
@@ -53,7 +52,6 @@
                                         CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Secundario" />
-                                        <!--materialDesign:PackIcon Kind="Palette" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/-->
                                     </StackPanel>
                                 </Button>
                             </Border>

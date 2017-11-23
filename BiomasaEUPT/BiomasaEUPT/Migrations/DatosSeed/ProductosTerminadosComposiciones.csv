@@ -1,5 +1,5 @@
-﻿ProductoTerminadoComposicionId;Unidades;Volumen;HistorialHuecoId;ProductoId
-1;;50;8;1
-2;;10;9;1
-3;30;;1;2
-4;20;;7;2
+﻿ProductoTerminadoComposicionId;Volumen;Unidades;HistorialHuecoId;ProductoId
+1;50;;8;1
+2;20;;9;1
+3;;50;1;2
+4;;30;7;2
