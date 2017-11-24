@@ -58,7 +58,6 @@
                             <i:EventTrigger EventName="CellEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGClientes_CellEditEndingComando, Mode=OneWay}"
                                                     PassEventArgsToCommand="True"/>
-                                <!--domain:EventCommandExecuter Command="{Binding DGClientes_CellEditEndingComando}"/-->
                             </i:EventTrigger>
                             <i:EventTrigger EventName="RowEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGClientes_RowEditEndingComando, Mode=OneWay}"

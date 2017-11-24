@@ -22,11 +22,7 @@
                        Text="{Binding Titulo}" />
             </Border>
         </materialDesign:ColorZone>
-        <!--Border Background="#F44336" TextElement.Foreground="#DDFFFFFF" Padding="8 4 8 4">
-            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="8 0 8 0"
-                       Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                       Text="{Binding Titulo}" />
-        </-->
+
         <ScrollViewer MaxWidth="300" MaxHeight="300" Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="tbMensaje" TextWrapping="Wrap" Text="{Binding Mensaje}"

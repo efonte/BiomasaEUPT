@@ -177,6 +177,7 @@ namespace BiomasaEUPT.Clases
                     proveedores.Add(r.Proveedor);
                 }
             }
+            Console.WriteLine(proveedores.ToString());
             return proveedores;
         }
     }

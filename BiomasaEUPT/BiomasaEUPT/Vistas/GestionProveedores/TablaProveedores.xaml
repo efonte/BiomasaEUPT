@@ -56,12 +56,10 @@
                             <i:EventTrigger EventName="CellEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGProveedores_CellEditEndingComando, Mode=OneWay}"
                                                     PassEventArgsToCommand="True"/>
-                                <!--domain:EventCommandExecuter Command="{Binding DGProveedores_CellEditEndingComando}"/-->
                             </i:EventTrigger>
                             <i:EventTrigger EventName="RowEditEnding">
                                 <cmd:EventToCommand Command="{Binding DGProveedores_RowEditEndingComando, Mode=OneWay}"
                                                     PassEventArgsToCommand="True"/>
-                                <!--domain:EventCommandExecuter Command="{Binding DGProveedores_RowEditEndingComando}"/-->
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <DataGrid.InputBindings>

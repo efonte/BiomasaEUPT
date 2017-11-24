@@ -126,18 +126,6 @@
                 ConnectTimeout = 10
             };
 
-            /*SqlConnectionStringBuilder sqlBuilder1 = new SqlConnectionStringBuilder
-            {
-                DataSource = "155.210.68.124,49170",
-                InitialCatalog = "BiomasaEUPT",
-                PersistSecurityInfo = true,
-                IntegratedSecurity = false,
-                MultipleActiveResultSets = true,
-                UserID = "usuario",
-                Password = "usuario",
-                ApplicationName = "EntityFramework",
-                ConnectTimeout = 10
-            };*/
 
             EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder
             {
@@ -150,36 +138,11 @@
             return entityBuilder.ToString();
         }
 
-        /*protected override DbEntityValidationResult ValidateEntity(
-      System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
-        {
-            var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
-            if (entityEntry.Entity is Usuario && entityEntry.State == EntityState.Added)
-            {
-                Usuario post = entityEntry.Entity as Usuario;
-                if (Usuarios.Where(p => p.Nombre == post.Nombre).Count() > 0)
-                {
-                    result.ValidationErrors.Add(
-                            new DbValidationError("nombre", "El nombre debe ser único."));
-                }
-            }
-
-            if (result.ValidationErrors.Count > 0)
-            {
-                return result;
-            }
-            else
-            {
-                return base.ValidateEntity(entityEntry, items);
-            }
-        }*/
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //var convention = new AttributeToColumnAnnotationConvention<DefaultValueAttribute, string>("SqlDefaultValue", (p, attributes) => attributes.SingleOrDefault().Value.ToString());
-            //modelBuilder.Conventions.Add(convention);
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            
 
             // Se evita que se cree la columna HistorialHuecosAlmacenajes_HistorialHuecoId en la tabla ProductoEnvasadoComposicion
             modelBuilder.Entity<ProductoEnvasadoComposicion>()

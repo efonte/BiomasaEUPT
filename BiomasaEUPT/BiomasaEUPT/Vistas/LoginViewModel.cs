@@ -102,7 +102,6 @@ namespace BiomasaEUPT.Vistas
                 Mensaje = "El usuario y/o la contraseña son incorrectos."
             };
             var resultado = await DialogHost.Show(mensaje, "RootDialog");
-            // Console.WriteLine(mensaje.DataContext.GetType().GetProperty("Nombre").GetValue(mensaje.DataContext));
         }
 
         private void CargarVistaMain(Usuario usuario)
