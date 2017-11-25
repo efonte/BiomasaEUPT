@@ -36,7 +36,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
             ProductoEnvasado productoEnvasado = (sender as Button).DataContext as ProductoEnvasado;
 
             InformePDF informe = new InformePDF(Properties.Settings.Default.DirectorioInformes);
-            System.Diagnostics.Process.Start(informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoTerminado(productoEnvasado.Codigo)));
+            System.Diagnostics.Process.Start(informe.GenerarInformeProductoEnvasado(trazabilidad.ProductoEnvasado(productoEnvasado.Codigo)));
         }
 
         private void bCodigo_Click(object sender, RoutedEventArgs e)
