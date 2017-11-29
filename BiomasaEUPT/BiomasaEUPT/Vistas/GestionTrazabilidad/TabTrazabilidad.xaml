@@ -481,6 +481,7 @@
                                 </Grid>
                             </DataTemplate>
 
+                           
                             <DataTemplate DataType="{x:Type tablas:Cliente}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>

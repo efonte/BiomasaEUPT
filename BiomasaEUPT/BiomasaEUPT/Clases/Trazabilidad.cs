@@ -106,7 +106,7 @@ namespace BiomasaEUPT.Clases
 
         public List<Proveedor> ProductoEnvasado(string codigo)
         {
-            var productoEnvasado= context.ProductosEnvasados
+            var productoEnvasado = context.ProductosEnvasados
                .Include("TipoProductoEnvasado")
                .Include("Picking")
                .Include("OrdenEnvasado")
@@ -115,68 +115,111 @@ namespace BiomasaEUPT.Clases
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.TipoProductoTerminado")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.OrdenElaboracion.EstadoElaboracion")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.TipoMateriaPrima")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.HuecoRecepcion.SitioRecepcion")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.EstadoRecepcion")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.TipoProveedor")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
+               .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones")
                .Single(mp => mp.Codigo == codigo);
 
-            var productosEnvasadosComposiciones = productoEnvasado.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
-            var materiasPrimas = new List<MateriaPrima>();
-            var productosTerminados = new List<ProductoTerminado>();
-            var productosEnvasados = new List<ProductoEnvasado>();
-
-            foreach (var pec in productosEnvasadosComposiciones)
-            {
-                pec.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones = productosEnvasadosComposiciones.Where(pec1 => pec1.HistorialHuecoId == pec.HistorialHuecoId).ToList();
-                if (!productosTerminados.Contains(pec.HistorialHuecoAlmacenaje.ProductoTerminado))
-                {
-                    productosTerminados.Add(pec.HistorialHuecoAlmacenaje.ProductoTerminado);
-                }
-            }
-
-            var envasados = new List<OrdenEnvasado>();
-            foreach (var pe in productosEnvasados)
-            {
-                Console.WriteLine("OrdenEnvasado " + pe.OrdenEnvasado.Descripcion);
-                if (!envasados.Contains(pe.OrdenEnvasado))
-                {
-                    Console.WriteLine("1");
-                    envasados.Add(pe.OrdenEnvasado);
-                }
-            }
-
-            var elaboraciones = new List<OrdenElaboracion>();
-            foreach (var pt in productosTerminados)
-            {
-                Console.WriteLine("OrdenElaboracion " + pt.OrdenElaboracion.Descripcion);
-                if (!elaboraciones.Contains(pt.OrdenElaboracion))
-                {
-                    Console.WriteLine("2");
-                    elaboraciones.Add(pt.OrdenElaboracion);
-                }
-            }
-
-            var recepciones = new List<Recepcion>();
-            foreach (var mp in materiasPrimas)
-            {
-                Console.WriteLine("Recepcion " + mp.Recepcion.NumeroAlbaran);
-                if (!recepciones.Contains(mp.Recepcion))
-                {
-                    Console.WriteLine("3");
-                    recepciones.Add(mp.Recepcion);
-                }
-            }
-
             var proveedores = new List<Proveedor>();
-            foreach (var r in recepciones)
+            foreach (var pec in productoEnvasado.ProductosEnvasadosComposiciones.ToList())
             {
-                Console.WriteLine("Proveedor " + r.Proveedor.RazonSocial);
-                if (!proveedores.Contains(r.Proveedor))
+                foreach (var ptc in pec.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones)
                 {
-                    Console.WriteLine("4");
-                    proveedores.Add(r.Proveedor);
+                    if (!proveedores.Contains(ptc.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor))
+                    {
+                        proveedores.Add(ptc.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor);
+                    }
                 }
             }
+
+            foreach (var p in proveedores)
+            {
+                foreach (var r in p.Recepciones) {
+                    foreach (var mp in r.MateriasPrimas)
+                    {
+                        foreach (var hhr in mp.HistorialHuecosRecepciones)
+                        {
+                            foreach (var ptc in hhr.ProductosTerminadosComposiciones)
+                            {
+                                foreach (var hha in ptc.ProductoTerminado.HistorialHuecosAlmacenajes)
+                                {
+                                    foreach (var pec in hha.ProductosEnvasadosComposiciones)
+                                    {
+                                        Console.WriteLine(pec.ProductoEnvasado.TipoProductoEnvasado.Nombre);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /*
+                        var productosEnvasadosComposiciones = productoEnvasado.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
+                        var materiasPrimas = new List<MateriaPrima>();
+                        var productosTerminados = new List<ProductoTerminado>();
+                        var productosEnvasados = new List<ProductoEnvasado>();
+
+                        foreach (var pec in productosEnvasadosComposiciones)
+                        {
+                            pec.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones = productosEnvasadosComposiciones.Where(pec1 => pec1.HistorialHuecoId == pec.HistorialHuecoId).ToList();
+                            if (!productosTerminados.Contains(pec.HistorialHuecoAlmacenaje.ProductoTerminado))
+                            {
+                                productosTerminados.Add(pec.HistorialHuecoAlmacenaje.ProductoTerminado);
+                            }
+                        }
+
+                        var envasados = new List<OrdenEnvasado>();
+                        Console.WriteLine("Estoy aquí");
+                        foreach (var pe in productosEnvasados)
+                        {
+                            Console.WriteLine("OrdenEnvasado " + pe.OrdenEnvasado.Descripcion);
+                            if (!envasados.Contains(pe.OrdenEnvasado))
+                            {
+                                Console.WriteLine("1");
+                                envasados.Add(pe.OrdenEnvasado);
+                            }
+                        }
+
+                        var elaboraciones = new List<OrdenElaboracion>();
+                        Console.WriteLine("Estoy aquí2");
+                        foreach (var pt in productosTerminados)
+                        {
+                            Console.WriteLine("OrdenElaboracion " + pt.OrdenElaboracion.Descripcion);
+                            if (!elaboraciones.Contains(pt.OrdenElaboracion))
+                            {
+                                Console.WriteLine("2");
+                                elaboraciones.Add(pt.OrdenElaboracion);
+                            }
+                        }
+
+                        var recepciones = new List<Recepcion>();
+                        foreach (var mp in materiasPrimas)
+                        {
+                            Console.WriteLine("Recepcion " + mp.Recepcion.NumeroAlbaran);
+                            if (!recepciones.Contains(mp.Recepcion))
+                            {
+                                Console.WriteLine("3");
+                                recepciones.Add(mp.Recepcion);
+                            }
+                        }
+
+                        var proveedores = new List<Proveedor>();
+                        foreach (var r in recepciones)
+                        {
+                            Console.WriteLine("Proveedor " + r.Proveedor.RazonSocial);
+                            if (!proveedores.Contains(r.Proveedor))
+                            {
+                                Console.WriteLine("4");
+                                proveedores.Add(r.Proveedor);
+                            }
+                        }*/
+
+
             return proveedores;
         }
     }
