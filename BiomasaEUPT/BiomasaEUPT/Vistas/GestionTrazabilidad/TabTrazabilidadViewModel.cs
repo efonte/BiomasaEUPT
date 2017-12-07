@@ -101,6 +101,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                             MostrarGenerarPDF = true;
                             TextoTrazabilidad = "Trazabilidad Producto Envasado";
                             Arbol = new ObservableCollection<Proveedor>(trazabilidad.ProductoEnvasado(Codigo));
+                            //ArbolCliente = new ObservableCollection <Cliente>(trazabilidad.ProductoEnvasado(Codigo))
                             //var proveedores = trazabilidad.ProductoTerminado(codigo);
                             //proveedores.ForEach(ucTrazabilidadCodigos.ArbolRecepcion.Add);
                         }

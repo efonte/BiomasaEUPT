@@ -150,6 +150,8 @@ namespace BiomasaEUPT.Clases
                                     foreach (var pec in hha.ProductosEnvasadosComposiciones)
                                     {
                                         Console.WriteLine(pec.ProductoEnvasado.TipoProductoEnvasado.Nombre);
+                                        var pdetalle = context.PedidosDetalles.Single(pd => pd.ProductoEnvasadoId == pec.ProductoEnvasado.ProductoEnvasadoId);
+
                                     }
                                 }
                             }
