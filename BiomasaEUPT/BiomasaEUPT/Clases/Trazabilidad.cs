@@ -136,7 +136,7 @@ namespace BiomasaEUPT.Clases
                 }
             }
 
-            foreach (var p in proveedores)
+            /*foreach (var p in proveedores)
             {
                 foreach (var r in p.Recepciones) {
                     foreach (var mp in r.MateriasPrimas)
@@ -158,7 +158,7 @@ namespace BiomasaEUPT.Clases
                         }
                     }
                 }
-            }
+            }*/
 
             /*
                         var productosEnvasadosComposiciones = productoEnvasado.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == productoEnvasado.Codigo).ToList();
@@ -223,6 +223,37 @@ namespace BiomasaEUPT.Clases
 
 
             return proveedores;
+        }
+
+        public List<Cliente> ProductoEnvasadoCliente(string codigo)
+        {
+            var pedidoDetalle = context.PedidosDetalles
+                .Include("ProductoEnvasado")
+                .Include("ProductoEnvasado.Picking")
+                .Include("ProductoEnvasado.OrdenEnvasado")
+                .Include("ProductoEnvasado.OrdenEnvasado.EstadoEnvasado")
+                .Include("PedidoLinea.TipoProductoEnvasado")
+                .Include("PedidoLinea")
+                .Include("PedidoLinea")
+                .Include("PedidoLinea.PedidoCabecera.EstadoPedido")
+                .Include("PedidoLinea.PedidoCabecera.FechaPedido")
+                .Include("PedidoLinea.PedidoCabecera.Cliente.Municipio.Provincia.Comunidad.Pais")
+                .Single(p => p.ProductoEnvasado.Codigo == codigo);
+
+            var pedidoLinea = pedidoDetalle.PedidoLinea;
+            pedidoLinea.PedidoDetalles = new List<PedidoDetalle>() { pedidoDetalle };
+            //var proveedor = recepcion.Proveedor;
+            //proveedor.Recepciones = new List<Recepcion>() { recepcion };
+            //return proveedor;
+
+            //var clientes = pedido.PedidoLinea.PedidoCabecera.Cliente;
+            //proveedor.Recepciones = new List<Recepcion>() { recepcion };
+
+
+
+
+
+            return null;
         }
     }
 }
