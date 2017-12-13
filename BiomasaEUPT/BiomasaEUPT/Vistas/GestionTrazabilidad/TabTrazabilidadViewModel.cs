@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BiomasaEUPT.Vistas.GestionTrazabilidad
@@ -23,6 +24,18 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             {
                 _codigo = value;
                 GenerarArbol();
+            }
+        }
+
+        public ObservableCollection<Cliente> ArbolCliente { get; set; } = new ObservableCollection<Cliente>();
+        private string _codigoCliente = "";
+        public string CodigoCliente
+        {
+            get { return _codigoCliente; }
+            set
+            {
+                _codigoCliente = value;
+                GenerarArbolCliente();
             }
         }
 
@@ -95,17 +108,50 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         break;
 
 
+                        /*case Constantes.CODIGO_VENTAS:
+                            if (context.ProductosEnvasados.Any(pe => pe.Codigo == Codigo) && TrazabilidadCliente==true)
+                            {
+                                MostrarGenerarPDF = true;
+                                TextoTrazabilidad = "Trazabilidad Producto Envasado";
+                                //Arbol = new ObservableCollection<Proveedor>(trazabilidad.ProductoEnvasado(Codigo));
+                                ArbolCliente = new ObservableCollection<Cliente>(trazabilidad.ProductoEnvasadoCliente(Codigo));
+                                //var proveedores = trazabilidad.ProductoTerminado(codigo);
+                                //proveedores.ForEach(ucTrazabilidadCodigos.ArbolRecepcion.Add);
+                            }
+                            break;*/
+                }
+            }
+        }
+
+        private void GenerarArbolCliente()
+        {
+            ArbolCliente.Clear();
+            MostrarGenerarPDF = false;
+            TextoTrazabilidad = "Trazabilidad";
+
+
+            if (Codigo.Length == 10)
+            {
+                switch (Codigo[0].ToString())
+                {
                     case Constantes.CODIGO_VENTAS:
-                        if (context.ProductosEnvasados.Any(mp => mp.Codigo == Codigo))
+                        if (TrazabilidadCliente == true)
                         {
-                            MostrarGenerarPDF = true;
-                            TextoTrazabilidad = "Trazabilidad Producto Envasado";
-                            Arbol = new ObservableCollection<Proveedor>(trazabilidad.ProductoEnvasado(Codigo));
-                            //ArbolCliente = new ObservableCollection <Cliente>(trazabilidad.ProductoEnvasado(Codigo))
-                            //var proveedores = trazabilidad.ProductoTerminado(codigo);
-                            //proveedores.ForEach(ucTrazabilidadCodigos.ArbolRecepcion.Add);
+                            if (context.ProductosEnvasados.Any(pe => pe.Codigo == CodigoCliente))
+                            {
+                                var tabTrazabilidad = new TabTrazabilidad();
+                                Console.WriteLine("pestaña " + tabTrazabilidad);
+                                MostrarGenerarPDF = true;
+                                tabTrazabilidad.gbArbolCliente.Visibility = Visibility.Visible;
+                                TextoTrazabilidad = "Trazabilidad Producto Envasado";
+                                Console.WriteLine("entro aquí ");
+                                //Arbol = new ObservableCollection<Proveedor>(trazabilidad.ProductoEnvasado(Codigo));
+                                ArbolCliente = new ObservableCollection<Cliente>(trazabilidad.ProductoEnvasadoCliente(Codigo));
+                            }
+
                         }
                         break;
+
                 }
             }
         }
