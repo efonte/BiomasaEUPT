@@ -130,9 +130,9 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
             TextoTrazabilidad = "Trazabilidad";
 
 
-            if (Codigo.Length == 10)
+            if (CodigoCliente.Length == 10)
             {
-                switch (Codigo[0].ToString())
+                switch (CodigoCliente[0].ToString())
                 {
                     case Constantes.CODIGO_VENTAS:
                         if (TrazabilidadCliente == true)
