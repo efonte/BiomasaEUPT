@@ -221,6 +221,7 @@ BEGIN
            UnidadesRestantes = CASE WHEN i.Unidades IS NOT NULL THEN (UnidadesRestantes - i.Unidades) ELSE UnidadesRestantes END
     FROM   inserted i
     WHERE  HistorialHuecosRecepciones.HistorialHuecoRecepcionId = i.HistorialHuecoId
+
 END
 '
 

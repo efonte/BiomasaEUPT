@@ -150,6 +150,17 @@
     <Compile Include="Migrations\SeedCodigosPostales.cs" />
     <Compile Include="Migrations\SeedTablas.cs" />
     <Compile Include="Modelos\BiomasaEUPTContextInitializer.cs" />
+	<EmbeddedResource Include="Migrations\DatosSeed\Picking.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosCabeceras.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosDetalles.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasadosComposiciones.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\TiposProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosPedidos.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\EstadosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\GruposProductosEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\OrdenesEnvasados.csv" />
+    <EmbeddedResource Include="Migrations\DatosSeed\PedidosLineas.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedComunidades.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedMunicipios.csv" />
     <EmbeddedResource Include="Migrations\DatosSeed\_SeedPaises.csv" />
@@ -755,17 +766,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DatosSeed\Picking.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\PedidosCabeceras.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\PedidosDetalles.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasados.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\ProductosEnvasadosComposiciones.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\TiposProductosEnvasados.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\EstadosPedidos.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\EstadosEnvasados.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\GruposProductosEnvasados.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\OrdenesEnvasados.csv" />
-    <EmbeddedResource Include="Migrations\DatosSeed\PedidosLineas.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BiomasaEUPT.Modelos.Tablas.Cliente.datasource" />
     <None Include="Properties\Settings.settings">
