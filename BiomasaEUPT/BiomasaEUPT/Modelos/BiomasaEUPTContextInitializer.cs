@@ -382,6 +382,31 @@ BEGIN
     WHERE  PedidosLineas.PedidoLineaId = i.PedidoLineaId
 END
 '
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_OrdenElaboracion_I]
+    ON [dbo].[OrdenesElaboraciones]
+    AFTER INSERT, UPDATE 
+AS
+  UPDATE oe set FechaElaboracion=GETDATE() 
+  FROM 
+  dbo.[OrdenesElaboraciones] AS oe 
+  INNER JOIN inserted 
+  AS i 
+  ON oe.OrdenElaboracionId = i.OrdenElaboracionId
+'
+
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER [dbo].[TR_OrdenEnvasado_I]
+    ON [dbo].[OrdenesEnvasados]
+    AFTER INSERT, UPDATE 
+AS
+  UPDATE oe set FechaEnvasado=GETDATE() 
+  FROM 
+  dbo.[OrdenesEnvasados] AS oe 
+  INNER JOIN inserted 
+  AS i 
+  ON oe.OrdenEnvasadoId = i.OrdenEnvasadoId
+'
 "
                 );
             base.Seed(context);

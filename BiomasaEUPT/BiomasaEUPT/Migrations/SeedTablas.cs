@@ -484,8 +484,8 @@ namespace BiomasaEUPT.Migrations
                         {
                             MateriaPrimaId = csvReader.GetField<int>("MateriaPrimaId"),
                             TipoId = csvReader.GetField<int>("TipoId"),
-                            Unidades = csvReader.GetField<int?>("Unidades"),
                             Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
                             RecepcionId = csvReader.GetField<int>("RecepcionId"),
                             ProcedenciaId = csvReader.GetField<int>("ProcedenciaId"),
                             FechaBaja = csvReader.GetField<DateTime?>("FechaBaja"),
@@ -511,8 +511,8 @@ namespace BiomasaEUPT.Migrations
                         datos.Add(new HistorialHuecoRecepcion()
                         {
                             HistorialHuecoRecepcionId = csvReader.GetField<int>("HistorialHuecoRecepcionId"),
-                            Unidades = csvReader.GetField<int?>("Unidades"),
                             Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
                             MateriaPrimaId = csvReader.GetField<int>("MateriaPrimaId"),
                             HuecoRecepcionId = csvReader.GetField<int>("HuecoRecepcionId")
                         });
@@ -690,8 +690,8 @@ namespace BiomasaEUPT.Migrations
                         datos.Add(new HistorialHuecoAlmacenaje()
                         {
                             HistorialHuecoAlmacenajeId = csvReader.GetField<int>("HistorialHuecoAlmacenajeId"),
-                            Unidades = csvReader.GetField<int?>("Unidades"),
                             Volumen = csvReader.GetField<double?>("Volumen"),
+                            Unidades = csvReader.GetField<int?>("Unidades"),
                             ProductoTerminadoId = csvReader.GetField<int>("ProductoTerminadoId"),
                             HuecoAlmacenajeId = csvReader.GetField<int>("HuecoAlmacenajeId")
                         });

@@ -1,6 +1,2 @@
-﻿MateriaPrimaId;TipoId;Unidades;Volumen;RecepcionId;ProcedenciaId;FechaBaja;Observaciones
-1;1;50;;1;1;;Prioridad alta
-2;5;80;;1;2;;
-3;6;45;;2;1;;Usar para tablones
-4;1;44;;2;3;;
-5;11;;70;3;2;;
+﻿MateriaPrimaId;TipoId;Volumen;Unidades;RecepcionId;ProcedenciaId;FechaBaja;Observaciones
+1;1;;50;1;1;;Prioridad alta

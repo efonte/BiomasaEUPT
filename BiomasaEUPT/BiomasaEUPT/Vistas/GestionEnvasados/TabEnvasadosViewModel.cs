@@ -187,7 +187,7 @@ namespace BiomasaEUPT.Vistas.GestionEnvasados
                 context.SaveChanges();
             }
 
-            CargarOrdenesEnvasados();
+            //CargarOrdenesEnvasados();
         }
         #endregion
 

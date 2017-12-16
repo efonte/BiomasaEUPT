@@ -58,7 +58,7 @@
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn x:Name="fechaEnvasadoColumna" Header="Fecha Envasado" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding FechaEnvasado, StringFormat={}{0:dd/MM/yyyy HH:mm}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True,
-                                                                                 Converter={StaticResource CadenaVaciaConverter},ConverterParameter='S/D'}"/>
+                                                                                 ConverterParameter='S/D'}"/>
 
                             <materialDesign:MaterialDataGridTextColumn x:Name="estadoColumna" Header="Estado" Width="auto" IsReadOnly="True"
                                                                        Binding="{Binding EstadoEnvasado.Nombre, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
