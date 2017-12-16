@@ -29,7 +29,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 
         public ObservableCollection<Cliente> ArbolCliente { get; set; } = new ObservableCollection<Cliente>();
         private string _codigoCliente = "";
-        public string CodigoCliente
+        /*public string CodigoCliente
         {
             get { return _codigoCliente; }
             set
@@ -37,7 +37,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                 _codigoCliente = value;
                 GenerarArbolCliente();
             }
-        }
+        }*/
 
         public bool TrazabilidadCliente { get; set; }
 
@@ -84,7 +84,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                 TextoTrazabilidad = "Trazabilidad Recepción";
                 Arbol.Add(trazabilidad.Recepcion(Codigo));
             }
-            else if (Codigo.Length == 10)
+            if (Codigo.Length == 10)
             {
                 switch (Codigo[0].ToString())
                 {
@@ -108,8 +108,10 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                         break;
 
 
-                        /*case Constantes.CODIGO_VENTAS:
-                            if (context.ProductosEnvasados.Any(pe => pe.Codigo == Codigo) && TrazabilidadCliente==true)
+                    case Constantes.CODIGO_VENTAS:
+                        if (context.ProductosEnvasados.Any(pe => pe.Codigo == Codigo))
+                        {
+                            if (TrazabilidadCliente == true)
                             {
                                 MostrarGenerarPDF = true;
                                 TextoTrazabilidad = "Trazabilidad Producto Envasado";
@@ -118,12 +120,15 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
                                 //var proveedores = trazabilidad.ProductoTerminado(codigo);
                                 //proveedores.ForEach(ucTrazabilidadCodigos.ArbolRecepcion.Add);
                             }
-                            break;*/
+
+                        }
+                        break;
                 }
             }
+
         }
 
-        private void GenerarArbolCliente()
+        /*private void GenerarArbolCliente()
         {
             ArbolCliente.Clear();
             MostrarGenerarPDF = false;
@@ -154,7 +159,7 @@ namespace BiomasaEUPT.Vistas.GestionTrazabilidad
 
                 }
             }
-        }
+        }*/
 
         #region Generar PDF
         public ICommand GenerarPDFComando => _generarPDFComando ??
