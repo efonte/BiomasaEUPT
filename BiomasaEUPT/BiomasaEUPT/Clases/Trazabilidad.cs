@@ -122,7 +122,7 @@ namespace BiomasaEUPT.Clases
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.TipoProveedor")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductoTerminado.ProductosTerminadosComposiciones.HistorialHuecoRecepcion.MateriaPrima.Recepcion.Proveedor.Municipio.Provincia.Comunidad.Pais")
                .Include("ProductosEnvasadosComposiciones.HistorialHuecoAlmacenaje.ProductosEnvasadosComposiciones")
-               .Single(mp => mp.Codigo == codigo);
+               .Single(pe => pe.Codigo == codigo);
 
             var proveedores = new List<Proveedor>();
             foreach (var pec in productoEnvasado.ProductosEnvasadosComposiciones.ToList())
@@ -141,6 +141,7 @@ namespace BiomasaEUPT.Clases
 
         public List<Cliente> ProductoEnvasadoCliente(string codigo)
         {
+
             var pedidoDetalle = context.PedidosDetalles
                   .Include("ProductoEnvasado")
                   .Include("ProductoEnvasado.Picking")
@@ -153,19 +154,17 @@ namespace BiomasaEUPT.Clases
                   .Include("PedidoLinea.PedidoCabecera.Cliente.Municipio.Provincia.Comunidad.Pais")
                   .Single(p => p.ProductoEnvasado.Codigo == codigo);
 
-
-
-
             var clientes = new List<Cliente>();
+            clientes.Add(pedidoDetalle.PedidoLinea.PedidoCabecera.Cliente);
+     
 
-            //var productosEnvasadosComposiciones = pedidoDetalle.ProductoEnvasado.ProductosEnvasadosComposiciones.Where(pec => pec.ProductoEnvasado.Codigo == pedidoDetalle.ProductoEnvasado.Codigo).ToList();
-            //var materiasPrimas = new List<MateriaPrima>();
+            return clientes;
 
 
-            /*foreach (var pec in productosEnvasadosComposiciones)
-            {
-                
-            }*/
+
+            //var clientes = new List<Cliente>();
+
+
 
             /*var pedidosLineas = new List<PedidoLinea>();
             var pedidosCabeceras = new List<PedidoCabecera>();
@@ -193,7 +192,7 @@ namespace BiomasaEUPT.Clases
                 }
             }*/
 
-            return clientes;
+            //return clientes;
         }
     }
 }

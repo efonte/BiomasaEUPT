@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BiomasaEUPT"
-#define MyAppVersion "0.3.0.0"
+#define MyAppVersion "0.3.1.0"
 #define MyAppExeName "BiomasaEUPT.exe"
 
 [Setup]
